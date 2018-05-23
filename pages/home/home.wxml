@@ -42,7 +42,6 @@
         <view class='listItem' wx:for="{{listCount}}">
             <view class='rowFlex'>
                 <view class='reward'>
-                    <view class='rTextG'>
                         <view class='rcText'>
                            <text>赏金</text>
                         </view>
@@ -52,7 +51,6 @@
                         <view class='reText'>
                             <text>RMB</text>
                         </view>
-                    </view>
                 </view>
                 <view class='body'>
                     <view class='exInstance'>

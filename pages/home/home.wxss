@@ -6,14 +6,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding-top: 12rpx;
 }
 
 .school {
     display: flex;
     flex-direction: row;
-    align-content: flex-start;
-    align-items: flex-start;
-    padding-top: 12rpx;
+    align-items: center;
+    padding-bottom: 10rpx;
     height: 62rpx;
     width: 100%;
 }
@@ -40,9 +40,16 @@
     border-radius: 68rpx;
 }
 
+.lText {
+    height: 70rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .schoolText {
     font-size: 32rpx;
-    height: 32rpx;
     width: 670rpx;
     color: #373c46;
     font-weight: bold;
@@ -50,10 +57,11 @@
     /* position: relative; */
 }
 
-.realSNText {
-    /* position: absolute;
-    top: -4.5rpx; */
-}
+
+/* .realSNText {
+    position: absolute;
+    top: -4.5rpx;
+} */
 
 .locIcon {
     height: 32rpx;
@@ -66,7 +74,7 @@
     border-radius: 50%;
     background: linear-gradient(#fed25c, #f9a93e);
     margin: 22rpx;
-    margin-right: 6rpx;
+    margin-right: 11rpx;
 }
 
 .slIcon {
@@ -75,16 +83,21 @@
     border-radius: 50%;
     background: linear-gradient(#fed25c, #f9a93e);
     margin: 22rpx;
-    margin-right: 6rpx;
+    margin-right: 11rpx;
 }
 
 .lTextLarge {
+    position: relative;
+    bottom: 0.5rpx;
     font-size: 28rpx;
     font-weight: bold;
     color: #373c46;
 }
 
 .lTextSmall {
+    position: relative;
+    left: 0.5rpx;
+    bottom: 0.5rpx;
     font-size: 20rpx;
     font-weight: normal;
     color: #999ba1;
@@ -119,7 +132,7 @@
     bottom: 30rpx;
     right: 24rpx;
     align-content: center;
-    z-index: 10;
+    /* z-index: 10; */
     width: 114rpx;
     height: 50rpx;
     border-radius: 30rpx;
@@ -130,9 +143,9 @@
     /* position: relative; */
     /* bottom: 30rpx;
     right: 24rpx; */
-    z-index: 10;
+    /* z-index: 10; */
     line-height: 50rpx;
-    margin: 25rpx auto;
+    /* margin: 25rpx auto; */
     text-align: center;
     font-size: 28rpx;
     font-weight: bold;
@@ -146,9 +159,9 @@
     background: linear-gradient(#fed25c, #f9a93e);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     color: white;
-    /* align-content: center; */
+    /* align-items: center; */
 }
 
 
@@ -163,27 +176,27 @@
 } */
 
 .rnText {
-    /* position: relative;
-    bottom: 4rpx;
-    left: -11rpx; */
+    position: relative;
+    bottom: 5rpx;
+    /* left: -11rpx; */
     font-size: 80rpx;
     font-weight: bold;
     text-align: center;
 }
 
 .reText {
-    /* position: relative;
-    bottom: 18rpx;
-    left: -2rpx; */
+    position: relative;
+    bottom: 26rpx;
+    /* left: -2rpx; */
     font-size: 24rpx;
     font-weight: bold;
     text-align: center;
 }
 
 .rcText {
-    /* position: relative;
-    bottom: -14rpx;
-    left: -3rpx; */
+    position: relative;
+    bottom: -20rpx;
+    /* left: -3rpx; */
     font-size: 28rpx;
     font-weight: bold;
     text-align: center;
@@ -192,6 +205,7 @@
 .rowFlex {
     display: flex;
     flex-direction: row;
+    align-content: center;
 }
 
 .body {
@@ -199,12 +213,18 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 .exInstance {
     font-size: 22rpx;
     color: #999ba1;
     font-weight: bold;
+    position: relative;
+    left: 2rpx;
+    /* align-content: center; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
     /* margin-bottom: 14rpx; */
     /* position: relative;
     left: -5rpx; */
@@ -214,8 +234,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* position: relative;
-    bottom: 2rpx; */
+    position: relative;
+    bottom: 4rpx;
 }
 
 .sdIText {
@@ -231,11 +251,14 @@
     border-top-left-radius: 6rpx;
     border-top-right-radius: 6rpx;
     border-bottom-right-radius: 6rpx;
+    border-bottom-left-radius: 0rpx;
     padding-left: 6rpx;
     padding-right: 6rpx;
     height: 32rpx;
     color: #d8320b;
     background-color: #ffe9e9;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -252,6 +275,7 @@
     height: 32rpx;
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin-right: 10rpx;
     /* position: relative;
     left: 2rpx; */
@@ -274,10 +298,10 @@
 .pubisher {
     display: flex;
     flex-direction: row;
-    align-items: center;
     font-size: 22rpx;
-    /* position: relative;
-    left: 4rpx; */
+    align-items: center;
+    position: relative;
+    left: 2rpx;
     margin-top: 10rpx;
 }
 
@@ -291,6 +315,7 @@
     padding-left: 4rpx;
 }
 
-text {
+
+/* text {
     background-color: gray;
-}
+} */
