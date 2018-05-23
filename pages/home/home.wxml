@@ -1,0 +1,90 @@
+<view class='container'>
+    <view class='select'>
+        <view class='school'>
+            <block class='locIcon'>
+            <image class='locIcon' src="{{loctionSrc}}"></image>
+            </block>
+            <view class='schoolText'>
+                <view class='realSNText'>{{mySchoolName}}</view>
+            </view>
+        </view>
+        <view class='mainSelect'>
+            <view class='expressLoc'>
+                <view class='elIcon'>
+                    
+                </view>
+                <view class='lText'>
+                    <view class='lTextLarge'>
+                        快递站点
+                    </view>
+                    <view class='lTextSmall'>
+                        选择取快递的站点
+                    </view>
+                </view>
+            </view>
+            <view class='sendLoc'>
+                <view class='slIcon'>
+                    
+                </view>
+                <view class='lText'>
+                    <view class='lTextLarge'>
+                        送达地点
+                    </view>
+                    <view class='lTextSmall'>
+                        选择快递送达地点
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class='list'>
+        <view class='listItem' wx:for="{{listCount}}">
+            <view class='rowFlex'>
+                <view class='reward'>
+                    <view class='rTextG'>
+                        <view class='rcText'>
+                            赏金
+                        </view>
+                        <view class='rnText'>
+                            {{reward}}
+                        </view>
+                        <view class='reText'>
+                            RMB
+                        </view>
+                    </view>
+                </view>
+                <view class='body'>
+                    <view class='exInstance'>
+                        {{exInstance}} 送至
+                    </view>
+                    <view class='sdInstance'>
+                        <view class='sdIText'>{{sdInstance}}</view>
+                        <view class='exTagWor'>
+                            <view class='tagText'>加急</view> 
+                        </view>
+                    </view>
+                    <view class='exTag'>
+                        <view class='exTag exTagWei'>
+                            <view class='tagText'>重量{{exWeight}} | {{exSize}}</view>
+                        </view>
+                        <view class='exTag exTagTime'>
+                            <view class='tagText'>{{exExTime}}前取货</view>
+                        </view>
+                    </view>
+                    <view class='pubisher'>
+                        <image class='pubIcon' src="{{pubIcon}}"></image>
+                        <view class='pubName'>
+                            发布人：{{pubName}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class='rbutton'>
+                <view class='rbText'>详情</view>
+                
+                <!-- 可能需要先相对定位一下然后使用button-->
+            </view>
+        </view>
+    </view>
+</view>

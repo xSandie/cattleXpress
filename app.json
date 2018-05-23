@@ -1,0 +1,41 @@
+{
+    "pages": [
+        "pages/home/home",
+        "pages/logs/logs",
+        "pages/publish/publish",
+        "pages/orders/orders",
+        "pages/my/my"
+    ],
+    "window": {
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#f5f8fd",
+        "navigationBarTitleText": "",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#f5f8fd",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50
+    },
+    "tabBar": {
+        "color": "#999ba1",
+        "selectedColor": "#faaf42",
+        "borderStyle": "white",
+        "list": [{
+                "pagePath": "pages/home/home",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/publish/publish",
+                "text": "发布"
+            },
+            {
+                "pagePath": "pages/orders/orders",
+                "text": "订单"
+            },
+            {
+                "pagePath": "pages/my/my",
+                "text": "我的"
+            }
+        ]
+    }
+
+}
