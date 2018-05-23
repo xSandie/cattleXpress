@@ -47,12 +47,12 @@
     color: #373c46;
     font-weight: bold;
     padding-left: 6rpx;
-    position: relative;
+    /* position: relative; */
 }
 
 .realSNText {
-    position: absolute;
-    top: -4.5rpx;
+    /* position: absolute;
+    top: -4.5rpx; */
 }
 
 .locIcon {
@@ -80,13 +80,13 @@
 
 .lTextLarge {
     font-size: 28rpx;
-    font-weight: 600;
+    font-weight: bold;
     color: #373c46;
 }
 
 .lTextSmall {
     font-size: 20rpx;
-    font-weight: 400;
+    font-weight: normal;
     color: #999ba1;
 }
 
@@ -116,22 +116,26 @@
 
 .rbutton {
     position: absolute;
-    bottom: 31rpx;
+    bottom: 30rpx;
     right: 24rpx;
-    align-items: center;
+    align-content: center;
     z-index: 10;
     width: 114rpx;
     height: 50rpx;
-    border-radius: 26rpx;
+    border-radius: 30rpx;
     border: 1rpx solid #faaf42;
 }
 
 .rbText {
-    position: absolute;
-    top: 5rpx;
-    left: 30rpx;
+    /* position: relative; */
+    /* bottom: 30rpx;
+    right: 24rpx; */
+    z-index: 10;
+    line-height: 50rpx;
+    margin: 25rpx auto;
+    text-align: center;
     font-size: 28rpx;
-    font-weight: 600;
+    font-weight: bold;
     color: #faaf42;
 }
 
@@ -143,11 +147,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    /* text-align: center; */
+    color: white;
+    /* align-content: center; */
 }
 
-.rTextG {
+
+/* .rTextG {
     color: white;
     display: flex;
     flex-direction: column;
@@ -155,36 +160,38 @@
     align-items: center;
     width: 140rpx;
     height: 190rpx;
-}
+} */
 
 .rnText {
-    position: relative;
+    /* position: relative;
     bottom: 4rpx;
-    left: -11rpx;
+    left: -11rpx; */
     font-size: 80rpx;
     font-weight: bold;
+    text-align: center;
 }
 
 .reText {
-    position: relative;
+    /* position: relative;
     bottom: 18rpx;
-    left: -2rpx;
+    left: -2rpx; */
     font-size: 24rpx;
-    font-weight: 600;
+    font-weight: bold;
+    text-align: center;
 }
 
 .rcText {
-    position: relative;
+    /* position: relative;
     bottom: -14rpx;
-    left: -3rpx;
+    left: -3rpx; */
     font-size: 28rpx;
-    font-weight: 600;
+    font-weight: bold;
+    text-align: center;
 }
 
 .rowFlex {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
 }
 
 .body {
@@ -197,24 +204,24 @@
 .exInstance {
     font-size: 22rpx;
     color: #999ba1;
-    font-weight: 600;
+    font-weight: bold;
     /* margin-bottom: 14rpx; */
-    position: relative;
-    left: -5rpx;
+    /* position: relative;
+    left: -5rpx; */
 }
 
 .sdInstance {
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: relative;
-    bottom: 2rpx;
+    /* position: relative;
+    bottom: 2rpx; */
 }
 
 .sdIText {
     font-size: 48rpx;
     color: #373c46;
-    font-weight: 600;
+    font-weight: bold;
     margin-right: 16rpx;
 }
 
@@ -246,8 +253,8 @@
     display: flex;
     flex-direction: row;
     margin-right: 10rpx;
-    position: relative;
-    left: 2rpx;
+    /* position: relative;
+    left: 2rpx; */
 }
 
 .exTagWei {
@@ -269,8 +276,8 @@
     flex-direction: row;
     align-items: center;
     font-size: 22rpx;
-    position: relative;
-    left: 4rpx;
+    /* position: relative;
+    left: 4rpx; */
     margin-top: 10rpx;
 }
 
@@ -282,4 +289,8 @@
 .pubName {
     color: #faaf42;
     padding-left: 4rpx;
+}
+
+text {
+    background-color: gray;
 }
