@@ -5,7 +5,7 @@
             <image class='locIcon' src="{{loctionSrc}}"></image>
             </block>
             <view class='schoolText'>
-                <view class='realSNText'>{{mySchoolName}}</view>
+                <view class='realSNText'><text>{{mySchoolName}}</text></view>
             </view>
         </view>
         <view class='mainSelect'>
@@ -15,10 +15,10 @@
                 </view>
                 <view class='lText'>
                     <view class='lTextLarge'>
-                        快递站点
+                        <text>快递站点</text>
                     </view>
                     <view class='lTextSmall'>
-                        选择取快递的站点
+                        <text>选择取快递的站点</text>
                     </view>
                 </view>
             </view>
@@ -28,10 +28,10 @@
                 </view>
                 <view class='lText'>
                     <view class='lTextLarge'>
-                        送达地点
+                       <text>送达地点</text>
                     </view>
                     <view class='lTextSmall'>
-                        选择快递送达地点
+                       <text>选择快递送达地点</text> 
                     </view>
                 </view>
             </view>
@@ -42,46 +42,44 @@
         <view class='listItem' wx:for="{{listCount}}">
             <view class='rowFlex'>
                 <view class='reward'>
-                    <view class='rTextG'>
                         <view class='rcText'>
-                            赏金
+                           <text>赏金</text>
                         </view>
                         <view class='rnText'>
-                            {{reward}}
+                            <text>{{reward}}</text>
                         </view>
                         <view class='reText'>
-                            RMB
+                            <text>RMB</text>
                         </view>
-                    </view>
                 </view>
                 <view class='body'>
                     <view class='exInstance'>
-                        {{exInstance}} 送至
+                       <text>{{exInstance}} 送至</text> 
                     </view>
                     <view class='sdInstance'>
-                        <view class='sdIText'>{{sdInstance}}</view>
+                        <view class='sdIText'><text>{{sdInstance}}</text></view>
                         <view class='exTagWor'>
-                            <view class='tagText'>加急</view> 
+                            <view class='tagText'><text>加急</text></view> 
                         </view>
                     </view>
                     <view class='exTag'>
                         <view class='exTag exTagWei'>
-                            <view class='tagText'>重量{{exWeight}} | {{exSize}}</view>
+                            <view class='tagText'><text>重量{{exWeight}} | {{exSize}}</text></view>
                         </view>
                         <view class='exTag exTagTime'>
-                            <view class='tagText'>{{exExTime}}前取货</view>
+                            <view class='tagText'><text>{{exExTime}}前取货</text></view>
                         </view>
                     </view>
                     <view class='pubisher'>
                         <image class='pubIcon' src="{{pubIcon}}"></image>
                         <view class='pubName'>
-                            发布人：{{pubName}}
+                        <text>发布人：{{pubName}}</text>
                         </view>
                     </view>
                 </view>
             </view>
             <view class='rbutton'>
-                <view class='rbText'>详情</view>
+                <view class='rbText'><text>详情</text></view>
                 
                 <!-- 可能需要先相对定位一下然后使用button-->
             </view>
