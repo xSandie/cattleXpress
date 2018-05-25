@@ -1,0 +1,353 @@
+.container {
+    padding-top: 12rpx;
+    height: 100%;
+    padding-bottom: 40rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.exLocDe {
+    box-sizing: border-box;
+    height: 138rpx;
+    width: 100%;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 16rpx;
+    margin-bottom: 30rpx;
+}
+
+.exLogo {
+    height: 90rpx;
+    width: 90rpx;
+}
+
+.exDetail {
+    position: relative;
+    bottom: 1rpx;
+    height: 66rpx;
+    width: 380rpx;
+    margin-left: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.exInstance {
+    position: relative;
+    left: -1rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #373c46;
+}
+
+.exLocTime {
+    font-size: 20rpx;
+    color: #999ba1;
+}
+
+.cline {
+    width: 1rpx;
+    height: 90rpx;
+    margin-left: 40rpx;
+    background-color: #999ba1;
+}
+
+.fixBtn {
+    display: flex;
+    flex-direction: column;
+    height: 78rpx;
+    justify-content: space-between;
+    align-content: center;
+    margin-left: 30rpx;
+}
+
+.fxIcon {
+    height: 50rpx;
+    width: 50rpx;
+}
+
+.fxText {
+    font-size: 18rpx;
+    color: #999ba1;
+    text-align: center;
+}
+
+.mainSum {
+    padding: 24rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    position: relative;
+}
+
+.sdSum {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 140rpx;
+    justify-content: space-between;
+}
+
+.smTitle {
+    color: #faaf42;
+    font-size: 22rpx;
+    font-weight: bold;
+}
+
+.sdInstance {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.msdInstance {
+    font-size: 48rpx;
+    color: #373c46;
+    font-weight: bold;
+}
+
+.sdProm {
+    font-size: 18rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #999ba1;
+    margin-left: 16rpx;
+}
+
+.sdTag {
+    display: flex;
+    flex-direction: row;
+    font-size: 28rpx;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.exExTime {
+    color: #0abc0a;
+    background-color: #e6ffe6;
+    font-size: 28rpx;
+    height: 39rpx;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    display: flex;
+    align-items: center;
+    border-radius: 10rpx;
+    margin-right: 10rpx;
+}
+
+.exSize {
+    color: #0b85d8;
+    background-color: #e9f4ff;
+    font-size: 28rpx;
+    height: 39rpx;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    display: flex;
+    align-items: center;
+    border-radius: 10rpx;
+    margin-right: 10rpx;
+}
+
+.exWeight {
+    color: #0b85d8;
+    background-color: #e9f4ff;
+    font-size: 28rpx;
+    height: 39rpx;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    display: flex;
+    align-items: center;
+    border-radius: 10rpx;
+    margin-right: 10rpx;
+}
+
+.rline {
+    height: 1rpx;
+    width: 100%;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    margin-top: 24rpx;
+    margin-bottom: 20rpx;
+}
+
+.rline1 {
+    height: 1rpx;
+    width: 100%;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    margin-top: 24rpx;
+    margin-bottom: 20rpx;
+}
+
+.exDepict {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.smTitle1 {
+    color: #faaf42;
+    font-size: 22rpx;
+    font-weight: bold;
+    margin-bottom: 12rpx;
+}
+
+.sText {
+    font-size: 28rpx;
+    color: #373c46;
+    line-height: 42rpx;
+}
+
+.reward {
+    width: 100%;
+    height: 98rpx;
+    border-radius: 10rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #faaf42;
+    border: 1rpx solid #faaf42;
+}
+
+.rnText {
+    /* position: relative;
+    bottom: 5rpx; */
+    font-size: 80rpx;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 22rpx;
+    margin-right: 22rpx;
+}
+
+.reText {
+    /* position: relative;
+    bottom: 26rpx; */
+    font-size: 24rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.rcText {
+    /* position: relative;
+    bottom: -20rpx; */
+    font-size: 28rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.trifle {
+    margin-top: 26rpx;
+    font-size: 22rpx;
+    color: #999ba1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+
+.nav {
+    color: #faaf42;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.worTag {
+    width: 60rpx;
+    color: #d8320b;
+    background-color: #ffe9e9;
+    border-top-left-radius: 6rpx;
+    border-top-right-radius: 6rpx;
+    border-bottom-right-radius: 6rpx;
+    border-bottom-left-radius: 0rpx;
+    font-size: 20rpx;
+    height: 32rpx;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    display: flex;
+    align-items: center;
+    margin-right: 10rpx;
+    position: absolute;
+    top: 24rpx;
+    right: 24rpx;
+    text-align: center;
+}
+
+.fxdBtnArea {
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
+    height: 100rpx;
+    background-color: white;
+}
+
+.fxdBtnBac {
+    position: fixed;
+    bottom: 100rpx;
+    width: 750rpx;
+    height: 100rpx;
+    background: linear-gradient(rgba(255, 255, 255, 0), #FFFFFF);
+}
+
+.contact {
+    z-index: 15;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    border-radius: 10rpx;
+    height: 100rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 40rpx;
+    bottom: 40rpx;
+}
+
+.conText {
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: white;
+}
+
+.conIcon {
+    height: 34rpx;
+    width: 34rpx;
+    margin-left: 20rpx;
+}
+
+.dirGet {
+    z-index: 15;
+    position: absolute;
+    left: 40rpx;
+    bottom: 57rpx;
+    display: flex;
+    flex-direction: column;
+    height: 70rpx;
+    justify-content: space-between;
+}
+
+.lDGT {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #faaf42;
+}
+
+.sDGT {
+    font-size: 22rpx;
+    color: #999ba1;
+}

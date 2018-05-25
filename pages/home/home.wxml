@@ -39,7 +39,7 @@
     </view>
 
     <view class='list'>
-        <view class='listItem' wx:for="{{listCount}}">
+        <view class='listItem' bindtap="toSumDetail" wx:for="{{listCount}}">
             <view class='rowFlex'>
                 <view class='reward'>
                         <view class='rcText'>
@@ -58,7 +58,7 @@
                     </view>
                     <view class='sdInstance'>
                         <view class='sdIText'><text>{{sdInstance}}</text></view>
-                        <view class='exTagWor'>
+                        <view class='exTagWor' wx:if="{{exWorry}}">
                             <view class='tagText'><text>加急</text></view> 
                         </view>
                     </view>
@@ -84,5 +84,16 @@
                 <!-- 可能需要先相对定位一下然后使用button-->
             </view>
         </view>
+    </view>
+    <view class='fbtnBox'>
+        <view class='floatBtn'>
+            <text class='hBtnText'>{{hBtnText}}</text>
+            <image class='hBtnIcon' src='{{hBtnIcon}}'></image>
+        </view>
+    </view>
+    <view class='prompt'>
+        <view class='lineCss'></view>
+        <text>黄牛也是有底线的</text>
+        <view class='lineCss'></view>
     </view>
 </view>

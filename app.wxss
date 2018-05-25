@@ -1,11 +1,17 @@
 /**app.wxss**/
 
+page {
+    height: 100%;
+    width: 100%;
+}
+
 .container {
     height: 100%;
+    width: 100%;
     display: flex;
     padding-left: 40rpx;
     padding-right: 40rpx;
     box-sizing: border-box;
     background-color: #f5f8fd;
-    padding-bottom:40rpx; 
+    /* padding-bottom:40rpx;  */
 }

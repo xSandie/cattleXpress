@@ -1,0 +1,90 @@
+<view class='container'>
+    <view class='exLocDe'>
+        <image class='exLogo' src="{{exLogo}}"></image>
+        <view class='exDetail'>
+            <text class='exInstance'>{{exInstance}}</text>
+            <text class='exLocTime'>{{exLocTime}}</text>
+        </view>
+        <view class='cline'>   
+        </view>
+        <view class='fixBtn'>
+            <image src="{{fxIcon}}" class='fxIcon'></image>
+            <text class='fxText'>报错</text>
+        </view>
+    </view>
+    <view class='mainSum'>
+        <view class='sdSum'>
+            <text class='smTitle'>送至 DELIVER TO</text>
+            <view class='sdInstance'>
+                <text class='msdInstance'>{{sdInstance}}</text>
+                <view class='sdProm'>
+                <text>具体地址</text>
+                <text>接单后可见</text>
+                </view>
+            </view>
+            <view class='sdTag'>
+                <view class='exExTime'>
+                    <text>{{exExTime}}前取货</text>
+                </view>
+                <view class='exWeight'>
+                    <text>重量{{exWeight}}</text>
+                </view>
+                <view class='exSize'>
+                    <text>{{exSize}}物品</text>
+                </view>
+            </view>
+            <view class='worTag' wx:if="{{exWorry}}">
+                <text>加急</text>
+            </view>
+        </view>
+        <view class='rline'>
+        </view>
+        <view class='exDepict'>
+            <view class='smTitle1'>
+                <text>快递描述 DETAILS</text>
+            </view>
+            <view class='sText'>
+                <text>{{dText}}</text>
+            </view>
+        </view>
+        <view class='rline1'>
+        </view>
+        <view class='reward'>
+            <view class='rcText'>
+                <text>赏金</text>
+            </view>
+            <view class='rnText'>
+                <text>{{reward}}</text>
+            </view>
+            <view class='reText'>
+                <text>RMB</text>
+            </view>
+        </view>
+    </view>
+    <view class='trifle'>
+        <view class='pubSum'>
+           <text>{{schNum}} {{LName}}同学于 {{pubtime}} 发布</text>
+        </view>
+        <view class='instr'>
+            <view>其他具体信息<view class='nav'><text>接单</text></view>后可见</view>
+        </view>
+    </view>
+</view>
+<view>
+    <view class='fxdBtnBac'>    
+    </view>
+    <view class='fxdBtnArea'>
+        <view class='contact'>
+          <text class='conText'>联系TA</text>
+          <image src='{{conIcon}}' class='conIcon'></image>     
+        </view>
+        <view class='dirGet'>
+            <view class='lDGT'>
+               <text>点此接单</text>
+            </view>
+            <view class='sDGT'>
+               <text>建议接单前先联系本人</text>
+            </view>
+        </view>
+    </view>
+</view>

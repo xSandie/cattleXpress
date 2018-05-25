@@ -2,9 +2,11 @@
     "pages": [
         "pages/home/home",
         "pages/logs/logs",
-        "pages/publish/publish",
+        "pages/publish1/publish1",
+        "pages/publish2/publish2",
         "pages/orders/orders",
-        "pages/my/my"
+        "pages/my/my",
+        "pages/orderDetailsVeiwer/orderDetailsVeiwer"
     ],
     "window": {
         "backgroundTextStyle": "dark",
@@ -24,7 +26,7 @@
                 "text": "首页"
             },
             {
-                "pagePath": "pages/publish/publish",
+                "pagePath": "pages/publish1/publish1",
                 "text": "发布"
             },
             {

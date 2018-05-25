@@ -3,6 +3,7 @@
 }
 
 .select {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -10,6 +11,7 @@
 }
 
 .school {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -252,13 +254,17 @@
     border-top-right-radius: 6rpx;
     border-bottom-right-radius: 6rpx;
     border-bottom-left-radius: 0rpx;
-    padding-left: 6rpx;
     padding-right: 6rpx;
+    padding-left: 6rpx;
     height: 32rpx;
     color: #d8320b;
     background-color: #ffe9e9;
     display: flex;
     align-items: center;
+}
+
+.tagText {
+    text-align: center;
 }
 
 
@@ -277,6 +283,7 @@
     flex-direction: row;
     align-items: center;
     margin-right: 10rpx;
+    padding-right: 6rpx;
     /* position: relative;
     left: 2rpx; */
 }
@@ -285,14 +292,12 @@
     color: #0b85d8;
     background-color: #e9f4ff;
     padding-left: 6rpx;
-    padding-right: 6rpx;
 }
 
 .exTagTime {
     color: #0abc0a;
     background-color: #e6ffe6;
     padding-left: 6rpx;
-    padding-right: 6rpx;
 }
 
 .pubisher {
@@ -313,6 +318,59 @@
 .pubName {
     color: #faaf42;
     padding-left: 4rpx;
+}
+
+.fbtnBox {
+    position: fixed;
+    bottom: 40rpx;
+    height: 80rpx;
+    width: 670rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.floatBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30rpx;
+    padding-left: 44rpx;
+    border-radius: 40rpx;
+    height: 80rpx;
+    width: auto;
+    background-color: white;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    z-index: 15;
+}
+
+.hBtnIcon {
+    height: 34rpx;
+    width: 34rpx;
+}
+
+.hBtnText {
+    font-size: 24rpx;
+    color: #373c46;
+    margin-right: 28rpx;
+    text-align: center;
+}
+
+.prompt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: #999ba1;
+    font-size: 20rpx;
+    margin-bottom: 40rpx;
+}
+
+.lineCss {
+    height: 1rpx;
+    width: 220rpx;
+    background-color: #eef1fd;
 }
 
 

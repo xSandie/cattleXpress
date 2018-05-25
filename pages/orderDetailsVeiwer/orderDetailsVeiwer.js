@@ -4,28 +4,33 @@ Page({
      * 页面的初始数据
      */
     data: {
-        mySchoolName: '陕西师范大学（长安校区）',
-        reward: '99',
-        loctionSrc: "../../images/location.png",
-        pubIcon: '../../images/publisher.png',
+        exLogo: '../../images/STOLOGO.png',
+        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
         exInstance: '申通快递·阳光苑',
+        fxIcon: '../../images/fixBtnIcon.png',
+        conIcon: '../../images/conIcon.png',
         sdInstance: '宿舍区 硕士楼',
+
         exWorry: true,
         exWeight: '<1KG',
         exSize: '小件',
         exExTime: '05-07 18:00',
-        pubName: '向同学 41612057',
-        hBtnIcon: '../../images/bTopIcon.png',
-        hBtnText: '回到顶部',
-        listCount: [
-            '1',
-        ]
+
+        dText: '氨基酸的覅加瓦尔覅骄傲i圣诞节发士大夫艰苦拉萨的积分收到回复骄傲是的回复的覅加瓦尔放假啊撒谎的飞机',
+
+        reward: '20',
+        schNum: '41612057',
+        LName: '向',
+        pubtime: '1月19日 12：00',
+
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {},
+    onLoad: function(options) {
+
+    },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -74,10 +79,5 @@ Page({
      */
     onShareAppMessage: function() {
 
-    },
-    toSumDetail: function() {
-        wx.navigateTo({
-            url: "../orderDetailsVeiwer/orderDetailsVeiwer"
-        })
     }
 })
