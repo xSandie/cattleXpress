@@ -75,12 +75,12 @@
     </view>
     <view class='fxdBtnArea'>
         <view class='contact'>
-          <text class='conText'>联系TA</text>
+          <text class='conText'>点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
         </view>
         <view class='dirGet'>
             <view class='lDGT'>
-               <text>点此接单</text>
+               <text>联系TA</text>
             </view>
             <view class='sDGT'>
                <text>建议接单前先联系本人</text>

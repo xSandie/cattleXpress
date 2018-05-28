@@ -1,0 +1,111 @@
+<view class='header'>
+       <view class='htArea'>
+           <text class='lHeader'>先填写基本信息</text>
+           <text class='sHeader'>离发布不到1分钟</text>
+       </view> 
+</view>
+
+<view class='container'>
+    <view class='FakeCard'>
+    </view>
+    <form class='mainForm' bindsubmit="firstOrdSubmit">
+        <view class='floatCard'>
+            <view class='contactNum'>
+                <text class='contactNumTi'>联系电话</text>
+                <view>
+                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{DeContactNum}}" class='contactNumCon' />
+                </view>
+            </view>
+            <view class='tline'>   
+            </view>
+            <view class='recLoc'>
+                <text class='recLocTi'>送达地址</text>
+                    <view class='recLocDetail'>
+                        <picker mode="multiSelector" class='DeRecLocSel'>{{DeRecLocSel[0][0]}}·{{DeRecLocSel[1][0]}}</picker>
+                        <view class='cline'>
+                        </view>
+                        <input type="text" placeholder-class="placeHolder" maxlength='10' placeholder="{{DeRecLocIn}}" class='DeRecLocIn'/>
+                    </view>
+            </view>
+            <view class='setDef'>
+                <text>设为默认</text>            
+            </view>
+            <view class='differLink'>
+                <text>· 联系电话与收货手机号的区别</text>
+            </view>
+        </view>
+        <view class='norInfo'>
+            <view class='selEx'>
+                <view class='Ti'>
+                    <text>选择快递</text>
+                </view>
+                <view>
+                    <picker mode="multiSelector" class='selExCon'>{{selExCon[0][0]}}·{{selExCon[1][0]}}</picker>
+                </view>
+            </view>
+            <view class='rline'>
+            </view>
+            <view class='exTime'>
+                <view class='Ti'>
+                    <text>最晚取货时间</text>
+                </view>
+                <view class='exTimeCon'>
+                    <picker class='DatePi' value="{{date}}" mode="date" start="{{DeDate}}" end="{{EndDate}}">{{date}}</picker>
+                    <view class='cline'>
+                    </view>
+                    <picker class='TimePi' value="{{time}}" mode="time" start="00:00" end="24:00">{{time}}</picker>
+                </view>
+            </view>
+            <view class='rline'>
+            </view>
+            <view class='estInfo'>
+                <view class='weInfo'>
+                    <view class='Ti'>
+                        <text>快递重量估计</text>
+                    </view>
+                    <view>
+                        <picker mode="selector" class='weInfoCon' ><text class='weightInfo'>{{exWeight[0]}}</text></picker>
+                    </view>                    
+                </view>
+                <view class='twoInfo'>
+                    <view class='sizeInfo'>
+                        <view class='Ti'>
+                            <text>大小估计</text> 
+                        </view>
+                        <view>
+                            <checkbox-group class="group" bindchange="checkboxChange">
+                            <view class="label-1" wx:for="{{checkboxItems}}">
+                                <label>
+                                <checkbox hidden value="{{item.name}}" checked="{{item.checked}}"></checkbox> 
+                                <!--<view class="label-1__icon">
+                                    <view class="label-1__icon-checked" style="opacity:{{item.checked ? 1: 0}}"></view>
+                                </view>--> 
+                                <view class="label-1__icon" style="color:{{item.checked ? 'white': '#999ba1'}};background:{{item.checked ? '#faaf42': ''}};" ><text>{{item.value}}</text></view>
+                                </label>
+                            </view>
+                            </checkbox-group>
+                        </view>
+                    </view>
+                    <view class='worInfo'style="color:{{worchecked?'white':'#999ba1'}};border: {{worchecked?'':'1rpx solid #999ba1'}};background:{{worchecked?'#faaf42':''}};">
+                        <text>加急</text>
+                    </view> 
+                </view>                
+            </view>
+            <view class='rline'>
+            </view>
+        <!--    <view class='others'>
+                <view class='othersTi'>
+                    <text>快递描述</text>
+                </view>
+                <view>
+                    <textarea maxlength='50' type="text" class='othersCon' placeholder="{{lastDep}}" placeholder-class="placeHold" />
+                </view>
+            </view>-->
+            <button class='fakeBtn' bindtap="testTap" formType="submit"><view class='nbtnT'>
+                    <text>最后一步</text>
+                </view>    
+                <image class='nbtnIcon' src="{{nbtnIcon}}"></image></button>
+        </view>
+        
+    </form>
+</view>

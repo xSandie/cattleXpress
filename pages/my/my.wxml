@@ -1,0 +1,90 @@
+<view class='container'>
+        <view class='cardA'>
+            <view class='numA'>
+                <view class='money'>
+                    <text>{{balance}}元</text>
+                    <text class='small'>余额</text>
+                </view>
+                <view class='achie'>
+                    <text>{{creditScr}}</text>
+                    <text class='small'>LV.{{level}} 信用分</text>
+                </view> 
+            </view>
+            <view class='finanBtn'>
+                <view class='addCre'>
+                    <text>充值</text>
+                </view>
+                <view class='tline'>
+                </view>
+                <view class='drawCash'>
+                    <text>提现</text>
+                </view>
+            </view>
+        </view>
+        <image class='cardBack' src='{{cardBack}}'></image>
+    <view class='proA'>
+        <view class='prof'>
+            <open-data type="userAvatarUrl" class='profImg'></open-data>
+        </view>
+        <view class='info'>
+            <view class='nameA'>
+                <view wx:if="{{!certif}}">
+                    <open-data type="userNickName"></open-data>
+                </view> 
+                <view class='certif' wx:else>
+                    <text>{{realName}}</text>
+                    <view class='cerTag'>
+                        <text>已认证</text>
+                    </view>
+                </view>
+            </view>
+            <view class='schoNum'>
+                <view wx:if="{{!certif}}">
+                    <text>学号：66666666</text>
+                </view>
+                <view wx:else>
+                    <text>学号：{{schoNum}}</text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+    <view class='btnA'>
+        <view class='bigBtn'>
+            <view class='address'>
+                <view class='addressIcon'>
+                    <image class='addressIcon' src="{{addressIcon}}"></image>
+                </view>
+                <text>收货地址管理</text>
+            </view>
+            <view class='cline'>
+            </view>
+            <view class='police'>
+                <view class='policeIcon'>
+                    <image class='policeIcon' src="{{policeIcon}}"></image>
+                </view>
+                <text>举报/申诉进度</text>
+            </view>
+        </view>
+        <view class='smallBtn'>
+            <view class='support'>
+                <view class='supportText'>
+                    <text>支持我们</text>
+                </view>
+                <view class='next'>
+                    <image class='nextIcon' src='{{nextIcon}}'></image>
+                </view>
+            </view>
+            <view class='rline'>
+            </view>
+            <view class='joinUs'>
+                <view class='joinUsText'>
+                    <text>联系/加入我们</text>
+                </view>
+                <view class='next'>
+                   <image class='nextIcon' src='{{nextIcon}}'></image> 
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

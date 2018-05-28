@@ -7,6 +7,9 @@
             <view class='schoolText'>
                 <view class='realSNText'><text>{{mySchoolName}}</text></view>
             </view>
+            <view>
+                <image class='pullIcon' src='{{pullIcon}}'></image>
+            </view>
         </view>
         <view class='mainSelect'>
             <view class='expressLoc'>
@@ -46,7 +49,7 @@
                            <text>赏金</text>
                         </view>
                         <view class='rnText'>
-                            <text>{{reward}}</text>
+                            <text>{{item.reward}}</text>
                         </view>
                         <view class='reText'>
                             <text>RMB</text>
@@ -54,26 +57,26 @@
                 </view>
                 <view class='body'>
                     <view class='exInstance'>
-                       <text>{{exInstance}} 送至</text> 
+                       <text>{{item.exInstance}} 送至</text> 
                     </view>
                     <view class='sdInstance'>
-                        <view class='sdIText'><text>{{sdInstance}}</text></view>
-                        <view class='exTagWor' wx:if="{{exWorry}}">
+                        <view class='sdIText'><text>{{item.sdInstance}}</text></view>
+                        <view class='exTagWor' wx:if="{{item.exWorry}}">
                             <view class='tagText'><text>加急</text></view> 
                         </view>
                     </view>
                     <view class='exTag'>
                         <view class='exTag exTagWei'>
-                            <view class='tagText'><text>重量{{exWeight}} | {{exSize}}</text></view>
+                            <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
                         </view>
                         <view class='exTag exTagTime'>
-                            <view class='tagText'><text>{{exExTime}}前取货</text></view>
+                            <view class='tagText'><text>{{item.exExTime}}前取货</text></view>
                         </view>
                     </view>
                     <view class='pubisher'>
                         <image class='pubIcon' src="{{pubIcon}}"></image>
                         <view class='pubName'>
-                        <text>发布人：{{pubName}}</text>
+                        <text>发布人：{{item.pubName}}</text>
                         </view>
                     </view>
                 </view>

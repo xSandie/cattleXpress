@@ -1,0 +1,426 @@
+page {
+    width: 100%;
+    height: 100%;
+    background-color: #f5f8fd;
+}
+
+.container {
+    flex-direction: column;
+    background: #f5f8fd;
+    width: 100%;
+}
+
+.pullIcon {
+    height: 24rpx;
+    width: 24rpx;
+}
+
+.item {
+    width: 375rpx;
+    height: 90rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30rpx;
+    font-weight: bold;
+}
+
+.item.active {
+    color: #faaf42;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    color: #999ba1;
+    background: white;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+}
+
+.recCardTag {
+    width: 160rpx;
+    font-size: 28rpx;
+    text-align: center;
+    background: #E6FFE6;
+    border-radius: 25rpx;
+    height: 50rpx;
+    box-sizing: border-box;
+    padding-right: 22rpx;
+    padding-left: 22rpx;
+    color: #0ABC0A;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 120rpx;
+    margin-bottom: 30rpx;
+}
+
+.orderCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.pubCardTag {
+    width: 160rpx;
+    font-size: 28rpx;
+    text-align: center;
+    background: #fffbe9;
+    border-radius: 25rpx;
+    height: 50rpx;
+    box-sizing: border-box;
+    padding-right: 22rpx;
+    padding-left: 22rpx;
+    color: #faaf42;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30rpx;
+}
+
+.ongoRecList {
+    width: 100%;
+    height: 238rpx;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    background-color: white;
+    padding: 24rpx;
+    box-sizing: border-box;
+    position: relative;
+    margin-bottom: 30rpx;
+}
+
+.rowFlex {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+
+.reward {
+    width: 120rpx;
+    height: 190rpx;
+    border-radius: 10rpx;
+    background: linear-gradient(#fed25c, #f9a93e);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: white;
+}
+
+.rcText {
+    position: relative;
+    bottom: -20rpx;
+    /* left: -3rpx; */
+    font-size: 28rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.rnText {
+    position: relative;
+    bottom: 5rpx;
+    font-size: 80rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.reText {
+    position: relative;
+    bottom: 26rpx;
+    font-size: 24rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.body {
+    margin-left: 16rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.exInstance {
+    font-size: 22rpx;
+    color: #999ba1;
+    font-weight: bold;
+    position: relative;
+    left: 2rpx;
+}
+
+.sdInstance {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    bottom: 5rpx;
+}
+
+.sdIText {
+    font-size: 48rpx;
+    color: #373c46;
+    font-weight: bold;
+    margin-right: 16rpx;
+}
+
+.exTagWor {
+    box-sizing: border-box;
+    font-size: 20rpx;
+    border-top-left-radius: 6rpx;
+    border-top-right-radius: 6rpx;
+    border-bottom-right-radius: 6rpx;
+    border-bottom-left-radius: 0rpx;
+    padding-right: 6rpx;
+    padding-left: 6rpx;
+    height: 32rpx;
+    color: #d8320b;
+    background-color: #ffe9e9;
+    display: flex;
+    align-items: center;
+}
+
+.tagText {
+    text-align: center;
+}
+
+.fetchDe {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 22rpx;
+    height: 34rpx;
+    position: relative;
+    bottom: 3rpx;
+}
+
+.fetchCode {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    color: #d8320b;
+    background-color: #ffe9e9;
+    padding-right: 6rpx;
+    padding-left: 6rpx;
+    border-radius: 6rpx;
+    margin-right: 8rpx;
+}
+
+.fetchName {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    color: #0abc0a;
+    background-color: #e6ffe6;
+    padding-right: 6rpx;
+    padding-left: 6rpx;
+    border-radius: 6rpx;
+    margin-right: 8rpx;
+}
+
+.fatchPhone {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    color: #0b85d8;
+    background-color: #e9f4ff;
+    padding-right: 6rpx;
+    padding-left: 6rpx;
+    border-radius: 6rpx;
+    margin-right: 8rpx;
+}
+
+.prompt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: #999ba1;
+    font-size: 20rpx;
+    margin-bottom: 40rpx;
+}
+
+.exSum {
+    font-size: 20rpx;
+    display: flex;
+    flex-direction: row;
+    color: #faaf42;
+}
+
+.lineCss {
+    height: 1rpx;
+    width: 220rpx;
+    background-color: #eef1fd;
+}
+
+.rbuttonA {
+    position: absolute;
+    top: 24rpx;
+    right: 24rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+}
+
+.waitRec {
+    border: 1rpx solid #faaf42;
+    color: #faaf42;
+    width: 114rpx;
+    height: 50rpx;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.waitPay {
+    border: 1rpx solid #faaf42;
+    color: #faaf42;
+    width: 114rpx;
+    height: 50rpx;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.haveRec {
+    border: 1rpx solid #0ABC0A;
+    color: #0ABC0A;
+    width: 114rpx;
+    height: 50rpx;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.abor {
+    border: 1rpx solid #d8320b;
+    color: #d8320b;
+    width: 114rpx;
+    height: 50rpx;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.ongoPubList {
+    width: 100%;
+    height: 238rpx;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    background-color: white;
+    padding: 24rpx;
+    box-sizing: border-box;
+    position: relative;
+    margin-bottom: 30rpx;
+}
+
+.pubisher {
+    display: flex;
+    flex-direction: row;
+    font-size: 22rpx;
+    align-items: center;
+    position: relative;
+    left: 2rpx;
+    margin-top: 10rpx;
+}
+
+.pubIcon {
+    height: 22rpx;
+    width: 22rpx;
+}
+
+.pubName {
+    color: #faaf42;
+    padding-left: 4rpx;
+}
+
+.tagText {
+    text-align: center;
+}
+
+.exTag {
+    box-sizing: border-box;
+    font-size: 20rpx;
+    border-radius: 6rpx;
+    height: 32rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10rpx;
+    padding-right: 6rpx;
+}
+
+.exTagWei {
+    color: #0b85d8;
+    background-color: #e9f4ff;
+    padding-left: 6rpx;
+}
+
+.exTagTime {
+    color: #0abc0a;
+    background-color: #e6ffe6;
+    padding-left: 6rpx;
+}
+
+.finExSum {
+    font-size: 22rpx;
+    display: flex;
+    flex-direction: row;
+    color: #999ba1;
+    position: relative;
+    bottom: 3rpx;
+}
+
+.finPubisher {
+    display: flex;
+    flex-direction: row;
+    font-size: 22rpx;
+    align-items: center;
+    position: relative;
+    left: 2rpx;
+    margin-top: 10rpx;
+    bottom: 3rpx;
+}
+
+.finOrd {
+    border: 1rpx solid #999ba1;
+    color: #999ba1;
+    width: 114rpx;
+    height: 50rpx;
+    border-radius: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.rbuttonAfin {
+    position: absolute;
+    bottom: 24rpx;
+    right: 24rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+}

@@ -1,0 +1,261 @@
+page {
+    background-color: #f5f8fd;
+}
+
+.container {
+    z-index: -3;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    background: white;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.cardBack {
+    position: absolute;
+    top: 12rpx;
+    z-index: 2;
+    width: 670rpx;
+    height: 370rpx;
+    border-radius: 16rpx;
+}
+
+.cardA {
+    margin-top: 12rpx;
+    height: 370rpx;
+    width: 670rpx;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    background-size: 670rpx 370rpx;
+    padding: 24rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.numA {
+    z-index: 5;
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.money {
+    color: white;
+    font-weight: bold;
+    font-size: 60rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.achie {
+    color: white;
+    font-weight: bold;
+    font-size: 60rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+}
+
+.small {
+    font-weight: normal;
+    font-size: 22rpx;
+}
+
+.finanBtn {
+    z-index: 5;
+    height: 70rpx;
+    width: 360rpx;
+    border-radius: 10rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #fe574d;
+    background-color: white;
+    font-size: 28rpx;
+    text-align: center;
+    align-items: center;
+}
+
+.addCre {
+    height: 70rpx;
+    width: 178rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drawCash {
+    height: 70rpx;
+    width: 178rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tline {
+    height: 34rpx;
+    width: 1rpx;
+    background: #fe574d;
+}
+
+.profImg {
+    height: 100rpx;
+    width: 100rpx;
+    border-radius: 50%;
+    margin-right: 18rpx;
+    overflow: hidden;
+    object-fit: over;
+    float: left;
+}
+
+.prof {
+    border: 2 solid #999ba1;
+}
+
+.proA {
+    height: 174rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.nameA {
+    font-weight: bold;
+    font-size: 34rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cerTag {
+    height: 32rpx;
+    width: 78rpx;
+    font-size: 22rpx;
+    color: white;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    border-radius: 6rpx;
+    margin-left: 8rpx;
+    text-align: center;
+    justify-content: center;
+}
+
+.certif {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.schoNum {
+    color: #999ba1;
+    font-size: 24rpx;
+}
+
+.info {
+    height: 72rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bigBtn {
+    height: 166rpx;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cline {
+    height: 100rpx;
+    width: 2rpx;
+    background: #f4f4f4;
+}
+
+.address {
+    margin-left: 58rpx;
+    margin-right: 106rpx;
+    width: 174rpx;
+    height: 118rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: #373c46;
+    font-size: 28rpx;
+    text-align: center;
+}
+
+.addressIcon {
+    margin: 0 auto;
+    height: 60rpx;
+    width: 60rpx;
+}
+
+.police {
+    margin-left: 98rpx;
+    margin-right: 50rpx;
+    width: 188rpx;
+    height: 118rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: #373c46;
+    font-size: 28rpx;
+    text-align: center;
+}
+
+.policeIcon {
+    margin: 0 auto;
+    height: 60rpx;
+    width: 60rpx;
+    position: relative;
+    bottom: 1rpx;
+}
+
+.support {
+    height: 110rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #373c46;
+    font-size: 34rpx;
+}
+
+.nextIcon {
+    height: 40rpx;
+    width: 40rpx;
+}
+
+.joinUs {
+    height: 110rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #373c46;
+    font-size: 34rpx;
+}
+
+.rline {
+    height: 1rpx;
+    width: 100%;
+    background: #F4F4F4;
+}

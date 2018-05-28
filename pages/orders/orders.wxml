@@ -1,0 +1,229 @@
+<!--导航条-->  
+<view class="navbar">  
+  <view wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap"><text>{{item}}</text></view>  
+</view>  
+<view class='container'>
+<!--未完成-->  
+<view hidden="{{currentTab!==0}}">  
+    <view class='receive'>
+        <view class='recCardTag'>
+            <text>我接到的</text>
+        </view>
+        <view class='orderCard'>
+            <view class='ongoRecList' wx:for="{{ongoRecListCount}}">
+                    <view class='rowFlex'>
+                        <view class='reward'>
+                            <view class='rcText'>
+                                    <text>赏金</text>
+                            </view>
+                            <view class='rnText'>
+                                <text>{{item.reward}}</text>
+                            </view>
+                            <view class='reText'>
+                                <text>RMB</text>
+                            </view>
+                        </view>
+                        <view class='body'>
+                            <view class='exInstance'>
+                                <text>{{item.exInstance}} 送至</text> 
+                            </view>
+                            <view class='sdInstance'>
+                                <view class='sdIText'><text>{{item.sdInstance}}</text></view>
+                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                    <view class='tagText'><text>加急</text></view> 
+                                </view>
+                            </view>
+                            <view class='fetchDe'>
+                                <view class='fetchCode'>
+                                    <text>{{item.fetchCode}}</text>
+                                </view>
+                                <view class='fetchName'>
+                                    <text>姓名:{{item.fetchName}}</text>
+                                </view>
+                                <view class='fatchPhone'>
+                                    <text>尾号:{{item.fatchPhone}}</text>
+                                </view>
+                            </view>
+                            <view class='exSum'>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前取货</text></view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class='rbuttonA'>
+                            <view wx:if="{{item.exState==0}}" class='waitPay'><text>待支付</text></view>
+                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                    </view>
+            </view> 
+        </view>
+    </view>
+    <view class='myPub'>
+        <view class='pubCardTag'>
+            <text>我发布的</text>
+        </view>
+        <view class='orderCard'>
+            <view class='ongoPubList' wx:for="{{ongoPubListCount}}">
+                <view class='rowFlex'>
+                        <view class='reward'>
+                            <view class='rcText'>
+                                    <text>赏金</text>
+                            </view>
+                            <view class='rnText'>
+                                <text>{{item.reward}}</text>
+                            </view>
+                            <view class='reText'>
+                                <text>RMB</text>
+                            </view>
+                        </view>
+                        <view class='body'>
+                            <view class='exInstance'>
+                                <text>{{item.exInstance}} 送至</text> 
+                            </view>
+                            <view class='sdInstance'>
+                                <view class='sdIText'><text>{{item.sdInstance}}</text></view>
+                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                    <view class='tagText'><text>加急</text></view> 
+                                </view>
+                            </view>
+                            <view class='exTag'>
+                                <view class='exTag exTagWei'>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                                </view>
+                                <view class='exTag exTagTime'>
+                                    <view class='tagText'><text>{{item.exExTime}}前取货</text></view>
+                                </view>
+                            </view>
+                            <view class='pubisher'>
+                                <image class='pubIcon' src="{{pubIcon}}"></image>
+                                <view class='pubName'>
+                                <text>接单人：{{item.recName}}</text>
+                                </view>
+                            </view>  
+                        </view>
+                </view>
+                <view class='rbuttonA'>
+                    <view wx:if="{{item.exState==1}}" class='waitRec'><text>待接单</text></view>
+                    <view wx:if="{{item.exState==2}}" class='haveRec'><text>待送达</text></view>
+                    <view wx:if="{{item.exState==4}}" class='abor'><text>待送达</text></view>
+                </view>
+            </view> 
+        </view>
+    </view>
+    <view class='prompt'>
+        <view class='lineCss'></view>
+        <text>快去发布订单吧</text>
+        <view class='lineCss'></view>
+    </view>
+</view>  
+  
+<!--已完成-->  
+<view hidden="{{currentTab!==1}}">  
+      <view class='receive'>
+        <view class='recCardTag'>
+            <text>我接到的</text>
+        </view>
+        <view class='orderCard'>
+            <view class='ongoRecList' wx:for="{{finRecListCount}}">
+                    <view class='rowFlex'>
+                        <view class='reward'>
+                            <view class='rcText'>
+                                    <text>赏金</text>
+                            </view>
+                            <view class='rnText'>
+                                <text>{{item.reward}}</text>
+                            </view>
+                            <view class='reText'>
+                                <text>RMB</text>
+                            </view>
+                        </view>
+                        <view class='body'>
+                            <view class='exInstance'>
+                                <text>{{item.exInstance}} 送至</text> 
+                            </view>
+                            <view class='sdInstance'>
+                                <view class='sdIText'><text>{{item.sdInstance}}</text></view>
+                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                    <view class='tagText'><text>加急</text></view> 
+                                </view>
+                            </view>
+                            <view class='finExSum'>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前取货</text></view>
+                            </view>
+                            <view class='finPubisher'>
+                                <image class='pubIcon' src="{{pubIcon}}"></image>
+                                <view class='pubName'>
+                                <text>发布人：{{item.pubName}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class='rbuttonAfin'>
+                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>  
+                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                    </view>
+            </view> 
+        </view>
+    </view>
+        <view class='myPub'>
+            <view class='pubCardTag'>
+                <text>我发布的</text>
+            </view>
+            <view class='orderCard'>
+                <view class='ongoPubList' wx:for="{{finPubListCount}}">
+                    <view class='rowFlex'>
+                            <view class='reward'>
+                                <view class='rcText'>
+                                        <text>赏金</text>
+                                </view>
+                                <view class='rnText'>
+                                    <text>{{item.reward}}</text>
+                                </view>
+                                <view class='reText'>
+                                    <text>RMB</text>
+                                </view>
+                            </view>
+                            <view class='body'>
+                                <view class='exInstance'>
+                                    <text>{{item.exInstance}} 送至</text> 
+                                </view>
+                                <view class='sdInstance'>
+                                    <view class='sdIText'><text>{{item.sdInstance}}</text></view>
+                                    <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                        <view class='tagText'><text>加急</text></view> 
+                                    </view>
+                                </view>
+                                <view class='exTag'>
+                                    <view class='exTag exTagWei'>
+                                        <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                                    </view>
+                                    <view class='exTag exTagTime'>
+                                        <view class='tagText'><text>{{item.exExTime}}前取货</text></view>
+                                    </view>
+                                </view>
+                                <view class='finPubisher'>
+                                    <image class='pubIcon' src="{{pubIcon}}"></image>
+                                    <view class='pubName'>
+                                    <text>接单人：{{item.recName}}</text>
+                                    </view>
+                                </view>  
+                            </view>
+                    </view>
+                    <view class='rbuttonAfin'>
+                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>  
+                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                    </view>
+                </view> 
+            </view>
+        </view>
+        <view wx:if="{{atEnd}}" class='prompt'>
+            <view class='lineCss'></view>
+            <text>下拉加载更多</text>
+            <view class='lineCss'></view>
+        </view>  
+        <view wx:else class='prompt'>
+            <view class='lineCss'></view>
+            <text>我是个有底线的黄牛</text>
+            <view class='lineCss'></view>
+        </view> 
+</view>  
+
+</view>  

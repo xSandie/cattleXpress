@@ -8,17 +8,29 @@ Page({
         reward: '99',
         loctionSrc: "../../images/location.png",
         pubIcon: '../../images/publisher.png',
-        exInstance: '申通快递·阳光苑',
-        sdInstance: '宿舍区 硕士楼',
-        exWorry: true,
-        exWeight: '<1KG',
-        exSize: '小件',
-        exExTime: '05-07 18:00',
-        pubName: '向同学 41612057',
         hBtnIcon: '../../images/bTopIcon.png',
+        pullIcon: '../../images/pull.png',
         hBtnText: '回到顶部',
-        listCount: [
-            '1',
+        listCount: [{
+                exInstance: '申通快递·阳光苑',
+                sdInstance: '宿舍区 硕士楼',
+                exWorry: true,
+                reward: '2',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 18:00',
+                pubName: '向同学 41612057'
+            },
+            {
+                exInstance: '圆通快递·阳光苑',
+                sdInstance: '宿舍区 周园',
+                exWorry: false,
+                reward: '5',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 17:00',
+                pubName: '刘同学 41612058'
+            },
         ]
     },
 

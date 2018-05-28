@@ -2,6 +2,11 @@
     flex-direction: column;
 }
 
+.pullIcon {
+    height: 24rpx;
+    width: 24rpx;
+}
+
 .select {
     position: relative;
     display: flex;
@@ -52,18 +57,11 @@
 
 .schoolText {
     font-size: 32rpx;
-    width: 670rpx;
+    width: auto;
     color: #373c46;
     font-weight: bold;
     padding-left: 6rpx;
-    /* position: relative; */
 }
-
-
-/* .realSNText {
-    position: absolute;
-    top: -4.5rpx;
-} */
 
 .locIcon {
     height: 32rpx;
@@ -134,7 +132,6 @@
     bottom: 30rpx;
     right: 24rpx;
     align-content: center;
-    /* z-index: 10; */
     width: 114rpx;
     height: 50rpx;
     border-radius: 30rpx;
@@ -142,12 +139,7 @@
 }
 
 .rbText {
-    /* position: relative; */
-    /* bottom: 30rpx;
-    right: 24rpx; */
-    /* z-index: 10; */
     line-height: 50rpx;
-    /* margin: 25rpx auto; */
     text-align: center;
     font-size: 28rpx;
     font-weight: bold;
@@ -163,24 +155,11 @@
     flex-direction: column;
     justify-content: space-around;
     color: white;
-    /* align-items: center; */
 }
-
-
-/* .rTextG {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 140rpx;
-    height: 190rpx;
-} */
 
 .rnText {
     position: relative;
     bottom: 5rpx;
-    /* left: -11rpx; */
     font-size: 80rpx;
     font-weight: bold;
     text-align: center;
@@ -189,7 +168,6 @@
 .reText {
     position: relative;
     bottom: 26rpx;
-    /* left: -2rpx; */
     font-size: 24rpx;
     font-weight: bold;
     text-align: center;
@@ -198,7 +176,6 @@
 .rcText {
     position: relative;
     bottom: -20rpx;
-    /* left: -3rpx; */
     font-size: 28rpx;
     font-weight: bold;
     text-align: center;
@@ -224,12 +201,6 @@
     font-weight: bold;
     position: relative;
     left: 2rpx;
-    /* align-content: center; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
-    /* margin-bottom: 14rpx; */
-    /* position: relative;
-    left: -5rpx; */
 }
 
 .sdInstance {
@@ -267,13 +238,6 @@
     text-align: center;
 }
 
-
-/* .tagText {
-    position: relative;
-    bottom: -1rpx;
-    left: -1rpx;
-} */
-
 .exTag {
     box-sizing: border-box;
     font-size: 20rpx;
@@ -284,8 +248,6 @@
     align-items: center;
     margin-right: 10rpx;
     padding-right: 6rpx;
-    /* position: relative;
-    left: 2rpx; */
 }
 
 .exTagWei {
@@ -372,8 +334,3 @@
     width: 220rpx;
     background-color: #eef1fd;
 }
-
-
-/* text {
-    background-color: gray;
-} */
