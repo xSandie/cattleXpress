@@ -46,15 +46,16 @@ Page({
         time: '12:00',
         date: '05-27',
         exWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
+        weIndex: 0,
         nbtnIcon: "../../images/next.png",
         lastDep: "简单描述下您的快递（不超过50字）",
         worchecked: false,
 
         checkboxItems: [
-            { name: 'LEX', value: '大件' },
-            { name: 'MEX', value: '中件' },
-            { name: 'SEX', value: '小件', checked: 'true' }
-        ]
+            { name: 'BEx', value: '大件' },
+            { name: 'MEx', value: '中件' },
+            { name: 'SEx', value: '小件', checked: true }
+        ],
     },
 
     /**
@@ -160,14 +161,56 @@ Page({
 
 
     firstOrdSubmit: function(e) {
-        e.detail.value.DeRecLocSel = this.data.sendLoc
+        e.detail.value.DeRecLocSel = this.data.sendLoc;
+        e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+        if (e.detail.value.DeRecLocIn == '') {
+            e.detail.value.DeRecLocIn = this.data.default.sendLocIn;
+        }
         if (e.detail.value.conPhoneNum == '') {
-            e.detail, value.conPhoneNum =
+            e.detail.value.conPhoneNum = this.data.default.conPhoneNum;
         }
         console.log('form发生了submit事件，携带数据为：', e.detail.value)
-
+        wx.setStorage({
+                key: 'FORM1',
+                data: e.detail.value,
+            }) //设置缓存
     },
     testTap: function() {
         console.log('按钮被点击了')
+    },
+    worcheck: function() {
+        var worchecked1 = !this.data.worchecked;
+        this.setData({
+            worchecked: worchecked1
+        })
+    },
+
+    checkboxChange: function(e) {
+        console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
+        console.log(e)
+        switch (e.detail.value) {
+            case '大件':
+                this.setData({
+                    checkboxItems: [{ name: 'BEx', value: '大件', checked: true },
+                        { name: 'MEx', value: '中件' },
+                        { name: 'SEx', value: '小件' }
+                    ]
+                })
+                break;
+            case '中件':
+                this.setData({
+                    checkboxItems: [{ name: 'BEx', value: '大件' },
+                        { name: 'MEx', value: '中件', checked: true },
+                        { name: 'SEx', value: '小件' }
+                    ]
+                })
+                break;
+            case '小件':
+                checkboxItems: [{ name: 'BEx', value: '大件' },
+                    { name: 'MEx', value: '中件' },
+                    { name: 'SEx', value: '小件', checked: true }
+                ]
+                break;
+        }
     }
 })

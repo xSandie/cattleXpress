@@ -24,7 +24,7 @@
                         <picker value="{{sdlocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
                         <view class='cline'>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" maxlength='10' placeholder="{{DeRecLocIn}}" class='DeRecLocIn'/>
+                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
                     </view>
             </view>
             <view class='setDef'>
@@ -40,20 +40,20 @@
                     <text>选择快递</text>
                 </view>
                 <view>
-                    <picker mode="multiSelector" class='selExCon'>{{selExCon[0][0]}}·{{selExCon[1][0]}}</picker>
+                    <picker mode="multiSelector" name="selExCon" class='selExCon'>{{selExCon[0][0]}}·{{selExCon[1][0]}}</picker>
                 </view>
             </view>
             <view class='rline'>
             </view>
             <view class='exTime'>
                 <view class='Ti'>
-                    <text>最晚取货时间</text>
+                    <text>最晚送达时间</text>
                 </view>
                 <view class='exTimeCon'>
-                    <picker class='DatePi' value="{{date}}" mode="date" start="{{DeDate}}" end="{{EndDate}}">{{date}}</picker>
+                    <picker name="exTimeConDate" class='DatePi' value="{{date}}" mode="date" start="{{DeDate}}" end="{{EndDate}}">{{date}}</picker>
                     <view class='cline'>
                     </view>
-                    <picker class='TimePi' value="{{time}}" mode="time" start="00:00" end="24:00">{{time}}</picker>
+                    <picker name="exTimeConTime" class='TimePi' value="{{time}}" mode="time" start="00:00" end="24:00">{{time}}</picker>
                 </view>
             </view>
             <view class='rline'>
@@ -64,7 +64,7 @@
                         <text>快递重量估计</text>
                     </view>
                     <view>
-                        <picker mode="selector" class='weInfoCon' ><text class='weightInfo'>{{exWeight[0]}}</text></picker>
+                        <picker value="{{weIndex}}" bindchange="weInfoChange" range="{{exWeight}}" name="weightInfo" mode="selector" class='weInfoCon' ><text class='weightInfo'>{{exWeight[weIndex]}}</text></picker>
                     </view>                    
                 </view>
                 <view class='twoInfo'>
@@ -73,21 +73,21 @@
                             <text>大小估计</text> 
                         </view>
                         <view>
-                            <checkbox-group class="group" bindchange="checkboxChange">
+                            <radio-group name="sizeInfo" class="group" bindchange="checkboxChange">
                             <view class="label-1" wx:for="{{checkboxItems}}">
                                 <label>
-                                <checkbox hidden value="{{item.name}}" checked="{{item.checked}}"></checkbox> 
-                                <!--<view class="label-1__icon">
-                                    <view class="label-1__icon-checked" style="opacity:{{item.checked ? 1: 0}}"></view>
-                                </view>--> 
+                                <radio hidden  value="{{item.value}}" checked="{{item.checked}}"></radio> 
                                 <view class="label-1__icon" style="color:{{item.checked ? 'white': '#999ba1'}};background:{{item.checked ? '#faaf42': ''}};" ><text>{{item.value}}</text></view>
                                 </label>
                             </view>
-                            </checkbox-group>
+                            </radio-group>
                         </view>
                     </view>
-                    <view class='worInfo'style="color:{{worchecked?'white':'#999ba1'}};border: {{worchecked?'':'1rpx solid #999ba1'}};background:{{worchecked?'#faaf42':''}};">
+                    <view bindtap="worcheck" class='worInfo'style="color:{{worchecked?'white':'#999ba1'}};border: {{worchecked?'':'1rpx solid #999ba1'}};background:{{worchecked?'#faaf42':''}};">
                         <text>加急</text>
+                    <checkbox-group hidden name="worInfo" bindchange="worChange">
+                        <checkbox hidden  value="{{worchecked}}" checked="true"></checkbox>      
+                    </checkbox-group>
                     </view> 
                 </view>                
             </view>
