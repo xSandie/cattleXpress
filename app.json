@@ -6,7 +6,16 @@
         "pages/publish2/publish2",
         "pages/orders/orders",
         "pages/my/my",
-        "pages/orderDetailsVeiwer/orderDetailsVeiwer"
+        "pages/orderDetailsVeiwer/orderDetailsVeiwer",
+        "pages/orderDetailsRec/orderDetailsRec",
+        "pages/orderDetailsPub/orderDetailsPub",
+        "pages/finPub/finPub",
+        "pages/policeList/policeList",
+        "pages/policeDetail/policeDetail",
+        "pages/reportExError/reportExError",
+        "pages/defAddrEdit/defAddrEdit",
+        "pages/certifPage/certifPage",
+        "pages/welcome/welcome"
     ],
     "window": {
         "backgroundTextStyle": "dark",

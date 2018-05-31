@@ -50,7 +50,7 @@
                         </view>
                     </view>
                     <view class='rbuttonA'>
-                            <view wx:if="{{item.exState==0}}" class='waitPay'><text>待支付</text></view>
+                            <view wx:if="{{item.exState==0}}" class='waitAffirm'><text>待对方确认</text></view>
                             <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
                     </view>
             </view> 
@@ -192,10 +192,10 @@
                                     </view>
                                 </view>
                                 <view class='exTag'>
-                                    <view class='exTag exTagWei'>
+                                    <view class='exTag finexTagWei'>
                                         <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
                                     </view>
-                                    <view class='exTag exTagTime'>
+                                    <view class='exTag finexTagTime'>
                                         <view class='tagText'><text>{{item.exExTime}}前取货</text></view>
                                     </view>
                                 </view>
@@ -208,8 +208,9 @@
                             </view>
                     </view>
                     <view class='rbuttonAfin'>
-                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>  
-                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>
+                            <view wx:if="{{item.exState==4}}" class='finOrd'><text>已过期</text></view>  
+                            <view wx:if="{{item.exState==5}}" class='abor'><text>异常</text></view>
                     </view>
                 </view> 
             </view>

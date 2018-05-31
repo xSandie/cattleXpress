@@ -285,11 +285,14 @@ page {
     text-align: center;
 }
 
-.waitPay {
-    border: 1rpx solid #faaf42;
-    color: #faaf42;
-    width: 114rpx;
+.waitAffirm {
+    border: 1rpx solid #d8320b;
+    color: #d8320b;
+    width: auto;
     height: 50rpx;
+    box-sizing: border-box;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
     border-radius: 30rpx;
     display: flex;
     flex-direction: row;
@@ -372,6 +375,12 @@ page {
     padding-right: 6rpx;
 }
 
+.finexTagWei {
+    color: #999ba1;
+    background-color: #E1E3E9;
+    padding-left: 6rpx;
+}
+
 .exTagWei {
     color: #0b85d8;
     background-color: #e9f4ff;
@@ -381,6 +390,12 @@ page {
 .exTagTime {
     color: #0abc0a;
     background-color: #e6ffe6;
+    padding-left: 6rpx;
+}
+
+.finexTagTime {
+    color: #999ba1;
+    background-color: #E1E3E9;
     padding-left: 6rpx;
 }
 

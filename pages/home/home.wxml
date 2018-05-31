@@ -12,32 +12,36 @@
             </view>
         </view>
         <view class='mainSelect'>
-            <view class='expressLoc'>
-                <view class='elIcon'>
-                    
-                </view>
-                <view class='lText'>
-                    <view class='lTextLarge'>
-                        <text>快递站点</text>
+            <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
+               <view class='expressLoc'>
+                    <view class='elIcon'>
+                        
                     </view>
-                    <view class='lTextSmall'>
-                        <text>选择取快递的站点</text>
+                    <view class='lText'>
+                        <view class='lTextLarge'>
+                            <text>快递站点</text>
+                        </view>
+                        <view class='lTextSmall'>
+                            <text>{{expressLoc}}</text>
+                        </view>
+                    </view>
+               </view> 
+            </picker>
+            <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}">
+                <view class='sendLoc'>
+                    <view class='slIcon'>
+                        
+                    </view>
+                    <view class='lText'>
+                        <view class='lTextLarge'>
+                        <text>送达地点</text>
+                        </view>
+                        <view class='lTextSmall'>
+                        <text>{{sendLoc}}</text> 
+                        </view>
                     </view>
                 </view>
-            </view>
-            <view class='sendLoc'>
-                <view class='slIcon'>
-                    
-                </view>
-                <view class='lText'>
-                    <view class='lTextLarge'>
-                       <text>送达地点</text>
-                    </view>
-                    <view class='lTextSmall'>
-                       <text>选择快递送达地点</text> 
-                    </view>
-                </view>
-            </view>
+            </picker>
         </view>
     </view>
 

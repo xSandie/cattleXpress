@@ -21,7 +21,7 @@
             <view class='recLoc'>
                 <text class='recLocTi'>送达地址</text>
                     <view class='recLocDetail'>
-                        <picker mode="multiSelector" class='DeRecLocSel'>{{DeRecLocSel[0][0]}}·{{DeRecLocSel[1][0]}}</picker>
+                        <picker value="{{sdlocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
                         <view class='cline'>
                         </view>
                         <input type="text" placeholder-class="placeHolder" maxlength='10' placeholder="{{DeRecLocIn}}" class='DeRecLocIn'/>

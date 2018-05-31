@@ -1,0 +1,37 @@
+<view class='container'>
+    <view class='fxdBtnArea'>
+        <view wx:if="{{exState==0}}">
+            <!--对方已送达，待自己确认-->
+        </view>
+        <view wx:if="{{exState==1}}">
+            <!--等待接单-->
+        </view>
+        <view wx:if="{{exState==2}}">
+            <!--对方已接单待送达-->
+        </view>
+        <view wx:if="{{exState==3}}">
+            <!--订单已完成-->
+        </view>
+        <view wx:if="{{exState==4}}">
+            <!--订单已过期-->
+        </view>
+        <view wx:if="{{exState==5}}">
+            <!--订单异常-->
+        </view>
+    </view>
+    <view class='exLocDe'>
+        
+    </view>
+    <view class='statusBar'>
+        
+    </view>
+    <view class='detailBar'>
+        
+    </view>
+    <view class='otherCard'>
+        
+    </view>
+    <view class='trifle'>
+        
+    </view>
+</view>

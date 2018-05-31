@@ -74,8 +74,8 @@
     <view class='fxdBtnBac'>    
     </view>
     <view class='fxdBtnArea'>
-        <view class='contact'>
-          <text class='conText'>点此接单</text>
+        <view class='contact' bindtap="recOrder">
+          <text class='conText' >点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
         </view>
         <view class='dirGet'>

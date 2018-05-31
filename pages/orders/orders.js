@@ -83,7 +83,7 @@ Page({
                 exInstance: '京东·新勇',
                 sdInstance: '宿舍区 硕士楼',
                 exWorry: true,
-                recName: '刘同学',
+                recName: '无',
                 exWeight: '<1KG',
                 exSize: '小件',
                 exExTime: '05-07 18:00'
@@ -98,13 +98,24 @@ Page({
                 exWeight: '<1KG',
                 exSize: '小件',
                 exExTime: '05-07 18:00'
+            },
+            {
+                exState: '5',
+                reward: '16',
+                exInstance: '黄马甲·新东门',
+                sdInstance: '宿舍区 硕士楼',
+                exWorry: true,
+                recName: '刘同学',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 18:00'
             }
         ],
 
         pubIcon: '../../images/publisher.png',
         atEnd: false
     },
-    //0代表已接单待支付，1代表等待接单，2代表对方已接单未完成，3代表已完成,4代表异常
+    //0代表已接单待支付，1代表等待接单，2代表对方已接单未完成，3代表已完成,4代表已过期,5代表异常。
     navbarTap: function(e) {
         this.setData({
             currentTab: e.currentTarget.dataset.idx
