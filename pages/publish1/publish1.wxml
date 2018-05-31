@@ -13,7 +13,7 @@
             <view class='contactNum'>
                 <text class='contactNumTi'>联系电话</text>
                 <view>
-                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{DeContactNum}}" class='contactNumCon' />
+                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhoneNum}}" class='contactNumCon' />
                 </view>
             </view>
             <view class='tline'>   
@@ -27,10 +27,10 @@
                         <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
                     </view>
             </view>
-            <view class='setDef'>
+            <view class='setDef' bindtap="setDef">
                 <text>设为默认</text>            
             </view>
-            <view class='differLink'>
+            <view class='differLink' bindtap="differLink">
                 <text>· 联系电话与收货手机号的区别</text>
             </view>
         </view>
@@ -40,7 +40,7 @@
                     <text>选择快递</text>
                 </view>
                 <view>
-                    <picker mode="multiSelector" name="selExCon" class='selExCon'>{{selExCon[0][0]}}·{{selExCon[1][0]}}</picker>
+                    <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
                 </view>
             </view>
             <view class='rline'>
@@ -50,10 +50,10 @@
                     <text>最晚送达时间</text>
                 </view>
                 <view class='exTimeCon'>
-                    <picker name="exTimeConDate" class='DatePi' value="{{date}}" mode="date" start="{{DeDate}}" end="{{EndDate}}">{{date}}</picker>
+                    <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{default.dateRange}}" mode="selector">{{default.dateRange[dateIndex]}}</picker>
                     <view class='cline'>
                     </view>
-                    <picker name="exTimeConTime" class='TimePi' value="{{time}}" mode="time" start="00:00" end="24:00">{{time}}</picker>
+                    <picker name="exTimeConTime" class='TimePi' value="{{time}}" bindchange="bindTimeChange" mode="time" start="00:00" end="24:00">{{time}}</picker>
                 </view>
             </view>
             <view class='rline'>
