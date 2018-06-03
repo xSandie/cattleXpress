@@ -4,7 +4,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        DeRecLocIn: 'D1-15184',
+        sendLocIn: '',
         index: 0,
         selExCon: [
             ['阳光苑', '硕士楼负一层', '新勇'],
@@ -22,11 +22,12 @@ Page({
         },
 
 
+
         exlocArray: [
             ['新东门', '老东门', '硕士楼', '新勇西', '阳光苑二楼'],
             ['顺丰', '申通', '中通', '圆通', '百世汇通', '韵达', '天天快递', 'EMS', '京东']
         ],
-        expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
+        expressLoc: '', //这就是默认
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
         sendLoc: '宿舍区' + '·' + '周园',
@@ -58,8 +59,7 @@ Page({
         conPhoneNum: '',
         phoneRear: '',
         recName: '',
-
-        checking: false,
+        fetchCode:'',
 
         sexLimRange: [
             "无性别限制",
@@ -79,15 +79,7 @@ Page({
             { name: 'SEx', value: '小件', checked: true }
         ],
 
-        rewardBoxItems: [
-            { name: 2, value: '2元', checked: true },
-            { name: 5, value: '5元' },
-            { name: 10, value: '10元' }
-        ],
-        rewardTapTime: [
-            0, 0, 0
-        ],
-
+        reward:''
 
 
     },
@@ -96,7 +88,65 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+          var that=this
+          wx.getStorage({
+            key: 'sizeArr',
+            success: function(res) {
+              that.setData({
+                checkboxItems: res.data
+              })
+            },
+          })
+          wx.getStorage({
+            key: 'FORMrow1',
+            success: function(res) {
+              that.setData({
+                sdlocIndex:res.data.DeRecLocSel,
+                dateIndex:res.data.exTimeConDate,
+              })
+            }
+          })
+          wx.getStorage({
+              key: 'FORM1',
+              success: function(res) {
+                that.setData({
+                  conPhoneNum: res.data.conPhoneNum,
+                  sendLoc:res.data.DeRecLocSel,
+                  sendLocIn:res.data.DeRecLocIn,
+                  recName: res.data.recName,
+                  phoneRear: res.data.phoneRear,
+                  expressLoc:res.data.selExCon,
+                })
+              },
+            })
+          wx.getStorage({
+            key: 'FORMrow2',
+            success: function(res) {
+                that.setData({
+                  fetchCode: res.data.fetchCode,
+                  sexIndex: res.data.sexLimit,
+                  weIndex:res.data.weightInfo,
+                })
+            },
+          })
+          wx.getStorage({
+            key: 'FORM2',
+            success: function(res) {
+              if (res.data.rewardIn instanceof Array) {
+                that.setData({
+                  reward: res.data.rewardIn[0]
+                })}else{
+                  that.setData({
+                    reward:res.data.rewardIn
+                  })
+                }
+              that.setData({
+                worchecked:res.data.worInfo,
+                lastDep:res.data.otherInfo
+              })
+            },
+          })
+          
     },
 
     /**
@@ -146,5 +196,191 @@ Page({
      */
     onShareAppMessage: function() {
 
-    }
+    },
+    finOrdSubmit: function(e) {
+        //default早已存在缓存中
+      e.detail.value.DeRecLocSel = this.data.sendLoc;
+      e.detail.value.selExCon = this.data.expressLoc;
+      // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+      e.detail.value.exTimeConDate = this.data.default.dateRange[this.data.dateIndex]
+      if (e.detail.value.DeRecLocIn == '') {
+        e.detail.value.DeRecLocIn = this.data.default.sendLocIn;
+      }
+      if (e.detail.value.conPhoneNum == '') {
+        e.detail.value.conPhoneNum = this.data.default.conPhoneNum;
+      }
+      if (e.detail.value.recName == '') {
+        e.detail.value.recName = this.data.default.recName;
+      }
+      if (e.detail.value.phoneRear == '') {
+        e.detail.value.phoneRear = this.data.default.phoneRear;
+      }
+      if (e.detail.value.rewardIn == '') {
+        e.detail.value.rewardIn = this.data.reward;
+      }
+      e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+      e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex];
+        console.log(e.detail.value)
+        var that=this
+      wx.showToast({
+        title: '发布成功',
+        icon: 'success',
+        duration: 2000
+      })
+      that.setData({
+        checking: false
+      })
+      wx.switchTab({
+        url: '../orders/orders',
+      })
+    },
+    worcheck: function () {
+      var worchecked1 = !this.data.worchecked;
+      this.setData({
+        worchecked: worchecked1
+      })
+      console.log(this.data.worchecked)
+    },
+    checkboxChange: function (e) {
+      console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
+      console.log(e)
+      switch (e.detail.value) {
+        case '大件':
+          this.setData({
+            checkboxItems: [{ name: 'BEx', value: '大件', checked: true },
+            { name: 'MEx', value: '中件' },
+            { name: 'SEx', value: '小件' }
+            ]
+          })
+          break;
+        case '中件':
+          this.setData({
+            checkboxItems: [{ name: 'BEx', value: '大件' },
+            { name: 'MEx', value: '中件', checked: true },
+            { name: 'SEx', value: '小件' }
+            ]
+          })
+          break;
+        case '小件':
+          this.setData({
+            checkboxItems: [{ name: 'BEx', value: '大件' },
+            { name: 'MEx', value: '中件' },
+            { name: 'SEx', value: '小件', checked: true }
+            ]
+          })
+          break;
+      }
+    },
+    weInfoChange: function (e) {
+      console.log(e);
+      this.setData({
+        weIndex: e.detail.value
+      })
+    },
+    sexLimitChange: function (e) {
+      console.log(e);
+      this.setData({
+        sexIndex: e.detail.value
+      })
+    },
+    exlocChange: function (e) {
+      console.log(e);
+      console.log('时间picker发送选择改变，携带值为', e.detail.value)
+      var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+      this.setData({
+        expressLoc: selected
+      })
+
+    },
+    exlocColumnChange: function (e) {
+      console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+      if (e.detail.column == 0) {
+        this.setData({
+          exlocfirstIndex: e.detail.value
+        })
+      } else {
+        this.setData({
+          exlocSecondIndex: e.detail.value
+        })
+      }
+    },
+    exlocChange: function (e) {
+      console.log(e);
+      console.log('时间picker发送选择改变，携带值为', e.detail.value)
+      var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+      this.setData({
+        expressLoc: selected
+      })
+
+    },
+    exlocColumnChange: function (e) {
+      console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+      if (e.detail.column == 0) {
+        this.setData({
+          exlocfirstIndex: e.detail.value
+        })
+      } else {
+        this.setData({
+          exlocSecondIndex: e.detail.value
+        })
+      }
+    },
+
+    sdlocChange: function (e) {
+      console.log(e);
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      var selected = this.data.sdlocArray[0][this.data.sdlocIndex[0]] + '·' + this.data.sdlocArray[1][this.data.sdlocIndex[1]]
+      this.setData({
+        sendLoc: selected
+      })
+    },
+    sdlocColumnChange: function (e) {
+      console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+      var data = {
+        sdlocArray: this.data.sdlocArray,
+        sdlocIndex: this.data.sdlocIndex
+      }
+      data.sdlocIndex[e.detail.column] = e.detail.value;
+      switch (e.detail.column) {
+        case 0:
+          switch (data.sdlocIndex[0]) {
+            case 0:
+              data.sdlocArray[1] = this.data.column2_0;
+              console.log(data.sdlocArray[1])
+              break;
+
+            case 1:
+              data.sdlocArray[1] = this.data.column2_1;
+              console.log(data.sdlocArray[1])
+              break;
+            case 2:
+              data.sdlocArray[1] = this.data.column2_2;
+              console.log(data.sdlocArray[1])
+              break;
+            case 3:
+              data.sdlocArray[1] = this.data.column2_3;
+              console.log(data.sdlocArray[1])
+              break;
+          }
+          data.sdlocIndex[1] = 0;
+          break;
+
+        case 1:
+          break;
+      }
+      this.setData(data);
+      console.log(data)
+    },
+    dateChange: function (e) {
+      console.log(e);
+      this.setData({
+        dateIndex: e.detail.value
+      })
+    },
+    bindTimeChange: function (e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        time: e.detail.value
+      })
+    },
 })

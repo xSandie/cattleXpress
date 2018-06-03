@@ -30,7 +30,7 @@
                         <view class="Ti">
                             <text>取货码</text>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" placeholder="请输入取货码" class="fetchCode"/>
+                        <input type="text" name="fetchCode" placeholder-class="placeHolder" placeholder="请输入取货码" class="fetchCode"/>
                     </view>
                     <view class="sexLimitA">
                         <view class="Ti">

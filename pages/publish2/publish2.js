@@ -122,6 +122,7 @@ Page({
             data: e.detail.value,
         })
 
+
         if (e.detail.value.rewardIn == '') {
             e.detail.value.rewardIn = e.detail.value.reward;
         }
@@ -129,22 +130,34 @@ Page({
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex]
         console.log(e.detail.value)
         var that = this;
+        wx.setStorage({
+            key: 'sizeArr',
+            data: that.data.checkboxItems,
+        })
         setTimeout(function() {
-            wx.showToast({
-                title: '全速整合中',
-                icon: 'loading',
-                duration: 500
-            })
             wx.setStorage({
                 key: 'FORM2',
                 data: e.detail.value,
             })
             if (that.data.checking == true) {
+              wx.showToast({
+                title: '全速整合中',
+                icon: 'loading',
+                duration: 500
+              })
                 wx.navigateTo({
                     url: '../finPub/finPub',
                 })
             } else {
                 //要继续写函数
+                wx.showToast({
+                  title: '发布成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+                that.setData({
+                  checking:false
+                })
                 wx.switchTab({
                     url: '../orders/orders',
                 })

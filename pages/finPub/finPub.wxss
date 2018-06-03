@@ -28,10 +28,9 @@
 
 .container {
     position: relative;
-    height: 100%;
+    height: 1350rpx;
     width: 100%;
     box-sizing: border-box;
-    padding-bottom: 100rpx;
 }
 
 .FakeCard {
@@ -405,7 +404,6 @@ button {
     margin-left: 16rpx;
 }
 
-
 .formMain {
     box-sizing: border-box;
     padding-top: 24rpx;
@@ -446,12 +444,6 @@ button {
     align-items: center;
     font-size: 32rpx;
     color: #faaf42;
-}
-
-.tline {
-    height: 1rpx;
-    background: linear-gradient(90deg, #f9a93e, #fed25c);
-    width: 100rpx;
 }
 
 .conA {
@@ -734,7 +726,10 @@ button-hover {
 .reIn {
     font-size: 36rpx;
     color: #373c46;
-    width: 180rpx;
-    text-align: center;
-    margin-left: 76rpx;
+    width: 90rpx;
+}
+
+.yuan {
+    font-size: 36rpx;
+    color: #373c46;
 }
