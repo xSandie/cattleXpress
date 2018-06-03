@@ -27,6 +27,20 @@
                         <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
                     </view>
             </view>
+            <view class='tline'>   
+            </view>
+            <view class="secA">
+                <view class="exName">
+                    <view class="Ti">收货姓名</view>
+                    <input type="text" placeholder="{{default.recName}}" placeholder-class="placeHolder" name="recName" class="recName"/>
+                </view>
+                <view class="cline1">
+                </view>
+                <view class="numRear">
+                    <view class="Ti">手机尾号</view>
+                    <input type="number" placeholder="{{default.phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
+                </view>
+            </view>
             <view class='setDef' bindtap="setDef">
                 <text>设为默认</text>            
             </view>
@@ -58,7 +72,7 @@
             </view>
             <view class='rline'>
             </view>
-            <view class='estInfo'>
+            <!--<view class='estInfo'>
                 <view class='weInfo'>
                     <view class='Ti'>
                         <text>快递重量估计</text>
@@ -93,7 +107,7 @@
             </view>
             <view class='rline'>
             </view>
-        <!--    <view class='others'>
+            <view class='others'>
                 <view class='othersTi'>
                     <text>快递描述</text>
                 </view>
@@ -101,7 +115,7 @@
                     <textarea maxlength='50' type="text" class='othersCon' placeholder="{{lastDep}}" placeholder-class="placeHold" />
                 </view>
             </view>-->
-            <button class='fakeBtn' bindtap="testTap" formType="submit"><view class='nbtnT'>
+            <button class='fakeBtn' formType="submit"><view class='nbtnT'>
                     <text>最后一步</text>
                 </view>    
                 <image class='nbtnIcon' src="{{nbtnIcon}}"></image></button>

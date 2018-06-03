@@ -35,8 +35,8 @@
     border-radius: 16rpx;
     box-shadow: 0rpx 6rpx 10rpx #eef1fd;
     width: 670rpx;
+    height: 330rpx;
     position: absolute;
-    height: 230rpx;
     z-index: 1;
     top: -26rpx;
 }
@@ -50,7 +50,7 @@ form {
     padding: 24rpx;
     width: 670rpx;
     position: absolute;
-    height: 230rpx;
+    height: 330rpx;
     z-index: 15;
     top: -26rpx;
     display: flex;
@@ -97,7 +97,7 @@ form {
 
 .placeHolder {
     font-size: 36rpx;
-    color: rgb(77, 85, 100);
+    color: #373c46;
 }
 
 .contactNumCon {
@@ -160,7 +160,7 @@ form {
 
 .norInfo {
     position: absolute;
-    top: 234rpx;
+    top: 334rpx;
     width: 100%;
     padding-left: 24rpx;
     padding-right: 24rpx;
@@ -188,6 +188,10 @@ form {
 .selExCon {
     font-size: 36rpx;
     color: #373c46;
+}
+
+button-hover {
+    color: #6D6141;
 }
 
 .exTime {
@@ -267,8 +271,7 @@ form {
 
 button {
     margin: 0rpx;
-    margin-top: 40rpx;
-    margin-bottom: 60rpx;
+    margin-top: 50rpx;
     border-radius: 10rpx;
     box-sizing: border-box;
     background: linear-gradient(90deg, #f9a93e, #fed25c);
@@ -278,8 +281,13 @@ button {
     width: 246rpx;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: white;
     border: 0rpx;
+}
+
+.fakeBtn::after {
+    border: none;
 }
 
 .nbtnT {
@@ -293,30 +301,6 @@ button {
 .nbtnIcon {
     height: 40rpx;
     width: 40rpx;
-}
-
-.othersCon {
-    box-sizing: border-box;
-    height: 124rpx;
-    width: 100%;
-    border-radius: 10rpx;
-    border: 1rpx solid #faaf42;
-    padding: 20rpx;
-    white-space: normal;
-    font-size: 28rpx;
-}
-
-.others {
-    display: flex;
-    flex-direction: column;
-}
-
-.othersTi {
-    display: flex;
-    color: #999ba1;
-    font-size: 20rpx;
-    font-weight: bold;
-    margin-bottom: 20rpx;
 }
 
 .placeHold {
@@ -367,4 +351,51 @@ button {
     padding-right: 18rpx;
     padding-left: 18rpx;
     font-size: 32rpx;
+}
+
+.secA {
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    color: #999ba1;
+    align-items: center;
+}
+
+.exName {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.numRear {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recName {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 190rpx;
+    height: 40rpx;
+}
+
+.phoneRear {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+    width: 150rpx;
+}
+
+.cline1 {
+    width: 1rpx;
+    height: 60rpx;
+    background: #373c46;
+    margin-right: 30rpx;
+    margin-left: 16rpx;
 }

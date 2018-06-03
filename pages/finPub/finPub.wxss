@@ -1,0 +1,740 @@
+.header {
+    width: 100%;
+    height: 268rpx;
+    background: #faaf42;
+    position: relative;
+}
+
+.htArea {
+    z-index: 5;
+    position: absolute;
+    top: 38rpx;
+    left: 40rpx;
+    color: white;
+    height: 128rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lHeader {
+    font-size: 60rpx;
+    font-weight: bold;
+}
+
+.sHeader {
+    font-size: 36rpx;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 100rpx;
+}
+
+.FakeCard {
+    background-color: white;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    width: 670rpx;
+    height: 330rpx;
+    position: absolute;
+    z-index: 1;
+    top: -26rpx;
+}
+
+form {
+    z-index: 15;
+}
+
+.floatCard {
+    box-sizing: border-box;
+    padding: 24rpx;
+    width: 670rpx;
+    position: absolute;
+    height: 330rpx;
+    z-index: 15;
+    top: -26rpx;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30rpx;
+}
+
+.setDef {
+    font-size: 26rpx;
+    color: #faaf42;
+    position: absolute;
+    bottom: 26rpx;
+    right: 24rpx;
+}
+
+.differLink {
+    font-size: 20rpx;
+    color: #999ba1;
+    position: absolute;
+    right: 24rpx;
+    top: 64rpx;
+}
+
+.mainForm {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.contactNum {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80rpx;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contactNumTi {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.placeHolder {
+    font-size: 36rpx;
+    color: #373c46;
+}
+
+.contactNumCon {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+}
+
+.recLoc {
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.DeRecLocSel {
+    width: auto;
+}
+
+.recLocTi {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.recLocDetail {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.DeRecLocIn {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 218rpx;
+    height: 40rpx;
+}
+
+.tline {
+    height: 1rpx;
+    width: 100%;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+}
+
+.cline {
+    height: 36rpx;
+    width: 1rpx;
+    background: #373c46;
+    margin-right: 16rpx;
+    margin-left: 16rpx;
+}
+
+.norInfo {
+    position: absolute;
+    top: 334rpx;
+    width: 100%;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.rline {
+    width: 100%;
+    height: 1rpx;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-top: 10rpx;
+    margin-bottom: 24rpx;
+}
+
+.selEx {
+    height: 80rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.selExCon {
+    font-size: 36rpx;
+    color: #373c46;
+}
+
+button-hover {
+    color: #6D6141;
+}
+
+.exTime {
+    height: 80rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Ti {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.exTimeCon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.DatePi {
+    color: #373c46;
+    font-size: 36rpx;
+}
+
+.TimePi {
+    color: #373c46;
+    font-size: 36rpx;
+}
+
+.estInfo {
+    height: 104rpx;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+.weInfo {
+    height: 104rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sizeInfo {
+    height: 104rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.weInfoCon {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    color: #373c46;
+    font-size: 32rpx;
+    border: 1rpx solid #999ba1;
+    border-radius: 8rpx;
+    text-align: center;
+    padding-right: 8rpx;
+    padding-left: 8rpx;
+    height: 66rpx;
+}
+
+.weightInfo {
+    vertical-align: center;
+}
+
+.fakeBtn {
+    height: 100rpx;
+    width: 246rpx;
+    margin-bottom: 100rpx;
+}
+
+button {
+    margin: 0rpx;
+    margin-top: 80rpx;
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    border-radius: 10rpx;
+    height: 100rpx;
+    padding: 30rpx;
+    width: 246rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0rpx;
+}
+
+.fakeBtn::after {
+    border: none;
+}
+
+.nbtnT {
+    vertical-align: center;
+    margin-left: 10rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.nbtnIcon {
+    height: 40rpx;
+    width: 40rpx;
+}
+
+.placeHold {
+    text-align: left;
+    align-items: flex-start;
+    color: #999ba1;
+    font-size: 28rpx;
+    line-height: 42rpx;
+}
+
+.group {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 66rpx;
+    align-items: center;
+    font-size: 32rpx;
+    border-radius: 8rpx;
+    /* color: white; */
+    border: 1rpx solid #999ba1;
+}
+
+.label-1__icon {
+    padding-right: 20rpx;
+    padding-left: 20rpx;
+    height: 66rpx;
+    border-radius: 8rpx;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.twoInfo {
+    margin-left: 24rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.worInfo {
+    height: 66rpx;
+    border-radius: 8rpx;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: 22rpx;
+    padding-right: 18rpx;
+    padding-left: 18rpx;
+    font-size: 32rpx;
+}
+
+.secA {
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    color: #999ba1;
+    align-items: center;
+}
+
+.exName {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.numRear {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.recName {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 190rpx;
+    height: 40rpx;
+}
+
+.phoneRear {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+    width: 150rpx;
+}
+
+.cline1 {
+    width: 1rpx;
+    height: 60rpx;
+    background: #373c46;
+    margin-right: 30rpx;
+    margin-left: 16rpx;
+}
+
+
+.formMain {
+    box-sizing: border-box;
+    padding-top: 24rpx;
+    position: relative;
+    top: -26rpx;
+}
+
+button {
+    margin: 0rpx;
+}
+
+.floatCard {
+    box-sizing: border-box;
+    padding: 24rpx;
+    height: auto;
+    width: 100%;
+    background-color: white;
+    border-radius: 16rpx;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    position: relative;
+    top: -26rpx;
+}
+
+.sum {
+    height: 76rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loc {
+    width: 100%;
+    height: 36rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 32rpx;
+    color: #faaf42;
+}
+
+.tline {
+    height: 1rpx;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    width: 100rpx;
+}
+
+.conA {
+    color: #999ba1;
+    font-size: 24rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.exName {
+    margin-right: 20rpx;
+}
+
+.conNum {
+    margin-right: 30rpx;
+}
+
+.btnA {
+    margin-top: 50rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100rpx;
+    align-items: center;
+}
+
+.Ti {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.checkBtn {
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    border-radius: 10rpx;
+    height: 100rpx;
+    padding: 30rpx;
+    width: 246rpx;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: center;
+}
+
+.pubBtn {
+    background: none;
+    height: 100rpx;
+    padding: 30rpx;
+    width: 246rpx;
+    display: flex;
+    align-items: center;
+    color: #faaf42;
+    font-size: 32rpx;
+    font-weight: bold;
+    text-align: center;
+    justify-content: flex-end;
+}
+
+.nbtnT {
+    vertical-align: center;
+    margin-left: 10rpx;
+    font-size: 32rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.nbtnIcon {
+    height: 40rpx;
+    width: 40rpx;
+}
+
+.pubBtn::after {
+    border: none;
+}
+
+.checkBtn::after {
+    border: none;
+}
+
+button-hover {
+    color: #6D6141;
+}
+
+.secInfo {
+    display: flex;
+    flex-direction: row;
+    height: 80rpx;
+    align-items: center;
+}
+
+.fetchA {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 76rpx;
+}
+
+.fetchCode {
+    width: 290rpx;
+    height: 40rpx;
+    color: #373c46;
+    font-size: 36rpx;
+}
+
+.sexLimitA {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 80rpx;
+    margin-left: 20rpx;
+}
+
+.sexLimit {
+    width: 200rpx;
+    color: #373c46;
+    font-size: 36rpx;
+}
+
+.placeHolder {
+    font-size: 36rpx;
+    color: #999ba1;
+}
+
+.rline {
+    width: 100%;
+    height: 1rpx;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-top: 10rpx;
+    margin-bottom: 24rpx;
+}
+
+.estInfo {
+    height: 104rpx;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+.weInfo {
+    height: 104rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sizeInfo {
+    height: 104rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.weInfoCon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: #373c46;
+    font-size: 32rpx;
+    border: 1rpx solid #999ba1;
+    border-radius: 8rpx;
+    text-align: center;
+    padding-right: 8rpx;
+    padding-left: 8rpx;
+    height: 66rpx;
+}
+
+.worInfo {
+    height: 66rpx;
+    border-radius: 8rpx;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    margin-left: 22rpx;
+    padding-right: 18rpx;
+    padding-left: 18rpx;
+    font-size: 32rpx;
+}
+
+.twoInfo {
+    margin-left: 24rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.othersCon {
+    box-sizing: border-box;
+    height: 124rpx;
+    width: 100%;
+    border-radius: 10rpx;
+    border: 1rpx solid #faaf42;
+    padding-right: 16rpx;
+    padding-left: 16rpx;
+    padding-top: 10rpx;
+    padding-bottom: 16rpx;
+    white-space: normal;
+    font-size: 28rpx;
+}
+
+.others {
+    display: flex;
+    flex-direction: column;
+}
+
+.othersTi {
+    display: flex;
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+}
+
+.group {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 66rpx;
+    align-items: center;
+    font-size: 32rpx;
+    border-radius: 8rpx;
+    /* color: white; */
+    border: 1rpx solid #999ba1;
+}
+
+.group1 {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 66rpx;
+    align-items: center;
+    font-size: 32rpx;
+}
+
+.label-2__icon {
+    padding-right: 20rpx;
+    padding-left: 20rpx;
+    height: 66rpx;
+    margin-right: 8rpx;
+    border-radius: 8rpx;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.label-1__icon {
+    padding-right: 20rpx;
+    padding-left: 20rpx;
+    height: 66rpx;
+    border-radius: 8rpx;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.reward {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 104rpx;
+    width: 100%;
+}
+
+.reInA {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.reIn {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 180rpx;
+    text-align: center;
+    margin-left: 76rpx;
+}
