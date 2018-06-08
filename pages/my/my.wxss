@@ -3,7 +3,6 @@ page {
 }
 
 .container {
-    z-index: -3;
     box-sizing: border-box;
     width: 100%;
     height: auto;
@@ -198,6 +197,8 @@ page {
     color: #373c46;
     font-size: 28rpx;
     text-align: center;
+    box-sizing: border-box;
+    z-index: 10;
 }
 
 .addressIcon {

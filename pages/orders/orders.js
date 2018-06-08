@@ -176,5 +176,10 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    toPubDetails: function() {
+        wx.navigateTo({
+          url: '../orderDetailsPub/orderDetailsPub',
+        })
     }
 })

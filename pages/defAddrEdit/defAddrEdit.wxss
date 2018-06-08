@@ -1,0 +1,186 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: #faaf42;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+}
+
+.floatCard {
+    box-sizing: border-box;
+    padding: 24rpx;
+    width: 670rpx;
+    position: relative;
+    height: 330rpx;
+    z-index: 15;
+    display: flex;
+    top: 200rpx;
+    flex-direction: column;
+    background: white;
+    border-radius: 16rpx;
+}
+
+.contactNum {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80rpx;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.contactNumTi {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.contactNumCon {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+}
+
+.tline {
+    height: 1rpx;
+    width: 100%;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+}
+
+.recLoc {
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.secA {
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    color: #999ba1;
+    align-items: center;
+}
+
+.differLink {
+    font-size: 20rpx;
+    color: #999ba1;
+    position: absolute;
+    right: 24rpx;
+    top: 64rpx;
+}
+
+.fakeBtn {
+    height: 100rpx;
+    width: 100%;
+    position: relative;
+    top: 200rpx;
+    color: #faaf42;
+    background: white;
+    font-size: 32rpx;
+    font-weight: bold;
+}
+
+button {
+    margin: 0rpx;
+    margin-top: 30rpx;
+    border-radius: 16rpx;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    height: 100rpx;
+    padding: 30rpx;
+    width: 246rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0rpx;
+}
+
+.recLocTi {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.recLocDetail {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.DeRecLocSel {
+    width: auto;
+}
+
+.cline {
+    height: 36rpx;
+    width: 1rpx;
+    background: #373c46;
+    margin-right: 16rpx;
+    margin-left: 16rpx;
+}
+
+.DeRecLocIn {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 218rpx;
+    height: 40rpx;
+}
+
+.exName {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Ti {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+.recName {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 190rpx;
+    height: 40rpx;
+}
+
+.numRear {
+    height: 80rpx;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cline1 {
+    width: 1rpx;
+    height: 60rpx;
+    background: #373c46;
+    margin-right: 30rpx;
+    margin-left: 16rpx;
+}
+
+.phoneRear {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+    width: 150rpx;
+}
+
+form {
+    z-index: 15;
+}

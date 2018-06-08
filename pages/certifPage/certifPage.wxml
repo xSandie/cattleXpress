@@ -1,0 +1,52 @@
+<view class="container">
+    <view class="header">
+        <view class="htArea">
+            <view class="Lheader">
+            <text>教务系统认证</text>
+        </view>
+        <view class="Sheader">
+            <text>为了安全，我们需要确认您的在校身份</text>
+        </view>
+        </view>
+    </view>
+    <form bindsubmit="certif" class="certifForm">
+        <view class="studentOrTeacher">
+            <view class="{{studentOrTeacher?'studentsel':'unselectedStu'}}" bindtap="selStudent">
+                <text>我是学生</text>
+            </view>
+            <view class="{{studentOrTeacher?'unselectedTeach':'teachersel'}}" bindtap="selTeacher">
+                <text>教职工</text>
+            </view>
+            <switch checked="{{studentOrTeacher}}" hidden name="studentOrTeacher"/>
+            <!--true为学生，false为老师-->
+        </view>
+        <view class="selectSchool" bindtap="schoolInput">
+            <image class="schoolIcon" src="{{schoolIcon}}"></image>
+            <view class="cline"></view>
+            <view class="schoolInput" ><text>{{schoolName}}</text></view>
+        </view>
+        <view class="inputA">
+            <view class="inA">
+                <input type="number" class="inputMy" placeholder="账号（教务系统账号）" bindtap="change1"/>
+                <view class="row" style='background:{{row1?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
+            </view>
+            <view class="inA">
+                <input type="text" class="inputMy" placeholder="密码" password bindtap="change2"/>
+                <view class="row" style='background:{{row2?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
+            </view>
+            <view class="inA">
+                <input type="text" class="inputMy" placeholder="验证码" bindtap="change3"/>
+                <view class="row" style='background:{{row3?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
+            </view>
+            <view class="btnA">
+                <button class="btnMy" formType="submit" hover-class="defaultTap">
+                    <text>通过验证</text>
+                    <image class="passCertifIcon" src="{{passCertifIcon}}"></image></button>
+                <view class="codeA">
+                    <text class="codeText">看不清，换一张</text>
+                    <image class="codeImage" src="{{verifCode}}"></image>
+                </view>
+            </view>
+        </view>
+    </form>
+</view>

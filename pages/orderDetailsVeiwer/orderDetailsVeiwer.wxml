@@ -74,11 +74,11 @@
     <view class='fxdBtnBac'>    
     </view>
     <view class='fxdBtnArea'>
-        <view class='contact' bindtap="recOrder">
+        <button class='contact' bindtap="recOrder">
           <text class='conText' >点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
-        </view>
-        <view class='dirGet'>
+        </button>
+        <view class='dirGet' bindtap="conTA">
             <view class='lDGT'>
                <text>联系TA</text>
             </view>

@@ -62,7 +62,7 @@
         </view>
         <view class='orderCard'>
             <view class='ongoPubList' wx:for="{{ongoPubListCount}}">
-                <view class='rowFlex'>
+                <view class='rowFlex' bindtap="toPubDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>

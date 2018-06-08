@@ -1,0 +1,60 @@
+<view class="container">
+    <view class="myPolice">
+        <view class="tag"><text>我举报的</text></view>
+        <view class="cardA" >
+            <view class="card" wx:for="{{myPoliceList}}">
+                <view class="statusTag">
+                    <view class="status13" wx:if="{{item.policeStatus==13}}">
+                        处理中
+                    </view>
+                    <view class="status10" wx:if="{{item.policeStatus==10}}">
+                        已封号
+                    </view>
+                </view>
+                <view class="content">
+                  <view class="Ti">
+                      <text>被举报人</text>
+                  </view>
+                  <view class="name">
+                      <text>{{item.LName}}同学</text>
+                  </view>
+                  <view class="reason">
+                      <text>举报原因:{{item.reason}}</text>
+                  </view>  
+                </view>
+                <view class="deBtn">
+                    <text>详情</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="policeMe">
+        <view class="tag1"><text>举报我的</text></view>
+        <view class="cardA" >
+            <view class="card" wx:for="{{policeMeList}}">
+                <view class="statusTag">
+                    <view class="status13" wx:if="{{item.policeStatus==13}}">
+                        处理中
+                    </view>
+                    <view class="status10" wx:if="{{item.policeStatus==10}}">
+                        已封号
+                    </view>
+                </view>
+                <view class="content">
+                  <view class="Ti">
+                      <text>举报人</text>
+                  </view>
+                  <view class="name">
+                      <text>{{item.LName}}同学</text>
+                  </view>
+                  <view class="reason">
+                      <text>举报原因:{{item.reason}}</text>
+                  </view>  
+                </view>
+                <view class="deBtn">
+                    <text>申诉</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

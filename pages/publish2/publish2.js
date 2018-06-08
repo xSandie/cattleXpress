@@ -39,7 +39,7 @@ Page({
         ],
         rewardTapTime: [
             0, 0, 0
-        ]
+        ],
     },
 
     /**
@@ -116,6 +116,8 @@ Page({
         console.log("检查按钮被点击了")
     },
 
+
+
     secOrdSubmit: function(e) {
         wx.setStorage({
             key: 'FORMrow2',
@@ -140,23 +142,23 @@ Page({
                 data: e.detail.value,
             })
             if (that.data.checking == true) {
-              wx.showToast({
-                title: '全速整合中',
-                icon: 'loading',
-                duration: 500
-              })
+                wx.showToast({
+                    title: '全速整合中',
+                    icon: 'loading',
+                    duration: 500
+                })
                 wx.navigateTo({
                     url: '../finPub/finPub',
                 })
             } else {
                 //要继续写函数
                 wx.showToast({
-                  title: '发布成功',
-                  icon: 'success',
-                  duration: 2000
+                    title: '发布成功',
+                    icon: 'success',
+                    duration: 2000
                 })
                 that.setData({
-                  checking:false
+                    checking: false
                 })
                 wx.switchTab({
                     url: '../orders/orders',

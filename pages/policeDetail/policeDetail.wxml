@@ -1,0 +1,62 @@
+<view class="header">
+    
+</view>
+<form bindsubmit="report" class="container">
+    <view class="reasonA">
+        <view class="reportIn" wx:if="{{reportProcess==0}}">
+            <text class="TiMe">举报原因</text>
+            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{lastDep}}" />
+        </view>
+        <view wx:if="{{reportProcess==2}}" class="complain">
+            <view class="reImageA" wx:if="{{report1}}">
+                <image src="item.url" wx:for="{{report1}}" class="reImage"></image>
+            </view>
+        </view>
+    </view>
+    <view class="btnA">
+        <view class='BtnArea' wx:if="{{reportProcess==1}}">
+            <button class='contact' bindtap="report">
+            <text class='conText' >举报</text>
+            <image src='{{policeIcon}}' class='conIcon'></image>     
+            </button>
+            <view class='dirGet' bindtap="retrieve">
+                <view class='lDGT'>
+                <text>撤销举报</text>
+                </view>
+                <view class='sDGT'>
+                <text>请如实描述</text>
+                </view>
+            </view>
+        </view>
+        <view class='BtnArea' wx:if="{{reportProcess==2}}">
+            <button class='contact' bindtap="report">
+            <text class='conText' >举报</text>
+            <image src='{{policeIcon}}' class='conIcon'></image>     
+            </button>
+            <view class='dirGet' bindtap="retrieve">
+                <view class='lDGT'>
+                <text>撤销举报</text>
+                </view>
+                <view class='sDGT'>
+                <text>请如实描述</text>
+                </view>
+            </view>
+        </view>
+        <view class='BtnArea' wx:if="{{reportProcess==3}}">
+            <button class='contact' bindtap="report">
+            <text class='conText' >举报</text>
+            <image src='{{policeIcon}}' class='conIcon'></image>     
+            </button>
+            <view class='dirGet' bindtap="retrieve">
+                <view class='lDGT'>
+                <text>撤销举报</text>
+                </view>
+                <view class='sDGT'>
+                <text>请如实描述</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</form>
+
+<!--发起举报的页面-->

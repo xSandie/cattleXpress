@@ -1,0 +1,150 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.myPolice {
+    padding-top: 30rpx;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.policeMe {
+    padding-top: 30rpx;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.tag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 28rpx;
+    color: #faaf42;
+    width: 167rpx;
+    height: 50rpx;
+    border-radius: 22rpx;
+    background: #fffbe9;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tag1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 28rpx;
+    color: #d8320b;
+    width: 167rpx;
+    height: 50rpx;
+    border-radius: 22rpx;
+    background: #ffe9e9;
+}
+
+.Ti {
+    font-size: 22rpx;
+    color: #faaf42;
+}
+
+.reason {
+    font-size: 20rpx;
+    color: #999ba1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 344rpx;
+}
+
+.cardA {
+    box-sizing: border-box;
+    padding-top: 30rpx;
+    padding-bottom: 10rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    background: white;
+    border-radius: 16rpx;
+    height: 178rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24rpx;
+    box-sizing: border-box;
+    margin-bottom: 30rpx;
+}
+
+.name {
+    font-size: 48rpx;
+    font-weight: bold;
+    color: #373c46;
+}
+
+.deBtn {
+    background: #E5EAEE;
+    width: 128rpx;
+    height: 78rpx;
+    border-radius: 36rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #373c46;
+}
+
+.status10 {
+    width: 120rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #E5EAEE;
+    color: #585C64;
+    font-weight: bold;
+    font-size: 28rpx;
+    border-radius: 10rpx;
+    margin-right: 16rpx;
+}
+
+.statusTag {
+    width: 120rpx;
+    height: 100%;
+}
+
+.status13 {
+    width: 120rpx;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: none;
+    border: 1rpx solid #faaf42;
+    color: #faaf42;
+    font-weight: bold;
+    font-size: 28rpx;
+    border-radius: 10rpx;
+    margin-right: 16rpx;
+}

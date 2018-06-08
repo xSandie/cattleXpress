@@ -1,0 +1,43 @@
+<view class='container'>
+    <form class='mainForm' bindsubmit="replaceAddr">
+        <view class='floatCard'>
+            <view class='contactNum'>
+                <text class='contactNumTi'>联系电话</text>
+                <view>
+                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhoneNum}}" class='contactNumCon' />
+                </view>
+            </view>
+            <view class='tline'>   
+            </view>
+            <view class='recLoc'>
+                <text class='recLocTi'>送达地址</text>
+                    <view class='recLocDetail'>
+                        <picker value="{{sdlocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
+                        <view class='cline'>
+                        </view>
+                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
+                    </view>
+            </view>
+            <view class='tline'>   
+            </view>
+            <view class="secA">
+                <view class="exName">
+                    <view class="Ti">收货姓名</view>
+                    <input type="text" placeholder="{{default.recName}}" placeholder-class="placeHolder" name="recName" class="recName"/>
+                </view>
+                <view class="cline1">
+                </view>
+                <view class="numRear">
+                    <view class="Ti">手机尾号</view>
+                    <input type="number" placeholder="{{default.phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
+                </view>
+            </view>
+            <view class='differLink' bindtap="differLink">
+                <text>· 联系电话与收货手机号的区别</text>
+            </view>
+        </view>
+        <button class='fakeBtn' formType="submit">
+            <text>确认修改</text> 
+        </button>
+    </form>
+</view>

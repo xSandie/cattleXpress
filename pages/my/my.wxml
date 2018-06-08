@@ -51,7 +51,7 @@
     </view>
     <view class='btnA'>
         <view class='bigBtn'>
-            <view class='address'>
+            <view class='address' bindtap="toAddrEdit">
                 <view class='addressIcon'>
                     <image class='addressIcon' src="{{addressIcon}}"></image>
                 </view>
@@ -59,7 +59,7 @@
             </view>
             <view class='cline'>
             </view>
-            <view class='police'>
+            <view class='police' bindtap="toPoList">
                 <view class='policeIcon'>
                     <image class='policeIcon' src="{{policeIcon}}"></image>
                 </view>

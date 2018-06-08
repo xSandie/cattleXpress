@@ -59,6 +59,7 @@ Page({
         //     { name: 'MEx', value: '中件' },
         //     { name: 'SEx', value: '小件', checked: true }
         // ],
+        setDef: false
     },
 
     /**
@@ -249,6 +250,12 @@ Page({
             // }, 1000);
         wx.navigateTo({
             url: '../publish2/publish2',
+        })
+    },
+    setDef: function() {
+        var setDefault = this.data.setDef;
+        this.setData({
+            setDef: !setDefault
         })
     },
     // testTap: function() {

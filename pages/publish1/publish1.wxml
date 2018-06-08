@@ -41,8 +41,13 @@
                     <input type="number" placeholder="{{default.phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
                 </view>
             </view>
-            <view class='setDef' bindtap="setDef">
+            <!--<view class='setDef' bindtap="setDef">
                 <text>设为默认</text>            
+            </view>-->
+            <view class='setDef' bindtap="setDef">
+                <text wx:if="{{setDef==true}}">取消设为默认</text>
+                <text wx:else>设为默认</text>
+                <switch checked="{{setDef}}" hidden name="setDef"/>          
             </view>
             <view class='differLink' bindtap="differLink">
                 <text>· 联系电话与收货手机号的区别</text>

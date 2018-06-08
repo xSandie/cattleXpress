@@ -27,15 +27,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-        // setTimeout(function() {
-        //     wx.getStorage({
-        //         key: 'FORM1',
-        //         success: function(res) {
-        //             console.log(res.data)
-        //             console.log(res.data.DeRecLocIn)
-        //         }
-        //     })
-        // }, 1000);
+
     },
 
     /**
@@ -78,5 +70,17 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    toAddrEdit: function() {
+        console.log("addr被点击了");
+        wx.navigateTo({
+            url: '../defAddrEdit/defAddrEdit',
+        })
+    },
+    toPoList: function() {
+        console.log("toPoList被点击了");
+        wx.navigateTo({
+            url: '../policeList/policeList',
+        })
     }
 })

@@ -89,9 +89,7 @@
                         </view>
                         <view bindtap="worcheck" class='worInfo'style="color:{{worchecked?'white':'#999ba1'}};border: {{worchecked?'':'1rpx solid #999ba1'}};background:{{worchecked?'#faaf42':''}};">
                             <text>加急</text>
-                            <checkbox-group hidden name="worInfo" bindchange="worChange">
-                            <checkbox hidden  value="{{worchecked}}" checked="true"></checkbox>      
-                            </checkbox-group>
+                            <switch checked="{{worchecked}}" hidden name="worInfo"/>
                         </view> 
                     </view>                
                 </view>

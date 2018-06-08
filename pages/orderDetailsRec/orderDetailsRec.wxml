@@ -1,0 +1,147 @@
+<view class='container'>
+    <view class='exLocDe'>
+        <image class='exLogo' src="{{exLogo}}"></image>
+        <view class='exDetail'>
+            <text class='exInstance'>{{exInstance}}</text>
+            <text class='exLocTime'>{{exLocTime}}</text>
+        </view>
+        <view class='cline'>   
+        </view>
+        <view class='fixBtn'>
+            <image src="{{fxIcon}}" class='fxIcon'></image>
+            <text class='fxText'>报错</text>
+        </view>
+    </view>
+    <view class="mainDetail">
+        <view class="fetchCodeA">
+          <view class="fetchTi"><text>取件码</text></view>
+          <view class="mlineA">
+              <view class="mline"></view>
+          </view>
+          <view class="fetchCode"><text>{{fetchCode}}</text></view>  
+        </view>
+        <view class="detailA">
+             <view class="column">
+                 <view class="item">
+                     <view>
+                         <image class="deIcon" src='{{haoIcon}}'></image>
+                     </view>
+                     <view class="norText">
+                         <text>手机尾号：<text class="impText">{{haoText}}</text></text>
+                     </view>
+                 </view>
+                 <view class="item">
+                     <view>
+                          <image class="deIcon" src='{{jianIcon}}'></image>                    
+                     </view>
+                     <view class="norText">
+                        <text>物品大小：<text class="impText">{{jianText}}</text></text>
+                     </view>
+                 </view>
+             </view>
+             <view class="column1">
+                 <view class="item">
+                     <view>
+                         <image class="deIcon" src='{{mingIcon}}'></image>
+                     </view>
+                     <view class="norText">
+                         <text>取货姓名：<text class="impText">{{mingText}}</text></text>
+                     </view>
+                 </view>
+                 <view class="item">
+                     <view>
+                         <image class="deIcon" src='{{shiIcon}}'></image>
+                     </view>
+                     <view class="norText">
+                         <text><text class="impText">{{shiText}}</text>送达</text>
+                     </view>
+                 </view>
+             </view>
+        </view>
+        <view class="rline"></view>
+        <view class="sdLocA">
+            <view class="sdTi">
+                <text>送至 DELIVER TO</text>
+            </view>
+            <view class="sdLoc">
+                <text>{{sdLoc}}</text>
+            </view>
+        </view>
+        <view class='worTag' wx:if="{{exWorry}}"><text>加急</text></view>
+    </view>
+    <view class='mainSum'>
+        <view class='reward'>
+            <view class='rcText'>
+                <text>赏金</text>
+            </view>
+            <view class='rnText'>
+                <text>{{reward}}</text>
+            </view>
+            <view class='reText'>
+                <text>RMB</text>
+            </view>
+        </view>
+        <view class="rline"></view>
+        <view class="exDepict">
+            <view class="smTitle">
+                <text>快递描述 DETAILS <text class="weightInfo"> 包裹{{weightInfo}}</text></text>
+            </view>
+            <view class="sText">
+                <text>{{otherInfo}}</text>
+            </view>
+        </view>
+    </view>
+    <view class='trifle'>
+        <view class='pubSum'>
+           <text>{{LName}}同学于{{pubtime}}发布 取消订单请<text class="nav">联系对方</text></text>
+        </view>
+    </view>
+</view>
+<view>
+    <view class='fxdBtnBac'>    
+    </view>
+    <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
+        <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
+          <text class='finText'>完成订单</text>
+          <image src='{{finIcon}}' class='finIcon'></image>     
+        </button>
+        <view class="smallBtnA">
+            <view bindtap="conTA" class="sBtnA">
+                <image src='{{conTAIcon}}' class='dimIcon'></image> 
+                <text class='dimText'>联系TA</text>
+            </view>
+            <view bindtap="policeTA" class="sBtnA">
+                <image src='{{policeTAIcon}}' class='dimIcon'></image>
+                <text class='dimText'>举报</text>
+            </view>
+        </view>
+    </view> 
+    <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
+        <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
+          <text class='finText'>联系TA</text>
+          <image src='{{conIcon}}' class='finIcon'></image>     
+        </button>
+         <view class='dirGet'>
+            <view class='lDGT'>
+               <text>举报TA</text>
+            </view>
+            <view class='sDGT'>
+               <text>请勿随意举报</text>
+            </view>
+        </view>
+    </view> 
+    <view wx:if="{{statusCode==3}}" class='fxdBtnArea'>
+        <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
+          <text class='finText'>举报TA</text>
+          <image src='{{policeIcon}}' class='finIcon'></image>     
+        </button>
+        <view class='dirGet'>
+            <view class='lDGT'>
+               <text>举报条款</text>
+            </view>
+            <view class='sDGT'>
+               <text>请勿随意举报</text>
+            </view>
+        </view>
+    </view> 
+</view>
