@@ -32,7 +32,41 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        console.log(options)
+        console.log(options.id);
 
+        var that = this
+            // wx.request({
+            //   url: "https://liudongtushuguan.cn/v2/movie/subject/"+options.id,
+            //   //method:"GET",默认
+            //   header:{
+            //     "content-type":"json"
+            //   },
+
+        //   //捎带数据传送给server,异步调用
+
+        //   //接收到服务器返回数据进行处理
+        //   success:function(res){
+        //     console.log(res);
+        //     //res是返回数据的对象，只要有返回数据就是成功，会抽取返回的状态码403 200之类的
+        //     if(res.statusCode==200){
+        //     that.setData({
+        //       movie:res.data//movie是新增的变量，此时this指向的是wx.request内部
+        //       })
+        //       //动态设置title
+        //       wx.setNavigationBarTitle({
+        //         title: res.data.rating.average+"分："+res.data.title,
+        //       })
+        //       wx.hideNavigationBarLoading();
+        //     }
+        //   },
+        //   complete:function(){
+        //     //最后都会运行
+        //   },
+
+        // })
+
+        // console.log("ok")//会先执行ok再等到收到数据执行success
     },
 
     /**
@@ -144,5 +178,10 @@ Page({
                 phoneNumber: this.data.phoneNum //仅为示例，并非真实的电话号码
             })
         }
+    },
+    toFix:function(){
+      wx.navigateTo({
+        url: '../reportExError/reportExError',
+      })
     }
 })

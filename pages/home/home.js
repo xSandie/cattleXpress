@@ -1,3 +1,4 @@
+var app = getApp();
 Page({
 
     /**
@@ -5,12 +6,12 @@ Page({
      */
     data: {
         mySchoolName: '陕西师范大学（长安校区）',
-        reward: '99',
         loctionSrc: "../../images/location.png",
         pubIcon: '../../images/publisher.png',
-        hBtnIcon: '../../images/bTopIcon.png',
+        topIcon: '../../images/bTopIcon.png',
         pullIcon: '../../images/pull.png',
-        hBtnText: '回到顶部',
+        topubIcon: '../../images/hPubIcon.png',
+        fabuOrDingbu: true, //true渲染发布
         listCount: [{
                 exInstance: '申通快递·阳光苑',
                 sdInstance: '宿舍区 硕士楼',
@@ -19,7 +20,9 @@ Page({
                 exWeight: '<1KG',
                 exSize: '小件',
                 exExTime: '05-07 18:00',
-                pubName: '向同学 41612057'
+                pubName: '向同学 41612057',
+                id: 155,
+                key: 2
             },
             {
                 exInstance: '圆通快递·阳光苑',
@@ -29,8 +32,44 @@ Page({
                 exWeight: '<1KG',
                 exSize: '小件',
                 exExTime: '05-07 17:00',
-                pubName: '刘同学 41612058'
+                pubName: '刘同学 41612058',
+                id: 156,
+                key: 1
             },
+            {
+                exInstance: '圆通快递·阳光苑',
+                sdInstance: '宿舍区 周园',
+                exWorry: false,
+                reward: '5',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 17:00',
+                pubName: '刘同学 41612058',
+                id: 157,
+                key: 1
+            }, {
+                exInstance: '圆通快递·阳光苑',
+                sdInstance: '宿舍区 周园',
+                exWorry: false,
+                reward: '5',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 17:00',
+                pubName: '刘同学 41612058',
+                id: 158,
+                key: 1
+            }, {
+                exInstance: '圆通快递·阳光苑',
+                sdInstance: '宿舍区 周园',
+                exWorry: false,
+                reward: '5',
+                exWeight: '<1KG',
+                exSize: '小件',
+                exExTime: '05-07 17:00',
+                pubName: '刘同学 41612058',
+                id: 159,
+                key: 1
+            }
         ],
         sendLoc: '选择快递送达地点',
         expressLoc: '选择取快递的站点',
@@ -54,12 +93,33 @@ Page({
         column2_2: ['图书馆', '校务楼', '阳光苑', '溢香楼', '上林体育馆', '新勇', '终南音乐厅', '教育博物馆', '游泳馆', '家属院', '校医院', '家园生活服务区', '师大附小', '其他'],
         column2_3: ['长雁通']
     },
+    /**
+     * 会被动态设置的元素，exlocArray，sdlocArray,column2_0123,listCount
+     **/
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {},
+    onLoad: function(options) {
+        wx.getSetting({
+            success: function(res) {
+                if (res.authSetting['scope.userInfo']) {
+                    wx.getUserInfo({
+                        success: function(res) {
+                            // console.log(res.userInfo)
+                            //用户已经授权过,发送一个get请求3rd_session
+                        }
+                    })
+                } else {
+                    //未授权
+                    wx.redirectTo({
+                        url: '../welcome/welcome',
+                    })
+                }
+            }
+        })
 
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -70,9 +130,7 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {
-
-    },
+    onShow: function() {},
 
     /**
      * 生命周期函数--监听页面隐藏
@@ -92,14 +150,18 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        this.setData({
+            fabuOrDingbu: true
+        })
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function() {
-
+        this.setData({
+            fabuOrDingbu: false
+        })
     },
 
     /**
@@ -108,10 +170,14 @@ Page({
     onShareAppMessage: function() {
 
     },
-    toSumDetail: function() {
+    toSumDetail: function(event) {
+        console.log(event)
+        var orderId = event.currentTarget.dataset.orderId;
+        console.log(orderId)
         wx.navigateTo({
-            url: "../orderDetailsVeiwer/orderDetailsVeiwer"
+            url: "../orderDetailsVeiwer/orderDetailsVeiwer?id=" + orderId
         })
+
     },
 
     /**
@@ -122,16 +188,39 @@ Page({
         console.log('picker发送选择改变，携带值为', e.detail.value)
         var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
         this.setData({
-            expressLoc: selected
+                expressLoc: selected
+            })
+            //发起筛选快递站点请求
+        wx.request({
+            url: 'test.php', //仅为示例，并非真实的接口地址
+            data: {
+                x: '',
+                y: ''
+            },
+            success: function(res) {
+                console.log(res.data)
+                    //在此设置页面订单列表listCount
+            }
         })
-
     },
     sdlocChange: function(e) {
         console.log(e);
         console.log('picker发送选择改变，携带值为', e.detail.value)
         var selected = this.data.sdlocArray[0][this.data.sdlocIndex[0]] + '·' + this.data.sdlocArray[1][this.data.sdlocIndex[1]]
         this.setData({
-            sendLoc: selected
+                sendLoc: selected
+            })
+            //发起筛选送达地点请求
+        wx.request({
+            url: 'test.php', //仅为示例，并非真实的接口地址
+            data: {
+                x: '',
+                y: ''
+            },
+            success: function(res) {
+                console.log(res.data)
+                    //在此设置页面订单列表listCount
+            }
         })
     },
     exlocColumnChange: function(e) {
@@ -182,6 +271,24 @@ Page({
         }
         this.setData(data);
         console.log(data)
+    },
+    changeSchool: function() {
+        wx.navigateTo({
+            url: '../changeSchool/changeSchool',
+        })
+    },
+    toTop: function() {
+        wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 300
+        })
+        this.setData({
+            fabuOrDingbu: true
+        })
+    },
+    toPub: function() {
+        wx.switchTab({
+            url: '../publish1/publish1',
+        })
     }
-
 })

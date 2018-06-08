@@ -2,7 +2,7 @@
     <view class="myPolice">
         <view class="tag"><text>我举报的</text></view>
         <view class="cardA" >
-            <view class="card" wx:for="{{myPoliceList}}">
+            <view class="card" bindtap="toDetailProposal" wx:for="{{myPoliceList}}">
                 <view class="statusTag">
                     <view class="status13" wx:if="{{item.policeStatus==13}}">
                         处理中
@@ -31,7 +31,7 @@
     <view class="policeMe">
         <view class="tag1"><text>举报我的</text></view>
         <view class="cardA" >
-            <view class="card" wx:for="{{policeMeList}}">
+            <view class="card" bindtap="toDetailRec" wx:for="{{policeMeList}}">
                 <view class="statusTag">
                     <view class="status13" wx:if="{{item.policeStatus==13}}">
                         处理中

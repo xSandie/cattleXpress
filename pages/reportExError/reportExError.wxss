@@ -1,0 +1,66 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: #faaf42;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+}
+
+.floatCard {
+    box-sizing: border-box;
+    padding: 24rpx;
+    width: 670rpx;
+    position: relative;
+    height: 330rpx;
+    z-index: 15;
+    display: flex;
+    top: 200rpx;
+    flex-direction: column;
+    background: white;
+    border-radius: 16rpx;
+}
+
+.tline {
+    height: 1rpx;
+    width: 100%;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-bottom: 10rpx;
+    margin-top: 10rpx;
+}
+
+.fakeBtn {
+    height: 100rpx;
+    width: 100%;
+    position: relative;
+    top: 200rpx;
+    color: #faaf42;
+    background: white;
+    font-size: 32rpx;
+    font-weight: bold;
+}
+
+button {
+    margin: 0rpx;
+    margin-top: 30rpx;
+    border-radius: 16rpx;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    height: 100rpx;
+    padding: 30rpx;
+    width: 246rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 0rpx;
+}
+
+.Ti {
+    color: #999ba1;
+    font-size: 20rpx;
+    font-weight: bold;
+}
+
+form {
+    z-index: 15;
+}

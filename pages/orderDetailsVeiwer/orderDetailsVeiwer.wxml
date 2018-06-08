@@ -7,7 +7,7 @@
         </view>
         <view class='cline'>   
         </view>
-        <view class='fixBtn'>
+        <view class='fixBtn' bindtap='toFix'>
             <image src="{{fxIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>

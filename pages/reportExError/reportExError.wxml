@@ -1,0 +1,14 @@
+<view class='container'>
+    <form class='mainForm' bindsubmit="fixReport">
+        <view class='floatCard'>
+            <view>
+                
+            </view>
+            <view class="tline"></view>
+            <input type="text" placeholder="输入更正的营业时间"/>
+        </view>
+        <button class='fakeBtn' formType="submit">
+            <text>报错</text> 
+        </button>
+    </form>
+</view>

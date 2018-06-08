@@ -1,1 +1,8 @@
-{}
+{
+    "navigationBarBackgroundColor": "#faaf42",
+    "navigationBarTitleText": "报错页面",
+    "backgroundColor": "#faaf42",
+    "backgroundTextStyle": "light",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": false
+}

@@ -1,6 +1,6 @@
 <view class='container'>
     <view class='select'>
-        <view class='school'>
+        <view class='school' bindtap='changeSchool' >
             <block class='locIcon'>
             <image class='locIcon' src="{{loctionSrc}}"></image>
             </block>
@@ -46,8 +46,8 @@
     </view>
 
     <view class='list'>
-        <view class='listItem' bindtap="toSumDetail" wx:for="{{listCount}}">
-            <view class='rowFlex'>
+        <view class='listItem' wx:key="{{item.key}}" wx:for="{{listCount}}">
+            <view class='rowFlex' data-order-id="{{item.id}}" bindtap="toSumDetail">
                 <view class='reward'>
                         <view class='rcText'>
                            <text>赏金</text>
@@ -93,14 +93,18 @@
         </view>
     </view>
     <view class='fbtnBox'>
-        <view class='floatBtn'>
-            <text class='hBtnText'>{{hBtnText}}</text>
-            <image class='hBtnIcon' src='{{hBtnIcon}}'></image>
+        <view class='floatBtn' wx:if="{{!fabuOrDingbu}}" bindtap="toTop">
+            <text class='hBtnText'>回到顶部</text>
+            <image class='hBtnIcon' src='{{topIcon}}'></image>
+        </view>
+        <view class='floatBtn' wx:if="{{fabuOrDingbu}}" bindtap="toPub">
+            <text class='hBtnText'>发布</text>
+            <image class='hBtnIcon' src='{{topubIcon}}'></image>
         </view>
     </view>
     <view class='prompt'>
         <view class='lineCss'></view>
-        <text>黄牛也是有底线的</text>
+        <text>黄牛是有底线的</text>
         <view class='lineCss'></view>
     </view>
 </view>

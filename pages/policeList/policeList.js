@@ -78,5 +78,15 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    toDetailProposal: function() {
+        wx.navigateTo({
+          url: '../policeDetailProposal/policeDetailProposal',
+        })
+    },
+    toDetailRec: function() {
+      wx.navigateTo({
+        url: '../policeDetailRec/policeDetailRec',
+      })
     }
 })

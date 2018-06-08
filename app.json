@@ -16,7 +16,8 @@
         "pages/reportExError/reportExError",
         "pages/defAddrEdit/defAddrEdit",
         "pages/certifPage/certifPage",
-        "pages/welcome/welcome"
+        "pages/welcome/welcome",
+        "pages/changeSchool/changeSchool"
     ],
     "window": {
         "backgroundTextStyle": "dark",
