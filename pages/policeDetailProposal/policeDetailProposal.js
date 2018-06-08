@@ -16,7 +16,8 @@ Page({
                     url: "../../images/example.jpg"
                 }
             ]
-        }
+        },
+        policeIcon: "../../images/example.jpg",
     },
 
     /**
@@ -72,6 +73,12 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
+
+    },
+    /**
+     * 表单提交
+     */
+    report: function() {
 
     }
 })
