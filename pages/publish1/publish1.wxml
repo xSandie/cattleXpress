@@ -1,8 +1,10 @@
 <view class='header'>
-       <view class='htArea'>
-           <text class='lHeader'>先填写基本信息</text>
-           <text class='sHeader'>离发布不到1分钟</text>
-       </view> 
+    <view class='htArea'>
+        <text class='lHeader'>先填写基本信息</text>
+        <text class='sHeader'>离发布不到1分钟</text>
+    </view> 
+    <image class="publishIMG2" src="{{publishIMG}}"></image>
+
 </view>
 
 <view class='container'>

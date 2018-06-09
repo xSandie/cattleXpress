@@ -4,7 +4,18 @@ Page({
      * 页面的初始数据
      */
     data: {
+        exLogo: '../../images/STOLOGO.png',
+        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
+        exInstance: '申通快递·阳光苑',
+        //原实例时间地点
 
+        exlocArray: [
+            ['新东门', '老东门', '硕士楼', '新勇西', '阳光苑二楼'],
+            ['顺丰', '申通', '中通', '圆通', '百世汇通', '韵达', '天天快递', 'EMS', '京东']
+        ],
+        expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
+        exlocfirstIndex: 0,
+        exlocSecondIndex: 0,
     },
 
     /**
@@ -64,5 +75,26 @@ Page({
     },
     fixReport: function() {
 
-    }
+    },
+    exlocChange: function(e) {
+        console.log(e);
+        console.log('时间picker发送选择改变，携带值为', e.detail.value)
+        var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+        this.setData({
+            expressLoc: selected
+        })
+
+    },
+    exlocColumnChange: function(e) {
+        console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+        if (e.detail.column == 0) {
+            this.setData({
+                exlocfirstIndex: e.detail.value
+            })
+        } else {
+            this.setData({
+                exlocSecondIndex: e.detail.value
+            })
+        }
+    },
 })

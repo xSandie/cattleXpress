@@ -101,6 +101,10 @@ button {
     border: 0rpx;
 }
 
+button::after {
+    border: none;
+}
+
 .recLocTi {
     color: #999ba1;
     font-size: 20rpx;

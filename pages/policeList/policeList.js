@@ -81,12 +81,12 @@ Page({
     },
     toDetailProposal: function() {
         wx.navigateTo({
-          url: '../policeDetailProposal/policeDetailProposal',
+            url: '../policeDetailProposal/policeDetailProposal',
         })
     },
     toDetailRec: function() {
-      wx.navigateTo({
-        url: '../policeDetailRec/policeDetailRec',
-      })
+        wx.navigateTo({
+            url: '../policeDetailRec/policeDetailRec',
+        })
     }
 })

@@ -367,3 +367,11 @@ button {
     text-align: center;
     margin-left: 76rpx;
 }
+
+.publishIMG2 {
+    width: 399rpx;
+    height: 198.75rpx;
+    position: absolute;
+    top: 69.25rpx;
+    right: 0rpx;
+}

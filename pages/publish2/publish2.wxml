@@ -3,6 +3,7 @@
            <text class='lHeader'>最后填写具体信息</text>
            <text class='sHeader'>离发布不到半分钟</text>
        </view> 
+       <image class="publishIMG2" src="{{publishIMG}}"></image>
 </view>
 <view class="container">
      <view class='FakeCard'>

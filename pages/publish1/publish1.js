@@ -59,7 +59,8 @@ Page({
         //     { name: 'MEx', value: '中件' },
         //     { name: 'SEx', value: '小件', checked: true }
         // ],
-        setDef: false
+        setDef: false,
+        publishIMG: "../../images/publishIMG1.png"
     },
 
     /**

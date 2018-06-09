@@ -98,9 +98,8 @@
     </view>
 </view>
 <view>
-    <view class='fxdBtnBac'>    
-    </view>
     <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
+        <view class='fxdBtnBac'></view>
         <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
           <text class='finText'>完成订单</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
@@ -117,6 +116,7 @@
         </view>
     </view> 
     <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
+        <view class='fxdBtnBac'></view>
         <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
           <text class='finText'>联系TA</text>
           <image src='{{conIcon}}' class='finIcon'></image>     
@@ -131,6 +131,7 @@
         </view>
     </view> 
     <view wx:if="{{statusCode==3}}" class='fxdBtnArea'>
+        <view class='fxdBtnBac'></view>
         <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
           <text class='finText'>举报TA</text>
           <image src='{{policeIcon}}' class='finIcon'></image>     

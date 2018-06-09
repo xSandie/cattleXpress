@@ -24,7 +24,7 @@ Page({
         pubtime: '1月19日 12：00',
 
         phoneNum: 15529268167,
-        certif: false
+        certif: true
 
     },
 
@@ -179,9 +179,9 @@ Page({
             })
         }
     },
-    toFix:function(){
-      wx.navigateTo({
-        url: '../reportExError/reportExError',
-      })
+    toFix: function() {
+        wx.navigateTo({
+            url: '../reportExError/reportExError',
+        })
     }
 })

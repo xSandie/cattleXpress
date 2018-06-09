@@ -82,5 +82,23 @@ Page({
         wx.navigateTo({
             url: '../policeList/policeList',
         })
+    },
+    supportUs: function() {
+        wx.showModal({
+            title: '感谢',
+            content: '开发团队富得很，暂时不需要支持噢！',
+            showCancel: false,
+            confirmText: '知道啦',
+            confirmColor: '#faaf42'
+        })
+    },
+    joinUs: function() {
+        wx.showModal({
+            title: '神秘的组织',
+            content: '我们才不会轻易告诉你联系方式呢，哼！',
+            showCancel: false,
+            confirmText: '厉害了',
+            confirmColor: '#faaf42'
+        })
     }
 })

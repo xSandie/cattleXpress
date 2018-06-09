@@ -40,6 +40,8 @@ Page({
         rewardTapTime: [
             0, 0, 0
         ],
+
+        publishIMG: "../../images/publishIMG2.png"
     },
 
     /**

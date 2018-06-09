@@ -5,10 +5,10 @@
             <view class="card" bindtap="toDetailProposal" wx:for="{{myPoliceList}}">
                 <view class="statusTag">
                     <view class="status13" wx:if="{{item.policeStatus==13}}">
-                        处理中
+                        <text>处理中</text>
                     </view>
                     <view class="status10" wx:if="{{item.policeStatus==10}}">
-                        已封号
+                        <text>已封号</text>
                     </view>
                 </view>
                 <view class="content">
@@ -34,10 +34,10 @@
             <view class="card" bindtap="toDetailRec" wx:for="{{policeMeList}}">
                 <view class="statusTag">
                     <view class="status13" wx:if="{{item.policeStatus==13}}">
-                        处理中
+                        <text>处理中</text>
                     </view>
                     <view class="status10" wx:if="{{item.policeStatus==10}}">
-                        已封号
+                        <text>已封号</text>
                     </view>
                 </view>
                 <view class="content">

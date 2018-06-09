@@ -399,3 +399,11 @@ button {
     margin-right: 30rpx;
     margin-left: 16rpx;
 }
+
+.publishIMG2 {
+    width: 412.5rpx;
+    height: 180.75rpx;
+    position: absolute;
+    top: 87.25rpx;
+    right: 0rpx;
+}

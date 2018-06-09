@@ -23,6 +23,7 @@
 .exLogo {
     height: 90rpx;
     width: 90rpx;
+    border-radius: 10rpx;
 }
 
 .exDetail {

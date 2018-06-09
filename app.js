@@ -5,8 +5,8 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-
-        // 登录
+        console.log("评委老师们辛苦了！")
+            // 登录
         wx.login({
             success: function(res) {
                 if (res.code) {
@@ -28,8 +28,8 @@ App({
     globalData: {
         userInfo: null,
         session_ID: null,
-        schoolID:null,
-        schoolName:"陕西师范大学（长安校区）",
-        ourUserStatus:0
+        schoolID: null,
+        schoolName: "陕西师范大学（长安校区）",
+        ourUserStatus: 0
     }
 })

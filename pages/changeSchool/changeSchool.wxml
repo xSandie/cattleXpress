@@ -1,2 +1,16 @@
-<!--pages/changeSchool/changeSchool.wxml-->
-<text>pages/changeSchool/changeSchool.wxml</text>
+<view class="container">
+    <view class="selectSchool" bindtap="schoolInput">
+        <image class="schoolIcon" src="{{schoolIcon}}"></image>
+        <view class="cline"></view>
+        <input type="text" placeholder="点击输入学校加校区名称" auto-focus  class="schoolInput"/>
+        <view class="search" bindtap="search">搜索</view>
+    </view>
+    <view class="answerArea">
+        <view wx:for="{{answer}}">
+            <view hover-class="answerHover" class="answer" data-schoolID="{{item.schoolID}}" bindtap="selectAnswer">
+                <text class="Ti">点击选择</text>
+                <text class="con">{{item.name}}</text>
+            </view>
+        </view>
+    </view>
+</view>

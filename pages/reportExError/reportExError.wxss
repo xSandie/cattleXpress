@@ -4,20 +4,21 @@
     background: #faaf42;
     padding-left: 40rpx;
     padding-right: 40rpx;
+    display: flex;
+    flex-direction: column;
 }
 
 .floatCard {
     box-sizing: border-box;
     padding: 24rpx;
     width: 670rpx;
-    position: relative;
-    height: 330rpx;
+    height: auto;
     z-index: 15;
     display: flex;
-    top: 200rpx;
     flex-direction: column;
     background: white;
     border-radius: 16rpx;
+    margin-bottom: 30rpx;
 }
 
 .tline {
@@ -31,8 +32,6 @@
 .fakeBtn {
     height: 100rpx;
     width: 100%;
-    position: relative;
-    top: 200rpx;
     color: #faaf42;
     background: white;
     font-size: 32rpx;
@@ -55,6 +54,10 @@ button {
     border: 0rpx;
 }
 
+button::after {
+    border: none;
+}
+
 .Ti {
     color: #999ba1;
     font-size: 20rpx;
@@ -63,4 +66,67 @@ button {
 
 form {
     z-index: 15;
+}
+
+.exLocDe {
+    box-sizing: border-box;
+    height: 138rpx;
+    width: 100%;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-radius: 16rpx;
+    margin-bottom: 30rpx;
+}
+
+.exLogo {
+    height: 90rpx;
+    width: 90rpx;
+    border-radius: 10rpx;
+}
+
+.exDetail {
+    position: relative;
+    bottom: 1rpx;
+    height: 66rpx;
+    width: 380rpx;
+    margin-left: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.exInstance {
+    position: relative;
+    left: -1rpx;
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #373c46;
+}
+
+.exLocTime {
+    font-size: 20rpx;
+    color: #999ba1;
+}
+
+.cline {
+    width: 1rpx;
+    height: 90rpx;
+    margin-left: 40rpx;
+    background-color: #999ba1;
+}
+
+.inputCorrect {
+    width: 100%;
+    font-size: 32rpx;
+    color: #373c46;
+}
+
+.selExCon {
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
 }

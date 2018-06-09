@@ -67,5 +67,15 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    selStudent: function() {
+        this.setData({
+            studentOrTeacher: true
+        })
+    },
+    selTeacher: function() {
+        this.setData({
+            studentOrTeacher: false
+        })
     }
 })
