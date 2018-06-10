@@ -70,6 +70,10 @@
 }
 
 .elIcon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 90rpx;
     width: 90rpx;
     border-radius: 50%;
@@ -79,6 +83,10 @@
 }
 
 .slIcon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 90rpx;
     width: 90rpx;
     border-radius: 50%;
@@ -336,4 +344,18 @@
     height: 1rpx;
     width: 220rpx;
     background-color: #eef1fd;
+}
+
+.elIconImg {
+    height: 40rpx;
+    width: 40rpx;
+    position: relative;
+    bottom: 1rpx;
+}
+
+.slIconImg {
+    height: 40rpx;
+    width: 40rpx;
+    position: relative;
+    bottom: 1rpx;
 }

@@ -1,4 +1,5 @@
 // pages/changeSchool/changeSchool.js
+var app=getApp()
 Page({
 
     /**
@@ -66,5 +67,27 @@ Page({
      */
     onShareAppMessage: function() {
 
+    },
+    search:function(e){
+      console.log(e.detail.value)
+      wx.request({
+        url: '', //填充url请求列表
+        method: 'GET',
+        data: {
+          'schoolID': app.globalData.schoolID,
+          'user_ID': app.globalData.user_ID,
+          'time': 1
+        },
+        header: {
+          "Content-Type": "applciation/json"
+        },
+        success: function (res) {
+          that.setData({
+            listCount: res.data.listCount
+          })
+        },
+        fail: function () { },
+        complete: function () { }
+      })
     }
 })

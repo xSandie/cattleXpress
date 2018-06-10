@@ -1,9 +1,11 @@
+var app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        uploadList: null,
         checkBtnIcon: "../../images/next.png",
 
         exCon: '',
@@ -48,19 +50,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this;
-        wx.getStorage({
-            key: 'FORM1',
-            success: function(res) {
-                that.setData({
-                    exCon: res.data.selExCon,
-                    sdLoc: res.data.DeRecLocSel,
-                    conPhoneNum: res.data.conPhoneNum,
-                    phoneRear: res.data.phoneRear,
-                    recName: res.data.recName
-                })
-            },
-        })
+       
     },
 
     /**
@@ -74,7 +64,22 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-
+        this.setData({
+            checking: false
+        })
+        var that = this;
+        wx.getStorage({
+          key: 'FORM1',
+          success: function (res) {
+            that.setData({
+              exCon: res.data.selExCon,
+              sdLoc: res.data.DeRecLocSel,
+              conPhoneNum: res.data.conPhoneNum,
+              phoneRear: res.data.phoneRear,
+              recName: res.data.recName
+            })
+          },
+        })
     },
 
     /**
@@ -153,17 +158,55 @@ Page({
                     url: '../finPub/finPub',
                 })
             } else {
-                //要继续写函数
-                wx.showToast({
-                    title: '发布成功',
-                    icon: 'success',
-                    duration: 2000
-                })
-                that.setData({
-                    checking: false
-                })
-                wx.switchTab({
-                    url: '../orders/orders',
+                wx.getStorage({
+                    key: 'FORM1',
+                    success: function(res) {
+                        var uploadlist = Object.assign({}, res.data, e.detail.value)
+                        console.log(uploadlist)
+                        that.setData({
+                            uploadList: uploadlist
+                        })
+                        console.log(that.data.uploadList)
+                        wx.request({
+                            url: '', //填充url发送表单json
+                            method: 'POST',
+                            data: {
+                                'body': that.data.uploadList,
+                                'user_ID': app.globalData.user_ID
+                            },
+                            header: {
+                                "Content-Type": "applciation/json"
+                            },
+                            success: function() {
+                                console.log("表单提交成功")
+                                wx.showToast({
+                                    title: '发布成功',
+                                    icon: 'success',
+                                    duration: 2000
+                                })
+                                that.setData({
+                                    checking: false
+                                })
+                                wx.switchTab({
+                                    url: '../orders/orders',
+                                })
+                            },
+                            fail: function() {
+                              wx.showModal({
+                                title: '提示',
+                                content: '网络不太畅通，请稍后再试噢',
+                                showCancel: false,
+                                confirmText: '返回',
+                                confirmColor: '#faaf42',
+                              })
+                                    //console.log(app.globalData.userInfo)
+                            },
+                            complete: function() {}
+                        })
+
+                    },
+                    fail: function(res) {},
+                    complete: function(res) {},
                 })
             }
         }, 1000);

@@ -15,7 +15,7 @@
             <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
                <view class='expressLoc'>
                     <view class='elIcon'>
-                        
+                    <image class='elIconImg' src="{{elIconImg}}"></image>  
                     </view>
                     <view class='lText'>
                         <view class='lTextLarge'>
@@ -30,7 +30,7 @@
             <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}">
                 <view class='sendLoc'>
                     <view class='slIcon'>
-                        
+                    <image class='slIconImg' src="{{slIconImg}}"></image>     
                     </view>
                     <view class='lText'>
                         <view class='lTextLarge'>
@@ -74,7 +74,7 @@
                             <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
                         </view>
                         <view class='exTag exTagTime'>
-                            <view class='tagText'><text>{{item.exExTime}}前取货</text></view>
+                            <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
                         </view>
                     </view>
                     <view class='pubisher'>

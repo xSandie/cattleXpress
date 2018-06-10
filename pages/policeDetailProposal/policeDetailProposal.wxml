@@ -99,7 +99,7 @@
             </button>
             <view class='dirGet' bindtap="retrieve">
                 <text class='lDGT'>撤销举报</text>
-                <text class='sDGT'>请如实描述</text>
+                <text class='sDGT'>请谨慎撤销</text>
             </view>
         </view>
 

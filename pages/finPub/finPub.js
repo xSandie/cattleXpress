@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
     /**
@@ -89,67 +90,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this
-        wx.getStorage({
-            key: 'sizeArr',
-            success: function(res) {
-                that.setData({
-                    checkboxItems: res.data
-                })
-            },
-        })
-        wx.getStorage({
-            key: 'FORMrow1',
-            success: function(res) {
-                that.setData({
-                    sdlocIndex: res.data.DeRecLocSel,
-                    dateIndex: res.data.exTimeConDate,
-                    setDef: res.data.setDef
-                })
-            }
-        })
-        wx.getStorage({
-            key: 'FORM1',
-            success: function(res) {
-                that.setData({
-                    conPhoneNum: res.data.conPhoneNum,
-                    sendLoc: res.data.DeRecLocSel,
-                    sendLocIn: res.data.DeRecLocIn,
-                    recName: res.data.recName,
-                    phoneRear: res.data.phoneRear,
-                    expressLoc: res.data.selExCon,
-                })
-            },
-        })
-        wx.getStorage({
-            key: 'FORMrow2',
-            success: function(res) {
-                that.setData({
-                    fetchCode: res.data.fetchCode,
-                    sexIndex: res.data.sexLimit,
-                    weIndex: res.data.weightInfo,
-                })
-            },
-        })
-        wx.getStorage({
-            key: 'FORM2',
-            success: function(res) {
-                if (res.data.rewardIn instanceof Array) {
-                    that.setData({
-                        reward: res.data.rewardIn[0]
-                    })
-                } else {
-                    that.setData({
-                        reward: res.data.rewardIn
-                    })
-                }
-                that.setData({
-                    worchecked: res.data.worInfo,
-                    lastDep: res.data.otherInfo
-                })
-            },
-        })
-
+       
     },
 
     /**
@@ -163,7 +104,93 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        var that = this
+      // var that = this
+      // wx.getStorage({
+      //   key: 'sizeArr',
+      //   success: function (res) {
+      //     that.setData({
+      //       checkboxItems: res.data
+      //     })
+      //   },
+      // })
+      // wx.getStorage({
+      //   key: 'FORMrow1',
+      //   success: function (res) {
+      //     that.setData({
+      //       sdlocIndex: res.data.DeRecLocSel,
+      //       dateIndex: res.data.exTimeConDate,
+      //       setDef: res.data.setDef
+      //     })
+      //   }
+      // })
+      // wx.getStorage({
+      //   key: 'FORM1',
+      //   success: function (res) {
+      //     that.setData({
+      //       conPhoneNum: res.data.conPhoneNum,
+      //       sendLoc: res.data.DeRecLocSel,
+      //       sendLocIn: res.data.DeRecLocIn,
+      //       recName: res.data.recName,
+      //       phoneRear: res.data.phoneRear,
+      //       expressLoc: res.data.selExCon,
+      //     })
+      //   },
+      // })
+      // wx.getStorage({
+      //   key: 'FORMrow2',
+      //   success: function (res) {
+      //     that.setData({
+      //       fetchCode: res.data.fetchCode,
+      //       sexIndex: res.data.sexLimit,
+      //       weIndex: res.data.weightInfo,
+      //     })
+      //   },
+      // })
+      // wx.getStorage({
+      //   key: 'FORM2',
+      //   success: function (res) {
+      //     if (res.data.rewardIn instanceof Array) {
+      //       that.setData({
+      //         reward: res.data.rewardIn[0]
+      //       })
+      //     } else {
+      //       that.setData({
+      //         reward: res.data.rewardIn
+      //       })
+      //     }
+      //     that.setData({
+      //       worchecked: res.data.worInfo,
+      //       lastDep: res.data.otherInfo
+      //     })
+      //   },
+      // })
+      this.setData({
+        exlocArray: app.globalData.exlocArray,
+        column2_0: app.globalData.column2_0,
+        column2_1: app.globalData.column2_1,
+        column2_2: app.globalData.column2_2,
+        column2_3: app.globalData.column2_3,
+      })
+      var that = this
+      wx.request({//请求默认地址
+        url: '', //填充url请求
+        method: 'GET',
+        data: {
+          'user_ID': app.globalData.user_ID,
+        },
+        header: {
+          "Content-Type": "applciation/json"
+        },
+        success: function (res) {
+          that.setData({
+            default: res.data.xx//需替换
+          })
+        },
+        fail: function () { },
+        complete: function () { }
+      })
+
+
         wx.getStorage({
             key: 'sizeArr',
             success: function(res) {
@@ -284,16 +311,50 @@ Page({
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex];
         console.log(e.detail.value)
         var that = this
-        wx.showToast({
-            title: '发布成功',
-            icon: 'success',
-            duration: 2000
-        })
-        that.setData({
-            checking: false
-        })
-        wx.switchTab({
-            url: '../orders/orders',
+        wx.request({
+            url: '', //填充url发送表单json
+            method: 'POST',
+            data: {
+                'body': that.data.uploadList,
+                'user_ID': app.globalData.user_ID
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function() {
+                console.log("表单提交成功")
+                wx.showToast({
+                    title: '发布成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+                setTimeout(function() {
+                    wx.switchTab({
+                        url: '../orders/orders',
+                    })
+                }, 1000);
+            },
+            fail: function() {
+                // wx.showToast({
+                //     title: '发布成功',
+                //     icon: 'success',
+                //     duration: 1000
+                // })
+                // setTimeout(function() {
+                //     wx.switchTab({
+                //         url: '../orders/orders',
+                //     })
+                // }, 1000);
+
+              wx.showModal({
+                title: '提示',
+                content: '网络不太畅通，请稍后再试噢',
+                showCancel: false,
+                confirmText: '返回',
+                confirmColor: '#faaf42',
+              })
+            },
+            complete: function() {}
         })
     },
     worcheck: function() {

@@ -205,3 +205,8 @@ button::after {
     justify-content: space-between;
     align-items: flex-end;
 }
+.answerHover {
+    color: #999ba1;
+    background: rgba(238, 241, 253, 0.76);
+    border-radius: 16rpx;
+}

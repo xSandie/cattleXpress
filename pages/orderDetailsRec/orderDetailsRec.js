@@ -24,7 +24,7 @@ Page({
         jianIcon: '../../images/sizeIcon.png',
         shiIcon: '../../images/timeIcon.png',
 
-        shiText: '05-07 16:00前',
+        shiText: '05-07 16:00',
         mingText: '向书晗',
         jianText: '小件',
         haoText: '9021',

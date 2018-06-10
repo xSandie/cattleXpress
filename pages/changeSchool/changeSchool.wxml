@@ -1,10 +1,10 @@
 <view class="container">
-    <view class="selectSchool" bindtap="schoolInput">
+    <form bindsubmit="search" class="selectSchool" bindtap="schoolInput">
         <image class="schoolIcon" src="{{schoolIcon}}"></image>
         <view class="cline"></view>
-        <input type="text" placeholder="点击输入学校加校区名称" auto-focus  class="schoolInput"/>
-        <view class="search" bindtap="search">搜索</view>
-    </view>
+        <input name="schoolName" type="text" placeholder="点击输入学校加校区名称" auto-focus  class="schoolInput"/>
+        <button class="search" hover-class="answerHover" formType="submit">搜索</button>
+    </form>
     <view class="answerArea">
         <view wx:for="{{answer}}">
             <view hover-class="answerHover" class="answer" data-schoolID="{{item.schoolID}}" bindtap="selectAnswer">

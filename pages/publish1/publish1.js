@@ -1,3 +1,4 @@
+var app = getApp();
 Page({
 
     /**
@@ -81,7 +82,31 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-
+      this.setData({
+        exlocArray: app.globalData.exlocArray,
+        column2_0: app.globalData.column2_0,
+        column2_1: app.globalData.column2_1,
+        column2_2: app.globalData.column2_2,
+        column2_3: app.globalData.column2_3,
+      })
+      var that=this
+      wx.request({//请求默认地址
+        url: '', //填充url请求
+        method: 'GET',
+        data: {
+          'user_ID': app.globalData.user_ID,
+        },
+        header: {
+          "Content-Type": "applciation/json"
+        },
+        success: function (res) {
+          that.setData({
+            default: res.data.xx//需替换
+          })
+        },
+        fail: function () { },
+        complete: function () { }
+      })
     },
 
     /**

@@ -1,3 +1,4 @@
+var app=getApp()
 Page({
 
     /**
@@ -13,14 +14,15 @@ Page({
         schoNum: "41612057",
         addressIcon: "../../images/myAdress.png",
         policeIcon: "../../images/police.png",
-        nextIcon: "../../images/nextBlack.png"
+        nextIcon: "../../images/nextBlack.png",
+        tempName:'实习黄牛'
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        
     },
 
     /**

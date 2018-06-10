@@ -24,7 +24,7 @@
             </view>
             <view class='sdTag'>
                 <view class='exExTime'>
-                    <text>{{exExTime}}前取货</text>
+                    <text>{{exExTime}}前送达</text>
                 </view>
                 <view class='exWeight'>
                     <text>重量{{exWeight}}</text>
