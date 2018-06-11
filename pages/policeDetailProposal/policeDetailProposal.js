@@ -40,7 +40,26 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        console.log(options.id)
+        var that = this
+        wx.request({
+            url: '', //填充发起举报url
+            method: 'GET',
+            data: {
+                'orderID': options.id,
+                'user_ID': app.globalData.user_ID,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    //设置页面参数，返回对方的姓名等基本信息，订单状态码
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     },
 
     /**

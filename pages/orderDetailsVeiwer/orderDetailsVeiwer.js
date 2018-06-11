@@ -1,4 +1,4 @@
-
+var app = getApp()
 Page({
 
     /**
@@ -23,9 +23,11 @@ Page({
         schNum: '41612057',
         LName: '向',
         pubtime: '1月19日 12：00',
-
+        orderId: '166',
         phoneNum: '15529268167',
-        certif: true
+        certif: true,
+
+        expressID: '1562'
 
     },
 
@@ -67,22 +69,22 @@ Page({
 
         // })
         wx.request({
-          url: '', //填充请求订单详情url
-          method: 'GET',
-          data: {
-            'orderID': options.id,
-            'user_ID': app.globalData.user_ID,
-          },
-          header: {
-            "Content-Type": "applciation/json"
-          },
-          success: function (res) {
-            that.setData({
-              //设置页面参数
-            })
-          },
-          fail: function () { },
-          complete: function () { }
+            url: '', //填充请求订单详情url
+            method: 'GET',
+            data: {
+                'orderID': options.id,
+                'user_ID': app.globalData.user_ID,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    //设置页面参数
+                })
+            },
+            fail: function() {},
+            complete: function() {}
         })
 
         // console.log("ok")//会先执行ok再等到收到数据执行success
@@ -139,7 +141,7 @@ Page({
     /**
      * 接单按钮按下
      */
-    recOrder: function() {
+    recOrder: function(event) {
         if (this.data.certif == true) {
             wx.showModal({
                 title: '确认接单',
@@ -148,8 +150,11 @@ Page({
                 success: function(res) {
                     if (res.confirm) {
                         console.log('用户点击确定')
+                        console.log(event)
+                        var orderId = event.currentTarget.dataset.orderId;
+                        console.log(orderId)
                         wx.redirectTo({
-                            url: '../orderDetailsRec/orderDetailsRec'
+                            url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
                         })
                     } else if (res.cancel) {
                         console.log('用户点击取消')
@@ -198,9 +203,11 @@ Page({
             })
         }
     },
-    toFix: function() {
+    toFix: function(event) {
+        var expressID = event.currentTarget.dataset.expressId
+        console.log(expressID)
         wx.navigateTo({
-            url: '../reportExError/reportExError',
+            url: '../reportExError/reportExError?id=' + expressID,
         })
     }
 })

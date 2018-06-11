@@ -7,7 +7,7 @@
         </view>
         <view class='cline'>   
         </view>
-        <view class='fixBtn'>
+        <view bindtap="toFix" data-express-id="{{expressID}}" class='fixBtn'>
             <image src="{{fxIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
@@ -22,7 +22,7 @@
         </view>
         <view class="detailA">
              <view class="column">
-                 <view class="item">
+                 <view class="item" wx:if="{{statusCode==0||statusCode==2}}">
                      <view>
                          <image class="deIcon" src='{{haoIcon}}'></image>
                      </view>
@@ -40,7 +40,7 @@
                  </view>
              </view>
              <view class="column1">
-                 <view class="item">
+                 <view class="item" wx:if="{{statusCode==0||statusCode==2}}">
                      <view>
                          <image class="deIcon" src='{{mingIcon}}'></image>
                      </view>
@@ -109,7 +109,7 @@
                 <image src='{{conTAIcon}}' class='dimIcon'></image> 
                 <text class='dimText'>联系TA</text>
             </view>
-            <view bindtap="policeTA" class="sBtnA">
+            <view data-order-id="{{orderId}}" bindtap="policeTA" class="sBtnA">
                 <image src='{{policeTAIcon}}' class='dimIcon'></image>
                 <text class='dimText'>举报</text>
             </view>
@@ -117,11 +117,11 @@
     </view> 
     <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
+        <button class='finishOrd' hover-class="defaultTap" bindtap="conTA">
           <text class='finText'>联系TA</text>
           <image src='{{conIcon}}' class='finIcon'></image>     
         </button>
-         <view class='dirGet'>
+         <view bindtap="policeTA" data-order-id="{{orderId}}" class='dirGet'>
             <view class='lDGT'>
                <text>举报TA</text>
             </view>
@@ -132,11 +132,11 @@
     </view> 
     <view wx:if="{{statusCode==3}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button class='finishOrd' hover-class="defaultTap" bindtap="finOrder">
+        <button data-order-id="{{orderId}}" class='finishOrd' hover-class="defaultTap" bindtap="policeTA">
           <text class='finText'>举报TA</text>
           <image src='{{policeIcon}}' class='finIcon'></image>     
         </button>
-        <view class='dirGet'>
+        <view class='dirGet' bindtap="toLaw">
             <view class='lDGT'>
                <text>举报条款</text>
             </view>

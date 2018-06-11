@@ -7,7 +7,7 @@
         </view>
         <view class='cline'>   
         </view>
-        <view class='fixBtn' bindtap='toFix'>
+        <view data-express-id="{{expressID}}" class='fixBtn' bindtap='toFix'>
             <image src="{{fxIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
@@ -74,10 +74,10 @@
     <view class='fxdBtnBac'>    
     </view>
     <view class='fxdBtnArea'>
-        <button class='contact' bindtap="recOrder">
+        <view class='contact' data-order-id="{{orderId}}" bindtap="recOrder">
           <text class='conText' >点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
-        </button>
+        </view>
         <view class='dirGet' bindtap="conTA">
             <view class='lDGT'>
                <text>联系TA</text>
