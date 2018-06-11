@@ -51,7 +51,7 @@ App({
         schoolNumb: null, //用户学号
         schoolID: null,
         schoolName: "陕西师范大学（长安校区）",
-        ourUserStatus: 4, //用户状态码
+        ourUserStatus: 3, //用户状态码
         sex: '',
         exlocArray: [], //两列快递站点数组
 

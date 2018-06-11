@@ -1,3 +1,4 @@
+
 Page({
 
     /**
@@ -23,7 +24,7 @@ Page({
         LName: '向',
         pubtime: '1月19日 12：00',
 
-        phoneNum: 15529268167,
+        phoneNum: '15529268167',
         certif: true
 
     },
@@ -65,6 +66,24 @@ Page({
         //   },
 
         // })
+        wx.request({
+          url: '', //填充请求订单详情url
+          method: 'GET',
+          data: {
+            'orderID': options.id,
+            'user_ID': app.globalData.user_ID,
+          },
+          header: {
+            "Content-Type": "applciation/json"
+          },
+          success: function (res) {
+            that.setData({
+              //设置页面参数
+            })
+          },
+          fail: function () { },
+          complete: function () { }
+        })
 
         // console.log("ok")//会先执行ok再等到收到数据执行success
     },

@@ -1,5 +1,5 @@
 // pages/changeSchool/changeSchool.js
-var app=getApp()
+var app = getApp()
 Page({
 
     /**
@@ -68,26 +68,56 @@ Page({
     onShareAppMessage: function() {
 
     },
-    search:function(e){
-      console.log(e.detail.value)
-      wx.request({
-        url: '', //填充url请求列表
-        method: 'GET',
-        data: {
-          'schoolID': app.globalData.schoolID,
-          'user_ID': app.globalData.user_ID,
-          'time': 1
-        },
-        header: {
-          "Content-Type": "applciation/json"
-        },
-        success: function (res) {
-          that.setData({
-            listCount: res.data.listCount
-          })
-        },
-        fail: function () { },
-        complete: function () { }
-      })
+    search: function(e) {
+        console.log(e.detail.value)
+        var that = this
+        wx.request({
+            url: '', //填充查询url
+            method: 'GET',
+            data: e.detail.value,
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    answer: res.data.xx //需修改
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
+    },
+    selectAnswer: function(e) {
+        //console.log(e)
+        var schoolid = e.currentTarget.dataset.schoolid
+            // app.globalData.schoolID = schoolid
+        wx.request({
+            url: '', //填充选择url
+            method: 'POST',
+            data: {
+                'schoolID': schoolid,
+                'user_ID': app.globalData.user_ID
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function() {
+                app.globalData.schoolID = schoolid
+                app.globalData.schoolName = e.currentTarget.dataset.schoolname
+                wx.showToast({
+                    title: '修改成功',
+                    icon: 'succes',
+                    duration: 1000
+                })
+                setTimeout(function() {
+                    wx.navigateBack({
+
+                    })
+                }, 1000);
+
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     }
 })
