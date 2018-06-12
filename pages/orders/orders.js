@@ -108,7 +108,7 @@ Page({
                 recName: '刘同学',
                 exWeight: '<1KG',
                 exSize: '小件',
-                exExTime: '05-07 18:00'
+                exExTime: '05-07 18:00',
             }
         ],
 
@@ -179,7 +179,7 @@ Page({
     },
     toPubDetails: function() {
         wx.navigateTo({
-          url: '../orderDetailsPub/orderDetailsPub',
+            url: '../orderDetailsPub/orderDetailsPub',
         })
     }
 })

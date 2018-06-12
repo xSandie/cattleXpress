@@ -7,20 +7,24 @@ Page({
         myPoliceList: [{
             LName: '向',
             policeStatus: 13,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节"
+            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
+            reportOrderID: '1545',
         }, {
             LName: '刘',
             policeStatus: 10,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节"
+            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
+            reportOrderID: '1545',
         }],
         policeMeList: [{
             LName: '刘',
             policeStatus: 13,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节"
+            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
+            reportOrderID: '1545',
         }, {
             LName: '刘',
             policeStatus: 10,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节"
+            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
+            reportOrderID: '1545',
         }]
     },
 
@@ -79,14 +83,18 @@ Page({
     onShareAppMessage: function() {
 
     },
-    toDetailProposal: function() {
+    toDetailProposal: function(event) {
+        var that = this
+        var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
-            url: '../policeDetailProposal/policeDetailProposal',
+            url: '../policeDetailProposal/policeDetailProposal?id=' + reportOrderID,
         })
     },
-    toDetailRec: function() {
+    toDetailRec: function(event) {
+        var that = this
+        var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
-            url: '../policeDetailRec/policeDetailRec',
+            url: '../policeDetailRec/policeDetailRec?id=' + reportOrderID,
         })
     }
 })
