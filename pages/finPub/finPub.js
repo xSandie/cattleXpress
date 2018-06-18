@@ -34,7 +34,7 @@ Page({
         sendLoc: '宿舍区' + '·' + '周园',
         sdlocArray: [
             ['宿舍区', '教学区', '其他区域', '跨校区'],
-            ['周园', '秦园', '汉园', '唐园', '梅园', '兰园', '硕士楼', '研究生公寓', '博士2号楼', '竹园']
+           []
         ],
         sdlocIndex: [0, 0],
         sdlocfirstIndex: 0,
@@ -90,7 +90,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-       
+
     },
 
     /**
@@ -104,93 +104,16 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-      // var that = this
-      // wx.getStorage({
-      //   key: 'sizeArr',
-      //   success: function (res) {
-      //     that.setData({
-      //       checkboxItems: res.data
-      //     })
-      //   },
-      // })
-      // wx.getStorage({
-      //   key: 'FORMrow1',
-      //   success: function (res) {
-      //     that.setData({
-      //       sdlocIndex: res.data.DeRecLocSel,
-      //       dateIndex: res.data.exTimeConDate,
-      //       setDef: res.data.setDef
-      //     })
-      //   }
-      // })
-      // wx.getStorage({
-      //   key: 'FORM1',
-      //   success: function (res) {
-      //     that.setData({
-      //       conPhoneNum: res.data.conPhoneNum,
-      //       sendLoc: res.data.DeRecLocSel,
-      //       sendLocIn: res.data.DeRecLocIn,
-      //       recName: res.data.recName,
-      //       phoneRear: res.data.phoneRear,
-      //       expressLoc: res.data.selExCon,
-      //     })
-      //   },
-      // })
-      // wx.getStorage({
-      //   key: 'FORMrow2',
-      //   success: function (res) {
-      //     that.setData({
-      //       fetchCode: res.data.fetchCode,
-      //       sexIndex: res.data.sexLimit,
-      //       weIndex: res.data.weightInfo,
-      //     })
-      //   },
-      // })
-      // wx.getStorage({
-      //   key: 'FORM2',
-      //   success: function (res) {
-      //     if (res.data.rewardIn instanceof Array) {
-      //       that.setData({
-      //         reward: res.data.rewardIn[0]
-      //       })
-      //     } else {
-      //       that.setData({
-      //         reward: res.data.rewardIn
-      //       })
-      //     }
-      //     that.setData({
-      //       worchecked: res.data.worInfo,
-      //       lastDep: res.data.otherInfo
-      //     })
-      //   },
-      // })
-      this.setData({
-        exlocArray: app.globalData.exlocArray,
-        column2_0: app.globalData.column2_0,
-        column2_1: app.globalData.column2_1,
-        column2_2: app.globalData.column2_2,
-        column2_3: app.globalData.column2_3,
-      })
       var that = this
-      wx.request({//请求默认地址
-        url: '', //填充url请求
-        method: 'GET',
-        data: {
-          'user_ID': app.globalData.user_ID,
-        },
-        header: {
-          "Content-Type": "applciation/json"
-        },
-        success: function (res) {
-          that.setData({
-            default: res.data.xx//需替换
-          })
-        },
-        fail: function () { },
-        complete: function () { }
-      })
-
-
+        this.setData({
+            exlocArray: app.globalData.exlocArray,
+            column2_0: app.globalData.column2_0,
+            column2_1: app.globalData.column2_1,
+            column2_2: app.globalData.column2_2,
+            column2_3: app.globalData.column2_3,
+            sdlocArray: [['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0]
+        })
+        var that = this
         wx.getStorage({
             key: 'sizeArr',
             success: function(res) {
@@ -205,7 +128,7 @@ Page({
                 that.setData({
                     sdlocIndex: res.data.DeRecLocSel,
                     dateIndex: res.data.exTimeConDate,
-                    setDef: res.data.setDef[0]
+                    setDef: res.data.setDef
                 })
             }
         })
@@ -245,7 +168,7 @@ Page({
                     })
                 }
                 that.setData({
-                    worchecked: res.data.worInfo[0],
+                    worchecked: res.data.worInfo,
                     lastDep: res.data.otherInfo
                 })
             },
@@ -293,46 +216,78 @@ Page({
         // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
         e.detail.value.exTimeConDate = this.data.default.dateRange[this.data.dateIndex]
         if (e.detail.value.DeRecLocIn == '') {
-            e.detail.value.DeRecLocIn = this.data.default.sendLocIn;
+            e.detail.value.DeRecLocIn = this.data.sendLocIn;
         }
         if (e.detail.value.conPhoneNum == '') {
-            e.detail.value.conPhoneNum = this.data.default.conPhoneNum;
+            e.detail.value.conPhoneNum = this.data.conPhoneNum;
         }
         if (e.detail.value.recName == '') {
-            e.detail.value.recName = this.data.default.recName;
+            e.detail.value.recName = this.data.recName;
         }
         if (e.detail.value.phoneRear == '') {
-            e.detail.value.phoneRear = this.data.default.phoneRear;
+            e.detail.value.phoneRear = this.data.phoneRear;
         }
         if (e.detail.value.rewardIn == '') {
             e.detail.value.rewardIn = this.data.reward;
         }
+        if (e.detail.value.otherInfo == '') {
+            e.detail.value.otherInfo = this.data.lastDep
+        }
         e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex];
         console.log(e.detail.value)
+        var event = e.detail.value
         var that = this
+        console.log(app.globalData.user_ID)
         wx.request({
-            url: '', //填充url发送表单json
+            url: 'http://10.2.24.200:8080/HelloWord/publish/publishinfo', //填充发布订单url
             method: 'POST',
             data: {
-                'body': that.data.uploadList,
-                'user_ID': app.globalData.user_ID
+                userID: app.globalData.user_ID,
+                schoolID: app.globalData.schoolID,
+                //订单具体信息
+                contactNum: event.conPhoneNum,
+                sendArea: event.DeRecLocSel,
+                sendLoc: event.DeRecLocIn,
+                recName: event.recName,
+                phoneRear: event.phoneRear,
+                setDefault: event.setDef,
+                fetchCode: event.fetchCode,
+                expressLoc: event.selExCon,
+                deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
+                sexLimit: event.sexLimit,
+                reward: event.rewardIn,
+                weightEsti: event.weightInfo,
+                sizeEsti: event.sizeInfo,
+                worried: event.worInfo,
+                depict: event.otherInfo,
             },
             header: {
-                "Content-Type": "applciation/json"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
-            success: function() {
-                console.log("表单提交成功")
-                wx.showToast({
-                    title: '发布成功',
-                    icon: 'success',
-                    duration: 1000
-                })
-                setTimeout(function() {
-                    wx.switchTab({
-                        url: '../orders/orders',
+            success: function(res) {
+                console.log(res)
+                if (res.statusCode == 200) {
+                    console.log("表单提交成功")
+                    wx.showToast({
+                        title: '发布成功',
+                        icon: 'success',
+                        duration: 1000
                     })
-                }, 1000);
+                    setTimeout(function() {
+                        wx.switchTab({
+                            url: '../orders/orders',
+                        })
+                    }, 1000);
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '出了点小问题，请稍后再试噢',
+                        showCancel: false,
+                        confirmText: '返回',
+                        confirmColor: '#faaf42',
+                    })
+                }
             },
             fail: function() {
                 // wx.showToast({
@@ -345,14 +300,6 @@ Page({
                 //         url: '../orders/orders',
                 //     })
                 // }, 1000);
-
-              wx.showModal({
-                title: '提示',
-                content: '网络不太畅通，请稍后再试噢',
-                showCancel: false,
-                confirmText: '返回',
-                confirmColor: '#faaf42',
-              })
             },
             complete: function() {}
         })
@@ -510,6 +457,20 @@ Page({
         var setDefault = this.data.setDef;
         this.setData({
             setDef: !setDefault
+        })
+    },
+    differLink: function() {
+        wx.showModal({
+            title: '区别',
+            content: '联系电话是代领者与你联系时使用的号码，收货电话是领取你的快递时用的号码（建议使用不同号码）。',
+            confirmColor: '#faaf42',
+            confirmText: '知道啦',
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                }
+            }
         })
     }
 })

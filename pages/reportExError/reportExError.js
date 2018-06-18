@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
     /**
@@ -5,7 +6,7 @@ Page({
      */
     data: {
         exLogo: '../../images/STOLOGO.png',
-        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
+        exLocTime: '周一至周日08：00至19：00',
         exInstance: '申通快递·阳光苑',
         //原实例时间地点
 
@@ -16,13 +17,40 @@ Page({
         expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
+        expressID: null
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function(options) { //获取快递站点基本信息
+        var that = this
+        wx.request({
+            url: '', //填充单独报错URL
+            method: 'GET',
+            data: {
+                'expressLocID': options.id,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    //设置页面参数
+                    exLogo: res.data,
+                    exLocTime: res.data,
+                    exInstance: res.data,
+                    expressLoc: res.data, //与上面相同
+                    expressID: res.data,
 
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
+        this.setData({
+            exlocArray: app.globalData.exlocArray
+        })
     },
 
     /**
@@ -73,8 +101,31 @@ Page({
     onShareAppMessage: function() {
 
     },
-    fixReport: function() {
-
+    fixReport: function(e) {
+        var that = this
+        console.log(e)
+        wx.request({
+            url: '', //填充报错URL
+            method: 'POST',
+            data: {
+                'exLocTime': e.detail.value.reportIn,
+                'exInstance': e.detail.value.selExCon,
+                'expressID': that.data.expressID,
+                'userID': app.globalData.user_ID
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                wx.showToast({
+                    title: '提交成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     },
     exlocChange: function(e) {
         console.log(e);

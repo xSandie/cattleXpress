@@ -50,7 +50,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-       
+
     },
 
     /**
@@ -69,16 +69,16 @@ Page({
         })
         var that = this;
         wx.getStorage({
-          key: 'FORM1',
-          success: function (res) {
-            that.setData({
-              exCon: res.data.selExCon,
-              sdLoc: res.data.DeRecLocSel,
-              conPhoneNum: res.data.conPhoneNum,
-              phoneRear: res.data.phoneRear,
-              recName: res.data.recName
-            })
-          },
+            key: 'FORM1',
+            success: function(res) {
+                that.setData({
+                    exCon: res.data.selExCon,
+                    sdLoc: res.data.DeRecLocSel,
+                    conPhoneNum: res.data.conPhoneNum,
+                    phoneRear: res.data.phoneRear,
+                    recName: res.data.recName
+                })
+            },
         })
     },
 
@@ -140,76 +140,161 @@ Page({
         console.log(e.detail.value)
         var that = this;
         wx.setStorage({
-            key: 'sizeArr',
-            data: that.data.checkboxItems,
-        })
-        setTimeout(function() {
-            wx.setStorage({
-                key: 'FORM2',
-                data: e.detail.value,
+                key: 'sizeArr',
+                data: that.data.checkboxItems,
             })
-            if (that.data.checking == true) {
-                wx.showToast({
-                    title: '全速整合中',
-                    icon: 'loading',
-                    duration: 500
-                })
-                wx.navigateTo({
-                    url: '../finPub/finPub',
-                })
-            } else {
-                wx.getStorage({
-                    key: 'FORM1',
-                    success: function(res) {
-                        var uploadlist = Object.assign({}, res.data, e.detail.value)
-                        console.log(uploadlist)
-                        that.setData({
-                            uploadList: uploadlist
-                        })
-                        console.log(that.data.uploadList)
-                        wx.request({
-                            url: '', //填充url发送表单json
-                            method: 'POST',
-                            data: {
-                                'body': that.data.uploadList,
-                                'user_ID': app.globalData.user_ID
-                            },
-                            header: {
-                                "Content-Type": "applciation/json"
-                            },
-                            success: function() {
-                                console.log("表单提交成功")
-                                wx.showToast({
-                                    title: '发布成功',
-                                    icon: 'success',
-                                    duration: 2000
-                                })
-                                that.setData({
-                                    checking: false
-                                })
-                                wx.switchTab({
-                                    url: '../orders/orders',
-                                })
-                            },
-                            fail: function() {
-                              wx.showModal({
-                                title: '提示',
-                                content: '网络不太畅通，请稍后再试噢',
-                                showCancel: false,
-                                confirmText: '返回',
-                                confirmColor: '#faaf42',
-                              })
-                                    //console.log(app.globalData.userInfo)
-                            },
-                            complete: function() {}
-                        })
+            // setTimeout(function() {
+        wx.setStorage({
+            key: 'FORM2',
+            data: e.detail.value,
+        })
+        wx.showLoading({
+            title: '全速整合中',
+            mask: true, //是否显示透明蒙层，防止触摸穿透，默认：false  
+            success: function() {
+                if (that.data.checking == true) {
+                    wx.hideLoading()
+                    wx.navigateTo({
+                        url: '../finPub/finPub',
+                    })
+                } else {
+                    wx.getStorage({
+                        key: 'FORM1',
+                        success: function(res) {
+                            var uploadlist = Object.assign({}, res.data, e.detail.value)
+                            console.log(uploadlist)
+                            var event = uploadlist
+                                // that.setData({
+                                //     uploadList: uploadlist
+                                // })
+                            console.log(event.DeRecLocSel)
+                            wx.request({
+                                url: 'http://10.2.24.200:8080/HelloWord/publish/publishinfo', //填充发布订单url
+                                method: 'POST',
+                                data: {
+                                    userID: app.globalData.user_ID,
+                                    schoolID: app.globalData.schoolID,
+                                    //订单具体信息
+                                    contactNum: event.conPhoneNum,
+                                    sendArea: event.DeRecLocSel,
+                                    sendLoc: event.DeRecLocIn,
+                                    recName: event.recName,
+                                    phoneRear: event.phoneRear,
+                                    setDefault: event.setDef,
+                                    fetchCode: event.fetchCode,
+                                    expressLoc: event.selExCon,
+                                    deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
+                                    sexLimit: event.sexLimit,
+                                    reward: event.rewardIn,
+                                    weightEsti: event.weightInfo,
+                                    sizeEsti: event.sizeInfo,
+                                    worried: event.worInfo,
+                                    depict: event.otherInfo,
+                                },
+                                header: {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                },
+                                success: function(res) {
+                                    wx.hideLoading()
+                                    console.log("表单提交成功")
+                                    wx.showToast({
+                                        title: '发布成功',
+                                        icon: 'success',
+                                        duration: 2000
+                                    })
+                                    that.setData({
+                                        checking: false
+                                    })
+                                    wx.switchTab({
+                                        url: '../orders/orders',
+                                    })
+                                },
+                                fail: function() {
+                                    wx.hideLoading()
+                                    wx.showModal({
+                                            title: '提示',
+                                            content: '网络不太畅通，请稍后再试噢',
+                                            showCancel: false,
+                                            confirmText: '返回',
+                                            confirmColor: '#faaf42',
+                                        })
+                                        //console.log(app.globalData.userInfo)
+                                },
+                                complete: function() {}
+                            })
 
-                    },
-                    fail: function(res) {},
-                    complete: function(res) {},
-                })
-            }
-        }, 1000);
+                        },
+                        fail: function(res) {},
+                        complete: function(res) {},
+                    })
+                }
+            }, //接口调用成功的回调函数  
+            fail: function() {}, //接口调用失败的回调函数  
+            complete: function() {} //接口调用结束的回调函数  
+        })
+
+        // if (that.data.checking == true) {
+        //     // wx.showToast({
+        //     //     title: '全速整合中',
+        //     //     icon: 'loading',
+        //     //     duration: 1000
+        //     // })
+        //     wx.navigateTo({
+        //         url: '../finPub/finPub',
+        //     })
+        // } else {
+        //     wx.getStorage({
+        //         key: 'FORM1',
+        //         success: function(res) {
+        //             var uploadlist = Object.assign({}, res.data, e.detail.value)
+        //             console.log(uploadlist)
+        //             that.setData({
+        //                 uploadList: uploadlist
+        //             })
+        //             console.log(that.data.uploadList)
+        //             wx.request({
+        //                 url: '', //填充url发送表单json
+        //                 method: 'POST',
+        //                 data: {
+        //                     'body': that.data.uploadList,
+        //                     'user_ID': app.globalData.user_ID
+        //                 },
+        //                 header: {
+        //                     "Content-Type": "applciation/json"
+        //                 },
+        //                 success: function() {
+        //                     console.log("表单提交成功")
+        //                     wx.showToast({
+        //                         title: '发布成功',
+        //                         icon: 'success',
+        //                         duration: 2000
+        //                     })
+        //                     that.setData({
+        //                         checking: false
+        //                     })
+        //                     wx.switchTab({
+        //                         url: '../orders/orders',
+        //                     })
+        //                 },
+        //                 fail: function() {
+        //                     wx.showModal({
+        //                             title: '提示',
+        //                             content: '网络不太畅通，请稍后再试噢',
+        //                             showCancel: false,
+        //                             confirmText: '返回',
+        //                             confirmColor: '#faaf42',
+        //                         })
+        //                         //console.log(app.globalData.userInfo)
+        //                 },
+        //                 complete: function() {}
+        //             })
+
+        //         },
+        //         fail: function(res) {},
+        //         complete: function(res) {},
+        //     })
+        // }
+        // }, 1000);
 
 
     },

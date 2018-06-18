@@ -1,12 +1,12 @@
 <view class="header"></view>
 <form bindsubmit="report" class="container">
-    <view class="floatCard">
+    <view hover-class="answerHover1" class="floatCard">
         <view class="people">
             <text class="topTi">被举报人</text>
             <text class="LName">{{LName}}</text>
-            <text class="reportTime">{{reportTime}}</text>
+            <text  class="reportTime">{{reportTime}}</text>
         </view>
-        <button class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button>
+        <button  class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button>
     </view>
     <view class="reasonA">
         <view class="reportIn" wx:if="{{reportProcess==0}}">
@@ -86,26 +86,26 @@
     </view>
     <view class="btnA">
         <view class='BtnArea' wx:if="{{reportProcess==0}}">
-            <button class='contact' bindtap="uploadIMG" formType="submit">
-            <text class='conText' >举报</text>
+            <button  hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <text>举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess==2}}">
-            <button class='contact' bindtap="uploadIMG" formType="submit">
-            <text class='conText' >继续举报</text>
+            <button  hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <text>继续举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
             <view class='dirGet' bindtap="retrieve">
-                <text class='lDGT'>撤销举报</text>
+                <view hover-class="defaultHover" class='lDGT'>撤销举报</view>
                 <text class='sDGT'>请谨慎撤销</text>
             </view>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess!=2&&reportProcess!=0}}">
-            <button class='contact' bindtap="retrieve">
-            <text class='conText' >撤销举报</text>
+            <button  hover-class="defaultHover" class='contact' bindtap="retrieve">
+            <text>撤销举报</text>
             <image mode='aspectFill' src='{{retrieveIcon}}' class='conIcon'></image>     
             </button>
             <view></view>

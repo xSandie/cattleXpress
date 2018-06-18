@@ -20,7 +20,7 @@
             <switch checked="{{studentOrTeacher}}" hidden name="studentOrTeacher"/>
             <!--true为学生，false为老师-->
         </view>
-        <view hover-class="answerHover" class="selectSchool" bindtap="schoolInput">
+        <view  hover-class="answerHover" class="selectSchool" bindtap="schoolInput">
             <image class="schoolIcon" src="{{schoolIcon}}"></image>
             <view class="cline"></view>
             <view class="schoolInput" ><text>{{schoolName}}</text></view>
@@ -31,7 +31,7 @@
                 <view class="row" style='background:{{row1?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="inA">
-                <input type="text" name="password" class="inputMy" placeholder="密码" password bindtap="change2"/>
+                <input type="text" name="password" class="inputMy" placeholder="密码（测试期间不做校验）" password bindtap="change2"/>
                 <view class="row" style='background:{{row2?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="inA">
@@ -39,7 +39,7 @@
                 <view class="row" style='background:{{row3?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="btnA">
-                <button class="btnMy" formType="submit" hover-class="defaultTap">
+                <button class="btnMy" formType="submit" hover-class="defaultHover">
                     <text>通过验证</text>
                     <image class="passCertifIcon" src="{{passCertifIcon}}"></image></button>
                 <view class="codeA">

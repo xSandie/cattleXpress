@@ -5,7 +5,7 @@
             <image class='locIcon' src="{{loctionSrc}}"></image>
             </block>
             <view class='schoolText'>
-                <view class='realSNText'><text>{{mySchoolName}}</text></view>
+                <view hover-class="answerHover" class='realSNText'><text>{{mySchoolName}}</text></view>
             </view>
             <view>
                 <image class='pullIcon' src='{{pullIcon}}'></image>
@@ -13,7 +13,7 @@
         </view>
         <view class='mainSelect'>
             <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
-               <view class='expressLoc'>
+               <view hover-class="answerHover1" class='expressLoc'>
                     <view class='elIcon'>
                     <image class='elIconImg' src="{{elIconImg}}"></image>  
                     </view>
@@ -28,7 +28,7 @@
                </view> 
             </picker>
             <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}">
-                <view class='sendLoc'>
+                <view  hover-class="answerHover1" class='sendLoc'>
                     <view class='slIcon'>
                     <image class='slIconImg' src="{{slIconImg}}"></image>     
                     </view>
@@ -46,7 +46,7 @@
     </view>
 
     <view class='list'>
-        <view class='listItem' wx:key="{{item.key}}" wx:for="{{listCount}}">
+        <view class='listItem' hover-class="answerHover1" wx:key="{{item.key}}" wx:for="{{listCount}}">
             <view class='rowFlex' data-order-id="{{item.id}}" bindtap="toSumDetail">
                 <view class='reward'>
                         <view class='rcText'>
@@ -93,18 +93,26 @@
         </view>
     </view>
     <view class='fbtnBox'>
-        <view class='floatBtn' wx:if="{{!fabuOrDingbu}}" bindtap="toTop">
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{!fabuOrDingbu}}" bindtap="toTop">
             <text class='hBtnText'>回到顶部</text>
             <image class='hBtnIcon' src='{{topIcon}}'></image>
         </view>
-        <view class='floatBtn' wx:if="{{fabuOrDingbu}}" bindtap="toPub">
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{fabuOrDingbu}}" bindtap="toPub">
             <text class='hBtnText'>发布</text>
             <image class='hBtnIcon' src='{{topubIcon}}'></image>
         </view>
     </view>
-    <view class='prompt'>
+    <view wx:if="{{atEnd}}" class='prompt'>
         <view class='lineCss'></view>
         <text>黄牛是有底线的</text>
+        <view class='lineCss'></view>
+    </view>
+    <view class="blankArea" wx:if="{{!listCount}}">
+        <image class='blankIcon' src='{{blankIcon}}'></image>
+    </view>
+    <view wx:if="{{!listCount}}" class='prompt'>
+        <view class='lineCss'></view>
+        <text>暂无订单</text>
         <view class='lineCss'></view>
     </view>
 </view>

@@ -7,11 +7,13 @@ Page({
      */
     data: {
         schoolIcon: "../../images/schoolIcon.png",
-        answer: [{
-            name: "陕西师范大学（长安校区）",
-            schoolID: 155
-        }]
+        answer: []
     },
+
+    /*{
+        name: "陕西师范大学（长安校区）",
+        schoolID: 155
+    }*/
 
     /**
      * 生命周期函数--监听页面加载
@@ -72,15 +74,17 @@ Page({
         console.log(e.detail.value)
         var that = this
         wx.request({
-            url: '', //填充查询url
+            url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolinfo', //填充查询url
             method: 'GET',
-            data: e.detail.value,
+            data: {
+                school: e.detail.value.schoolName,
+            },
             header: {
                 "Content-Type": "applciation/json"
             },
             success: function(res) {
                 that.setData({
-                    answer: res.data.xx //需修改
+                    answer: res.data //需修改
                 })
             },
             fail: function() {},
@@ -92,14 +96,14 @@ Page({
         var schoolid = e.currentTarget.dataset.schoolid
             // app.globalData.schoolID = schoolid
         wx.request({
-            url: '', //填充选择url
+          url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolidwaitreceive', //填充选择url
             method: 'POST',
             data: {
-                'schoolID': schoolid,
-                'user_ID': app.globalData.user_ID
+              schoolID: schoolid,
+              Account: app.globalData.user_ID
             },
             header: {
-                "Content-Type": "applciation/json"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function() {
                 app.globalData.schoolID = schoolid
@@ -107,14 +111,13 @@ Page({
                 wx.showToast({
                     title: '修改成功',
                     icon: 'succes',
-                    duration: 1000
+                    duration: 1000,
+                    success: function() {
+                        wx.navigateBack({
+
+                        })
+                    }
                 })
-                setTimeout(function() {
-                    wx.navigateBack({
-
-                    })
-                }, 1000);
-
             },
             fail: function() {},
             complete: function() {}

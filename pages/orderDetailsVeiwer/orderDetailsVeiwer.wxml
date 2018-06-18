@@ -3,11 +3,11 @@
         <image class='exLogo' src="{{exLogo}}"></image>
         <view class='exDetail'>
             <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>{{exLocTime}}</text>
+            <text class='exLocTime'>营业时间:{{exLocTime}}</text>
         </view>
         <view class='cline'>   
         </view>
-        <view data-express-id="{{expressID}}" class='fixBtn' bindtap='toFix'>
+        <view  hover-class="answerHover1"  data-express-id="{{expressID}}" class='fixBtn' bindtap='toFix'>
             <image src="{{fxIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
@@ -74,12 +74,12 @@
     <view class='fxdBtnBac'>    
     </view>
     <view class='fxdBtnArea'>
-        <view class='contact' data-order-id="{{orderId}}" bindtap="recOrder">
-          <text class='conText' >点此接单</text>
+        <view class='contact' hover-class="defaultHover" data-order-id="{{orderId}}" bindtap="recOrder">
+          <text>点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
         </view>
         <view class='dirGet' bindtap="conTA">
-            <view class='lDGT'>
+            <view hover-class="defaultHover" class='lDGT'>
                <text>联系TA</text>
             </view>
             <view class='sDGT'>

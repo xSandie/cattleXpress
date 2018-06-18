@@ -13,13 +13,13 @@ Page({
         ],
 
         default: {
-            conPhoneNum: 15529268167,
-            sendLoc: '宿舍区' + '·' + '周园',
-            sendLocIn: 'D1-340',
-            recName: '向书晗',
-            phoneRear: '9021',
-            date: '06-01', //往后加一天
-            dateRange: ['06-01', '06-02', '06-03', '其他']
+            conPhoneNum: '点击输入电话号码',
+            sendLoc: '选择地点',
+            sendLocIn: '填写地点',
+            recName: '填写姓名',
+            phoneRear: '四位数字',
+            //date: '点击选择日期', //往后加一天
+            dateRange: ['06-01','06-02','06-03','其他']
         },
 
 
@@ -30,10 +30,10 @@ Page({
         expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
-        sendLoc: '宿舍区' + '·' + '周园',
+        sendLoc: '宿舍区' + '·' + '周园', //默认
         sdlocArray: [
             ['宿舍区', '教学区', '其他区域', '跨校区'],
-            ['周园', '秦园', '汉园', '唐园', '梅园', '兰园', '硕士楼', '研究生公寓', '博士2号楼', '竹园']
+            []
         ],
         sdlocIndex: [0, 0],
         sdlocfirstIndex: 0,
@@ -51,15 +51,6 @@ Page({
 
 
         nbtnIcon: "../../images/next.png",
-        // lastDep: "简单描述下您的快递（不超过50字）",
-        // worchecked: false,
-        // exWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
-        // weIndex: 0,
-        // checkboxItems: [
-        //     { name: 'BEx', value: '大件' },
-        //     { name: 'MEx', value: '中件' },
-        //     { name: 'SEx', value: '小件', checked: true }
-        // ],
         setDef: false,
         publishIMG: "../../images/publishIMG1.png"
     },
@@ -68,7 +59,22 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        if (app.globalData.ourUserStatus == 4) {
+            wx.showModal({
+                title: '请认证',
+                content: '点击确定前往教务系统认证！',
+                confirmColor: '#faaf42',
+                showCancel: false,
+                success: function(res) {
+                    if (res.confirm) {
+                        console.log('用户点击确定')
+                        wx.redirectTo({
+                            url: '../certifPage/certifPage'
+                        })
+                    }
+                }
+            })
+        }
     },
 
     /**
@@ -82,31 +88,39 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-      this.setData({
-        exlocArray: app.globalData.exlocArray,
-        column2_0: app.globalData.column2_0,
-        column2_1: app.globalData.column2_1,
-        column2_2: app.globalData.column2_2,
-        column2_3: app.globalData.column2_3,
-      })
       var that=this
-      wx.request({//请求默认地址
-        url: '', //填充url请求
-        method: 'GET',
-        data: {
-          'user_ID': app.globalData.user_ID,
-        },
-        header: {
-          "Content-Type": "applciation/json"
-        },
-        success: function (res) {
-          that.setData({
-            default: res.data.xx//需替换
-          })
-        },
-        fail: function () { },
-        complete: function () { }
-      })
+        this.setData({
+          default: app.globalData.default,
+            exlocArray: app.globalData.exlocArray,
+            column2_0: app.globalData.column2_0,
+            column2_1: app.globalData.column2_1,
+            column2_2: app.globalData.column2_2,
+            column2_3: app.globalData.column2_3,
+            sdlocArray: [['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0],
+            
+        })//执行完才提交
+        this.setData({
+          sendLoc: that.data.default.sendLoc
+        })
+        var that = this
+        wx.request({ //请求默认地址
+                url: '',
+                method: 'GET',
+                data: {
+                    'user_ID': app.globalData.user_ID,
+                },
+                header: {
+                    "Content-Type": "applciation/json"
+                },
+                success: function(res) {
+                    that.setData({
+                        default: res.data.xx //需替换
+                    })
+                },
+                fail: function() {},
+                complete: function() {}
+            })
+            //设置sdloc初始值
     },
 
     /**
@@ -223,22 +237,6 @@ Page({
             time: e.detail.value
         })
     },
-
-
-    // weInfoChange: function(e) {
-    //     console.log(e);
-    //     this.setData({
-    //         weIndex: e.detail.value
-    //     })
-    // },
-
-    // checking: function() {
-    //     this.setData({
-    //         checking: true
-    //     })
-    //     console.log("checking")
-    // },
-
     firstOrdSubmit: function(e) {
         wx.setStorage({
                 key: 'FORMrow1',
@@ -262,18 +260,9 @@ Page({
         }
         console.log('form发生了submit事件，携带数据为：', e.detail.value)
         wx.setStorage({
-                key: 'FORM1',
-                data: e.detail.value,
-            }) //设置缓存
-            // setTimeout(function() {
-            //     wx.getStorage({
-            //         key: 'FORM1',
-            //         success: function(res) {
-            //             console.log(res.data)
-            //             console.log(res.data.DeRecLocIn)
-            //         }
-            //     })
-            // }, 1000);
+            key: 'FORM1',
+            data: e.detail.value,
+        })
         wx.navigateTo({
             url: '../publish2/publish2',
         })
@@ -284,42 +273,18 @@ Page({
             setDef: !setDefault
         })
     },
-    // testTap: function() {
-    //     console.log('按钮被点击了')
-    // },
-    // worcheck: function() {
-    //     var worchecked1 = !this.data.worchecked;
-    //     this.setData({
-    //         worchecked: worchecked1
-    //     })
-    // },
-
-    // checkboxChange: function(e) {
-    //     console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
-    //     console.log(e)
-    //     switch (e.detail.value) {
-    //         case '大件':
-    //             this.setData({
-    //                 checkboxItems: [{ name: 'BEx', value: '大件', checked: true },
-    //                     { name: 'MEx', value: '中件' },
-    //                     { name: 'SEx', value: '小件' }
-    //                 ]
-    //             })
-    //             break;
-    //         case '中件':
-    //             this.setData({
-    //                 checkboxItems: [{ name: 'BEx', value: '大件' },
-    //                     { name: 'MEx', value: '中件', checked: true },
-    //                     { name: 'SEx', value: '小件' }
-    //                 ]
-    //             })
-    //             break;
-    //         case '小件':
-    //             checkboxItems: [{ name: 'BEx', value: '大件' },
-    //                 { name: 'MEx', value: '中件' },
-    //                 { name: 'SEx', value: '小件', checked: true }
-    //             ]
-    //             break;
-    //     }
-    // }
+    differLink: function() {
+        wx.showModal({
+            title: '区别',
+            content: '联系电话是代领者与你联系时使用的号码，收货电话是领取你的快递时用的号码（建议使用不同号码）。',
+            confirmColor: '#faaf42',
+            confirmText: '知道啦',
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                }
+            }
+        })
+    }
 })

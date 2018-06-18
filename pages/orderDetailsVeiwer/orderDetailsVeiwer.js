@@ -6,7 +6,7 @@ Page({
      */
     data: {
         exLogo: '../../images/STOLOGO.png',
-        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
+        exLocTime: '周一至周日08：00至19：00',
         exInstance: '申通快递·阳光苑',
         fxIcon: '../../images/fixBtnIcon.png',
         conIcon: '../../images/checkLight.png',
@@ -69,7 +69,7 @@ Page({
 
         // })
         wx.request({
-            url: '', //填充请求订单详情url
+            url: '', //填充请求浏览者订单详情url
             method: 'GET',
             data: {
                 'orderID': options.id,
@@ -81,6 +81,23 @@ Page({
             success: function(res) {
                 that.setData({
                     //设置页面参数
+                    exLogo: res.data,
+                    exLocTime: res.data,
+                    exInstance: res.data,
+                    expressID: res.data,
+                    //以上是快递站点信息
+                    orderId: res.data,
+                    sdInstance: res.data,
+                    exWorry: res.data,
+                    exWeight: res.data,
+                    exSize: res.data,
+                    exExTime: res.data,
+                    reward: res.data,
+                    schNum: res.data,
+                    LName: res.data,
+                    pubtime: res.data,
+                    phoneNum: res.data,
+                    dText: res.data
                 })
             },
             fail: function() {},
@@ -143,6 +160,7 @@ Page({
      */
     recOrder: function(event) {
         if (this.data.certif == true) {
+            var orderId = event.currentTarget.dataset.orderId;
             wx.showModal({
                 title: '确认接单',
                 content: '接单后要准时送达噢',
@@ -150,11 +168,22 @@ Page({
                 success: function(res) {
                     if (res.confirm) {
                         console.log('用户点击确定')
-                        console.log(event)
-                        var orderId = event.currentTarget.dataset.orderId;
-                        console.log(orderId)
-                        wx.redirectTo({
-                            url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
+                            //接单动作
+                        wx.request({
+                            url: 'http://10.2.24.200:8080/HelloWord/receivecode/getopenid', //订单动作接口
+                            method: 'POST',
+                            data: {
+                                'orderID': orderId,
+                                'user_ID': app.globalData.user_ID,
+                                'nextStat': 2
+                            },
+                            success: function(res) {
+                                console.log(event)
+                                console.log(orderId)
+                                wx.redirectTo({
+                                    url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
+                                })
+                            },
                         })
                     } else if (res.cancel) {
                         console.log('用户点击取消')

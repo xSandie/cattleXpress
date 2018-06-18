@@ -238,3 +238,16 @@ button::after {
     margin-left: auto;
     margin-right: auto;
 }
+
+.defaultHover {
+    color: #6D6141;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: rgb(240, 240, 245);
+}
+
+.answerHover1 {
+    background: rgb(240, 240, 245);
+}

@@ -58,6 +58,10 @@ button::after {
     border: none;
 }
 
+.answerHover {
+    background: rgba(238, 241, 253, 0.76);
+}
+
 .Ti {
     color: #999ba1;
     font-size: 20rpx;
@@ -129,4 +133,9 @@ form {
     font-size: 36rpx;
     color: #373c46;
     width: 100%;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: rgb(240, 240, 245);
 }

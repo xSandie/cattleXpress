@@ -106,13 +106,13 @@
                 </view>
             </view>
             <view class="btnA">
-                <button class="checkBtn" bindtap="checking" formType="submit">
+                <button hover-class="defaultHover" class="checkBtn" bindtap="checking" formType="submit">
                     <view class='nbtnT'>
                         <text>检查一下</text>
                     </view>    
                     <image class='nbtnIcon' src="{{checkBtnIcon}}"></image>
                 </button>
-                <button formType="submit" class='pubBtn'>发布</button>
+                <button formType="submit" hover-class="defaultHover" class='pubBtn'>发布</button>
             </view>
        </view>
          

@@ -46,7 +46,7 @@
                 <text wx:if="{{setDef==false}}">设为默认</text>
                 <switch checked="{{setDef}}" hidden name="setDef"/>       
             </view>
-            <view class='differLink' bindtap="differLink">
+            <view class='differLink' catchtap="differLink">
                 <text>· 联系电话与收货手机号的区别</text>
             </view>
         </view>
@@ -81,7 +81,7 @@
                         <view class="Ti">
                             <text>取货码</text>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" placeholder="{{fetchCode}}" class="fetchCode"/>
+                        <input type="text" placeholder-class="placeHolder" value="{{fetchCode}}" name="fetchCode" placeholder="{{fetchCode}}" class="fetchCode"/>
                     </view>
                     <view class="sexLimitA">
                         <view class="Ti">
@@ -149,7 +149,7 @@
                 </view>
             </view>
        </view>
-            <button class='fakeBtn' formType="submit"><view class='nbtnT'>
+            <button hover-class="defaultHover" class='fakeBtn' formType="submit"><view class='nbtnT'>
                     <text>发布</text>
                 </view>    
                 <image class='nbtnIcon' src="{{nbtnIcon}}"></image></button>

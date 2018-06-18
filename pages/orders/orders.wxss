@@ -439,3 +439,23 @@ page {
     font-size: 28rpx;
     font-weight: bold;
 }
+
+.answerHover1 {
+    background: rgb(240, 240, 245);
+}
+
+.blankIcon {
+    width: 278rpx;
+    height: 368rpx;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 200rpx;
+    margin-bottom: 20rpx;
+}
+
+.blankArea {
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+}

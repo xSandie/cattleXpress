@@ -48,6 +48,10 @@ form {
     z-index: 15;
 }
 
+.defaultHover {
+    color: #6D6141;
+}
+
 .floatCard {
     box-sizing: border-box;
     padding: 24rpx;
@@ -75,6 +79,7 @@ form {
     position: absolute;
     right: 24rpx;
     top: 64rpx;
+    z-index: 10;
 }
 
 .mainForm {

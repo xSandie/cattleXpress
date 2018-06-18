@@ -303,6 +303,10 @@ button {
     margin-bottom: 20rpx;
 }
 
+.defaultHover {
+    color: #6D6141;
+}
+
 .group {
     box-sizing: border-box;
     display: flex;

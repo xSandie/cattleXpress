@@ -6,12 +6,12 @@
 <!--未完成-->  
 <view hidden="{{currentTab!==0}}">  
     <view class='receive'>
-        <view class='recCardTag'>
+        <view wx:if="{{!blank}}" class='recCardTag'>
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view class='ongoRecList' wx:for="{{ongoRecListCount}}">
-                    <view class='rowFlex'>
+            <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.orderID}}" wx:for="{{ongoRecListCount}}" >
+                    <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -57,12 +57,12 @@
         </view>
     </view>
     <view class='myPub'>
-        <view class='pubCardTag'>
+        <view wx:if="{{!blank}}" class='pubCardTag'>
             <text>我发布的</text>
         </view>
         <view class='orderCard'>
-            <view class='ongoPubList' wx:for="{{ongoPubListCount}}">
-                <view class='rowFlex' bindtap="toPubDetails">
+            <view hover-class="answerHover1" class='ongoPubList' wx:key="{{item.orderID}}" wx:for="{{ongoPubListCount}}">
+                <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toPubDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -108,9 +108,12 @@
             </view> 
         </view>
     </view>
+    <view class="blankArea" wx:if="{{blank}}">
+        <image class='blankIcon' src='{{blankIcon}}'></image>
+    </view>
     <view class='prompt'>
         <view class='lineCss'></view>
-        <text>快去发布订单吧</text>
+        <text>快去发布/接收订单吧</text>
         <view class='lineCss'></view>
     </view>
 </view>  
@@ -122,8 +125,8 @@
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view class='ongoRecList' wx:for="{{finRecListCount}}">
-                    <view class='rowFlex'>
+            <view hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecListCount}}" wx:key="{{item.orderID}}">
+                    <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -151,7 +154,7 @@
                             <view class='finPubisher'>
                                 <image class='pubIcon' src="{{pubIcon}}"></image>
                                 <view class='pubName'>
-                                <text>发布人：{{item.pubName}}</text>
+                                <text>发布人：{{item.pubName}}同学</text>
                                 </view>
                             </view>
                         </view>
@@ -168,8 +171,8 @@
                 <text>我发布的</text>
             </view>
             <view class='orderCard'>
-                <view class='ongoPubList' wx:for="{{finPubListCount}}">
-                    <view class='rowFlex'>
+                <view hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubListCount}}" wx:key="{{item.orderID}}">
+                    <view class='rowFlex' data-order-id="{{item.orderID}}"  bindtap="toPubDetails">
                             <view class='reward'>
                                 <view class='rcText'>
                                         <text>赏金</text>

@@ -72,6 +72,7 @@
     position: absolute;
     right: 24rpx;
     top: 64rpx;
+    z-index: 10;
 }
 
 .fakeBtn {
@@ -187,4 +188,9 @@ button::after {
 
 form {
     z-index: 15;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: rgb(240, 240, 245);
 }

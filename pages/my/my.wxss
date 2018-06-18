@@ -260,3 +260,9 @@ page {
     width: 100%;
     background: #F4F4F4;
 }
+
+.answerHover1 {
+    color: #999ba1;
+    background: rgb(240, 240, 245);
+    border-radius: 10rpx;
+}

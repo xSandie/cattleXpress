@@ -5,16 +5,17 @@ Page({
      * 页面的初始数据
      */
     data: {
-        mySchoolName: '陕西师范大学（长安校区）',
+        mySchoolName: '点击选择学校',
         loctionSrc: "../../images/location.png",
         pubIcon: '../../images/publisher.png',
+        blankIcon: '../../images/blank1.png',
         topIcon: '../../images/bTopIcon.png',
         pullIcon: '../../images/pull.png',
         topubIcon: '../../images/hPubIcon.png',
         elIconImg: '../../images/kdzd.png',
         slIconImg: '../../images/sddd.png',
         fabuOrDingbu: true, //true渲染发布
-        listCount: [{
+        /*listCount: [{
                 exInstance: '申通快递·阳光苑',
                 sdInstance: '宿舍区 硕士楼',
                 exWorry: true,
@@ -72,7 +73,8 @@ Page({
                 id: 159,
                 key: 1
             }
-        ],
+        ],*/
+        listCount: null,
         sendLoc: '选择快递送达地点',
         expressLoc: '选择取快递的站点',
 
@@ -83,18 +85,16 @@ Page({
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
 
-        sdlocArray: [
-            ['宿舍区', '教学区', '其他区域', '跨校区'],
-            ['周园', '秦园', '汉园', '唐园', '梅园', '兰园', '硕士楼', '研究生公寓', '博士2号楼', '竹园']
-        ],
+        sdlocArray: [],
         sdlocIndex: [0, 0],
         sdlocfirstIndex: 0,
         sdlocSecondIndex: 0,
         column2_0: ['周园', '秦园', '汉园', '唐园', '梅园', '兰园', '硕士楼', '研究生公寓', '博士2号楼', '竹园'],
         column2_1: ['文津楼', '文渊楼', '文汇楼', '文澜楼', '格物楼', '致知楼', '逸夫科技楼', '六艺楼'],
-        column2_2: ['图书馆', '校务楼', '阳光苑', '溢香楼', '上林体育馆', '新勇', '终南音乐厅', '教育博物馆', '游泳馆', '家属院', '校医院', '家园生活服务区', '师大附小', '其他'],
+        column2_2: ['图书馆', '校务楼', '阳光苑', '溢香楼', '上林体育馆', '新勇', '终南音乐厅', '教育博物馆', '游泳馆', '家属院', '校医院', '家园', '师大附小', '其他'],
         column2_3: ['长雁通'],
-        requestTime: 1
+        requestTime: 1,
+        atEnd: false,
     },
     /**
      * 会被动态设置的元素，exlocArray，sdlocArray,column2_0123,listCount
@@ -104,25 +104,64 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        var that = this
         wx.getSetting({
             success: function(res) {
                 if (res.authSetting['scope.userInfo']) {
                     wx.getUserInfo({
-                        success: function(res) {
-                            // console.log(res.userInfo)
-                            //用户已经授权过,发送一个get请求3rd_session
-                        }
+                        success: function(res) {}
                     })
                 } else {
                     //未授权
-                    wx.redirectTo({
+                    wx.reLaunch({
                         url: '../welcome/welcome',
                     })
                 }
             }
         })
-
-
+        wx.login({
+            success: function(res) {
+                if (res.code) {
+                    //发起网络请求
+                    wx.request({
+                        url: 'http://10.2.24.200:8080/HelloWord/receivecode/getopenid', //服务器api
+                        data: {
+                            code: res.code
+                        },
+                        success: function(res) { //服务器解密后，客户端收到基本信息
+                            console.log(res.data)
+                            app.globalData.user_ID = res.data[0].account
+                            app.globalData.userName = res.data[0].uname
+                            app.globalData.schoolNumb = res.data[0].uid //学号
+                            app.globalData.schoolID = res.data[0].schoolid
+                            app.globalData.schoolName = res.data[0].school
+                            app.globalData.ourUserStatus = res.data[0].status
+                            app.globalData.sex = res.data[0].sex
+                            app.globalData.exlocArray = res.data[1].kuaidi
+                            app.globalData.column2_0 = res.data[1].sushequ
+                            app.globalData.column2_1 = res.data[1].jiaoxuequ
+                            app.globalData.column2_2 = res.data[1].othersarea
+                            app.globalData.column2_3 = res.data[1].kuaxiaoqu //替换掉xx
+                            app.globalData.balance = res.data[0].money,
+                              app.globalData.default = res.data[1].default
+                                that.setData({
+                                    exlocArray: app.globalData.exlocArray,
+                                    column2_0: app.globalData.column2_0,
+                                    column2_1: app.globalData.column2_1,
+                                    column2_2: app.globalData.column2_2,
+                                    column2_3: app.globalData.column2_3,
+                                    mySchoolName: app.globalData.schoolName,
+                                })
+                        },
+                        fail: function() {
+                            //app.globalData.userInfo = "dfjkadhfkahfauhf"
+                        }
+                    })
+                } else {
+                    console.log('登录失败！' + res.errMsg)
+                } //服务器将存储用户code
+            }
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -135,8 +174,42 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+      wx.login({
+        success: function (res) {
+          if (res.code) {
+            //发起网络请求
+            wx.request({
+              url: 'http://10.2.24.200:8080/HelloWord/receivecode/getopenid', //服务器api
+              data: {
+                code: res.code
+              },
+              success: function (res) { //服务器解密后，客户端收到基本信息
+                app.globalData.user_ID = res.data[0].account
+                app.globalData.userName = res.data[0].uname
+                app.globalData.schoolNumb = res.data[0].uid //学号
+                app.globalData.schoolID = res.data[0].schoolid
+                app.globalData.schoolName = res.data[0].school
+                app.globalData.ourUserStatus = res.data[0].status
+                app.globalData.sex = res.data[0].sex
+                app.globalData.exlocArray = res.data[1].kuaidi
+                app.globalData.column2_0 = res.data[1].sushequ
+                app.globalData.column2_1 = res.data[1].jiaoxuequ
+                app.globalData.column2_2 = res.data[1].othersarea
+                app.globalData.column2_3 = res.data[1].kuaxiaoqu //替换掉xx
+                app.globalData.balance = res.data[0].money,
+                  app.globalData.default = res.data[1].default
+              },
+              fail: function () {
+                //app.globalData.userInfo = "dfjkadhfkahfauhf"
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          } //服务器将存储用户code
+        }
+      });
         this.setData({
-            requestTime: 1
+            requestTime: 1,
         })
         var that = this
         this.setData({
@@ -146,146 +219,32 @@ Page({
             column2_2: app.globalData.column2_2,
             column2_3: app.globalData.column2_3,
             mySchoolName: app.globalData.schoolName,
+            sdlocArray: [['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0]
         })
 
-        //测试用代码
-        // if (app.globalData.ourUserStatus == 3) {
-        //     wx.showModal({
-        //         title: '有未完成订单',
-        //         content: '是否前往查看？',
-        //         confirmText: '查看',
-        //         confirmColor: '#faaf42',
-        //         success: function(res) {
-        //             if (res.confirm) {
-        //                 console.log('用户点击确定')
-        //                 wx.switchTab({
-        //                     url: '../orders/orders',
-        //                 })
-        //             }
-        //         }
-        //     })
-        // }
-        // if (app.globalData.ourUserStatus == 1) {
-        //     wx.showModal({
-        //         title: '有被举报订单',
-        //         content: '是否前往查看？',
-        //         confirmText: '查看',
-        //         confirmColor: '#faaf42',
-        //         success: function(res) {
-        //             if (res.confirm) {
-        //                 console.log('用户点击确定')
-        //                 wx.navigateTo({
-        //                     url: '../policeList/policeList',
-        //                 })
-        //             }
-        //         }
-        //     })
-        // }
-        // if (app.globalData.ourUserStatus == 2) {
-        //     wx.showModal({
-        //         title: '已被封号',
-        //         content: '前往查看原因？',
-        //         showCancel: false,
-        //         confirmText: '查看',
-        //         confirmColor: '#faaf42',
-        //         success: function(res) {
-        //             if (res.confirm) {
-        //                 console.log('用户点击确定')
-        //                 wx.navigateTo({
-        //                     url: '../policeList/policeList',
-        //                 })
-        //             }
-        //         }
-        //     })
-        // }
-
-
-
-
-
-
+        console.log(app.globalData.sex)
         wx.request({
-            url: '', //填充请求状态码地址
-            method: 'GET',
-            data: {
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                app.globalData.ourUserStatus = res.data.listCount
-                if (app.globalData.ourUserStatus == 3) {
-                    wx.showModal({
-                        title: '有未完成订单',
-                        content: '是否前往查看？',
-                        confirmText: '查看',
-                        confirmColor: '#faaf42',
-                        success: function(res) {
-                            if (res.confirm) {
-                                console.log('用户点击确定')
-                                wx.switchTab({
-                                    url: '../orders/orders',
-                                })
-                            }
-                        }
-                    })
-                }
-                if (app.globalData.ourUserStatus == 1) {
-                    wx.showModal({
-                        title: '有被举报订单',
-                        content: '是否前往查看？',
-                        confirmText: '查看',
-                        confirmColor: '#faaf42',
-                        success: function(res) {
-                            if (res.confirm) {
-                                console.log('用户点击确定')
-                                wx.navigateTo({
-                                    url: '../policeList/policeList',
-                                })
-                            }
-                        }
-                    })
-                }
-                if (app.globalData.ourUserStatus == 2) {
-                    wx.showModal({
-                        title: '已被封号',
-                        content: '前往查看原因？',
-                        showCancel: false,
-                        confirmText: '查看',
-                        confirmColor: '#faaf42',
-                        success: function(res) {
-                            if (res.confirm) {
-                                console.log('用户点击确定')
-                                wx.navigateTo({
-                                    url: '../policeList/policeList',
-                                })
-                            }
-                        }
-                    })
-                }
-            },
-            fail: function() {},
-            complete: function() {}
-        })
-        wx.request({
-            url: '', //填充url请求列表
-            method: 'GET',
-            data: {
-                'schoolID': app.globalData.schoolID,
-                'user_ID': app.globalData.user_ID,
-                'time': 1
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    listCount: res.data.listCount
-                })
-            },
-            fail: function() {},
-            complete: function() {}
+          url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
+          method: 'GET',
+          data: {
+            'schoolID': app.globalData.schoolID,
+            'Account': app.globalData.user_ID,
+            'exloc': that.data.expressLoc,
+            'sdloc': that.data.sendLoc,
+            'Sex': app.globalData.sex,
+            'time': 1
+          },
+          header: {
+            "Content-Type": "applciation/json"
+          },
+          success: function (res) {
+            console.log(res)
+            that.setData({
+              listCount: res.data.listCount
+            })
+          },
+          fail: function () { },
+          complete: function () { }
         })
     },
 
@@ -307,17 +266,19 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+        var that = this
         this.setData({
             fabuOrDingbu: true
         })
         wx.request({
-            url: '', //填充url请求列表
+          url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
             method: 'GET',
             data: {
                 'schoolID': app.globalData.schoolID,
-                'user_ID': app.globalData.user_ID,
+                'Account': app.globalData.user_ID,
                 'exloc': that.data.expressLoc,
                 'sdloc': that.data.sendLoc,
+                'Sex': app.globalData.sex,
                 'time': 1
             },
             header: {
@@ -380,6 +341,13 @@ Page({
             },
             complete: function() {}
         })
+    },
+    onPageScroll: function(e) {
+        if (e.scrollTop == 0) {
+            this.setData({
+                fabuOrDingbu: true
+            })
+        }
     },
 
     /**

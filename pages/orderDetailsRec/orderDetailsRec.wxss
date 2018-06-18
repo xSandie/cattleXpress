@@ -4,6 +4,7 @@ button {
 
 .trifle {
     margin-top: 26rpx;
+    margin-bottom: 150rpx;
     font-size: 22rpx;
     color: #999ba1;
     display: flex;
@@ -15,7 +16,7 @@ button {
 
 .container {
     padding-top: 12rpx;
-    height: 100%;
+    height: auto;
     padding-bottom: 40rpx;
     display: flex;
     flex-direction: column;
@@ -167,6 +168,11 @@ button::after {
     border: none;
 }
 
+.answerHover1 {
+    background: rgba(238, 241, 253, 0.76);
+    border-radius: 10rpx;
+}
+
 .finishOrd {
     z-index: 15;
     background: linear-gradient(90deg, #fed25c, #f9a93e);
@@ -182,14 +188,19 @@ button::after {
     position: absolute;
     right: 40rpx;
     bottom: 40rpx;
-}
-
-.finText {
     text-align: center;
     font-size: 32rpx;
     font-weight: bold;
     color: white;
 }
+
+
+/* .finText {
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: white;
+} */
 
 .finIcon {
     height: 40rpx;
@@ -451,4 +462,8 @@ button::after {
 .sDGT {
     font-size: 22rpx;
     color: #999ba1;
+}
+
+.defaultHover {
+    color: #6D6141;
 }

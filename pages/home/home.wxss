@@ -359,3 +359,32 @@
     position: relative;
     bottom: 1rpx;
 }
+
+.defaultHover {
+    color: #6D6141;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: #DADEE2;
+    border-radius: 10rpx;
+}
+
+.answerHover1 {
+    background: rgb(240, 240, 245);
+    /*background: #DADEE2;*/
+}
+
+.blankIcon {
+    width: 278rpx;
+    height: 368rpx;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 80rpx;
+    margin-bottom: 20rpx;
+}
+
+.blankArea {
+    margin-right: auto;
+    margin-left: auto;
+}

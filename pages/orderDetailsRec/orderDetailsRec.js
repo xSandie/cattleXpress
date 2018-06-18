@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
     /**
@@ -35,8 +36,9 @@ Page({
         exWorry: true,
         phoneNum: '15622578294',
 
-        statusCode: 0,
-        expressID: '1562'
+        statusCode: 3,
+        expressID: '1562',
+        orderID: '15896'
 
     },
 
@@ -44,7 +46,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        console.log(options.id)
+        console.log(options)
         var that = this
         wx.request({
             url: '', //填充请求订单具体信息url
@@ -99,7 +101,25 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        var that = this
+        wx.request({
+            url: '', //填充请求订单具体信息url
+            method: 'GET',
+            data: {
+                'orderID': that.orderID,
+                'user_ID': app.globalData.user_ID,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    //设置页面参数，设置orderID
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     },
 
     /**
@@ -162,6 +182,7 @@ Page({
         })
     },
     finOrder: function() {
+
         var that = this
         wx.request({
             url: '', //填充完成订单url

@@ -16,3 +16,17 @@ page {
     background-color: #f5f8fd;
     /* padding-bottom:40rpx;  */
 }
+
+.defaultHover {
+    color: #6D6141;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: #DADEE2;
+    border-radius: 10rpx;
+}
+
+.answerHover1 {
+    background: #DADEE2;
+}

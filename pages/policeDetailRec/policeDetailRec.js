@@ -4,7 +4,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        reportProcess: 2,
+        reportProcess: 1,
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",

@@ -12,7 +12,7 @@
             <view class='recLoc'>
                 <text class='recLocTi'>送达地址</text>
                     <view class='recLocDetail'>
-                        <picker value="{{sdlocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
+                        <picker value="{{sendLoc}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
                         <view class='cline'>
                         </view>
                         <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
@@ -32,11 +32,11 @@
                     <input type="number" placeholder="{{default.phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
                 </view>
             </view>
-            <view class='differLink' bindtap="differLink">
+            <view class='differLink' catchtap="differLink">
                 <text>· 联系电话与收货手机号的区别</text>
             </view>
         </view>
-        <button class='fakeBtn' formType="submit">
+        <button hover-class="answerHover" class='fakeBtn' formType="submit">
             <text>确认修改</text> 
         </button>
     </form>

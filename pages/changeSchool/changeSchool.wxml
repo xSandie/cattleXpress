@@ -3,15 +3,15 @@
     <view class="selectSchool">
     <image class="schoolIcon" src="{{schoolIcon}}"></image>
         <view class="cline"></view>
-        <input name="schoolName" type="text" placeholder="点击输入学校加校区名称" auto-focus  class="schoolInput"/>
+        <input name="schoolName" type="text" placeholder="点击输入完整学校名称" auto-focus  class="schoolInput"/>
         <button class="search" hover-class="answerHover" formType="submit">搜索</button>
     </view>
     </form>
     <view class="answerArea">
         <view wx:for="{{answer}}">
-            <view hover-class="answerHover" class="answer" data-schoolID="{{item.schoolID}}" data-schoolName="{{item.name}}"bindtap="selectAnswer">
+            <view hover-class="answerHover1" class="answer" data-schoolID="{{item.schoolid}}" data-schoolName="{{item.schoolname}}"bindtap="selectAnswer">
                 <text class="Ti">点击选择</text>
-                <text class="con">{{item.name}}</text>
+                <text class="con">{{item.schoolname}}</text>
             </view>
         </view>
     </view>

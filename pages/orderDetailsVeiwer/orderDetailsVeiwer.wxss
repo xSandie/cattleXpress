@@ -286,10 +286,6 @@
     text-align: center;
 }
 
-.contact-hover {
-    color: #6D6141;
-}
-
 .fxdBtnArea {
     position: fixed;
     bottom: 0;
@@ -320,6 +316,10 @@
     position: absolute;
     right: 40rpx;
     bottom: 40rpx;
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: white;
 }
 
 .contact::after {
@@ -359,4 +359,18 @@
 .sDGT {
     font-size: 22rpx;
     color: #999ba1;
+}
+
+.defaultHover {
+    color: #6D6141;
+}
+
+.answerHover {
+    color: #999ba1;
+    background: #DADEE2;
+}
+
+.answerHover1 {
+    background: #DADEE2;
+    border-radius: 10rpx;
 }

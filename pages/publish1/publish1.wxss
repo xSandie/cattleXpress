@@ -72,6 +72,7 @@ form {
     position: absolute;
     right: 24rpx;
     top: 64rpx;
+    z-index: 10;
 }
 
 .mainForm {

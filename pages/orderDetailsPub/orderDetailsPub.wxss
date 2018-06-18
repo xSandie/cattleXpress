@@ -4,6 +4,7 @@ button {
 
 .trifle {
     margin-top: 26rpx;
+    margin-bottom: 150rpx;
     font-size: 22rpx;
     color: #999ba1;
     display: flex;
@@ -15,7 +16,7 @@ button {
 
 .container {
     padding-top: 12rpx;
-    height: 100%;
+    height: auto;
     padding-bottom: 40rpx;
     display: flex;
     flex-direction: column;
@@ -523,4 +524,8 @@ button::after {
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 9rpx;
+}
+
+.defaultHover {
+    color: #6D6141;
 }

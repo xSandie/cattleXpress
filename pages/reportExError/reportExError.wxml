@@ -3,16 +3,16 @@
         <image class='exLogo' src="{{exLogo}}"></image>
         <view class='exDetail'>
             <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>{{exLocTime}}</text>
+            <text class='exLocTime'>营业时间：{{exLocTime}}</text>
         </view>
     </view>
     <form class='mainForm' bindsubmit="fixReport">
         <view class='floatCard'>
             <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
             <view class="tline"></view>
-            <input class="inputCorrect" type="text" placeholder="输入更正的营业时间"/>
+            <input class="inputCorrect" type="text" name="reportIn" placeholder="输入更正的营业时间"/>
         </view>
-        <button class='fakeBtn' formType="submit">
+        <button hover-class="answerHover" class='fakeBtn' formType="submit">
             <text>报错</text> 
         </button>
     </form>

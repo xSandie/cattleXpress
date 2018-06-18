@@ -1,6 +1,6 @@
 <view class="header"></view>
 <form bindsubmit="report" class="container">
-    <view class="floatCard">
+    <view hover-class="answerHover1" class="floatCard">
         <view class="people">
             <text class="topTi">举报人</text>
             <text class="LName">{{LName}}</text>
@@ -85,21 +85,17 @@
     </view>
     <view class="btnA">
         <view class='BtnArea' wx:if="{{reportProcess==1}}">
-            <button class='contact' bindtap="uploadIMG" formType="submit">
-            <text class='conText' >申诉</text>
+            <button hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <text>申诉</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess==3}}">
-            <button class='contact' bindtap="uploadIMG" formType="submit">
-            <text class='conText' >继续申诉</text>
+            <button hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <text>继续申诉</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
-            <view class='dirGet' bindtap="retrieve">
-                <text class='lDGT'>撤销举报</text>
-                <text class='sDGT'>请如实描述</text>
-            </view>
         </view>
 
     </view>

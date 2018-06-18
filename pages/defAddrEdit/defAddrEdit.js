@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
     /**
@@ -17,8 +18,6 @@ Page({
             sendLocIn: 'D1-340',
             recName: '向书晗',
             phoneRear: '9021',
-            date: '06-01', //往后加一天
-            dateRange: ['06-01', '06-02', '06-03', '其他']
         },
 
 
@@ -32,7 +31,7 @@ Page({
         sendLoc: '宿舍区' + '·' + '周园',
         sdlocArray: [
             ['宿舍区', '教学区', '其他区域', '跨校区'],
-            ['周园', '秦园', '汉园', '唐园', '梅园', '兰园', '硕士楼', '研究生公寓', '博士2号楼', '竹园']
+            []
         ],
         sdlocIndex: [0, 0],
         sdlocfirstIndex: 0,
@@ -63,6 +62,33 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+        var that = this
+        wx.request({ //请求默认地址
+                url: '',
+                method: 'GET',
+                data: {
+                    'user_ID': app.globalData.user_ID,
+                },
+                header: {
+                    "Content-Type": "applciation/json"
+                },
+                success: function(res) {
+                    that.setData({
+                        default: res.data.xx //需替换
+                    })
+                },
+                fail: function() {},
+                complete: function() {}
+            })
+            //设置成全局中的picker数组
+        this.setData({
+            column2_0: app.globalData.column2_0,
+            column2_1: app.globalData.column2_1,
+            column2_2: app.globalData.column2_2,
+            column2_3: app.globalData.column2_3,
+            exlocArray: app.globalData.exlocArray,
+            sdlocArray: [['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0]
+        })
 
     },
 
@@ -168,80 +194,47 @@ Page({
             })
         }
     },
-    dateChange: function(e) {
-        console.log(e);
-        this.setData({
-            dateIndex: e.detail.value
-        })
-    },
-    bindTimeChange: function(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
-        this.setData({
-            time: e.detail.value
-        })
-    },
 
-
-    // weInfoChange: function(e) {
-    //     console.log(e);
-    //     this.setData({
-    //         weIndex: e.detail.value
-    //     })
-    // },
-
-    // checking: function() {
-    //     this.setData({
-    //         checking: true
-    //     })
-    //     console.log("checking")
-    // },
-
-    firstOrdSubmit: function(e) {
-        wx.setStorage({
-                key: 'FORMrow1',
-                data: e.detail.value,
-            }) //设置原始数据缓存
-        e.detail.value.DeRecLocSel = this.data.sendLoc;
-        e.detail.value.selExCon = this.data.expressLoc;
-        // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
-        e.detail.value.exTimeConDate = this.data.default.dateRange[this.data.dateIndex]
-        if (e.detail.value.DeRecLocIn == '') {
-            e.detail.value.DeRecLocIn = this.data.default.sendLocIn;
-        }
-        if (e.detail.value.conPhoneNum == '') {
-            e.detail.value.conPhoneNum = this.data.default.conPhoneNum;
-        }
-        if (e.detail.value.recName == '') {
-            e.detail.value.recName = this.data.default.recName;
-        }
-        if (e.detail.value.phoneRear == '') {
-            e.detail.value.phoneRear = this.data.default.phoneRear;
-        }
-        console.log('form发生了submit事件，携带数据为：', e.detail.value)
-        wx.setStorage({
-                key: 'FORM1',
-                data: e.detail.value,
-            }) //设置缓存
-            // setTimeout(function() {
-            //     wx.getStorage({
-            //         key: 'FORM1',
-            //         success: function(res) {
-            //             console.log(res.data)
-            //             console.log(res.data.DeRecLocIn)
-            //         }
-            //     })
-            // }, 1000);
-        wx.navigateTo({
-            url: '../publish2/publish2',
-        })
-    },
-    setDef: function() {
-        var setDefault = this.data.setDef;
-        this.setData({
-            setDef: !setDefault
-        })
-    },
-    replaceAddr: function() {
+    replaceAddr: function(e) {
+        console.log(e)
         console.log("提交被点击了")
+        wx.request({ //更改默认地址，为空的就是没变
+            url: '',
+            method: 'POST',
+            data: {
+                'user_ID': app.globalData.user_ID, //加其他字段
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                wx.showToast({
+                    title: '发布成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+                setTimeout(function() {
+                    wx.switchTab({
+                        url: '../my/my',
+                    })
+                }, 1000);
+            },
+            fail: function() {},
+            complete: function() {}
+        })
+    },
+    differLink: function() {
+        wx.showModal({
+            title: '区别',
+            content: '联系电话是代领者与你联系时使用的号码，收货电话是领取你的快递时用的号码（建议使用不同号码）。',
+            confirmColor: '#faaf42',
+            confirmText: '知道啦',
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                }
+            }
+        })
     }
 })
