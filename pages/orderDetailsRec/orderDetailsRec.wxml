@@ -3,7 +3,7 @@
         <image class='exLogo' src="{{exLogo}}"></image>
         <view class='exDetail'>
             <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>{{exLocTime}}</text>
+            <text class='exLocTime'>营业时间:{{exLocTime}}</text>
         </view>
         <view class='cline'>   
         </view>
@@ -67,7 +67,7 @@
                 <text>{{sdLoc}}</text>
             </view>
         </view>
-        <view class='worTag' wx:if="{{exWorry}}"><text>加急</text></view>
+        <view class='worTag' wx:if="{{exWorry=== 'true'}}"><text>加急</text></view>
     </view>
     <view class='mainSum'>
         <view class='reward'>
@@ -101,7 +101,7 @@
     <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
         <button class='finishOrd' bindtap="finOrder">
-          <text hover-class="defaultHover"  class='finText'>完成订单</text>
+          <text hover-class="defaultHover"  class='finText'>已经送达</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
         <view class="smallBtnA">

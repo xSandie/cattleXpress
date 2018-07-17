@@ -19,7 +19,21 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+        // wx.showModal({
+        //     title: '评委注意',
+        //     content: '目前只存储了"陕西师范大学长安校区"',
+        //     showCancel: false,
+        //     confirmText: '知道了',
+        //     confirmColor: '#faaf42',
+        //     success: function(res) {},
+        //     fail: function(res) {},
+        //     complete: function(res) {},
+        // })
+        wx.showToast({
+            title: '目前只有"陕西师范大学长安校区"',
+            icon: 'none',
+            duration: 3000
+        })
     },
 
     /**
@@ -71,10 +85,10 @@ Page({
 
     },
     search: function(e) {
-        console.log(e.detail.value)
+        //console.log(e.detail.value)
         var that = this
         wx.request({
-            url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolinfo', //填充查询url
+          url: 'http://45.40.197.154/HelloWord/firstpage/schoolinfo', //填充查询url
             method: 'GET',
             data: {
                 school: e.detail.value.schoolName,
@@ -96,31 +110,40 @@ Page({
         var schoolid = e.currentTarget.dataset.schoolid
             // app.globalData.schoolID = schoolid
         wx.request({
-          url: 'http://10.2.24.200:8080/HelloWord/firstpage/schoolidwaitreceive', //填充选择url
+            url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充更改学校url
             method: 'POST',
             data: {
-              schoolID: schoolid,
-              Account: app.globalData.user_ID
+                Account: app.globalData.user_ID,
+                schoolID: schoolid,
+                Sex: app.globalData.sex
             },
             header: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            success: function() {
+            success: function(res) {
+                //console.log(res)
+                if (res.statusCode == 200) {
+                    //console.log("更改提交成功")
+                }
                 app.globalData.schoolID = schoolid
                 app.globalData.schoolName = e.currentTarget.dataset.schoolname
+                    //console.log(app.globalData.schoolName)
                 wx.showToast({
                     title: '修改成功',
                     icon: 'succes',
                     duration: 1000,
                     success: function() {
-                        wx.navigateBack({
+                        setTimeout(function() {
+                            wx.navigateBack({
 
-                        })
-                    }
+                            })
+                        }, 1000);
+
+                    },
+                    complete: function() {}
                 })
-            },
-            fail: function() {},
-            complete: function() {}
+            }
         })
+
     }
 })

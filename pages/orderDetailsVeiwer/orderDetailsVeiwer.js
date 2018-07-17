@@ -6,28 +6,28 @@ Page({
      */
     data: {
         exLogo: '../../images/STOLOGO.png',
-        exLocTime: '周一至周日08：00至19：00',
-        exInstance: '申通快递·阳光苑',
+        exLocTime: '',
+        exInstance: '',
         fxIcon: '../../images/fixBtnIcon.png',
         conIcon: '../../images/checkLight.png',
-        sdInstance: '宿舍区 硕士楼',
+        sdInstance: '',
 
-        exWorry: true,
-        exWeight: '<1KG',
-        exSize: '小件',
-        exExTime: '05-07 18:00',
+        exWorry: null,
+        exWeight: '',
+        exSize: '',
+        exExTime: '',
 
-        dText: '氨基酸的覅加瓦尔覅骄傲i圣诞节发士大夫艰苦拉萨的积分收到回复骄傲是的回复的覅加瓦尔放假啊撒谎的飞机',
+        dText: '',
 
-        reward: '20',
-        schNum: '41612057',
-        LName: '向',
-        pubtime: '1月19日 12：00',
-        orderId: '166',
-        phoneNum: '15529268167',
+        reward: '',
+        schNum: '',
+        LName: '',
+        pubtime: '',
+        orderId: '',
+        phoneNum: '',
         certif: true,
 
-        expressID: '1562'
+        expressID: ''
 
     },
 
@@ -35,8 +35,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        console.log(options)
-        console.log(options.id);
+        // console.log(options)
+        // console.log(options.id);
 
         var that = this
             // wx.request({
@@ -69,35 +69,36 @@ Page({
 
         // })
         wx.request({
-            url: '', //填充请求浏览者订单详情url
+          url: 'http://45.40.197.154/HelloWord/firstpage/waitreceiveinfo', //填充请求浏览者订单详情url
             method: 'GET',
             data: {
                 'orderID': options.id,
-                'user_ID': app.globalData.user_ID,
+                //'user_ID': app.globalData.user_ID,为以后埋点做准备
             },
             header: {
                 "Content-Type": "applciation/json"
             },
             success: function(res) {
+                // console.log(res)
                 that.setData({
                     //设置页面参数
-                    exLogo: res.data,
-                    exLocTime: res.data,
-                    exInstance: res.data,
-                    expressID: res.data,
+                    exLogo: res.data.exLogo,
+                    exLocTime: res.data.exLocTime,
+                    exInstance: res.data.exInstance,
+                    expressID: res.data.expressID,
                     //以上是快递站点信息
-                    orderId: res.data,
-                    sdInstance: res.data,
-                    exWorry: res.data,
-                    exWeight: res.data,
-                    exSize: res.data,
-                    exExTime: res.data,
-                    reward: res.data,
-                    schNum: res.data,
-                    LName: res.data,
-                    pubtime: res.data,
-                    phoneNum: res.data,
-                    dText: res.data
+                    orderId: res.data.orderId,
+                    sdInstance: res.data.sdInstance,
+                    exWorry: res.data.exWorry,
+                    exWeight: res.data.exWeight,
+                    exSize: res.data.exSize,
+                    exExTime: res.data.exExTime,
+                    reward: res.data.reward,
+                    schNum: res.data.schNum,
+                    LName: res.data.LName,
+                    pubtime: res.data.pubtime,
+                    phoneNum: res.data.phoneNum,
+                    dText: res.data.dText
                 })
             },
             fail: function() {},
@@ -167,10 +168,10 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        console.log('用户点击确定')
-                            //接单动作
+                        // console.log('用户点击确定')
+                        //接单动作
                         wx.request({
-                            url: 'http://10.2.24.200:8080/HelloWord/receivecode/getopenid', //订单动作接口
+                            url: 'http://45.40.197.154/HelloWord/receivecode/getopenid', //订单动作接口
                             method: 'POST',
                             data: {
                                 'orderID': orderId,
@@ -178,15 +179,15 @@ Page({
                                 'nextStat': 2
                             },
                             success: function(res) {
-                                console.log(event)
-                                console.log(orderId)
+                                // console.log(event)
+                                // console.log(orderId)
                                 wx.redirectTo({
                                     url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
                                 })
                             },
                         })
                     } else if (res.cancel) {
-                        console.log('用户点击取消')
+                        // console.log('用户点击取消')
                     }
                 }
             })
@@ -197,12 +198,12 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        console.log('用户点击确定')
+                        // console.log('用户点击确定')
                         wx.redirectTo({
                             url: '../certifPage/certifPage'
                         })
                     } else if (res.cancel) {
-                        console.log('用户点击取消')
+                        // console.log('用户点击取消')
                     }
                 }
             })
@@ -217,12 +218,12 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        console.log('用户点击确定')
+                        // console.log('用户点击确定')
                         wx.redirectTo({
                             url: '../certifPage/certifPage'
                         })
                     } else if (res.cancel) {
-                        console.log('用户点击取消')
+                        // console.log('用户点击取消')
                     }
                 }
             })
@@ -233,10 +234,20 @@ Page({
         }
     },
     toFix: function(event) {
-        var expressID = event.currentTarget.dataset.expressId
-        console.log(expressID)
-        wx.navigateTo({
-            url: '../reportExError/reportExError?id=' + expressID,
+        // var expressID = event.currentTarget.dataset.expressId
+        // console.log(expressID)
+        // wx.navigateTo({
+        //     url: '../reportExError/reportExError?id=' + expressID,
+        // })
+        wx.showModal({
+            title: '敬请期待',
+            content: '攻城狮加紧完善中',
+            confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '期待噢',
+            success: function(res) {
+                if (res.confirm) {}
+            }
         })
     }
 })

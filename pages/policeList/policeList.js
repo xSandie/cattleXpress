@@ -1,31 +1,36 @@
+var app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        myPoliceList: [{
-            LName: '向',
-            policeStatus: 13,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
-            reportOrderID: '1545',
-        }, {
-            LName: '刘',
-            policeStatus: 10,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
-            reportOrderID: '1545',
-        }],
-        policeMeList: [{
-            LName: '刘',
-            policeStatus: 13,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
-            reportOrderID: '1545',
-        }, {
-            LName: '刘',
-            policeStatus: 10,
-            reason: "是就嗲家嗲时间分段式爱神的箭发i受到激发i圣诞节覅i圣诞节",
-            reportOrderID: '1545',
-        }]
+        myPoliceList: [
+            // myPoliceList: [{
+            //     LName: '',
+            //     policeStatus: null,
+            //     reason: "",
+            //     reportOrderID: '',
+            // }, {
+            //     LName: '',
+            //     policeStatus: null,
+            //     reason: "",
+            //     reportOrderID: '',
+            // }],
+        ],
+        policeMeList: [
+            //     {
+            //     LName: '',
+            //     policeStatus: null,
+            //     reason: "",
+            //     reportOrderID: '',
+            // }, {
+            //     LName: '',
+            //     policeStatus: null,
+            //     reason: "",
+            //     reportOrderID: '',
+            // }
+        ]
     },
 
     /**
@@ -46,7 +51,26 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-
+        var that = this
+        wx.request({
+          url: 'http://api.inschool.tech/HelloWord/my/reportinfo', //填充完成订单url
+            method: 'GET',
+            data: {
+                'uid': app.globalData.user_ID,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                console.log(res)
+                that.setData({
+                    myPoliceList: res.data[0],
+                    policeMeList: res.data[1]
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     },
 
     /**

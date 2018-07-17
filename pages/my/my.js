@@ -10,7 +10,8 @@ Page({
         creditScr: 185,
         level: 1,
         realName: "",
-        certif: false,
+        // certif: false,
+        certif: true,
         schoNum: "41612057",
         addressIcon: "../../images/myAdress.png",
         policeIcon: "../../images/police.png",
@@ -22,22 +23,22 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        if (app.globalData.ourUserStatus == 4) {
-            wx.showModal({
-                title: '请认证',
-                content: '点击确定前往教务系统认证！',
-                confirmColor: '#faaf42',
-                showCancel: false,
-                success: function(res) {
-                    if (res.confirm) {
-                        console.log('用户点击确定')
-                        wx.redirectTo({
-                            url: '../certifPage/certifPage'
-                        })
-                    }
-                }
-            })
-        }
+        // if (app.globalData.ourUserStatus == 4) {
+        //     wx.showModal({
+        //         title: '请认证',
+        //         content: '点击确定前往教务系统认证！',
+        //         confirmColor: '#faaf42',
+        //         showCancel: false,
+        //         success: function(res) {
+        //             if (res.confirm) {
+        //                 console.log('用户点击确定')
+        //                 wx.redirectTo({
+        //                     url: '../certifPage/certifPage'
+        //                 })
+        //             }
+        //         }
+        //     })
+        // }
     },
 
     /**
@@ -52,25 +53,26 @@ Page({
      */
     onShow: function() {
         this.setData({
-          balance: app.globalData.balance
+            balance: app.globalData.balance
         })
         var that = this
         wx.request({
-            url: '', //用户余额信用获取
+            url: 'http://45.40.197.154/HelloWord/my/personinfo', //用户余额信用获取
             method: 'GET',
             data: {
-                'user_ID': app.globalData.user_ID,
+                'Uid': app.globalData.user_ID,
             },
             header: {
                 "Content-Type": "applciation/json"
             },
             success: function(res) {
+                console.log(res)
                 that.setData({
-                    balance: res.data, //修改参数
-                    creditScr: res.data,
-                    level: res.data
+                    balance: res.data.balance, //修改参数
+                    creditScr: res.data.credit,
+                    level: res.data.Accress
                 })
-                app.globalData.balance = res.data
+                app.globalData.balance = res.data.balance
             },
             fail: function() {},
             complete: function() {}
@@ -122,13 +124,13 @@ Page({
 
     },
     toAddrEdit: function() {
-        console.log("addr被点击了");
+        // console.log("addr被点击了");
         wx.navigateTo({
             url: '../defAddrEdit/defAddrEdit',
         })
     },
     toPoList: function() {
-        console.log("toPoList被点击了");
+        // console.log("toPoList被点击了");
         wx.navigateTo({
             url: '../policeList/policeList',
         })

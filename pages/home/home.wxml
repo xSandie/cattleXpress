@@ -11,7 +11,7 @@
                 <image class='pullIcon' src='{{pullIcon}}'></image>
             </view>
         </view>
-        <view class='mainSelect'>
+        <view bindtap="ifCertif" class='mainSelect'>
             <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
                <view hover-class="answerHover1" class='expressLoc'>
                     <view class='elIcon'>
@@ -65,7 +65,7 @@
                     </view>
                     <view class='sdInstance'>
                         <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                        <view class='exTagWor' wx:if="{{item.exWorry}}">
+                        <view class='exTagWor' wx:if="{{item.exWorry=== 'true'}}">
                             <view class='tagText'><text>加急</text></view> 
                         </view>
                     </view>
@@ -107,10 +107,11 @@
         <text>黄牛是有底线的</text>
         <view class='lineCss'></view>
     </view>
-    <view class="blankArea" wx:if="{{!listCount}}">
+     <view class="blankArea" wx:if="{{listCount==false}}"> 
+     <!-- <view class="blankArea" wx:if="{{!listCount}}"> -->
         <image class='blankIcon' src='{{blankIcon}}'></image>
     </view>
-    <view wx:if="{{!listCount}}" class='prompt'>
+    <view wx:if="{{listCount==false}}" class='prompt'>
         <view class='lineCss'></view>
         <text>暂无订单</text>
         <view class='lineCss'></view>

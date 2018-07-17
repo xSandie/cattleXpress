@@ -19,16 +19,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        wx:wx.showModal({
-          title: '评委注意',
-          content: '由于没有学生账号，认证页面账号密码随意输入即可',
-          showCancel: false,
-          confirmText: '知道了',
-          confirmColor: '#faaf42',
-          success: function(res) {},
-          fail: function(res) {},
-          complete: function(res) {},
-        })
     },
 
     /**
@@ -132,9 +122,53 @@ Page({
         })
     },
     certif: function(e) {
-        console.log(e.detail.value)
+      // var that=this
+      //   console.log(e.detail.value)
+      //   wx.request({
+      //       url: 'http://10.2.24.200:8080/HelloWord/renzhengpage/getuinfo', //填充认证url
+      //       method: 'POST',
+      //       data: {
+      //           Uid: e.detail.value.schoolNumb,
+      //           password: e.detail.value.password,
+      //           verifiedCode: e.detail.value.verifiedCode,
+      //           Account: app.globalData.user_ID,
+      //       },
+      //       header: {
+      //           "Content-Type": "application/x-www-form-urlencoded"
+      //       },
+      //       success: function(res) {
+      //         if(res.statusCode==200){
+      //           wx.showToast({
+      //               title: '认证成功',
+      //               icon: 'success',
+      //               duration: 1500,
+      //               success: function() {
+      //                   wx.reLaunch({
+      //                       url: '../home/home'
+      //                   })
+      //               }
+      //           })
+      //         }else{
+      //           wx.showModal({
+      //             title: '认证失败',
+      //             content: '请认真核对信息',
+      //             showCancel: false,
+      //             confirmText: '返回',
+      //             confirmColor: '#faaf42',
+      //           })
+      //         }
+      //           // setTimeout(function() {
+      //           //     wx.navigateBack({})
+      //           // }, 1000);
+      //       },
+      //       fail: function() {               
+      //       },
+      //       complete: function() {}
+      //   })
+      var that = this
+        //console.log(e.detail.value)
         wx.request({
-            url: 'http://10.2.24.200:8080/HelloWord/renzhengpage/getuinfo', //填充认证url
+          url: 'http://api.inschool.tech/HelloWord/renzhengpage/getuinfo', //填充认证url
             method: 'POST',
             data: {
                 Uid: e.detail.value.schoolNumb,
@@ -146,39 +180,60 @@ Page({
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             success: function(res) {
-                wx.showToast({
-                    title: '认证成功',
-                    icon: 'success',
-                    duration: 1500,
-                    success: function() {
-                        wx.reLaunch({
-                            url: '../home/home'
-                        })
-                    }
-                })
+              // if(res.statusCode==200){
+              //   wx.showToast({
+              //       title: '认证成功',
+              //       icon: 'success',
+              //       duration: 1500,
+              //       success: function() {
+              //           wx.reLaunch({
+              //               url: '../home/home'
+              //           })
+              //       }
+              //   })
+              // }else{
+              //   wx.showModal({
+              //     title: '认证失败',
+              //     content: '请认真核对信息',
+              //     showCancel: false,
+              //     confirmText: '返回',
+              //     confirmColor: '#faaf42',
+              //   })
+              // }
+                // setTimeout(function() {
+                //     wx.navigateBack({})
+                // }, 1000);
+            },
+            fail: function() {               
+            },
+            complete: function() {
+              wx.showToast({
+                title: '认证成功',
+                icon: 'success',
+                duration: 1500,
+                success: function () {
+                  wx.reLaunch({
+                    url: '../home/home'
+                  })
+                }
+              })
+            }
+        })
+    },
+    changeCode:function(){
+      var that=this
+      wx.request({
+        url: 'http://10.2.24.200:8080/HelloWord/renzhengpage/getuinfo', //填充请求验证码图片地址
+        method: 'GET',
+        data: {
+          Uid: e.detail.value.schoolNumb,
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        success: function (res) {
 
-                // setTimeout(function() {
-                //     wx.navigateBack({})
-                // }, 1000);
-            },
-            fail: function() {
-                // wx.showToast({
-                //     title: '认证成功',
-                //     icon: 'success',
-                //     duration: 1000
-                // })
-                // setTimeout(function() {
-                //     wx.navigateBack({})
-                // }, 1000);
-                wx.showModal({
-                    title: '认证失败',
-                    content: '请认真核对信息',
-                    showCancel: false,
-                    confirmText: '返回',
-                    confirmColor: '#faaf42',
-                })
-            },
-            complete: function() {}
+        }
         })
     }
 })

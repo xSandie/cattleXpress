@@ -42,7 +42,7 @@
                 <button class="btnMy" formType="submit" hover-class="defaultHover">
                     <text>通过验证</text>
                     <image class="passCertifIcon" src="{{passCertifIcon}}"></image></button>
-                <view class="codeA">
+                <view bindtap='changeCode' class="codeA">
                     <text class="codeText">看不清，换一张</text>
                     <image class="codeImage" src="{{verifCode}}"></image>
                 </view>

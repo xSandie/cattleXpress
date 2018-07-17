@@ -9,10 +9,10 @@ Page({
         currentTab: 0,
         blankIcon: '../../images/blank1.png',
         blank: false, //未完成是否为空
-        ongoRecListCount:null,
-        ongoPubListCount:null,
-        finRecListCount:null,
-        finPubListCount:null,
+        ongoRecListCount: [],
+        ongoPubListCount: [],
+        finRecListCount: [],
+        finPubListCount: [],
         // ongoRecListCount: [{
         //     exState: '4',
         //     reward: '6',
@@ -133,40 +133,59 @@ Page({
     },
     //0代表已接单待支付，1代表等待接单，2代表对方已接单未完成，3代表已完成,4代表已过期,5代表异常。
     navbarTap: function(e) {
+        var that = this
         this.setData({
-            currentTab: e.currentTarget.dataset.idx
-        })
-        console.log(e.currentTarget.dataset.idx)
-        if (e.currentTarget.dataset.idx == 1) {
+                currentTab: e.currentTarget.dataset.idx
+            })
+            // console.log(e.currentTarget.dataset.idx)
+        if (e.currentTarget.dataset.idx == 0) {
             wx.request({
-                url: '', //我接到的已完成订单请求地址
+                url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
                 method: 'GET',
                 data: {
-                    'user_ID': app.globalData.user_ID,
+                    'Account': app.globalData.user_ID,
+                    'Sex': app.globalData.sex
                 },
                 header: {
                     "Content-Type": "applciation/json"
                 },
                 success: function(res) {
+                    // console.log(res)
                     that.setData({
-                        finRecListCount: res.data.ongoRecListCount //修改参数
+                        //修改参数
+                        ongoRecListCount: res.data[0],
+                        ongoPubListCount: res.data[1]
                     })
                 },
                 fail: function() {},
                 complete: function() {}
             })
+        } else {
             wx.request({
-                url: '', //我发布的已完成订单请求地址
+                url: 'http://45.40.197.154/HelloWord/getorderinfo/have', //已完成订单请求地址
                 method: 'GET',
                 data: {
-                    'user_ID': app.globalData.user_ID,
+                    'Account': app.globalData.user_ID,
                 },
                 header: {
                     "Content-Type": "applciation/json"
                 },
                 success: function(res) {
-                    that.setData({
-                        finPubListCount: res.data.finPubListCount //修改参数
+                    console.log('已完成订单请求', res)
+                    
+                    // if (res.data.message){
+                    //   that.setData({
+                    //     finRecListCount:null//修改参数
+                    //   }) 
+                    // }
+                    // else if (res.data.message) {
+                    //   that.setData({
+                    //     finPubListCount: null//修改参数
+                    //   })
+                    // } else {
+                      that.setData({
+                      finRecListCount: res.data[0],
+                      finPubListCount: res.data[1] //修改参数
                     })
                 },
                 fail: function() {},
@@ -178,6 +197,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        var that = this
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
                 title: '请认证',
@@ -186,7 +206,7 @@ Page({
                 showCancel: false,
                 success: function(res) {
                     if (res.confirm) {
-                        console.log('用户点击确定')
+                        // console.log('用户点击确定')
                         wx.redirectTo({
                             url: '../certifPage/certifPage'
                         })
@@ -194,40 +214,27 @@ Page({
                 }
             })
         }
-        wx.request({
-          url: '', //我接到的未完成订单请求地址
-          method: 'GET',
-          data: {
-            'user_ID': app.globalData.user_ID,
-          },
-          header: {
-            "Content-Type": "applciation/json"
-          },
-          success: function (res) {
-            that.setData({
-              ongoRecListCount: res.data.ongoRecListCount //修改参数
-            })
-          },
-          fail: function () { },
-          complete: function () { }
-        })
-        wx.request({
-          url: '', //我发布的未完成订单请求地址
-          method: 'GET',
-          data: {
-            'user_ID': app.globalData.user_ID,
-          },
-          header: {
-            "Content-Type": "applciation/json"
-          },
-          success: function (res) {
-            that.setData({
-              ongoPubListCount: res.data.ongoPubListCount //修改参数
-            })
-          },
-          fail: function () { },
-          complete: function () { }
-        })
+        // wx.request({
+        //     url: 'http://10.2.24.200:8080/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
+        //     method: 'GET',
+        //     data: {
+        //         'Account': app.globalData.user_ID,
+        //         'Sex': app.globalData.sex
+        //     },
+        //     header: {
+        //         "Content-Type": "applciation/json"
+        //     },
+        //     success: function(res) {
+        //         console.log(res)
+        //         that.setData({
+        //             ongoRecListCount: res.data[0],
+        //             ongoPubListCount: res.data[1]
+        //                 //修改参数
+        //         })
+        //     },
+        //     fail: function() {},
+        //     complete: function() {}
+        // })
     },
 
     /**
@@ -241,17 +248,49 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        
+        var that = this
             //判定是否为空的函数
-      if (this.data.ongoPubListCount == null && this.data.ongoRecListCount == null){
-        this.setData({
-          blank:true
+        wx.request({
+            url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
+            method: 'GET',
+            data: {
+                'Account': app.globalData.user_ID,
+                'Sex': app.globalData.sex
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                console.log(res)
+                that.setData({
+                    ongoRecListCount: res.data[0],
+                    ongoPubListCount: res.data[1]
+                        //修改参数
+                })
+                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                    that.setData({
+                        blank: true
+                    })
+                } else {
+                    that.setData({
+                        blank: false
+                    })
+                }
+            },
+            fail: function() {},
+            complete: function() {
+                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                    that.setData({
+                        blank: true
+                    })
+                } else {
+                    that.setData({
+                        blank: false
+                    })
+                }
+            }
         })
-      }else{
-        this.setData({
-          blank: false
-        })
-      }
+
     },
 
     /**
@@ -272,40 +311,38 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-      wx.request({
-        url: '', //我接到的未完成订单请求地址
-        method: 'GET',
-        data: {
-          'user_ID': app.globalData.user_ID,
-        },
-        header: {
-          "Content-Type": "applciation/json"
-        },
-        success: function (res) {
-          that.setData({
-            ongoRecListCount: res.data.ongoRecListCount //修改参数
-          })
-        },
-        fail: function () { },
-        complete: function () { }
-      })
-      wx.request({
-        url: '', //我发布的未完成订单请求地址
-        method: 'GET',
-        data: {
-          'user_ID': app.globalData.user_ID,
-        },
-        header: {
-          "Content-Type": "applciation/json"
-        },
-        success: function (res) {
-          that.setData({
-            ongoPubListCount: res.data.ongoPubListCount //修改参数
-          })
-        },
-        fail: function () { },
-        complete: function () { }
-      })
+        var that = this
+        wx.request({
+            url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
+            method: 'GET',
+            data: {
+                'Account': app.globalData.user_ID,
+                'Sex': app.globalData.sex
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                // console.log(res)
+                that.setData({
+                    //修改参数
+                    ongoRecListCount: res.data[0],
+                    ongoPubListCount: res.data[1]
+                })
+            },
+            fail: function() {},
+            complete: function() {
+                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                    that.setData({
+                        blank: true
+                    })
+                } else {
+                    that.setData({
+                        blank: false
+                    })
+                }
+            }
+        })
     },
 
     /**
@@ -324,14 +361,14 @@ Page({
     toPubDetails: function(event) {
         var orderId = event.currentTarget.dataset.orderId
         wx.navigateTo({
-            url: '../orderDetailsPub/orderDetailsPub?id=' + orderId,
+            url: '../orderDetailsPub/orderDetailsPub?key=1&id=' + orderId,
         })
     },
     toRecDetails: function(event) {
         var orderId = event.currentTarget.dataset.orderId
-        console.log(event)
+            // console.log(event)
         wx.navigateTo({
-            url: '../orderDetailsRec/orderDetailsRec?id=' + orderId,
+            url: '../orderDetailsRec/orderDetailsRec?key=1&id=' + orderId,
         })
     }
 })

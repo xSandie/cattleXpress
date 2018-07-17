@@ -68,7 +68,7 @@
                     <text>最晚送达时间</text>
                 </view>
                 <view class='exTimeCon'>
-                    <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{default.dateRange}}" mode="selector">{{default.dateRange[dateIndex]}}</picker>
+                    <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{dateRange}}" mode="selector">{{dateRange[dateIndex]}}</picker>
                     <view class='cline'>
                     </view>
                     <picker name="exTimeConTime" class='TimePi' value="{{time}}" bindchange="bindTimeChange" mode="time" start="00:00" end="24:00">{{time}}</picker>

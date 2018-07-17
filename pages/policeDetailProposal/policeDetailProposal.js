@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
     /**
@@ -12,21 +13,21 @@ Page({
         reportTime: "2018-05-07 16:00",
         lastDep: '乱举报也会被封号，请谨慎举报',
 
-        reportRe1: '按公式的飞机嘎设计的飞机啥的就放假啊是，哈吉斯的功夫哈三个地方和嘎哈施工方就发哈上雕刻技法哈师大复活节，撒娇的黄瓜富含精氨酸规划就',
+        reportRe1: '',
         report1: [
-            "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
+            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
         ],
-        complainRe1: '骄傲是的回复几个撒旦艰苦法国红酒嘎时间激发函数嗲激发，是大哥和法师就规划结婚啥的发货',
+        complainRe1: '',
         complain1: [
-            "http://img02.tooopen.com/images/20150514/tooopen_sy_122783536345.jpg", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
+            // "http://img02.tooopen.com/images/20150514/tooopen_sy_122783536345.jpg", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
         ],
-        reportRe2: '爱德华三分绝杀到付即可获得就寒假结束大华，刷等级回复就安徽啊',
+        reportRe2: '',
         report2: [
-            "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
+            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
         ],
-        complainRe2: '安徽大厦回复接受的话就返回基地和飞机啊发，艰苦撒旦和福建安徽山东分局数据库的回复接受的话附件',
+        complainRe2: '',
         complain2: [
-            "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
+            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
         ],
 
         img1: null,
@@ -34,6 +35,7 @@ Page({
         img3: null,
         imgUp: [],
 
+        orderID: null
     },
 
     /**
@@ -42,8 +44,11 @@ Page({
     onLoad: function(options) {
         console.log(options.id)
         var that = this
+        this.setData({
+            orderID: options.id
+        })
         wx.request({
-            url: '', //填充发起举报url
+            url: '', //填充查询举报url
             method: 'GET',
             data: {
                 'orderID': options.id,
@@ -94,7 +99,24 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        wx.request({
+            url: '', //填充查询举报url
+            method: 'GET',
+            data: {
+                'orderID': options.id,
+                'user_ID': app.globalData.user_ID,
+            },
+            header: {
+                "Content-Type": "applciation/json"
+            },
+            success: function(res) {
+                that.setData({
+                    //设置页面参数，返回对方的姓名等基本信息，订单状态码
+                })
+            },
+            fail: function() {},
+            complete: function() {}
+        })
     },
 
     /**

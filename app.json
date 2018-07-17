@@ -1,6 +1,8 @@
 {
     "pages": [
+      
         "pages/home/home",
+        "pages/certifPage/certifPage",
         "pages/logs/logs",
         "pages/publish1/publish1",
         "pages/publish2/publish2",
@@ -15,7 +17,6 @@
         "pages/policeDetailRec/policeDetailRec",
         "pages/reportExError/reportExError",
         "pages/defAddrEdit/defAddrEdit",
-        "pages/certifPage/certifPage",
         "pages/welcome/welcome",
         "pages/changeSchool/changeSchool"
     ],

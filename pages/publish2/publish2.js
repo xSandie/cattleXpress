@@ -169,7 +169,7 @@ Page({
                                 // })
                             console.log(event.DeRecLocSel)
                             wx.request({
-                                url: 'http://10.2.24.200:8080/HelloWord/publish/publishinfo', //填充发布订单url
+                                url: 'http://45.40.197.154/HelloWord/publish/publishinfo', //填充发布订单url
                                 method: 'POST',
                                 data: {
                                     userID: app.globalData.user_ID,
@@ -196,7 +196,7 @@ Page({
                                 },
                                 success: function(res) {
                                     wx.hideLoading()
-                                    console.log("表单提交成功")
+                                        //console.log("表单提交成功")
                                     wx.showToast({
                                         title: '发布成功',
                                         icon: 'success',
@@ -299,7 +299,7 @@ Page({
 
     },
     sexLimitChange: function(e) {
-        console.log(e);
+        // console.log(e);
         this.setData({
             sexIndex: e.detail.value
         })
@@ -309,7 +309,7 @@ Page({
 
 
     weInfoChange: function(e) {
-        console.log(e);
+        // console.log(e);
         this.setData({
             weIndex: e.detail.value
         })
@@ -323,8 +323,8 @@ Page({
     },
 
     checkboxChange: function(e) {
-        console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
-        console.log(e)
+        // console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
+        // console.log(e)
         switch (e.detail.value) {
             case '大件':
                 this.setData({
@@ -371,6 +371,6 @@ Page({
                 rewardBoxItems: items
             })
         }
-        console.log('赏金checkbox发生change事件，携带value值为：', e.detail.value)
+        // console.log('赏金checkbox发生change事件，携带value值为：', e.detail.value)
     }
 })

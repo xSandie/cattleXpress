@@ -6,12 +6,12 @@ Page({
      */
     data: {
         exLogo: '../../images/STOLOGO.png',
-        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
-        exInstance: '阳光苑·申通快递',
+        exLocTime: '',
+        exInstance: '',
         fxIcon: '../../images/fixBtnIcon.png',
-        LName: '向',
-        pubtime: '1月19日 12：00',
-        reward: '20',
+        LName: '',
+        pubtime: '',
+        reward: '',
 
         finIcon: '../../images/checkLight.png',
         policeTAIcon: '../../images/policeDim.png',
@@ -19,26 +19,26 @@ Page({
         conIcon: '../../images/conIcon.png',
         policeIcon: '../../images/policeLight.png',
 
-        fetchCode: 'A1-4568',
+        fetchCode: '',
         haoIcon: '../../images/numRear.png',
         mingIcon: '../../images/deName.png',
         jianIcon: '../../images/sizeIcon.png',
         shiIcon: '../../images/timeIcon.png',
 
-        shiText: '05-07 16:00',
-        mingText: '向书晗',
-        jianText: '小件',
-        haoText: '9021',
+        shiText: '',
+        mingText: '',
+        jianText: '',
+        haoText: '',
 
-        sdLoc: '宿舍区 硕士楼 D1-2245',
-        weightInfo: '<0.5KG',
-        otherInfo: '静安大火飞机喀什电话费就爱看华盛顿发射啊圣诞节快发哈设计开发和',
-        exWorry: true,
-        phoneNum: '15622578294',
+        sdLoc: '',
+        weightInfo: '',
+        otherInfo: '',
+        exWorry: null,
+        phoneNum: '',
 
-        statusCode: 3,
-        expressID: '1562',
-        orderID: '15896'
+        statusCode: null,
+        expressID: '',
+        orderId: ''
 
     },
 
@@ -48,25 +48,109 @@ Page({
     onLoad: function(options) {
         console.log(options)
         var that = this
-        wx.request({
-            url: '', //填充请求订单具体信息url
-            method: 'GET',
-            data: {
-                'orderID': options.id,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    //设置页面参数，
-                })
-            },
-            fail: function() {},
-            complete: function() {}
-        })
+        if (options.key == null) {
+            wx.request({
+              url: 'http://45.40.197.154/HelloWord/firstpage/havereceiveinfo', //填充请求订单具体信息url
+                method: 'GET',
+                data: {
+                    'orderID': options.id,
+                    'user_ID': app.globalData.user_ID,
+                },
+                header: {
+                    "Content-Type": "applciation/json"
+                },
+                success: function(res) {
+                    console.log(res)
+                    if (!res.data.reward) {
+                        wx.showToast({
+                            title: '订单被别人抢啦',
+                            icon: 'none',
+                            duration: 1000,
+                            success: function() {
+                                setTimeout(function() {
+                                    wx.switchTab({
+                                        url: '../home/home',
+                                    })
+                                }, 1000);
 
+                            }
+                        })
+                    } else {
+                        that.setData({
+                            //设置页面参数
+                            exLogo: res.data.exLogo,
+                            exLocTime: res.data.exLocTime,
+                            exInstance: res.data.exInstance,
+                            expressID: res.data.expressID,
+                            //以上是快递站点信息
+                            orderId: res.data.orderID,
+                            sdInstance: res.data.exInstance,
+                            exWorry: res.data.exWorry,
+                            weightInfo: res.data.weightInfo,
+                            reward: res.data.reward,
+                            LName: res.data.LName,
+                            pubtime: res.data.pubtime,
+                            phoneNum: res.data.phoneNum,
+                            shiText: res.data.shiText,
+                            mingText: res.data.mingText,
+                            jianText: res.data.jianText,
+                            haoText: res.data.haoText,
+                            fetchCode: res.data.fetchCode,
+                            otherInfo: res.data.otherInfo,
+                            statusCode: res.data.state,
+                            sdLoc: res.data.sdLoc
+
+
+                        })
+                    }
+                },
+                fail: function() {},
+                complete: function() {}
+            })
+        } else {
+
+            //从订单页面来的接口
+            wx.request({
+              url: 'http://45.40.197.154/HelloWord/getorderinfo/receive', //填充请求订单具体信息url
+                method: 'GET',
+                data: {
+                    'ordNum': options.id,
+                    'account': app.globalData.user_ID,
+                },
+                header: {
+                    "Content-Type": "applciation/json"
+                },
+                success: function(res) {
+                    console.log("从订单页面进入发送请求", res)
+                    that.setData({
+                        //设置页面参数
+                        exLogo: res.data.exLogo,
+                        exLocTime: res.data.exLocTime,
+                        exInstance: res.data.exInstance,
+                        expressID: res.data.expressID,
+                        //以上是快递站点信息
+                        orderId: res.data.orderID,
+                        sdInstance: res.data.exInstance,
+                        exWorry: res.data.exWorry,
+                        weightInfo: res.data.weightInfo,
+                        reward: res.data.reward,
+                        LName: res.data.LName,
+                        pubtime: res.data.pubtime,
+                        phoneNum: res.data.phoneNum,
+                        shiText: res.data.shiText,
+                        mingText: res.data.mingText,
+                        jianText: res.data.jianText,
+                        haoText: res.data.haoText,
+                        fetchCode: res.data.fetchCode,
+                        otherInfo: res.data.otherInfo,
+                        statusCode: res.data.State,
+                        sdLoc: res.data.sdLoc
+                    })
+                },
+                fail: function() {},
+                complete: function() {}
+            })
+        }
     },
 
     /**
@@ -101,25 +185,25 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        var that = this
-        wx.request({
-            url: '', //填充请求订单具体信息url
-            method: 'GET',
-            data: {
-                'orderID': that.orderID,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    //设置页面参数，设置orderID
-                })
-            },
-            fail: function() {},
-            complete: function() {}
-        })
+        // var that = this
+        // wx.request({
+        //     url: '', //填充请求订单具体信息url
+        //     method: 'GET',
+        //     data: {
+        //         'orderID': that.data.orderID,
+        //         'user_ID': app.globalData.user_ID,
+        //     },
+        //     header: {
+        //         "Content-Type": "applciation/json"
+        //     },
+        //     success: function(res) {
+        //         that.setData({
+        //             //设置页面参数，设置orderID
+        //         })
+        //     },
+        //     fail: function() {},
+        //     complete: function() {}
+        // })
     },
 
     /**
@@ -147,67 +231,118 @@ Page({
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
-                    console.log('用户点击确定')
+                    // console.log('用户点击确定')
                 } else if (res.cancel) {
-                    console.log('用户点击取消')
+                    // console.log('用户点击取消')
                 }
             }
         })
     },
     policeTA: function(event) {
-        var that = this
+        // var that = this
+        // wx.showModal({
+        //     title: '确定举报？',
+        //     content: '请谨慎举报',
+        //     confirmText: '确认举报',
+        //     confirmColor: '#faaf42',
+        //     success: function(res) {
+        //         if (res.confirm) {
+        //             console.log('用户点击确定')
+        //             wx.request({ //更改默认地址，为空的就是没变
+        //                 url: 'http://10.2.24.200:8080/HelloWord/getorderinfo/report',
+        //                 method: 'POST',
+        //                 data: {
+        //                     'uidNum': app.globalData.user_ID, //加其他字段
+        //                     'ordNum': that.data.orderId
+        //                 },
+        //                 header: {
+        //                     "Content-Type": "application/x-www-form-urlencoded"
+        //                 },
+        //                 success: function(res) {
+        //                     if (res.statusCode == 200) {
+        //                         console.log('举报订单生成', res)
+        //                         console.log(res.data.reportid)
+        //                         wx.redirectTo({
+        //                             url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.orderId
+        //                         })
+        //                     }
+
+        //                 },
+        //                 fail: function() {},
+        //                 complete: function() {}
+        //             })
+
+        //         } else if (res.cancel) {
+        //             console.log('用户点击取消')
+        //         }
+        //     }
+        // })
         wx.showModal({
-            title: '确定举报？',
-            content: '请谨慎举报',
-            confirmText: '确认举报',
+            title: '敬请期待',
+            content: '攻城狮加紧完善中',
             confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '期待噢',
             success: function(res) {
-                if (res.confirm) {
-                    console.log('用户点击确定')
-                    wx.redirectTo({
-                        url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.expressID
-                    })
-                } else if (res.cancel) {
-                    console.log('用户点击取消')
-                }
+                if (res.confirm) {}
             }
         })
 
     },
     toFix: function(event) {
-        var expressID = event.currentTarget.dataset.expressId
-        console.log(expressID)
-        wx.navigateTo({
-            url: '../reportExError/reportExError?id=' + expressID,
+        // var expressID = event.currentTarget.dataset.expressId
+        // console.log(expressID)
+        // wx.navigateTo({
+        //     url: '../reportExError/reportExError?id=' + expressID,
+        // })
+        wx.showModal({
+            title: '敬请期待',
+            content: '攻城狮加紧完善中',
+            confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '期待噢',
+            success: function(res) {
+                if (res.confirm) {}
+            }
         })
+
     },
     finOrder: function() {
-
         var that = this
-        wx.request({
-            url: '', //填充完成订单url
-            method: 'GET',
-            data: {
-                'orderID': that.data.expressID,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+        wx.showModal({
+            title: '确认送达？',
+            content: '对方确认后，赏金就到手啦',
+            confirmColor: '#faaf42',
             success: function(res) {
-                that.setData({
-                    //设置页面参数
-                    statusCode: 0,
-                })
-                wx.showToast({
-                    title: '等待对方确认',
-                    icon: 'success',
-                    duration: 1000
-                })
-            },
-            fail: function() {},
-            complete: function() {}
+                if (res.confirm) {
+                    wx.request({
+                        url: 'http://45.40.197.154/HelloWord/getorderinfo/havesongda', //填充完成订单url
+                        method: 'GET',
+                        data: {
+                            'ordNum': that.data.orderId,
+                        },
+                        header: {
+                            "Content-Type": "applciation/json"
+                        },
+                        success: function(res) {
+                            // console.log("确认送达", res)
+                            that.setData({
+                                //设置页面参数
+                                statusCode: res.data.State,
+                            })
+                            wx.showToast({
+                                title: '等待对方确认',
+                                icon: 'success',
+                                duration: 1000
+                            })
+                        },
+                        fail: function() {},
+                        complete: function() {}
+                    })
+                }
+            }
         })
+
     }
 
 })

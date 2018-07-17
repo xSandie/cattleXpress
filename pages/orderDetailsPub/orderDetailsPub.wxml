@@ -12,7 +12,7 @@
             <text class='fxText'>报错</text>
         </view>
     </view>
-    <view class="statusBar">
+    <view wx:if="{{!hideStatus}}" class="statusBar">
         <view class="status" style="background: {{statusBack}}">
             <text>{{status}}</text>
         </view>
@@ -22,7 +22,7 @@
         </view>
         <view class='cline1'wx:if="{{statusCode==1||statusCode==2}}">   
         </view>
-        <view class="cancel" wx:if="{{statusCode==1||statusCode==2}}">
+        <view class="cancel" bindtap="cancelOrder" wx:if="{{statusCode==1||statusCode==2}}">
             <image src='{{cancelIcon}}' class='cancelIcon'></image>
             <text>取消订单</text>
         </view>
@@ -82,7 +82,7 @@
                 <text>{{sdLoc}}</text>
             </view>
         </view>
-        <view class='worTag' wx:if="{{exWorry}}"><text>加急</text></view>
+        <view class='worTag' wx:if="{{exWorry=== 'true'}}"><text>加急</text></view>
     </view>
     <view class='mainSum'>
         <view class='reward'>
@@ -108,7 +108,7 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <text>{{LName}}同学于{{pubtime}}发布 取消订单请<text class="nav">联系对方</text></text>
+           <text wx:if="{{reTime!='若是自己取快递，记得帮别人领噢'}}">取消订单请先<text class="nav">联系对方</text></text>
         </view>
     </view>
 </view>

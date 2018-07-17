@@ -6,15 +6,15 @@ Page({
      */
     data: {
 
-        exLogo: '../../images/STOLOGO.png',
-        exLocTime: '营业时间：' + '周一至周日08：00至19：00',
-        exInstance: '阳光苑·申通快递',
+        exLogo: '',
+        exLocTime: '',
+        exInstance: '',
         fxIcon: '../../images/fixBtnIcon.png',
-        LName: '向',
-        pubtime: '1月19日 12：00',
-        reward: '20',
-        expressID: '125789',
-        orderID: '15895',
+        LName: '',
+        pubtime: '',
+        reward: '',
+        expressID: '',
+        orderID: '',
         finIcon: '../../images/checkLight.png',
         policeTAIcon: '../../images/policeDim.png',
         conTAIcon: '../../images/conDim.png',
@@ -22,24 +22,25 @@ Page({
         policeIcon: '../../images/policeLight.png',
         cancelIcon: "../../images/cancelIcon.png",
 
-        fetchCode: 'A1-4568',
+        fetchCode: '',
         haoIcon: '../../images/numRear.png',
         mingIcon: '../../images/deName.png',
         jianIcon: '../../images/sizeIcon.png',
         shiIcon: '../../images/timeIcon.png',
 
-        shiText: '05-07 16:00前',
-        mingText: '向书晗',
-        jianText: '小件',
-        haoText: '9021',
+        shiText: '',
+        mingText: '',
+        jianText: '',
+        haoText: '',
 
-        sdLoc: '宿舍区 硕士楼 D1-2245',
-        weightInfo: '<0.5KG',
-        otherInfo: '静安大火飞机喀什电话费就爱看华盛顿发射啊圣诞节快发哈设计开发和',
-        exWorry: true,
+        sdLoc: '',
+        weightInfo: '',
+        otherInfo: '',
+        exWorry: '',
 
-        reName: "刘国权 41612057",
-        reTime: " 接单时间：05-07 15:00",
+        reName: null,
+        reTime: null,
+        phoneNum: null,
 
         statusCode: 0,
         status: "",
@@ -47,31 +48,110 @@ Page({
         statusBackWaitMe: "linear-gradient(90deg,#fed25c, #f9a93e)",
         statusBackFinOrRec: "linear-gradient(90deg,#4ED662, #37BD76)",
         statusBackOutofTime: "linear-gradient(90deg,#D6D6D6, #BABABA)",
+        hideStatus: false
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function(options) { //要复制到下拉刷新中去
         console.log(options)
         var that = this
         wx.request({
-            url: '', //填充请求订单具体信息url
+            url: 'http://45.40.197.154/HelloWord/getorderinfo/publish', //填充请求订单具体信息url
             method: 'GET',
             data: {
-                'orderID': options.id,
-                'user_ID': app.globalData.user_ID,
+                'ordNum': options.id,
+                // 'user_ID': app.globalData.user_ID,
             },
             header: {
                 "Content-Type": "applciation/json"
             },
             success: function(res) {
+                console.log("onload", res)
+                var tdata = res.data
                 that.setData({
                     //设置页面参数，设置orderID
+                    statusCode: tdata.state,
+                    exWorry: tdata.exWorry,
+                    expressID: tdata.expressID,
+                    exLogo:tdata.exLogo,
+                    exLocTime: '营业时间：' + tdata.exLocTime,
+                    reward: tdata.reward,
+                    shiText: tdata.shiText,
+                    fetchCode: tdata.fetchCode,
+                    pubtime: tdata.pubtime,
+                    exInstance: tdata.exInstance,
+                    orderID: options.id,
+                    haoText: tdata.haoText,
+                    jianText: tdata.jianText,
+                    mingText: tdata.mingText,
+                    otherInfo: tdata.otherInfo,
+                    sdLoc: tdata.sdLoc,
+                    weightInfo: tdata.weightInfo,
                 })
+                if (tdata.rtime) {
+                    that.setData({
+                        reTime: '接单时间：' + tdata.rtime,
+                        reName: tdata.Uname + ' ' + tdata.Uid,
+                        phoneNum: tdata.phone
+                    })
+                } else {
+                    that.setData({
+                        reTime: '若是自己取快递，记得帮别人领噢',
+                        reName: '暂无'
+                    })
+                }
             },
             fail: function() {},
-            complete: function() {}
+            complete: function() {
+                if (that.data.statusCode == 0 || that.data.statusCode == 1) {
+                    that.setData({
+                        statusBack: "linear-gradient(90deg,#fed25c, #f9a93e)",
+                    })
+                } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
+                    that.setData({
+                        statusBack: "linear-gradient(90deg,#4ED662, #37BD76)"
+                    })
+                } else if (that.data.statusCode == 4) {
+                    that.setData({
+                        statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+                    })
+                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+                    that.setData({
+                            statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+                        })
+                        //异常也不让用户太糟心
+                }
+
+
+                if (that.data.statusCode == 0) {
+                    that.setData({
+                        status: "待收货"
+                    })
+                } else if (that.data.statusCode == 1) {
+                    that.setData({
+                        status: "待接单"
+                    })
+                } else if (that.data.statusCode == 2) {
+                    that.setData({
+                        status: "待送达"
+                    })
+                } else if (that.data.statusCode == 3) {
+                    that.setData({
+                        status: "已完成"
+                    })
+                } else if (that.data.statusCode == 4) {
+                    that.setData({
+                        status: "已过期"
+                    })
+                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+                    that.setData({
+                            status: "异常"
+                        })
+                        //异常也不让用户太糟心
+                }
+            }
         })
     },
 
@@ -86,52 +166,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        if (this.data.statusCode == 0 || this.data.statusCode == 1) {
-            this.setData({
-                statusBack: "linear-gradient(90deg,#fed25c, #f9a93e)",
-            })
-        } else if (this.data.statusCode == 2 || this.data.statusCode == 3) {
-            this.setData({
-                statusBack: "linear-gradient(90deg,#4ED662, #37BD76)"
-            })
-        } else if (this.data.statusCode == 4) {
-            this.setData({
-                statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-            })
-        } else if (this.data.statusCode == 5 || this.data.statusCode == 6) {
-            this.setData({
-                    statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-                })
-                //异常也不让用户太糟心
-        }
 
-
-        if (this.data.statusCode == 0) {
-            this.setData({
-                status: "待收货"
-            })
-        } else if (this.data.statusCode == 1) {
-            this.setData({
-                status: "待接单"
-            })
-        } else if (this.data.statusCode == 2) {
-            this.setData({
-                status: "待送达"
-            })
-        } else if (this.data.statusCode == 3) {
-            this.setData({
-                status: "已完成"
-            })
-        } else if (this.data.statusCode == 4) {
-            this.setData({
-                status: "已过期"
-            })
-        } else if (this.data.statusCode == 5 || this.data.statusCode == 6) {
-            this.setData({
-                    status: "异常"
-                })
-                //异常也不让用户太糟心
-        }
 
     },
 
@@ -153,25 +188,25 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        var that = this
-        wx.request({
-            url: '', //填充请求订单具体信息url
-            method: 'GET',
-            data: {
-                'orderID': that.orderID,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    //设置页面参数，设置orderID
-                })
-            },
-            fail: function() {},
-            complete: function() {}
-        })
+        // var that = this
+        // wx.request({
+        //     url: '', //填充请求订单具体信息url
+        //     method: 'GET',
+        //     data: {
+        //         'orderID': that.orderID,
+        //         'user_ID': app.globalData.user_ID,
+        //     },
+        //     header: {
+        //         "Content-Type": "applciation/json"
+        //     },
+        //     success: function(res) {
+        //         that.setData({
+        //             //设置页面参数，设置orderID
+        //         })
+        //     },
+        //     fail: function() {},
+        //     complete: function() {}
+        // })
     },
 
     /**
@@ -188,10 +223,20 @@ Page({
 
     },
     toFix: function(event) {
-        var expressID = event.currentTarget.dataset.expressId
-        console.log(expressID)
-        wx.navigateTo({
-            url: '../reportExError/reportExError?id=' + expressID,
+        // var expressID = event.currentTarget.dataset.expressId
+        // console.log(expressID)
+        // wx.navigateTo({
+        //     url: '../reportExError/reportExError?id=' + expressID,
+        // })
+        wx.showModal({
+            title: '敬请期待',
+            content: '攻城狮加紧完善中',
+            confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '期待噢',
+            success: function(res) {
+                if (res.confirm) {}
+            }
         })
     },
     conTA: function() {
@@ -214,63 +259,134 @@ Page({
         })
     },
     policeTA: function(event) {
-        var that = this
+        // var that = this
+        // wx.showModal({
+        //     title: '确定举报？',
+        //     content: '请谨慎举报',
+        //     confirmText: '确认举报',
+        //     confirmColor: '#faaf42',
+        //     success: function(res) {
+        //         if (res.confirm) {
+        //             console.log('用户点击确定')
+        //             wx.redirectTo({
+        //                 url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.expressID
+        //             })
+        //         } else if (res.cancel) {
+        //             console.log('用户点击取消')
+        //         }
+        //     }
+        // })
         wx.showModal({
-            title: '确定举报？',
-            content: '请谨慎举报',
-            confirmText: '确认举报',
+            title: '敬请期待',
+            content: '攻城狮加紧完善中',
             confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '期待噢',
             success: function(res) {
-                if (res.confirm) {
-                    console.log('用户点击确定')
-                    wx.redirectTo({
-                        url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.expressID
-                    })
-                } else if (res.cancel) {
-                    console.log('用户点击取消')
-                }
+                if (res.confirm) {}
             }
         })
 
     },
     finOrder: function() {
-      var that = this
-      wx.showModal({
-        title: '确认',
-        content: '确认收货后赏金就自动给对方了噢！',
-        confirmText: '好的',
-        confirmColor: '#faaf42',
-        success: function (res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-            wx.request({
-              url: '', //填充完成订单url
-              method: 'GET',
-              data: {
-                'orderID': that.data.expressID,
-                'user_ID': app.globalData.user_ID,
-              },
-              header: {
-                "Content-Type": "applciation/json"
-              },
-              success: function (res) {
-                that.setData({
-                  //设置页面参数
-                  statusCode: 0,
-                })
-                wx.showToast({
-                  title: '已完成',
-                  icon: 'success',
-                  duration: 1000
-                })
-              },
-              fail: function () { },
-              complete: function () { }
-            })
-          }
-        }
-      })
-        
-        
+        var that = this
+        wx.showModal({
+            title: '确认',
+            content: '确认收货后赏金就自动给对方了噢！',
+            confirmText: '好的',
+            confirmColor: '#faaf42',
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.request({
+                      url: 'http://45.40.197.154/HelloWord/getorderinfo/queren', //填充完成订单url
+                        method: 'GET',
+                        data: {
+                          'ordNum': that.data.orderID
+                            // 'user_ID': app.globalData.user_ID,
+                        },
+                        header: {
+                            "Content-Type": "applciation/json"
+                        },
+                        success: function(res) {
+                          console.log(res)
+                            that.setData({
+                                //设置页面参数
+                              statusCode: res.data.State,
+                            })
+                            wx.showToast({
+                                title: '已完成',
+                                icon: 'success',
+                                duration: 1000
+                            })
+                        },
+                        fail: function() {},
+                        complete: function() {}
+                    })
+                }
+            }
+        })
+
+
+    },
+    cancelOrder: function() {
+        var that = this
+        wx.showModal({
+            title: '确定取消？',
+            content: '建议取消前先联系对方',
+            confirmText: '确认取消',
+            cancelText: '再想想',
+            cancelColor: '#faaf42',
+            confirmColor: '#999ba1',
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.request({
+                        url: 'http://45.40.197.154/HelloWord/getorderinfo/quxiao', //填充取消订单
+                        method: 'POST',
+                        data: {
+                            'ordNum': that.data.orderID,
+                            'uidNum': app.globalData.user_ID
+                        },
+                        header: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        success: function(res) {
+                            console.log('取消', res)
+                            if (res.statusCode == 200) {
+                                that.setData({
+                                    //设置页面参数，设置orderID
+                                    statusCode: res.data,
+                                    hideStatus: true
+                                })
+                                wx.showToast({
+                                    title: '已完成',
+                                    icon: 'success',
+                                    duration: 1000
+                                })
+                                setTimeout(function() {}, 500);
+                                wx.switchTab({
+                                    url: '../orders/orders'
+                                })
+                            }
+
+                        },
+                        fail: function() {},
+                        complete: function() {
+                            if (that.data.statusCode == 4) {
+                                that.setData({
+                                    statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)",
+                                    status: "已过期"
+                                })
+                            }
+                        }
+                    })
+                }
+            }
+        })
+
+
+
+
     }
 })
