@@ -1,6 +1,5 @@
 {
     "navigationBarTitleText": "订单详情",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "white",
     "enablePullDownRefresh": false
 }

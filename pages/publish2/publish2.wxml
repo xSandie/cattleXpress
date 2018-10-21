@@ -106,7 +106,7 @@
                 </view>
             </view>
             <view class="btnA">
-                <button hover-class="defaultHover" class="checkBtn" bindtap="checking" formType="submit">
+                <button hover-class="button-hover"  bindtap="checking" formType="submit">
                     <view class='nbtnT'>
                         <text>检查一下</text>
                     </view>    

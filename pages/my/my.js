@@ -135,7 +135,7 @@ Page({
             url: '../policeList/policeList',
         })
     },
-    supportUs: function() {
+    supportUs: function(e) {
         wx.showModal({
             title: '感谢',
             content: '开发团队富得很，暂时不需要支持噢！',
@@ -146,10 +146,10 @@ Page({
     },
     joinUs: function() {
         wx.showModal({
-            title: '神秘的组织',
-            content: '我们才不会轻易告诉你联系方式呢，哼！',
+            title: '邮箱',
+            content: '联系我们请发送邮件至：\r\nmornstudio@163.com',
             showCancel: false,
-            confirmText: '厉害了',
+            confirmText: '好的',
             confirmColor: '#faaf42'
         })
     }

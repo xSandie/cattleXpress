@@ -8,12 +8,6 @@ App({
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())
         wx.setStorageSync('logs', logs)
-
-        console.log("黄牛快递代领")
-        console.log("校园快递最后一公里问题的最优解")
-        console.log("时间仓促，部分功能未完善（详情见项目需求文档），还望评委海涵!")
-        console.log("评委老师们辛苦了！")
-
         //登录
     },
     //获取基本信息方法
@@ -31,6 +25,7 @@ App({
                             },
                             success: function(res) {
                                 //   console.log(res.data)//服务器解密后，客户端收到基本信息
+                                console.log(res)
                                 app.globalData.user_ID = res.data[0].account
                                 app.globalData.userName = res.data[0].uname
                                 app.globalData.schoolNumb = res.data[0].uid //学号
@@ -79,6 +74,7 @@ App({
         column2_2: [],
         column2_3: [], //四列
         balance: 40.00,
+      certif:false,
         default: {
             conPhoneNum: '点击输入电话号码',
             sendLoc: '选择地点',

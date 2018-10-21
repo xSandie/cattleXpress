@@ -9,7 +9,7 @@ Page({
         schoolIcon: "../../images/schoolIcon.png",
         passCertifIcon: "../../images/next.png",
         verifCodePath: '', //验证码路径
-        schoolName: "点击选择学校",
+        schoolName: "请先点击选择学校",
         row1: false,
         row2: false,
         row3: false,
@@ -35,6 +35,7 @@ Page({
         this.setData({
             schoolName: app.globalData.schoolName
         })
+        //写具体的get函数 ifschoolname=空就不发送验证，根据教职工还是学生get不同的数据
     },
 
     /**

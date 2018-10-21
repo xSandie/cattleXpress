@@ -1,5 +1,22 @@
 button {
-    padding: 0rpx;
+    z-index: 15;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    border-radius: 10rpx;
+    height: 100rpx;
+    width: 265rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    right: 40rpx;
+    bottom: 40rpx;
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: white;
 }
 
 .trifle {
@@ -168,12 +185,13 @@ button::after {
     border: none;
 }
 
-.answerHover1 {
-    background: rgba(238, 241, 253, 0.76);
-    border-radius: 10rpx;
+.button-hover {
+    color: white;
+    background: linear-gradient(90deg, #b39340, #af782c);
 }
 
-.finishOrd {
+
+/* .finishOrd {
     z-index: 15;
     background: linear-gradient(90deg, #fed25c, #f9a93e);
     border-radius: 10rpx;
@@ -192,7 +210,7 @@ button::after {
     font-size: 32rpx;
     font-weight: bold;
     color: white;
-}
+} */
 
 
 /* .finText {
@@ -466,4 +484,9 @@ button::after {
 
 .defaultHover {
     color: #6D6141;
+}
+
+.answerHover1 {
+    background: rgba(238, 241, 253, 0.76);
+    border-radius: 10rpx;
 }

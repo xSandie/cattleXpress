@@ -75,7 +75,8 @@
     z-index: 10;
 }
 
-.fakeBtn {
+
+/* .fakeBtn {
     height: 100rpx;
     width: 100%;
     position: relative;
@@ -84,6 +85,10 @@
     background: white;
     font-size: 32rpx;
     font-weight: bold;
+} */
+
+button::after {
+    border: none;
 }
 
 button {
@@ -91,19 +96,20 @@ button {
     margin-top: 30rpx;
     border-radius: 16rpx;
     box-sizing: border-box;
-    background: linear-gradient(90deg, #f9a93e, #fed25c);
-    height: 100rpx;
     padding: 30rpx;
     width: 246rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     border: 0rpx;
-}
-
-button::after {
-    border: none;
+    height: 100rpx;
+    width: 100%;
+    position: relative;
+    top: 200rpx;
+    color: #faaf42;
+    background: white;
+    font-size: 32rpx;
+    font-weight: bold;
 }
 
 .recLocTi {
@@ -193,4 +199,5 @@ form {
 .answerHover {
     color: #999ba1;
     background: rgb(240, 240, 245);
+    border-radius: 16rpx;
 }

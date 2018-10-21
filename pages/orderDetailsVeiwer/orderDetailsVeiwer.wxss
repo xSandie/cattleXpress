@@ -374,3 +374,8 @@
     background: #DADEE2;
     border-radius: 10rpx;
 }
+
+.button-hover {
+    color: white;
+    background: linear-gradient(90deg, #b39340, #af782c);
+}

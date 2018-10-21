@@ -25,7 +25,6 @@ Page({
         pubtime: '',
         orderId: '',
         phoneNum: '',
-        certif: true,
 
         expressID: ''
 
@@ -160,7 +159,7 @@ Page({
      * 接单按钮按下
      */
     recOrder: function(event) {
-        if (this.data.certif == true) {
+        if (app.globalData.certif == true) {
             var orderId = event.currentTarget.dataset.orderId;
             wx.showModal({
                 title: '确认接单',
@@ -211,7 +210,7 @@ Page({
 
     },
     conTA: function() {
-        if (this.data.certif == false) {
+        if (app.globalData.certif == false) {
             wx.showModal({
                 title: '请认证',
                 content: '点击确定前往教务系统认证！',

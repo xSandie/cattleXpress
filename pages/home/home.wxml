@@ -1,21 +1,20 @@
+<view wx:if="{{tongzhi}}" bindtap="toTongzhi" class='tongzhi'>
+    <text>{{tongzhiSum}}</text>   
+</view>
 <view class='container'>
     <view class='select'>
         <view class='school' bindtap='changeSchool' >
-            <block class='locIcon'>
             <image class='locIcon' src="{{loctionSrc}}"></image>
-            </block>
             <view class='schoolText'>
                 <view hover-class="answerHover" class='realSNText'><text>{{mySchoolName}}</text></view>
             </view>
-            <view>
-                <image class='pullIcon' src='{{pullIcon}}'></image>
-            </view>
+            <image class='pullIcon' src='{{pullIcon}}'></image>
         </view>
         <view bindtap="ifCertif" class='mainSelect'>
             <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
                <view hover-class="answerHover1" class='expressLoc'>
                     <view class='elIcon'>
-                    <image class='elIconImg' src="{{elIconImg}}"></image>  
+                    <image class='elIconImg' src="{{elIconImg}}"></image>
                     </view>
                     <view class='lText'>
                         <view class='lTextLarge'>
@@ -25,19 +24,19 @@
                             <text>{{expressLoc}}</text>
                         </view>
                     </view>
-               </view> 
+               </view>
             </picker>
             <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}">
                 <view  hover-class="answerHover1" class='sendLoc'>
                     <view class='slIcon'>
-                    <image class='slIconImg' src="{{slIconImg}}"></image>     
+                    <image class='slIconImg' src="{{slIconImg}}"></image>
                     </view>
                     <view class='lText'>
                         <view class='lTextLarge'>
                         <text>送达地点</text>
                         </view>
                         <view class='lTextSmall'>
-                        <text>{{sendLoc}}</text> 
+                        <text>{{sendLoc}}</text>
                         </view>
                     </view>
                 </view>
@@ -61,12 +60,12 @@
                 </view>
                 <view class='body'>
                     <view class='exInstance'>
-                       <text>{{item.exInstance}} 送至</text> 
+                       <text>{{item.exInstance}} 送至</text>
                     </view>
                     <view class='sdInstance'>
                         <view class='sdIText'><text>{{item.sdInstance}}</text></view>
                         <view class='exTagWor' wx:if="{{item.exWorry=== 'true'}}">
-                            <view class='tagText'><text>加急</text></view> 
+                            <view class='tagText'><text>加急</text></view>
                         </view>
                     </view>
                     <view class='exTag'>
@@ -87,7 +86,7 @@
             </view>
             <view class='rbutton'>
                 <view class='rbText'><text>详情</text></view>
-                
+
                 <!-- 可能需要先相对定位一下然后使用button-->
             </view>
         </view>
@@ -101,13 +100,14 @@
             <text class='hBtnText'>发布</text>
             <image class='hBtnIcon' src='{{topubIcon}}'></image>
         </view>
+        <view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>
     </view>
     <view wx:if="{{atEnd}}" class='prompt'>
         <view class='lineCss'></view>
         <text>黄牛是有底线的</text>
         <view class='lineCss'></view>
     </view>
-     <view class="blankArea" wx:if="{{listCount==false}}"> 
+     <view class="blankArea" wx:if="{{listCount==false}}">
      <!-- <view class="blankArea" wx:if="{{!listCount}}"> -->
         <image class='blankIcon' src='{{blankIcon}}'></image>
     </view>

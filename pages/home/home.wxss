@@ -303,6 +303,25 @@
     justify-content: center;
 }
 
+.jieri {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30rpx;
+    padding-left: 30rpx;
+    border-radius: 40rpx;
+    height: 80rpx;
+    width: auto;
+    background-color: white;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    z-index: 15;
+    font-size: 24rpx;
+    color: #373c46;
+    text-align: center;
+    margin-left: 20rpx;
+}
+
 .floatBtn {
     display: flex;
     flex-direction: row;
@@ -387,4 +406,17 @@
 .blankArea {
     margin-right: auto;
     margin-left: auto;
+}
+
+.tongzhi {
+    width: 750rpx;
+    height: auto;
+    box-sizing: border-box;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    font-size: 24rpx;
+    padding-bottom: 16rpx;
+    padding-top: 16rpx;
+    background-color: #fbbd4d;
+    color: white;
 }

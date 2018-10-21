@@ -27,11 +27,11 @@
         </view>
         <view class="inputA">
             <view class="inA">
-                <input type="number" name="schoolNumb" class="inputMy" placeholder="账号（教务系统账号）" bindtap="change1"/>
+                <input type="number" name="schoolNumb" class="inputMy" placeholder="账号" bindtap="change1"/>
                 <view class="row" style='background:{{row1?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="inA">
-                <input type="text" name="password" class="inputMy" placeholder="密码（测试期间不做校验）" password bindtap="change2"/>
+                <input type="text" name="password" class="inputMy" placeholder="密码" password bindtap="change2"/>
                 <view class="row" style='background:{{row2?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="inA">

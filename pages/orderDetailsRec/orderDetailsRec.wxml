@@ -92,16 +92,17 @@
         </view>
     </view>
     <view class='trifle'>
-        <view class='pubSum'>
-           <text>{{LName}}同学于{{pubtime}}发布 取消订单请<text class="nav">联系对方</text></text>
+        <view wx:if="{{statusCode!=3&&statusCode!=4&&statusCode!=5&&statusCode!=6}}" class='pubSum'>
+           <view>{{LName}}同学于{{pubtime}}发布 取消订单请<view style='display:inline' bindtap="conTA" class="nav">联系对方</view></view>
         </view>
+        <view wx:if="{{statusCode==5||statusCode==6}}">请至 我的 > 举报/申诉进度 查看详情</view>
     </view>
 </view>
 <view>
     <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button class='finishOrd' bindtap="finOrder">
-          <text hover-class="defaultHover"  class='finText'>已经送达</text>
+        <button hover-class="button-hover" bindtap="finOrder">
+          <text class='finText'>已经送达</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
         <view class="smallBtnA">
@@ -110,14 +111,14 @@
                 <text class='dimText'>联系TA</text>
             </view>
             <view hover-class="answerHover1" data-order-id="{{orderId}}" bindtap="policeTA" class="sBtnA">
-                <image src='{{policeTAIcon}}' class='dimIcon'></image>
+                <image src='{{policeTAIcon}}' class='dimIcon'></image>  
                 <text class='dimText'>举报</text>
             </view>
         </view>
     </view>
     <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button hover-class="defaultHover" class='finishOrd' bindtap="conTA">
+        <button hover-class="button-hover" bindtap="conTA">
           <text>联系TA</text>
           <image src='{{conIcon}}' class='finIcon'></image>     
         </button>
@@ -132,7 +133,7 @@
     </view> 
     <view wx:if="{{statusCode==3}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button hover-class="defaultHover" data-order-id="{{orderId}}" class='finishOrd' bindtap="policeTA">
+        <button hover-class="button-hover" data-order-id="{{orderId}}" bindtap="policeTA">
           <text>举报TA</text>
           <image src='{{policeIcon}}' class='finIcon'></image>     
         </button>

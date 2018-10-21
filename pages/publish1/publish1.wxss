@@ -1,3 +1,7 @@
+button:after {
+    border: none;
+}
+
 .header {
     width: 100%;
     height: 268rpx;
@@ -191,11 +195,8 @@ form {
     color: #373c46;
 }
 
-button-hover {
-    color: #6D6141;
-}
-
 .exTime {
+    box-sizing: border-box;
     height: 80rpx;
     width: 100%;
     display: flex;
@@ -265,10 +266,11 @@ button-hover {
     vertical-align: center;
 }
 
-.fakeBtn {
+
+/* .fakeBtn {
     height: 100rpx;
     width: 246rpx;
-}
+} */
 
 button {
     margin: 0rpx;
@@ -287,8 +289,9 @@ button {
     border: 0rpx;
 }
 
-.fakeBtn::after {
-    border: none;
+.button-hover {
+    color: white;
+    background: linear-gradient(90deg, #af782c, #b39340);
 }
 
 .nbtnT {

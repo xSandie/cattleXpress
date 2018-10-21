@@ -74,7 +74,7 @@
     <view class='fxdBtnBac'>    
     </view>
     <view class='fxdBtnArea'>
-        <view class='contact' hover-class="defaultHover" data-order-id="{{orderId}}" bindtap="recOrder">
+        <view class='contact' hover-class="button-hover" data-order-id="{{orderId}}" bindtap="recOrder">
           <text>点此接单</text>
           <image src='{{conIcon}}' class='conIcon'></image>     
         </view>

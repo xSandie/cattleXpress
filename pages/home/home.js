@@ -5,6 +5,10 @@ Page({
      * 页面的初始数据
      */
     data: {
+        tongzhi: true,
+        jieri: true,
+        tongzhiContent: '代课专区试开放，11月31日后将暂时关闭，如有需要请至我的页面向我们反馈',
+        tongzhiSum: '点击查看新公告：代课专区开放公告',
         mySchoolName: '陕西师范大学长安校区',
         loctionSrc: "../../images/location.png",
         pubIcon: '../../images/publisher.png',
@@ -162,9 +166,9 @@ Page({
         var that = this
         app.getUser().then(function(res) {
             that.setData({
-                    requestTime: 1,
-                })
-                // console.log("onload被执行")
+                requestTime: 1,
+            })
+            console.log(res)
             that.setData({
                     exlocArray: app.globalData.exlocArray,
                     column2_0: app.globalData.column2_0,
@@ -194,7 +198,7 @@ Page({
                     "Content-Type": "applciation/json"
                 },
                 success: function(res) {
-                    // console.log(res)
+                    console.log(res)
                     that.setData({
                         listCount: res.data[0]
                     })
@@ -217,26 +221,26 @@ Page({
     onShow: function() {
         //console.log('刚开始onshow', app.globalData.schoolName)
         var that = this
-        // app.getUser().then(function(res) {
-        //     that.setData({
-        //             requestTime: 1,
-        //         })
-        //         //console.log("onshow getUser被执行")
-        //     that.setData({
-        //             exlocArray: app.globalData.exlocArray,
-        //             column2_0: app.globalData.column2_0,
-        //             column2_1: app.globalData.column2_1,
-        //             column2_2: app.globalData.column2_2,
-        //             column2_3: app.globalData.column2_3,
-        //             mySchoolName: app.globalData.schoolName,
-        //             sdlocArray: [
-        //                 ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-        //             ]
-        //         })
-        //         // console.log('onshowmy', that.data.mySchoolName)
-        //         // console.log("onshow" + app.globalData.sex)
-        //         // console.log('onshow' + app.globalData.schoolName)
-        // })
+            // app.getUser().then(function(res) {
+            //     that.setData({
+            //             requestTime: 1,
+            //         })
+            //         //console.log("onshow getUser被执行")
+            //     that.setData({
+            //             exlocArray: app.globalData.exlocArray,
+            //             column2_0: app.globalData.column2_0,
+            //             column2_1: app.globalData.column2_1,
+            //             column2_2: app.globalData.column2_2,
+            //             column2_3: app.globalData.column2_3,
+            //             mySchoolName: app.globalData.schoolName,
+            //             sdlocArray: [
+            //                 ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+            //             ]
+            //         })
+            //         // console.log('onshowmy', that.data.mySchoolName)
+            //         // console.log("onshow" + app.globalData.sex)
+            //         // console.log('onshow' + app.globalData.schoolName)
+            // })
     },
 
     /**
@@ -388,6 +392,15 @@ Page({
                 complete: function() {}
             })
         }
+    },
+    toTongzhi: function() {
+        wx.showModal({
+            title: '公告',
+            content: this.data.tongzhiContent,
+            showCancel: false,
+            confirmText: '知道啦',
+            confirmColor: '#faaf42',
+        })
     },
     onPageScroll: function(e) {
         if (e.scrollTop == 0) {

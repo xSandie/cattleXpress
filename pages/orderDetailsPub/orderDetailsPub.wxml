@@ -7,8 +7,8 @@
         </view>
         <view class='cline'>   
         </view>
-        <view class='fixBtn'>
-            <image src="{{fxIcon}}" hover-class="answerHover1"  bindtap="toFix" data-express-id="{{expressID}}" class='fxIcon'></image>
+        <view  hover-class="answerHover1" class='fixBtn'>
+            <image src="{{fxIcon}}" bindtap="toFix" data-express-id="{{expressID}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
     </view>
@@ -22,7 +22,7 @@
         </view>
         <view class='cline1'wx:if="{{statusCode==1||statusCode==2}}">   
         </view>
-        <view class="cancel" bindtap="cancelOrder" wx:if="{{statusCode==1||statusCode==2}}">
+        <view class="cancel" hover-class='answerHover1' bindtap="cancelOrder" wx:if="{{statusCode==1||statusCode==2}}">
             <image src='{{cancelIcon}}' class='cancelIcon'></image>
             <text>取消订单</text>
         </view>
@@ -108,7 +108,10 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <text wx:if="{{reTime!='若是自己取快递，记得帮别人领噢'}}">取消订单请先<text class="nav">联系对方</text></text>
+           <view wx:if="{{reTime!='若是自己取快递，记得帮别人领噢'&&(statusCode!=3&&statusCode!=5&&statusCode!=6)}}">取消订单请先<view bindtap="conTA" style='display:inline' class="nav">联系对方</view></view>
+           <view wx:if="{{statusCode==5||statusCode==6}}">
+               请至 我的 > 举报/申诉进度 查看详情
+           </view>
         </view>
     </view>
 </view>
@@ -116,8 +119,8 @@
     <view class='fxdBtnBac'>    
     </view>
     <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
-        <button class='finishOrd'  bindtap="finOrder">
-          <text hover-class="defaultHover" class='finText'>完成订单</text>
+        <button hover-class="button-hover" bindtap="finOrder">
+          <text>完成订单</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
         <view class="smallBtnA">
@@ -132,8 +135,8 @@
         </view>
     </view> 
     <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
-        <button class='finishOrd' bindtap="finOrder">
-          <text hover-class="defaultHover" class='finText'>确认收货</text>
+        <button hover-class="button-hover" class='finishOrd' bindtap="finOrder">
+          <text>确认收货</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
          <view  bindtap="policeTA" data-order-id="{{orderId}}" class='dirGet'>
@@ -146,8 +149,8 @@
         </view>
     </view> 
     <view wx:if="{{statusCode==3}}" class='fxdBtnArea'>
-        <button class='finishOrd'  bindtap="policeTA" data-order-id="{{orderId}}">
-          <text hover-class="defaultHover" class='finText'>举报TA</text>
+        <button hover-class="button-hover" bindtap="policeTA" data-order-id="{{orderId}}">
+          <text>举报TA</text>
           <image src='{{policeIcon}}' class='finIcon'></image>     
         </button>
         <view class='dirGet' bindtap="toLaw">
