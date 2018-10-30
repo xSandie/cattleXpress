@@ -1,0 +1,46 @@
+/* pages/myCode/myCode.wxss */
+.container{
+  flex-direction: column;
+}
+
+.btnArea{
+  border-radius: 10rpx;
+  background: linear-gradient(#fed25c, #f9a93e);
+  height: 100rpx;
+  width: 670rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.helpArea{
+  width: 670rpx;
+  box-sizing: border-box;
+}
+.help{
+  font-size: 22rpx;
+  color: #999ba1;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.payCode{
+  margin-top: 30rpx;
+  width: 670rpx;
+  box-sizing: border-box;
+}
+.codeImg{
+  width: 100%;
+}
+.button-hover {
+    color: white;
+    background: linear-gradient( #b39340, #af782c);
+}

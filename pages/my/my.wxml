@@ -67,6 +67,14 @@
             </view>
         </view>
         <view class='smallBtn'>
+            <view hover-class="answerHover1" class='joinUs' bindtap="myCode">
+                <view class='joinUsText'>
+                    <text>收款二维码</text>
+                </view>
+                <view class='next'>
+                   <image class='nextIcon' src='{{nextIcon}}'></image> 
+                </view>
+            </view>
             <view hover-class="answerHover1" class='support' bindtap="supportUs">
                 <view class='supportText'>
                     <text>支持我们</text>

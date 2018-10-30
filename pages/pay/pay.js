@@ -1,4 +1,6 @@
 // pages/pay/pay.js
+const urlModel = require('../../utils/urlSet.js')
+app=getApp()
 Page({
 
   /**

@@ -7,7 +7,7 @@ Page({
     data: {
         tongzhi: true,
         jieri: true,
-        tongzhiContent: '代课专区试开放，11月31日后将暂时关闭，如有需要请至我的页面向我们反馈',
+        tongzhiContent: '代课专区将于12月底试开放，敬请关注！',
         tongzhiSum: '点击查看新公告：代课专区开放公告',
         mySchoolName: '陕西师范大学长安校区',
         loctionSrc: "../../images/location.png",

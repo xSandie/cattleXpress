@@ -1,14 +1,8 @@
 //app.js
 const Promise = require('units/promise.js');
-
+const urlModel=require('utils/urlSet.js')
 App({
     onLaunch: function() {
-        var app = this
-            // 展示本地存储能力
-        var logs = wx.getStorageSync('logs') || []
-        logs.unshift(Date.now())
-        wx.setStorageSync('logs', logs)
-        //登录
     },
     //获取基本信息方法
     getUser: function() {
@@ -17,14 +11,17 @@ App({
             wx.login({
                 success: function(res) {
                     if (res.code) {
+                      console.log(res.code)
                         //发起网络请求
                         wx.request({
-                            url: 'http://45.40.197.154/HelloWord/receivecode/getopenid', //服务器api
+                          url: urlModel.url.codeUrl, //服务器api
+                            // url:'http://127.0.0.1:5000/v1',
                             data: {
                                 code: res.code
                             },
                             success: function(res) {
                                 //   console.log(res.data)//服务器解密后，客户端收到基本信息
+                                console.log('code')
                                 console.log(res)
                                 app.globalData.user_ID = res.data[0].account
                                 app.globalData.userName = res.data[0].uname

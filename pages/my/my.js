@@ -152,5 +152,10 @@ Page({
             confirmText: '好的',
             confirmColor: '#faaf42'
         })
-    }
+    },
+  myCode:function(){
+    wx.navigateTo({
+      url: '../myCode/myCode',
+    })
+  }
 })

@@ -233,20 +233,20 @@ Page({
         }
     },
     toFix: function(event) {
-        // var expressID = event.currentTarget.dataset.expressId
-        // console.log(expressID)
-        // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressID,
-        // })
-        wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
-            confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
-            success: function(res) {
-                if (res.confirm) {}
-            }
+        var expressID = event.currentTarget.dataset.expressId
+        console.log(expressID)
+        wx.navigateTo({
+            url: '../reportExError/reportExError?id=' + expressID,
         })
+        // wx.showModal({
+        //     title: '敬请期待',
+        //     content: '攻城狮加紧完善中',
+        //     confirmColor: '#faaf42',
+        //     showCancel: false,
+        //     confirmText: '期待噢',
+        //     success: function(res) {
+        //         if (res.confirm) {}
+        //     }
+        // })
     }
 })

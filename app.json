@@ -2,7 +2,6 @@
   "pages": [
     "pages/home/home",
     "pages/certifPage/certifPage",
-    "pages/logs/logs",
     "pages/publish1/publish1",
     "pages/publish2/publish2",
     "pages/orders/orders",
@@ -21,7 +20,8 @@
     "pages/daike/daike",
     "pages/daikeFabu/daikeFabu",
     "pages/daikeDetail/daikeDetail",
-    "pages/pay/pay"
+    "pages/pay/pay",
+    "pages/myCode/myCode"
   ],
   "window": {
     "backgroundTextStyle": "dark",
