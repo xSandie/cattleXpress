@@ -33,7 +33,7 @@ Page({
     wx.request({
       url: urlModel.url.getMyPayCode,
       data:{
-        gId:'oJXNZ5E-St_tRmPr9nr78ss48DLw'
+        gId:app.globalData.user_ID
       },
       success: function (res) {
         console.log(res)
@@ -115,7 +115,7 @@ Page({
             //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
           },
           formData: {
-            gId: 'oJXNZ5E-St_tRmPr9nr78ss48DLw'  //其他额外的formdata，userId
+            gId: app.globalData.user_ID  //其他额外的formdata，userId
           },
           success:function(res){
             console.log(res)

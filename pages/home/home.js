@@ -1,4 +1,5 @@
 var app = getApp();
+const urlModel = require('../../utils/urlSet.js')
 Page({
 
     /**
@@ -101,112 +102,89 @@ Page({
      * 会被动态设置的元素，exlocArray，sdlocArray,column2_0123,listCount
      **/
 
+    setAvatar:function(){
+      wx.getSetting({
+        success: function (res) {
+          if (res.authSetting['scope.userInfo']) {
+            wx.getUserInfo({
+              success: function (res) {
+                console.log(res)
+                send_data = {
+                  'user_nickname': res.userInfo.nickName,
+                  'user_avatarurl': res.userInfo.avatarUrl,
+                  'gId': app.globalData.user_ID
+                }
+                wx.request({
+                  url: urlModel.url.postAvatar,
+                  method: 'POST',
+                  data: send_data,
+                  success: function (res) {
+                    console.log("---上传头像--")
+                    console.log(res)
+                  }
+                })
+              }//发起发送用户头像昵称请求
+            })
+          } else {
+            //未授权
+            wx.reLaunch({
+              url: '../welcome/welcome',
+            })
+          }
+        }
+      })  
+    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this
-        wx.getSetting({
-                success: function(res) {
-                    if (res.authSetting['scope.userInfo']) {
-                        wx.getUserInfo({
-                            success: function(res) {}
-                        })
-                    } else {
-                        //未授权
-                        wx.reLaunch({
-                            url: '../welcome/welcome',
-                        })
-                    }
-                }
-            })
-            // wx.login({
-            //     success: function(res) {
-            //         if (res.code) {
-            //             //发起网络请求
-            //             wx.request({
-            //                 url: 'http://10.2.24.200:8080/HelloWord/receivecode/getopenid', //服务器api
-            //                 data: {
-            //                     code: res.code
-            //                 },
-            //                 success: function(res) { //服务器解密后，客户端收到基本信息
-            //                     console.log(res.data)
-            //                     app.globalData.user_ID = res.data[0].account
-            //                     app.globalData.userName = res.data[0].uname
-            //                     app.globalData.schoolNumb = res.data[0].uid //学号
-            //                     app.globalData.schoolID = res.data[0].schoolid
-            //                     app.globalData.schoolName = res.data[0].school
-            //                     app.globalData.ourUserStatus = res.data[0].status
-            //                     app.globalData.sex = res.data[0].sex
-            //                     app.globalData.exlocArray = res.data[1].kuaidi
-            //                     app.globalData.column2_0 = res.data[1].sushequ
-            //                     app.globalData.column2_1 = res.data[1].jiaoxuequ
-            //                     app.globalData.column2_2 = res.data[1].othersarea
-            //                     app.globalData.column2_3 = res.data[1].kuaxiaoqu //替换掉xx
-            //                     app.globalData.balance = res.data[0].money,
-            //                       app.globalData.default = res.data[1].default
-            //                         that.setData({
-            //                             exlocArray: app.globalData.exlocArray,
-            //                             column2_0: app.globalData.column2_0,
-            //                             column2_1: app.globalData.column2_1,
-            //                             column2_2: app.globalData.column2_2,
-            //                             column2_3: app.globalData.column2_3,
-            //                             mySchoolName: app.globalData.schoolName,
-            //                         })
-            //                 },
-            //                 fail: function() {
-            //                     //app.globalData.userInfo = "dfjkadhfkahfauhf"
-            //                 }
-            //             })
-            //         } else {
-            //             console.log('登录失败！' + res.errMsg)
-            //         } //服务器将存储用户code
-            //     }
-            // })
-        var that = this
-        app.getUser().then(function(res) {
-            that.setData({
-                requestTime: 1,
-            })
+      var that = this
+      app.getUser().then(function (res) {
+        that.setData({
+          requestTime: 1,
+        })
+        console.log(res)
+        that.setData({
+          exlocArray: app.globalData.exlocArray,
+          column2_0: app.globalData.column2_0,
+          column2_1: app.globalData.column2_1,
+          column2_2: app.globalData.column2_2,
+          column2_3: app.globalData.column2_3,
+          mySchoolName: app.globalData.schoolName,
+          sdlocArray: [
+            ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+          ]
+        })
+        // console.log('onload', app.globalData.schoolName)
+        // console.log('onload', app.globalData.sex)
+        // console.log('onloadmy', that.data.mySchoolName)
+        wx.request({
+          url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
+          method: 'GET',
+          data: {
+            'schoolID': app.globalData.schoolID,
+            'Account': app.globalData.user_ID,
+            'exloc': that.data.expressLoc,
+            'sdloc': that.data.sendLoc,
+            'Sex': app.globalData.sex,
+            'time': 1
+          },
+          header: {
+            "Content-Type": "applciation/json"
+          },
+          success: function (res) {
             console.log(res)
             that.setData({
-                    exlocArray: app.globalData.exlocArray,
-                    column2_0: app.globalData.column2_0,
-                    column2_1: app.globalData.column2_1,
-                    column2_2: app.globalData.column2_2,
-                    column2_3: app.globalData.column2_3,
-                    mySchoolName: app.globalData.schoolName,
-                    sdlocArray: [
-                        ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-                    ]
-                })
-                // console.log('onload', app.globalData.schoolName)
-                // console.log('onload', app.globalData.sex)
-                // console.log('onloadmy', that.data.mySchoolName)
-            wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
-                method: 'GET',
-                data: {
-                    'schoolID': app.globalData.schoolID,
-                    'Account': app.globalData.user_ID,
-                    'exloc': that.data.expressLoc,
-                    'sdloc': that.data.sendLoc,
-                    'Sex': app.globalData.sex,
-                    'time': 1
-                },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
-                success: function(res) {
-                    console.log(res)
-                    that.setData({
-                        listCount: res.data[0]
-                    })
-                },
-                fail: function() {},
-                complete: function() {}
+              listCount: res.data[0]
             })
+          },
+          fail: function () { },
+          complete: function () { }
         })
+      })
+      setTimeout(that.setAvatar, 5000)
+         
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -221,22 +199,17 @@ Page({
     onShow: function() {
         //console.log('刚开始onshow', app.globalData.schoolName)
         var that = this
-            // app.getUser().then(function(res) {
-            //     that.setData({
-            //             requestTime: 1,
-            //         })
-            //         //console.log("onshow getUser被执行")
-            //     that.setData({
-            //             exlocArray: app.globalData.exlocArray,
-            //             column2_0: app.globalData.column2_0,
-            //             column2_1: app.globalData.column2_1,
-            //             column2_2: app.globalData.column2_2,
-            //             column2_3: app.globalData.column2_3,
-            //             mySchoolName: app.globalData.schoolName,
-            //             sdlocArray: [
-            //                 ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-            //             ]
-            //         })
+        that.setData({
+                exlocArray: app.globalData.exlocArray,
+                column2_0: app.globalData.column2_0,
+                column2_1: app.globalData.column2_1,
+                column2_2: app.globalData.column2_2,
+                column2_3: app.globalData.column2_3,
+                mySchoolName: app.globalData.schoolName,
+                sdlocArray: [
+                    ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+                ]
+            })
             //         // console.log('onshowmy', that.data.mySchoolName)
             //         // console.log("onshow" + app.globalData.sex)
             //         // console.log('onshow' + app.globalData.schoolName)
@@ -292,7 +265,8 @@ Page({
             })
         } else {
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', //填充url筛选请求列表
+                url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', 
+                //填充url筛选请求列表
                 method: 'GET',
                 data: {
                     'schoolID': app.globalData.schoolID,

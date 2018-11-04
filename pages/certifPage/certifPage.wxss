@@ -159,11 +159,12 @@ input {
 }
 
 button {
+    margin-top: 24rpx;
     z-index: 5;
     background: linear-gradient(90deg, #fed25c, #f9a93e);
     border-radius: 10rpx;
     height: 100rpx;
-    width: 250rpx;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -171,6 +172,7 @@ button {
     font-size: 32rpx;
     color: white;
     font-weight: bold;
+    box-sizing: border-box;
 }
 
 button::after {
@@ -206,12 +208,13 @@ button::after {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    align-content:flex-start;
+    box-sizing: border-box;
 }
 
 .defaultHover {
-    color: #6D6141;
+    color: white;
+    background: linear-gradient(90deg, #b39340, #af782c);
 }
 
 .answerHover {
@@ -221,4 +224,11 @@ button::after {
 
 .answerHover1 {
     background: #DADEE2;
+}
+
+.inArea{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }

@@ -214,27 +214,6 @@ Page({
                 }
             })
         }
-        // wx.request({
-        //     url: 'http://10.2.24.200:8080/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
-        //     method: 'GET',
-        //     data: {
-        //         'Account': app.globalData.user_ID,
-        //         'Sex': app.globalData.sex
-        //     },
-        //     header: {
-        //         "Content-Type": "applciation/json"
-        //     },
-        //     success: function(res) {
-        //         console.log(res)
-        //         that.setData({
-        //             ongoRecListCount: res.data[0],
-        //             ongoPubListCount: res.data[1]
-        //                 //修改参数
-        //         })
-        //     },
-        //     fail: function() {},
-        //     complete: function() {}
-        // })
     },
 
     /**
@@ -325,7 +304,7 @@ Page({
             success: function(res) {
                 // console.log(res)
                 that.setData({
-                    //修改参数
+                    //修改参数,两边同时刷新
                     ongoRecListCount: res.data[0],
                     ongoPubListCount: res.data[1]
                 })

@@ -1,4 +1,5 @@
 var app = getApp()
+const urlModel = require('../../utils/urlSet.js')
 Page({
 
     /**
@@ -9,7 +10,7 @@ Page({
         schoolIcon: "../../images/schoolIcon.png",
         passCertifIcon: "../../images/next.png",
         verifCodePath: '', //验证码路径
-        schoolName: "请先点击选择学校",
+        schoolName: "点击选择学校",
         row1: false,
         row2: false,
         row3: false,
@@ -32,9 +33,33 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+      var that=this
         this.setData({
             schoolName: app.globalData.schoolName
         })
+      if (app.globalData.schoolName=='点击选择学校'){
+          wx.showToast({
+            title: '请先选择学校',
+            icon:'none'
+          })
+        }else{
+          send_data={
+            'gId':app.globalData.user_ID
+          }
+          wx.request({
+            url: urlModel.url.getCertifCode,
+            method:'POST',
+            data:send_data,
+            success:function(res){
+              console.log(res)
+              if(res.data.img_url){
+                that.setData({
+                  verifCodePath: res.data.img_url+'?v='+Math.random()
+                })
+              }
+            }
+          })
+        }
         //写具体的get函数 ifschoolname=空就不发送验证，根据教职工还是学生get不同的数据
     },
 
@@ -91,26 +116,6 @@ Page({
         this.setData({
             row1: true
         })
-        var that = this
-            // wx.request({
-            //     url: 'http://127.0.0.1:5000/verifiedCode', //填充请求验证码地址
-            //     method: 'GET',
-            //     data: {
-            //         'schoolID': app.globalData.schoolID,
-            //         'studentOrTeacher': that.data.studentOrTeacher,
-            //         'userID': app.globalData.user_ID
-            //     },
-            //     header: {
-            //         "Content-Type": "applciation/json"
-            //     },
-            //     success: function(res) {
-            //         that.setData({
-            //             verifCodePath: res.data
-            //         })
-            //     },
-            //     fail: function() {},
-            //     complete: function() {}
-            // })
     },
     change2: function() {
         this.setData({
@@ -123,118 +128,93 @@ Page({
         })
     },
     certif: function(e) {
-      // var that=this
-      //   console.log(e.detail.value)
-      //   wx.request({
-      //       url: 'http://10.2.24.200:8080/HelloWord/renzhengpage/getuinfo', //填充认证url
-      //       method: 'POST',
-      //       data: {
-      //           Uid: e.detail.value.schoolNumb,
-      //           password: e.detail.value.password,
-      //           verifiedCode: e.detail.value.verifiedCode,
-      //           Account: app.globalData.user_ID,
-      //       },
-      //       header: {
-      //           "Content-Type": "application/x-www-form-urlencoded"
-      //       },
-      //       success: function(res) {
-      //         if(res.statusCode==200){
-      //           wx.showToast({
-      //               title: '认证成功',
-      //               icon: 'success',
-      //               duration: 1500,
-      //               success: function() {
-      //                   wx.reLaunch({
-      //                       url: '../home/home'
-      //                   })
-      //               }
-      //           })
-      //         }else{
-      //           wx.showModal({
-      //             title: '认证失败',
-      //             content: '请认真核对信息',
-      //             showCancel: false,
-      //             confirmText: '返回',
-      //             confirmColor: '#faaf42',
-      //           })
-      //         }
-      //           // setTimeout(function() {
-      //           //     wx.navigateBack({})
-      //           // }, 1000);
-      //       },
-      //       fail: function() {               
-      //       },
-      //       complete: function() {}
-      //   })
-      var that = this
-        //console.log(e.detail.value)
-        wx.request({
-          url: 'http://api.inschool.tech/HelloWord/renzhengpage/getuinfo', //填充认证url
-            method: 'POST',
-            data: {
-                Uid: e.detail.value.schoolNumb,
-                password: e.detail.value.password,
-                verifiedCode: e.detail.value.verifiedCode,
-                Account: app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function(res) {
-              // if(res.statusCode==200){
-              //   wx.showToast({
-              //       title: '认证成功',
-              //       icon: 'success',
-              //       duration: 1500,
-              //       success: function() {
-              //           wx.reLaunch({
-              //               url: '../home/home'
-              //           })
-              //       }
-              //   })
-              // }else{
-              //   wx.showModal({
-              //     title: '认证失败',
-              //     content: '请认真核对信息',
-              //     showCancel: false,
-              //     confirmText: '返回',
-              //     confirmColor: '#faaf42',
-              //   })
-              // }
-                // setTimeout(function() {
-                //     wx.navigateBack({})
-                // }, 1000);
-            },
-            fail: function() {               
-            },
-            complete: function() {
-              wx.showToast({
-                title: '认证成功',
-                icon: 'success',
-                duration: 1500,
-                success: function () {
-                  wx.reLaunch({
-                    url: '../home/home'
-                  })
-                }
-              })
-            }
+      if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode==''){
+        wx.showModal({
+          title: '信息不全',
+          content: '请填写完整信息',
+          showCancel: false,
+          confirmText: '返回',
+          confirmColor: '#faaf42',
         })
+      }else{
+        var that = this
+        console.log(e.detail.value)
+        wx.request({
+          url: urlModel.url.postCertifMes, //填充认证url
+          method: 'POST',
+          data: {
+            'zjh': e.detail.value.schoolNumb,
+            'mm': e.detail.value.password,
+            'yzm': e.detail.value.verifiedCode,
+            'gId': app.globalData.user_ID,
+          },
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.statusCode == 200) {
+              if (res.data.status == 1) {
+
+                //设置姓名、学号、status
+                app.globalData.ourUserStatus=0
+                app.globalData.userName = res.data.name
+                app.globalData.schoolNumb = res.data.schoolNum
+                app.globalData.ourUserStatus = res.data.user_status
+                wx.showToast({
+                  title: '认证成功',
+                  icon: 'success',
+                  duration: 1500,
+                  success: function () {
+                    wx.reLaunch({
+                      url: '../home/home'
+                    })
+                  }
+                })
+              } else {
+                wx.showModal({
+                  title: '认证失败',
+                  content: '请认真核对信息',
+                  showCancel: false,
+                  confirmText: '返回',
+                  confirmColor: '#faaf42',
+                })
+                //设置新的验证码地址
+                that.setData({
+                  verifCodePath: res.data.imgUrl + '?v=' + Math.random()
+                })
+              }
+            } else {
+
+            }
+            // setTimeout(function() {
+            //     wx.navigateBack({})
+            // }, 1000);
+          },
+          fail: function () {
+          },
+          complete: function () { }
+        })
+      }
+      
     },
     changeCode:function(){
       var that=this
+      send_data = {
+        'gId': app.globalData.user_ID
+      }
       wx.request({
-        url: 'http://10.2.24.200:8080/HelloWord/renzhengpage/getuinfo', //填充请求验证码图片地址
-        method: 'GET',
-        data: {
-          Uid: e.detail.value.schoolNumb,
-        },
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        url: urlModel.url.getCertifCode,
+        method: 'POST',
+        data: send_data,
         success: function (res) {
-
+          console.log(res)
+          if (res.data.img_url) {
+            that.setData({
+              verifCodePath: res.data.img_url+'?v='+Math.random()
+            })
+          }
         }
-        })
+      })
     }
 })

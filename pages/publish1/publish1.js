@@ -89,22 +89,22 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        if (app.globalData.balance <= 2) {
-            wx.showModal({
-                title: '余额过低',
-                content: '点击确定前往充值！',
-                confirmColor: '#faaf42',
-                showCancel: true,
-                success: function(res) {
-                    if (res.confirm) {
-                        // console.log('用户点击确定')
-                        wx.switchTab({
-                            url: '../my/my'
-                        })
-                    }
-                }
-            })
-        }
+        // if (app.globalData.balance <= 2) {
+        //     wx.showModal({
+        //         title: '余额过低',
+        //         content: '点击确定前往充值！',
+        //         confirmColor: '#faaf42',
+        //         showCancel: true,
+        //         success: function(res) {
+        //             if (res.confirm) {
+        //                 // console.log('用户点击确定')
+        //                 wx.switchTab({
+        //                     url: '../my/my'
+        //                 })
+        //             }
+        //         }
+        //     })
+        // }
         // console.log(app.globalData.default)
         var that = this
         if (app.globalData.default.sendLoc != null) {

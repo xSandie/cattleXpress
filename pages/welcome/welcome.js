@@ -64,11 +64,6 @@ Page({
 
     },
     onGotUserInfo: function(e) {
-        console.log(e)
-        app.globalData.userInfo = e.detail.userInfo
-            // console.log(e.detail.errMsg)
-            // console.log(e.detail.userInfo)
-            // console.log(e.detail.rawData)//将发送请求session_ID
         wx.reLaunch({
             url: '../home/home',
         })

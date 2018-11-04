@@ -1,7 +1,9 @@
 {
   "pages": [
+    "pages/welcome/welcome",
     "pages/home/home",
     "pages/certifPage/certifPage",
+    
     "pages/publish1/publish1",
     "pages/publish2/publish2",
     "pages/orders/orders",
@@ -15,7 +17,7 @@
     "pages/policeDetailRec/policeDetailRec",
     "pages/reportExError/reportExError",
     "pages/defAddrEdit/defAddrEdit",
-    "pages/welcome/welcome",
+    
     "pages/changeSchool/changeSchool",
     "pages/daike/daike",
     "pages/daikeFabu/daikeFabu",

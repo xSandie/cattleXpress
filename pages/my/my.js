@@ -7,12 +7,12 @@ Page({
     data: {
         cardBack: "../../images/bigback.png",
         balance: null,
-        creditScr: 185,
+        creditScr: 0,
         level: 1,
         realName: "",
         // certif: false,
-        certif: true,
-        schoNum: "41612057",
+        certif: false,
+        schoNum: "",
         addressIcon: "../../images/myAdress.png",
         policeIcon: "../../images/police.png",
         nextIcon: "../../images/nextBlack.png",
@@ -23,29 +23,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // if (app.globalData.ourUserStatus == 4) {
-        //     wx.showModal({
-        //         title: '请认证',
-        //         content: '点击确定前往教务系统认证！',
-        //         confirmColor: '#faaf42',
-        //         showCancel: false,
-        //         success: function(res) {
-        //             if (res.confirm) {
-        //                 console.log('用户点击确定')
-        //                 wx.redirectTo({
-        //                     url: '../certifPage/certifPage'
-        //                 })
-        //             }
-        //         }
-        //     })
-        // }
     },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-
     },
 
     /**
