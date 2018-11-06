@@ -1,4 +1,5 @@
 var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -30,7 +31,7 @@ Page({
         expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
-        sendLoc: '宿舍区' + '·' + '周园', //默认
+        sendLoc: '',//'宿舍区' + '·' + '周园', //默认
         sdlocArray: [
             [],
             []
@@ -106,12 +107,29 @@ Page({
         //     })
         // }
         // console.log(app.globalData.default)
-        var that = this
-        if (app.globalData.default.sendLoc != null) {
-            this.setData({
-                default: app.globalData.default
-            })
+      // if (app.globalData.default.sendLoc != null) {
+      //   
+      // }
+        var send_data={
+          'gId':app.globalData.user_ID
         }
+        var that = this
+        wx.request({
+          url: urlModel.url.getAddr,
+          data:send_data,
+          success:function(res){
+            if(res.data.default){
+              app.globalData.default=res.data.default
+            }
+          },
+          complete:function(){//无论成功还是失败都会执行
+            that.setData({
+              default: app.globalData.default,
+              sendLoc: app.globalData.default.sendLoc
+            })
+          }
+        })
+          
         this.setData({
                 exlocArray: app.globalData.exlocArray,
                 column2_0: app.globalData.column2_0,
@@ -124,34 +142,34 @@ Page({
             sdlocArray: [
                 ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
             ],
-            sendLoc: that.data.default.sendLoc
+            
         })
-        var that = this
+        // var that = this
 
         //缓存信息设为默认
-        wx.getStorage({
-            key: 'FORMrow1',
-            success: function(res) {
-                that.setData({
-                    sdlocIndex: res.data.DeRecLocSel,
-                    dateIndex: res.data.exTimeConDate,
-                    // setDef: res.data.setDef
-                })
-            }
-        })
-        wx.getStorage({
-            key: 'FORM1',
-            success: function(res) {
-                that.setData({
-                    conPhoneNum: res.data.conPhoneNum,
-                    sendLoc: res.data.DeRecLocSel,
-                    sendLocIn: res.data.DeRecLocIn,
-                    recName: res.data.recName,
-                    phoneRear: res.data.phoneRear,
-                    expressLoc: res.data.selExCon,
-                })
-            },
-        })
+        // wx.getStorage({
+        //     key: 'FORMrow1',
+        //     success: function(res) {
+        //         that.setData({
+        //             sdlocIndex: res.data.DeRecLocSel,
+        //             dateIndex: res.data.exTimeConDate,
+        //             // setDef: res.data.setDef
+        //         })
+        //     }
+        // })
+        // wx.getStorage({
+        //     key: 'FORM1',
+        //     success: function(res) {
+        //         that.setData({
+        //             conPhoneNum: res.data.conPhoneNum,
+        //             sendLoc: res.data.DeRecLocSel,
+        //             sendLocIn: res.data.DeRecLocIn,
+        //             recName: res.data.recName,
+        //             phoneRear: res.data.phoneRear,
+        //             expressLoc: res.data.selExCon,
+        //         })
+        //     },
+        // })
     },
 
     /**
@@ -272,7 +290,7 @@ Page({
         wx.setStorage({
                 key: 'FORMrow1',
                 data: e.detail.value,
-            }) //设置原始数据缓存
+            }) //设置原始数据缓存,后面会用到
         e.detail.value.DeRecLocSel = this.data.sendLoc;
         e.detail.value.selExCon = this.data.expressLoc;
         // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
@@ -289,14 +307,44 @@ Page({
         if (e.detail.value.phoneRear == '') {
             e.detail.value.phoneRear = this.data.default.phoneRear;
         }
-        // console.log('form发生了submit事件，携带数据为：', e.detail.value)
+
+      if (this.check_default(e.detail.value)){
+        wx.showToast({
+          title: '输入有误，请检查',
+          icon:'none'
+        })
+      }else{//非默认值，可以进入下一个
+      //可以上传默认地址
+        if (e.detail.value.setDef==true){
+          var detail = e.detail.value
+          var send_data = {
+            'userID': app.globalData.user_ID,
+            'sdLocSum': detail.DeRecLocSel,
+            'sdLocDetail': detail.DeRecLocIn,
+            'contactNum': detail.conPhoneNum,
+            'fetchName': detail.recName,
+            'phoneRare': detail.phoneRear
+          }
+          wx.request({
+            url: urlModel.url.postAddr,
+            method: 'POST',
+            data: send_data,
+            success: function (res) {
+              console.log(res)
+              
+            }
+          })
+        }
         wx.setStorage({
-            key: 'FORM1',
-            data: e.detail.value,
+          key: 'FORM1',
+          data: e.detail.value,
         })
         wx.navigateTo({
-            url: '../publish2/publish2',
+          url: '../publish2/publish2',
         })
+      }
+        // console.log('form发生了submit事件，携带数据为：', e.detail.value)
+        
     },
     setDef: function() {
         var setDefault = this.data.setDef;
@@ -317,5 +365,26 @@ Page({
                 }
             }
         })
+    },
+    check_default:function(data_tocheck){
+      for (var Key in data_tocheck) {
+          if (Key == 'conPhoneNum') {
+            // console.log(Key)
+            if (data_tocheck[Key] == '点击输入电话号码') { return true }
+          } else if (Key == 'DeRecLocIn') {
+            // console.log(Key)
+            if (data_tocheck[Key] == '填写地点') { return true }
+          } else if (Key == 'recName') {
+            // console.log(Key)
+            if (data_tocheck[Key] == '填写姓名') { return true }
+          } else if (Key == 'phoneRear') {
+            // console.log(Key)
+            if (data_tocheck[Key] =='四位数字'){return true}
+          } else if (Key == 'DeRecLocSel') {
+            // console.log(Key)
+            if (data_tocheck[Key] == '选择地点') { return true }
+          }
+      }
+      return false
     }
 })

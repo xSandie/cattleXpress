@@ -1,4 +1,5 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js')
 Page({
 
     /**
@@ -63,27 +64,69 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        if (app.globalData.default.sendLoc != null) {
-            this.setData({
-                default: app.globalData.default
-            })
-        }
-        //设置成全局中的picker数组
-        var that = this
+        // if (app.globalData.default.sendLoc != null) {
+        //     this.setData({
+        //         default: app.globalData.default
+        //     })
+        // }
+        // //设置成全局中的picker数组
+        // var that = this
 
-        this.setData({
-            exlocArray: app.globalData.exlocArray,
-            column2_0: app.globalData.column2_0,
-            column2_1: app.globalData.column2_1,
-            column2_2: app.globalData.column2_2,
-            column2_3: app.globalData.column2_3,
-        })
-        this.setData({
-            sdlocArray: [
-                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-            ],
-            sendLoc: that.data.default.sendLoc
-        })
+        
+
+
+        // this.setData({
+        //     exlocArray: app.globalData.exlocArray,
+        //     column2_0: app.globalData.column2_0,
+        //     column2_1: app.globalData.column2_1,
+        //     column2_2: app.globalData.column2_2,
+        //     column2_3: app.globalData.column2_3,
+        // })
+        // this.setData({
+        //     sdlocArray: [
+        //         ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+        //     ],
+        //     sendLoc: that.data.default.sendLoc
+        // })
+      var send_data = {
+        'gId': app.globalData.user_ID
+      }
+      var that = this
+      wx.request({
+        url: urlModel.url.getAddr,
+        data: send_data,
+        success: function (res) {
+          //与发布界面 一致
+          if(res.statusCode==200){
+            console.log('获取默认地址成功')
+            console.log(res)
+            if (res.data.default) {
+              app.globalData.default = res.data.default
+            }
+          }
+          
+        },
+        complete: function () {//无论成功还是失败都会执行
+          that.setData({
+            default: app.globalData.default,
+            sendLoc: app.globalData.default.sendLoc//这里逻辑注意一下
+          })
+        }
+      })
+
+      this.setData({
+        exlocArray: app.globalData.exlocArray,
+        column2_0: app.globalData.column2_0,
+        column2_1: app.globalData.column2_1,
+        column2_2: app.globalData.column2_2,
+        column2_3: app.globalData.column2_3,
+        dateRange: app.globalData.dateRange
+      }) //执行完才提交
+      this.setData({
+        sdlocArray: [
+          ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+        ],
+      })
 
     },
 
@@ -190,59 +233,59 @@ Page({
         }
     },
 
-    replaceAddr: function(e) {
-        var that = this
-            // console.log(e)
-        var mvalue = e.detail.value
-        if (mvalue.DeRecLocIn == '') {
-            mvalue.DeRecLocIn = this.data.default.sendLocIn
-        }
-        if (mvalue.DeRecLocSel == '') {
-            mvalue.DeRecLocSel = this.data.default.sendLoc
-        }
-        if (mvalue.conPhoneNum == '') {
-            mvalue.conPhoneNum = this.data.default.conPhoneNum
-        }
-        if (mvalue.phoneRear == '') {
-            mvalue.phoneRear = this.data.default.phoneRear
-        }
-        if (mvalue.recName == '') {
-            mvalue.recName = this.data.default.recName
-        }
-        wx.request({ //更改默认地址，为空的就是没变
-            url: 'http://45.40.197.154/HelloWord/receivecode/insertaddress',
-            method: 'POST',
-            data: {
-                'userID': app.globalData.user_ID, //加其他字段
-                'sendArea': mvalue.DeRecLocSel,
-                'sendLoc': mvalue.DeRecLocIn,
-                'phoneRear': mvalue.phoneRear,
-                'contactNum': mvalue.conPhoneNum,
-                'recName': mvalue.recName
-            },
-            header: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            success: function(res) {
-                if (res.statusCode == 200) {
-                    // console.log('默认地址修改', res)
-                    wx.showToast({
-                        title: '修改成功',
-                        icon: 'success',
-                        duration: 1000
-                    })
-                    setTimeout(function() {
-                        wx.switchTab({
-                            url: '../my/my',
-                        })
-                    }, 1000);
-                }
+    // replaceAddr: function(e) {
+    //     var that = this
+    //         // console.log(e)
+    //     var mvalue = e.detail.value
+    //     if (mvalue.DeRecLocIn == '') {
+    //         mvalue.DeRecLocIn = this.data.default.sendLocIn
+    //     }
+    //     if (mvalue.DeRecLocSel == '') {
+    //         mvalue.DeRecLocSel = this.data.default.sendLoc
+    //     }
+    //     if (mvalue.conPhoneNum == '') {
+    //         mvalue.conPhoneNum = this.data.default.conPhoneNum
+    //     }
+    //     if (mvalue.phoneRear == '') {
+    //         mvalue.phoneRear = this.data.default.phoneRear
+    //     }
+    //     if (mvalue.recName == '') {
+    //         mvalue.recName = this.data.default.recName
+    //     }
+    //     wx.request({ //更改默认地址，为空的就是没变
+    //         url: urlModel.url.postAddr,
+    //         method: 'POST',
+    //         data: {
+    //             'userID': app.globalData.user_ID, //加其他字段
+    //             'sendArea': mvalue.DeRecLocSel,
+    //             'sendLoc': mvalue.DeRecLocIn,
+    //             'phoneRear': mvalue.phoneRear,
+    //             'contactNum': mvalue.conPhoneNum,
+    //             'recName': mvalue.recName
+    //         },
+    //         // header: {
+    //         //     "Content-Type": "application/x-www-form-urlencoded"
+    //         // },
+    //         success: function(res) {
+    //             if (res.statusCode == 200) {
+    //                 // console.log('默认地址修改', res)
+    //                 wx.showToast({
+    //                     title: '修改成功',
+    //                     icon: 'success',
+    //                     duration: 1500
+    //                 })
+    //                 setTimeout(function() {
+    //                     wx.switchTab({
+    //                         url: '../my/my',
+    //                     })
+    //                 }, 1500);
+    //             }
 
-            },
-            fail: function() {},
-            complete: function() {}
-        })
-    },
+    //         },
+    //         fail: function() {},
+    //         complete: function() {}
+    //     })
+    // },
     differLink: function() {
         wx.showModal({
             title: '区别',
@@ -256,5 +299,89 @@ Page({
                 }
             }
         })
+    },
+  replaceAddr:function(e){
+    console.log('submit')
+    console.log(e)
+    var detail = e.detail.value
+    var that=this
+    if (that.checkNone(detail)){
+      //check none 一定要在上
+      //默认情况 要 补全逻辑 返回detail
+      detail=that.fill_detail(detail)
+      console.log('信息完整')
+
+      var send_data={
+        'userID':app.globalData.user_ID,
+        'sdLocSum': detail.DeRecLocSel,
+        'sdLocDetail': detail.DeRecLocIn,
+        'contactNum': detail.conPhoneNum,
+        'fetchName': detail.recName,
+        'phoneRare': detail.phoneRear
+      }
+      //发起post请求
+      wx.request({
+        url: urlModel.url.postAddr,
+        method:'POST',
+        data:send_data,
+        success:function(res){
+          console.log(res)
+          if(res.data.msg=='ok'){
+            wx.showToast({
+              title: '修改成功',
+              complete:function(){
+                wx.navigateBack({
+                })
+              }
+            })
+          }else{
+            wx.showToast({
+              title: '出错，请重试',
+              icon:'none'
+            })
+          }
+        }
+      })
     }
+    
+  },
+  checkNone:function(detail){
+    if ((detail.DeRecLocIn == '' || detail.conPhoneNum == '' || detail.phoneRear == '' || detail.recName=='')&&
+      app.globalData.default.phoneRear=='四位数字'){//'四位数字'存在即说明没有设置过默认地址
+      wx.showToast({
+        title: '请补全信息',
+        icon:'none'
+      })
+      return false
+    }
+    return true
+  },
+  fill_detail:function(detail_to_fill){
+    //如果信息中有 未填写的默认信息，进行补全
+    // var filled_detail={}
+    // if (detail_to_fill.DeRecLocIn==''){
+    //   detail_to_fill.DeRecLocIn = this.data.default.sendLocIn
+    // }
+    for (var Key in detail_to_fill) {
+      if (detail_to_fill[Key]==''){
+        
+        if (Key =='conPhoneNum'){
+          // console.log(Key)
+          detail_to_fill[Key] = app.globalData.default.conPhoneNum
+        } else if (Key =='DeRecLocIn'){
+          // console.log(Key)
+          detail_to_fill[Key] = app.globalData.default.sendLocIn
+        } else if (Key =='recName'){
+          // console.log(Key)
+          detail_to_fill[Key] = app.globalData.default.recName
+        } else if (Key =='phoneRear'){
+          // console.log(Key)
+          detail_to_fill[Key] = app.globalData.default.phoneRear
+        }
+
+      }
+    }
+    console.log(detail_to_fill)
+    return detail_to_fill
+  }
 })

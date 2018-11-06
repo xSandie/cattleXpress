@@ -6,11 +6,11 @@ Page({
      * 页面的初始数据
      */
     data: {
-        tongzhi: true,
-        jieri: true,
+        tongzhi: false,//通知显示
+        jieri: false,//控制可点击悬浮按钮显示
         tongzhiContent: '代课专区将于12月底试开放，敬请关注！',
         tongzhiSum: '点击查看新公告：代课专区开放公告',
-        mySchoolName: '陕西师范大学长安校区',
+        mySchoolName: '',
         loctionSrc: "../../images/location.png",
         pubIcon: '../../images/publisher.png',
         blankIcon: '../../images/blank1.png',
@@ -183,7 +183,7 @@ Page({
           complete: function () { }
         })
       })
-      setTimeout(that.setAvatar, 5000)
+      setTimeout(that.setAvatar, 6000)
          
     },
     /**
@@ -197,7 +197,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        //console.log('刚开始onshow', app.globalData.schoolName)
         var that = this
         that.setData({
                 exlocArray: app.globalData.exlocArray,
@@ -210,10 +209,6 @@ Page({
                     ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
                 ]
             })
-            //         // console.log('onshowmy', that.data.mySchoolName)
-            //         // console.log("onshow" + app.globalData.sex)
-            //         // console.log('onshow' + app.globalData.schoolName)
-            // })
     },
 
     /**
@@ -236,7 +231,8 @@ Page({
     onPullDownRefresh: function() {
         console.log("refresh")
         this.setData({
-            fabuOrDingbu: true
+            fabuOrDingbu: true,
+          mySchoolName: app.globalData.schoolName,
         })
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {

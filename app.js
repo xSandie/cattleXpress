@@ -14,8 +14,7 @@ App({
                       console.log(res.code)
                         //发起网络请求
                         wx.request({
-                          url: urlModel.url.codeUrl, //服务器api
-                            // url:'http://127.0.0.1:5000/v1',
+                          url: urlModel.url.codeUrl, 
                             data: {
                                 code: res.code
                             },
@@ -24,21 +23,48 @@ App({
                               console.log('code')
                               console.log(res)
                               if (res.statusCode == 200 && !res.data.reqExceed){
-                                app.globalData.user_ID = res.data.gId
-                                app.globalData.userName = res.data.username
-                                app.globalData.schoolNumb = res.data.school_num //学号
-                                app.globalData.schoolID = res.data.school_id
-                                app.globalData.schoolName = res.data.school_name
-                                app.globalData.ourUserStatus = res.data.user_status
-                                app.globalData.sex = res.data.sex
-                                app.globalData.exlocArray = res.data.kuaidi
-                                app.globalData.column2_0 = res.data.sushequ
-                                app.globalData.column2_1 = res.data.jiaoxuequ
-                                app.globalData.column2_2 = res.data.othersarea
-                                app.globalData.column2_3 = res.data.kuaxiaoqu 
-                                app.globalData.balance = res.data.balance,
-                                app.globalData.dateRange = res.data.dateRange
+                                // if(res.data.noshool==true){
+                                //   wx.showModal({
+                                //     title: '欢迎注册',
+                                //     content: '请先选择学校',
+                                //     showCancel:false,
+                                //     cancelText:'好',
+                                //     cancelColor: '#f9a93e',
+                                //     success:function(){
+                                //       wx.navigateTo({
+                                //         url: 'pages/changeSchool/changeSchool',
+                                //       })
+                                //     }
+                                //   })
+                                // }else{
+                                if (res.data.username){
+                                  //有姓名，剩下的都会有
+                                  app.globalData.userName = res.data.username
+                                  app.globalData.schoolNumb = res.data.school_num //学号
+                                  app.globalData.schoolID = res.data.school_id
+                                  app.globalData.schoolName = res.data.school_name
+                                  app.globalData.sex = res.data.sex
+                                  app.globalData.exlocArray = res.data.kuaidi
+                                  app.globalData.column2_0 = res.data.sushequ
+                                  app.globalData.column2_1 = res.data.jiaoxuequ
+                                  app.globalData.column2_2 = res.data.othersarea
+                                  app.globalData.column2_3 = res.data.kuaxiaoqu
+                                  app.globalData.balance = res.data.balance,
+                                    app.globalData.dateRange = res.data.dateRange
+                                }else{//没有学校设置成陕师大
+                                  app.globalData.exlocArray = res.data.kuaidi
+                                  app.globalData.column2_0 = res.data.sushequ
+                                  app.globalData.column2_1 = res.data.jiaoxuequ
+                                  app.globalData.column2_2 = res.data.othersarea
+                                  app.globalData.column2_3 = res.data.kuaxiaoqu
+                                  app.globalData.balance = res.data.balance,
+                                    app.globalData.dateRange = res.data.dateRange,
+                                    app.globalData.schoolName = res.data.school_name
+                                }
                                 if (res.data.default) { app.globalData.default = res.data.default }
+                                // }
+                                app.globalData.user_ID = res.data.gId   
+                                app.globalData.ourUserStatus = res.data.user_status
                                 if (res.data.user_status == 4) { app.globalData.certif = false } else { app.globalData.certif = true }
                                 }
                                 resolve(res);
@@ -58,11 +84,11 @@ App({
     },
 
     globalData: {
-      user_ID: 'oberz0IZWeI5X66CegUezh-pszBA', //用户ID
+      user_ID: '', //用户ID
         userName: '', //用户姓名
         schoolNumb: '', //用户学号
         schoolID: 1, //学校id
-        schoolName: "陕西师范大学长安校区",
+        schoolName: "点击选择学校",
         ourUserStatus: 4, //用户状态码，默认先为4未认证
         sex: '',
         exlocArray: [], //两列快递站点数组

@@ -1,4 +1,5 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -161,67 +162,108 @@ Page({
                     wx.getStorage({
                         key: 'FORM1',
                         success: function(res) {
+                          //获取完存储的缓存后发送 发布订单请求 和 设置默认地址请求
                             var uploadlist = Object.assign({}, res.data, e.detail.value)
                             console.log(uploadlist)
                             var event = uploadlist
                                 // that.setData({
                                 //     uploadList: uploadlist
                                 // })
-                            console.log(event.DeRecLocSel)
+                            // console.log(event.DeRecLocSel)
+                            //event已经是完整可上传的对象
+                            //加入判空逻辑
+                          if (that.check_none(event)) {
+                            //有空的
+                            wx.showToast({
+                              title: '信息有空，请补全',
+                              icon: 'none'
+                            })
+                          } else {
                             wx.request({
-                                url: 'http://45.40.197.154/HelloWord/publish/publishinfo', //填充发布订单url
-                                method: 'POST',
-                                data: {
-                                    userID: app.globalData.user_ID,
-                                    schoolID: app.globalData.schoolID,
-                                    //订单具体信息
-                                    contactNum: event.conPhoneNum,
-                                    sendArea: event.DeRecLocSel,
-                                    sendLoc: event.DeRecLocIn,
-                                    recName: event.recName,
-                                    phoneRear: event.phoneRear,
-                                    setDefault: event.setDef,
-                                    fetchCode: event.fetchCode,
-                                    expressLoc: event.selExCon,
-                                    deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
-                                    sexLimit: event.sexLimit,
-                                    reward: event.rewardIn,
-                                    weightEsti: event.weightInfo,
-                                    sizeEsti: event.sizeInfo,
-                                    worried: event.worInfo,
-                                    depict: event.otherInfo,
-                                },
-                                header: {
-                                    "Content-Type": "application/x-www-form-urlencoded"
-                                },
-                                success: function(res) {
+                              url: 'http://45.40.197.154/HelloWord/publish/publishinfo', //填充发布订单url
+                              method: 'POST',
+                              data: {
+                                userID: app.globalData.user_ID,
+                                schoolID: app.globalData.schoolID,
+                                //订单具体信息
+                                contactNum: event.conPhoneNum,
+                                sendArea: event.DeRecLocSel,
+                                sendLoc: event.DeRecLocIn,
+                                recName: event.recName,
+                                phoneRear: event.phoneRear,
+                                setDefault: event.setDef,
+                                fetchCode: event.fetchCode,
+                                expressLoc: event.selExCon,
+                                deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
+                                sexLimit: event.sexLimit,
+                                reward: event.rewardIn,
+                                weightEsti: event.weightInfo,
+                                sizeEsti: event.sizeInfo,
+                                worried: event.worInfo,
+                                depict: event.otherInfo,
+                              },
+                              // header: {
+                              //     "Content-Type": "application/x-www-form-urlencoded"
+                              // },
+                              success: function (res) {
+                                if (res.statusCode == 200) {
+                                  //订单发布成功后发送 是否 设置默认地址
+                                  if (event.setDef == true) {
+                                    wx.request({//设置默认地址
+                                      url: '',
+                                      data: '',
+                                      success: function (res) {
+                                        //设置成功
+                                        if (res.statusCode == 200) {
+                                          wx.hideLoading()
+                                          //console.log("表单提交成功")
+                                          wx.showToast({
+                                            title: '发布成功',
+                                            icon: 'success',
+                                            duration: 2000
+                                          })
+                                          that.setData({
+                                            checking: false
+                                          })
+                                          wx.switchTab({
+                                            url: '../orders/orders',
+                                          })
+                                        }
+                                      }
+                                    })
+                                  } else {
                                     wx.hideLoading()
-                                        //console.log("表单提交成功")
+                                    //console.log("表单提交成功")
                                     wx.showToast({
-                                        title: '发布成功',
-                                        icon: 'success',
-                                        duration: 2000
+                                      title: '发布成功',
+                                      icon: 'success',
+                                      duration: 2000
                                     })
                                     that.setData({
-                                        checking: false
+                                      checking: false
                                     })
                                     wx.switchTab({
-                                        url: '../orders/orders',
+                                      url: '../orders/orders',
                                     })
-                                },
-                                fail: function() {
-                                    wx.hideLoading()
-                                    wx.showModal({
-                                            title: '提示',
-                                            content: '网络不太畅通，请稍后再试噢',
-                                            showCancel: false,
-                                            confirmText: '返回',
-                                            confirmColor: '#faaf42',
-                                        })
-                                        //console.log(app.globalData.userInfo)
-                                },
-                                complete: function() {}
+                                  }
+                                }
+
+                              },
+                              fail: function () {
+                                wx.hideLoading()
+                                wx.showModal({
+                                  title: '提示',
+                                  content: '网络不太畅通，请稍后再试噢',
+                                  showCancel: false,
+                                  confirmText: '返回',
+                                  confirmColor: '#faaf42',
+                                })
+                                //console.log(app.globalData.userInfo)
+                              },
+                              complete: function () { }
                             })
+                          }
+                            
 
                         },
                         fail: function(res) {},
@@ -372,5 +414,16 @@ Page({
             })
         }
         // console.log('赏金checkbox发生change事件，携带value值为：', e.detail.value)
+    },
+  check_none: function (data_tocheck) {
+    console.log(data_tocheck)
+    for (var Key in data_tocheck) {
+      if (data_tocheck[Key] == '') {//有空的返回true
+        if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {
+          return true
+        }
+      }
     }
+    return false
+  }
 })
