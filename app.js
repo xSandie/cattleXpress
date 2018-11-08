@@ -50,7 +50,7 @@ App({
                                   app.globalData.column2_2 = res.data.othersarea
                                   app.globalData.column2_3 = res.data.kuaxiaoqu
                                   app.globalData.balance = res.data.balance,
-                                    app.globalData.dateRange = res.data.dateRange
+                                  app.globalData.dateRange = res.data.dateRange
                                 }else{//没有学校设置成陕师大
                                   app.globalData.exlocArray = res.data.kuaidi
                                   app.globalData.column2_0 = res.data.sushequ
@@ -58,8 +58,8 @@ App({
                                   app.globalData.column2_2 = res.data.othersarea
                                   app.globalData.column2_3 = res.data.kuaxiaoqu
                                   app.globalData.balance = res.data.balance,
-                                    app.globalData.dateRange = res.data.dateRange,
-                                    app.globalData.schoolName = res.data.school_name
+                                  app.globalData.dateRange = res.data.dateRange,
+                                  app.globalData.schoolName = res.data.school_name
                                 }
                                 if (res.data.default) { app.globalData.default = res.data.default }
                                 // }

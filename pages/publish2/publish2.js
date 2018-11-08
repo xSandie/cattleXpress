@@ -179,8 +179,9 @@ Page({
                               icon: 'none'
                             })
                           } else {
+                            console.log(event)
                             wx.request({
-                              url: 'http://45.40.197.154/HelloWord/publish/publishinfo', //填充发布订单url
+                              url: urlModel.url.pubOrder, //填充发布订单url
                               method: 'POST',
                               data: {
                                 userID: app.globalData.user_ID,
@@ -209,26 +210,21 @@ Page({
                                 if (res.statusCode == 200) {
                                   //订单发布成功后发送 是否 设置默认地址
                                   if (event.setDef == true) {
-                                    wx.request({//设置默认地址
-                                      url: '',
-                                      data: '',
+                                    var send_data = {
+                                      'userID': app.globalData.user_ID,
+                                      'sdLocSum': event.DeRecLocSel,
+                                      'sdLocDetail': event.DeRecLocIn,
+                                      'contactNum': event.conPhoneNum,
+                                      'fetchName': event.recName,
+                                      'phoneRare': event.phoneRear
+                                    }
+                                    //发起post请求
+                                    wx.request({
+                                      url: urlModel.url.postAddr,
+                                      method: 'POST',
+                                      data: send_data,
                                       success: function (res) {
-                                        //设置成功
-                                        if (res.statusCode == 200) {
-                                          wx.hideLoading()
-                                          //console.log("表单提交成功")
-                                          wx.showToast({
-                                            title: '发布成功',
-                                            icon: 'success',
-                                            duration: 2000
-                                          })
-                                          that.setData({
-                                            checking: false
-                                          })
-                                          wx.switchTab({
-                                            url: '../orders/orders',
-                                          })
-                                        }
+                                        console.log(res)
                                       }
                                     })
                                   } else {

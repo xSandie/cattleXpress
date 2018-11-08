@@ -63,7 +63,7 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <text>{{schNum}} {{LName}}同学于 {{pubtime}} 发布</text>
+           <text>{{LName}}同学于 {{pubtime}} 发布</text>
         </view>
         <view class='instr'>
             <view>其他具体信息<view class='nav'><text>接单</text></view>后可见</view>

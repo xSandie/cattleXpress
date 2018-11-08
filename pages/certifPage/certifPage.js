@@ -166,9 +166,14 @@ Page({
                   icon: 'success',
                   duration: 1500,
                   success: function () {
-                    wx.reLaunch({
-                      url: '../home/home'
-                    })
+                    wx.showToast({
+                      title: '最后，请设置默认联系方式',
+                      success:function(){
+                        wx.redirectTo({
+                          url: '../defAddrEdit/defAddrEdit?path=certif'
+                        })
+                      }
+                    })          
                   }
                 })
               } else {

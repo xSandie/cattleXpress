@@ -38,7 +38,7 @@
                 </view>
                 <view class="numRear">
                     <view class="Ti">手机尾号</view>
-                    <input type="number" placeholder="{{phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
+                    <input type="number" maxlength='4' placeholder="{{phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
                 </view>
             </view>
             <view class='setDef' bindtap="setDef">

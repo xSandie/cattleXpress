@@ -50,7 +50,15 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
+      if (options.path=='certif'){
+        wx.showModal({
+          title: '注意',
+          content: '接单人 和 发布人\r\n都将使用 联系电话 与您联系\r\n请准确填写常用号码！',
+          showCancel:false,
+          confirmText:'好的',
+          confirmColor:'#faaf42',
+        })
+      }
     },
 
     /**

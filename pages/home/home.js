@@ -159,24 +159,33 @@ Page({
         // console.log('onload', app.globalData.schoolName)
         // console.log('onload', app.globalData.sex)
         // console.log('onloadmy', that.data.mySchoolName)
+        var send_sendLoc = ''
+        var send_expressLoc = ''
+        if (that.data.expressLoc =='选择取快递的站点'){
+          send_expressLoc = ''
+        } if (that.data.sendLoc =='选择快递送达地点'){
+          send_sendLoc = ''
+        }
+
+        var send_data={
+          'schoolID': app.globalData.schoolID,
+          'userID': app.globalData.user_ID,
+          'exloc': send_expressLoc,
+          'sdloc': send_sendLoc,
+          'sex': app.globalData.sex,
+          'time': 1
+        }
         wx.request({
-          url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
+          url: urlModel.url.getOrdersList, //填充请求订单
           method: 'GET',
-          data: {
-            'schoolID': app.globalData.schoolID,
-            'Account': app.globalData.user_ID,
-            'exloc': that.data.expressLoc,
-            'sdloc': that.data.sendLoc,
-            'Sex': app.globalData.sex,
-            'time': 1
-          },
-          header: {
-            "Content-Type": "applciation/json"
-          },
+          data: send_data,
+          // header: {
+          //   "Content-Type": "applciation/json"
+          // },
           success: function (res) {
             console.log(res)
             that.setData({
-              listCount: res.data[0]
+              listCount: res.data
             })
           },
           fail: function () { },
@@ -236,45 +245,59 @@ Page({
         })
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
+          //至少有一个没有选
+          var send_sendLoc = that.data.sendLoc
+          var send_expressLoc = that.data.expressLoc
+          if (send_expressLoc == '选择取快递的站点') {
+            send_expressLoc = ''
+          } if (send_sendLoc == '选择快递送达地点') {
+            send_sendLoc = ''
+          }
+
+          var send_data = {
+            'schoolID': app.globalData.schoolID,
+            'userID': app.globalData.user_ID,
+            'exloc': send_expressLoc,
+            'sdloc': send_sendLoc,
+            'sex': app.globalData.sex,
+            'time': 1
+          }
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
+              url: urlModel.url.getOrdersList, //填充请求订单
                 method: 'GET',
-                data: {
-                    'schoolID': app.globalData.schoolID,
-                    'Account': app.globalData.user_ID,
-                    'exloc': that.data.expressLoc,
-                    'sdloc': that.data.sendLoc,
-                    'Sex': app.globalData.sex,
-                    'time': 1
-                },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                data: send_data,
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     //console.log(res)
                     that.setData({
-                        listCount: res.data[0]
+                        listCount: res.data
+                    })
+                    wx.showToast({
+                      title: '刷新成功',
                     })
                 },
                 fail: function() {},
                 complete: function() {}
             })
         } else {
+          //两个筛选条件都选了
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', 
+              url: urlModel.url.getOrdersList, 
                 //填充url筛选请求列表
                 method: 'GET',
                 data: {
                     'schoolID': app.globalData.schoolID,
-                    'Account': app.globalData.user_ID,
+                    'userID': app.globalData.user_ID,
                     'exloc': that.data.expressLoc,
                     'sdloc': that.data.sendLoc,
-                    'Sex': app.globalData.sex,
+                    'sex': app.globalData.sex,
                     'time': 1
                 },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     //console.log(res)
                     that.setData({
@@ -298,57 +321,75 @@ Page({
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function() {
-        //console.log("到底了")
+    onReachBottom: function() {//这里list都是append逻辑
+        console.log("到底了")
+        var that=this
+        this.setData({
+          requestTime: that.data.requestTime+1
+        })
+      console.log(this.data.requestTime)
         this.setData({
             fabuOrDingbu: false
         })
         var that = this
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
+          //至少有一个没有设置筛选
+          var send_sendLoc = that.data.sendLoc
+          var send_expressLoc = that.data.expressLoc
+          if (send_expressLoc == '选择取快递的站点') {
+            send_expressLoc = ''
+          } if (send_sendLoc == '选择快递送达地点') {
+            send_sendLoc = ''
+          }
+
+          var send_data = {
+            'schoolID': app.globalData.schoolID,
+            'userID': app.globalData.user_ID,
+            'exloc': send_expressLoc,
+            'sdloc': send_sendLoc,
+            'sex': app.globalData.sex,
+            'time': that.data.requestTime
+          }
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/schoolidwaitreceive', //填充请求订单
+                url: urlModel.url.getOrdersList, //填充请求订单
                 method: 'GET',
-                data: {
-                    'schoolID': app.globalData.schoolID,
-                    'Account': app.globalData.user_ID,
-                    'exloc': that.data.expressLoc,
-                    'sdloc': that.data.sendLoc,
-                    'Sex': app.globalData.sex,
-                    'time': that.data.requestTime
-                },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                data: send_data,
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     // console.log(res)
+                  var new_list = that.data.listCount.push(res.data)
                     that.setData({
-                        listCount: res.data[0]
+                      listCount: new_list
                     })
                 },
                 fail: function() {},
                 complete: function() {}
             })
         } else {
+          //都设置了筛选
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', //填充url筛选请求列表
+                url: urlModel.url.getOrdersList, //填充url筛选请求列表
                 method: 'GET',
                 data: {
                     'schoolID': app.globalData.schoolID,
-                    'Account': app.globalData.user_ID,
+                    'userID': app.globalData.user_ID,
                     'exloc': that.data.expressLoc,
                     'sdloc': that.data.sendLoc,
-                    'Sex': app.globalData.sex,
+                    'sex': app.globalData.sex,
                     'time': that.data.requestTime
                 },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     //console.log(res)
-                    that.setData({
-                        listCount: res.data
-                    })
+                  var new_list = that.data.listCount.push(res.data)
+                  that.setData({
+                    listCount: new_list
+                  })
                 },
                 fail: function() {
                     wx.showModal({
@@ -451,21 +492,30 @@ Page({
         })
         var that = this
             //发起筛选快递站点请求
+      var send_sendLoc = that.data.sendLoc
+      var send_expressLoc = that.data.expressLoc
+      if (send_expressLoc == '选择取快递的站点') {
+        send_expressLoc = ''
+      } if (send_sendLoc == '选择快递送达地点') {
+        send_sendLoc = ''
+      }
+
+      var send_data = {
+        'schoolID': app.globalData.schoolID,
+        'userID': app.globalData.user_ID,
+        'exloc': send_expressLoc,
+        'sdloc': send_sendLoc,
+        'sex': app.globalData.sex,
+        'time': 1
+      }
         var that = this
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', //填充url筛选请求列表
+            url: urlModel.url.getOrdersList, //填充url筛选请求列表
             method: 'GET',
-            data: {
-                'schoolID': app.globalData.schoolID,
-                'Account': app.globalData.user_ID,
-                'exloc': that.data.expressLoc,
-                'sdloc': that.data.sendLoc,
-                'Sex': app.globalData.sex,
-                'time': 1
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            data: send_data,
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 // console.log(res)
                 that.setData({
@@ -497,20 +547,29 @@ Page({
             })
             //发起筛选送达地点请求
         var that = this
+      var send_sendLoc = that.data.sendLoc
+      var send_expressLoc = that.data.expressLoc
+      if (send_expressLoc == '选择取快递的站点') {
+        send_expressLoc = ''
+      } if (send_sendLoc == '选择快递送达地点') {
+        send_sendLoc = ''
+      }
+
+      var send_data = {
+        'schoolID': app.globalData.schoolID,
+        'userID': app.globalData.user_ID,
+        'exloc': send_expressLoc,
+        'sdloc': send_sendLoc,
+        'sex': app.globalData.sex,
+        'time': 1
+      }
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/firstpage/expwaitreceiveinfo', //填充url筛选请求列表
+            url: urlModel.url.getOrdersList, //填充url筛选请求列表
             method: 'GET',
-            data: {
-                'schoolID': app.globalData.schoolID,
-                'Account': app.globalData.user_ID,
-                'exloc': that.data.expressLoc,
-                'sdloc': that.data.sendLoc,
-                'Sex': app.globalData.sex,
-                'time': 1
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            data: send_data,
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 //console.log(res)
                 that.setData({
@@ -529,7 +588,7 @@ Page({
             complete: function() {}
         })
         this.setData({
-            requestTime: 1
+            requestTime: 1//设置逻辑有误，再调整
         })
     },
     exlocColumnChange: function(e) {

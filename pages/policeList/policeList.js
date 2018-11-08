@@ -53,14 +53,14 @@ Page({
     onShow: function() {
         var that = this
         wx.request({
-          url: 'http://api.inschool.tech/HelloWord/my/reportinfo', //填充完成订单url
+          url: urlModel.url.policelist, //查询举报条目列表
             method: 'GET',
             data: {
-                'uid': app.globalData.user_ID,
+                'userID': app.globalData.user_ID,
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 console.log(res)
                 that.setData({
@@ -91,7 +91,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        
     },
 
     /**
@@ -111,14 +111,14 @@ Page({
         var that = this
         var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
-            url: '../policeDetailProposal/policeDetailProposal?id=' + reportOrderID,
+          url: '../policeDetailProposal/policeDetailProposal?detailID=' + reportOrderID,
         })
     },
     toDetailRec: function(event) {
         var that = this
         var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
-            url: '../policeDetailRec/policeDetailRec?id=' + reportOrderID,
+            url: '../policeDetailRec/policeDetailRec?detailID=' + reportOrderID,
         })
     }
 })

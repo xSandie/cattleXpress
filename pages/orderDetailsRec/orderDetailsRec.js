@@ -1,4 +1,5 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -50,14 +51,12 @@ Page({
         var that = this
         if (options.key == null) {
             wx.request({
-              url: 'http://45.40.197.154/HelloWord/firstpage/havereceiveinfo', //填充请求订单具体信息url
-                method: 'GET',
+              url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+                method: 'POST',
                 data: {
                     'orderID': options.id,
-                    'user_ID': app.globalData.user_ID,
-                },
-                header: {
-                    "Content-Type": "applciation/json"
+                    'userID': app.globalData.user_ID,
+                  'schoolID': app.globalData.schoolID
                 },
                 success: function(res) {
                     console.log(res)
@@ -72,7 +71,6 @@ Page({
                                         url: '../home/home',
                                     })
                                 }, 1000);
-
                             }
                         })
                     } else {
@@ -99,8 +97,6 @@ Page({
                             otherInfo: res.data.otherInfo,
                             statusCode: res.data.state,
                             sdLoc: res.data.sdLoc
-
-
                         })
                     }
                 },
@@ -111,18 +107,20 @@ Page({
 
             //从订单页面来的接口
             wx.request({
-              url: 'http://45.40.197.154/HelloWord/getorderinfo/receive', //填充请求订单具体信息url
-                method: 'GET',
+              url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+                method: 'POST',
                 data: {
-                    'ordNum': options.id,
-                    'account': app.globalData.user_ID,
+                    'orderID': options.id,
+                    'userID': app.globalData.user_ID,
+                  'schoolID': app.globalData.schoolID
                 },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     console.log("从订单页面进入发送请求", res)
-                    that.setData({
+                    if(res.statusCode==200){
+                      that.setData({
                         //设置页面参数
                         exLogo: res.data.exLogo,
                         exLocTime: res.data.exLocTime,
@@ -145,7 +143,9 @@ Page({
                         otherInfo: res.data.otherInfo,
                         statusCode: res.data.State,
                         sdLoc: res.data.sdLoc
-                    })
+                      })
+                    }
+                    
                 },
                 fail: function() {},
                 complete: function() {}
@@ -185,25 +185,71 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        // var that = this
-        // wx.request({
-        //     url: '', //填充请求订单具体信息url
-        //     method: 'GET',
-        //     data: {
-        //         'orderID': that.data.orderID,
-        //         'user_ID': app.globalData.user_ID,
-        //     },
-        //     header: {
-        //         "Content-Type": "applciation/json"
-        //     },
-        //     success: function(res) {
-        //         that.setData({
-        //             //设置页面参数，设置orderID
-        //         })
-        //     },
-        //     fail: function() {},
-        //     complete: function() {}
-        // })
+      //刷新信息，同onload函数
+      //todo 防止恶意刷新，设置loading蒙层
+        var that = this
+      wx.showLoading({
+        title: '刷新中',
+      })
+      wx.request({
+        url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+        method: 'POST',
+        data: {
+          'orderID': that.data.orderID,
+          'userID': app.globalData.user_ID,
+          'schoolID': app.globalData.schoolID
+        },
+        // header: {
+        //     "Content-Type": "applciation/json"
+        // },
+        success: function (res) {
+          console.log('下拉刷新')
+          if (res.statusCode == 200) {
+            that.setData({
+              //设置页面参数
+              exLogo: res.data.exLogo,
+              exLocTime: res.data.exLocTime,
+              exInstance: res.data.exInstance,
+              expressID: res.data.expressID,
+              //以上是快递站点信息
+              orderId: res.data.orderID,
+              sdInstance: res.data.exInstance,
+              exWorry: res.data.exWorry,
+              weightInfo: res.data.weightInfo,
+              reward: res.data.reward,
+              LName: res.data.LName,
+              pubtime: res.data.pubtime,
+              phoneNum: res.data.phoneNum,
+              shiText: res.data.shiText,
+              mingText: res.data.mingText,
+              jianText: res.data.jianText,
+              haoText: res.data.haoText,
+              fetchCode: res.data.fetchCode,
+              otherInfo: res.data.otherInfo,
+              statusCode: res.data.State,
+              sdLoc: res.data.sdLoc
+            })
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新完成',
+            })
+          }else{
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新失败，请重试',
+              icon:'none'
+            })
+          }
+        },
+        fail: function () {
+          wx.hideLoading()
+          wx.showToast({
+            title: '刷新失败，请重试',
+            icon: 'none'
+          })},
+        complete: function () {
+         }
+      })
     },
 
     /**
@@ -221,7 +267,7 @@ Page({
     },
     conTA: function() {
         wx.makePhoneCall({
-            phoneNumber: this.data.phoneNum //仅为示例，并非真实的电话号码
+            phoneNumber: this.data.phoneNum 
         })
     },
     toLaw: function() {
@@ -239,55 +285,23 @@ Page({
         })
     },
     policeTA: function(event) {
-        // var that = this
-        // wx.showModal({
-        //     title: '确定举报？',
-        //     content: '请谨慎举报',
-        //     confirmText: '确认举报',
-        //     confirmColor: '#faaf42',
-        //     success: function(res) {
-        //         if (res.confirm) {
-        //             console.log('用户点击确定')
-        //             wx.request({ //更改默认地址，为空的就是没变
-        //                 url: 'http://10.2.24.200:8080/HelloWord/getorderinfo/report',
-        //                 method: 'POST',
-        //                 data: {
-        //                     'uidNum': app.globalData.user_ID, //加其他字段
-        //                     'ordNum': that.data.orderId
-        //                 },
-        //                 header: {
-        //                     "Content-Type": "application/x-www-form-urlencoded"
-        //                 },
-        //                 success: function(res) {
-        //                     if (res.statusCode == 200) {
-        //                         console.log('举报订单生成', res)
-        //                         console.log(res.data.reportid)
-        //                         wx.redirectTo({
-        //                             url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.orderId
-        //                         })
-        //                     }
-
-        //                 },
-        //                 fail: function() {},
-        //                 complete: function() {}
-        //             })
-
-        //         } else if (res.cancel) {
-        //             console.log('用户点击取消')
-        //         }
-        //     }
-        // })
+        var that = this
         wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
+            title: '确定举报？',
+            content: '请谨慎举报',
+            confirmText: '确认举报',
             confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
             success: function(res) {
-                if (res.confirm) {}
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.redirectTo({
+                      url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderId + '&LName=' + that.data.LName
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
             }
         })
-
     },
     toFix: function(event) {
         // var expressID = event.currentTarget.dataset.expressId
@@ -311,30 +325,44 @@ Page({
         var that = this
         wx.showModal({
             title: '确认送达？',
-            content: '对方确认后，赏金就到手啦',
+            content: '确认后等待对方确认支付，请关注微信支付公众号',
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
                     wx.request({
-                        url: 'http://45.40.197.154/HelloWord/getorderinfo/havesongda', //填充完成订单url
-                        method: 'GET',
+                      url: urlModel.url.changeOrderStatus, //填充完成订单url
+                        method: 'POST',
                         data: {
-                            'ordNum': that.data.orderId,
+                            'orderID': that.data.orderId,
+                            'userID':app.globalData.user_ID,
+                          'nextState': 0
                         },
-                        header: {
-                            "Content-Type": "applciation/json"
-                        },
+                        // header: {
+                        //     "Content-Type": "applciation/json"
+                        // },
                         success: function(res) {
                             // console.log("确认送达", res)
-                            that.setData({
+                            if(res.data.msg=='ok'){
+                              that.setData({
                                 //设置页面参数
                                 statusCode: res.data.State,
-                            })
-                            wx.showToast({
+                                //考虑返回发布人昵称，
+                              })
+                              wx.showToast({
                                 title: '等待对方确认',
                                 icon: 'success',
-                                duration: 1000
-                            })
+                                duration: 1500
+                              })
+                            }else{
+                              wx.showToast({
+                                title: '出错，请重试',
+                                icon: 'none',
+                                duration: 1500,
+                                success:function(){
+                                  that.onPullDownRefresh()
+                                }
+                              })
+                            }
                         },
                         fail: function() {},
                         complete: function() {}

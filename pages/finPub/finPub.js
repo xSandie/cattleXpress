@@ -276,7 +276,7 @@ Page({
           })
         }
         wx.request({
-          url: 'http://45.40.197.154/HelloWord/publish/publishinfo', //填充发布订单url
+          url: urlModel.url.pubOrder, //填充发布订单url
           method: 'POST',
           data: {
             userID: app.globalData.user_ID,
@@ -298,23 +298,26 @@ Page({
             worried: event.worInfo,
             depict: event.otherInfo,
           },
-          header: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
+          // header: {
+          //   "Content-Type": "application/x-www-form-urlencoded"
+          // },
           success: function (res) {
             //console.log(res)
             if (res.statusCode == 200) {
               //console.log("表单提交成功")
-              wx.showToast({
-                title: '发布成功',
-                icon: 'success',
-                duration: 1000
-              })
-              setTimeout(function () {
-                wx.switchTab({
-                  url: '../orders/orders',
+              if(res.data.msg='ok'){
+                
+                wx.showToast({
+                  title: '发布成功',
+                  icon: 'success',
+                  duration: 1000
                 })
-              }, 1000);
+                setTimeout(function () {
+                  wx.switchTab({
+                    url: '../orders/orders',
+                  })
+                }, 1000);
+              }     
             } else {
               wx.showModal({
                 title: '提示',

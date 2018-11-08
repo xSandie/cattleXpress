@@ -1,16 +1,17 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        reportProcess: 2,
+        reportProcess: null,
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",
-        LName: "向同学",
-        reportTime: "2018-05-07 16:00",
+        LName: "",
+        reportTime: "暂未生成",
         lastDep: '乱举报也会被封号，请谨慎举报',
 
         reportRe1: '',
@@ -29,42 +30,55 @@ Page({
         complain2: [
             // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
         ],
-
+//图片上传相关
         img1: null,
         img2: null,
         img3: null,
         imgUp: [],
 
-        orderID: null
+        orderID: null,
+        policeID:null//本条举报记录的id
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        console.log(options.id)
+      // console.log(options.orderID)
         var that = this
         this.setData({
-            orderID: options.id
+          orderID: options.orderID
         })
-        wx.request({
-            url: '', //填充查询举报url
-            method: 'GET',
-            data: {
-                'orderID': options.id,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    //设置页面参数，返回对方的姓名等基本信息，订单状态码
-                })
-            },
-            fail: function() {},
-            complete: function() {}
+      if (options.detailID){
+        // detailID即举报记录id
+        this.setData({
+          policeID: options.detailID
         })
+        wx.request({//获取举报订单详情
+          url: urlModel.url.reporterDetail,
+          method:'GET',
+          data:{
+            'policeID': options.detailID
+          },
+          success:function(res){
+
+          }
+        })
+      }else{
+        //生成举报记录的前端时间
+        var oDate = new Date();
+        var year = oDate.getFullYear();
+        var month = oDate.getMonth() + 1;
+        var day = oDate.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var generateTime = year + '-' + month + '-' + day + ' ' + hour+':' + minute
+        that.setData({
+          reportTime:generateTime,
+          orderID: options.orderID,
+          LName:options.LName
+        })    
+    }
     },
 
     /**
@@ -99,24 +113,6 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        wx.request({
-            url: '', //填充查询举报url
-            method: 'GET',
-            data: {
-                'orderID': options.id,
-                'user_ID': app.globalData.user_ID,
-            },
-            header: {
-                "Content-Type": "applciation/json"
-            },
-            success: function(res) {
-                that.setData({
-                    //设置页面参数，返回对方的姓名等基本信息，订单状态码
-                })
-            },
-            fail: function() {},
-            complete: function() {}
-        })
     },
 
     /**
@@ -136,15 +132,65 @@ Page({
      * 表单提交
      */
     report: function(e) {
+      console.log("发起举报")
         console.log(e)
+        var that=this
+        //发起举报
+      if (that.data.reportProcess){
+        //再次举报
+      }else{
+        //初次举报
+        wx.uploadFile({
+          url: urlModel.url.policePub,
+          filePath: that.data.imgUp,
+          name: 'police_img',
+          header: {
+            "Content-Type": "multipart/form-data",
+            'accept': 'application/json',
+            //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+          },
+          formData: {
+            gId: app.globalData.user_ID,  //其他额外的formdata，userId
+            reason: e.detail.value.reportRe1,
+            orderID: that.data.orderID,
+            pubTime: that.data.reportTime
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.statusCode == 200) {
+              //设置返回参数
+              that.setData({
+
+              })
+              wx.showToast({
+                title: '举报成功',
+              })
+              
+            } else {
+              wx.showToast({
+                title: '举报失败请重试',
+                icon:'none'
+              })
+            }
+          }
+        })
+      }
+      
     },
     retrieve: function() {
         wx.showModal({
             title: '确定撤销？',
-            content: '',
+            content: '撤销后仍可重新发起新的举报',
             confirmText: '我想好了',
             confirmColor: '#faaf42'
         })
+        //发起撤销请求，上传撤销用户id，后端查询是否有权力撤销
+        wx.request({
+          url: '',
+          method:'POST',
+
+        })
+
     },
     previewIMG: function(e) {
         var src = e.currentTarget.dataset.src
@@ -173,10 +219,8 @@ Page({
                 })
             }
         })
-
-
     },
-    uploadIMG: function() {
-        //上传选择的图片
-    }
+    // uploadIMG: function() {
+    //     //上传选择的图片
+    // }
 })

@@ -19,21 +19,23 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // wx.showModal({
-        //     title: '评委注意',
-        //     content: '目前只存储了"陕西师范大学长安校区"',
-        //     showCancel: false,
-        //     confirmText: '知道了',
-        //     confirmColor: '#faaf42',
-        //     success: function(res) {},
-        //     fail: function(res) {},
-        //     complete: function(res) {},
-        // })
-        wx.showToast({
-            title: '目前只有"陕西师范大学长安校区"',
-            icon: 'none',
-            duration: 3000
+        wx.showModal({
+            title: '抱歉',
+            content: '目前只支持"陕西师范大学长安校区"',
+            showCancel: false,
+            confirmText: '加油!',
+            confirmColor: '#faaf42',
+            success: function(res) {
+              wx.navigateBack({
+              })
+            },
+            complete: function(res) {},
         })
+        // wx.showToast({
+        //     title: '目前只有"陕西师范大学长安校区"',
+        //     icon: 'none',
+        //     duration: 3000
+        // })
     },
 
     /**

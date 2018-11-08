@@ -1,11 +1,12 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        exLogo: '../../images/STOLOGO.png',
+        exLogo: '',
         exLocTime: '',
         exInstance: '',
         fxIcon: '../../images/fixBtnIcon.png',
@@ -35,51 +36,24 @@ Page({
      */
     onLoad: function(options) {
         // console.log(options)
-        // console.log(options.id);
+        console.log(options.id);
 
         var that = this
-            // wx.request({
-            //   url: "https://liudongtushuguan.cn/v2/movie/subject/"+options.id,
-            //   //method:"GET",默认
-            //   header:{
-            //     "content-type":"json"
-            //   },
-
-        //   //捎带数据传送给server,异步调用
-
-        //   //接收到服务器返回数据进行处理
-        //   success:function(res){
-        //     console.log(res);
-        //     //res是返回数据的对象，只要有返回数据就是成功，会抽取返回的状态码403 200之类的
-        //     if(res.statusCode==200){
-        //     that.setData({
-        //       movie:res.data//movie是新增的变量，此时this指向的是wx.request内部
-        //       })
-        //       //动态设置title
-        //       wx.setNavigationBarTitle({
-        //         title: res.data.rating.average+"分："+res.data.title,
-        //       })
-        //       wx.hideNavigationBarLoading();
-        //     }
-        //   },
-        //   complete:function(){
-        //     //最后都会运行
-        //   },
-
-        // })
         wx.request({
-          url: 'http://45.40.197.154/HelloWord/firstpage/waitreceiveinfo', //填充请求浏览者订单详情url
+          url: urlModel.url.toOrderSum, //填充请求浏览者订单详情url
             method: 'GET',
             data: {
                 'orderID': options.id,
-                //'user_ID': app.globalData.user_ID,为以后埋点做准备
+                'userID': app.globalData.user_ID,//为以后埋点做准备
+                'schoolID':app.globalData.schoolID
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 // console.log(res)
-                that.setData({
+                if(res.data.can_get==true){
+                  that.setData({
                     //设置页面参数
                     exLogo: res.data.exLogo,
                     exLocTime: res.data.exLocTime,
@@ -93,12 +67,27 @@ Page({
                     exSize: res.data.exSize,
                     exExTime: res.data.exExTime,
                     reward: res.data.reward,
-                    schNum: res.data.schNum,
+                    // schNum: res.data.schNum,
                     LName: res.data.LName,
                     pubtime: res.data.pubtime,
                     phoneNum: res.data.phoneNum,
                     dText: res.data.dText
-                })
+                  })
+                }else{
+                  wx.showModal({
+                    title: '来晚一步',
+                    content: '抱歉，订单已经被抢啦~',
+                    showCancel:false,
+                    confirmColor:'#f9a93e',
+                    confirmText:'返回',
+                    success:function(){
+                      wx.switchTab({
+                        url: '../home/home',
+                      })
+                    }
+                  })  
+                }
+                
             },
             fail: function() {},
             complete: function() {}
@@ -170,19 +159,53 @@ Page({
                         // console.log('用户点击确定')
                         //接单动作
                         wx.request({
-                            url: 'http://45.40.197.154/HelloWord/receivecode/getopenid', //订单动作接口
-                            method: 'POST',
+                            url: urlModel.url.recOrder, //订单动作接口
+                            method: 'GET',
                             data: {
                                 'orderID': orderId,
-                                'user_ID': app.globalData.user_ID,
+                                'userID': app.globalData.user_ID,
                                 'nextStat': 2
                             },
                             success: function(res) {
                                 // console.log(event)
-                                // console.log(orderId)
-                                wx.redirectTo({
+                                // console.log(orderId)                       
+                                if(res.data.can_get==true){
+                                  wx.redirectTo({
                                     url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
-                                })
+                                  })
+                                } else if (res.data.without_addr){
+                                  wx.showModal({
+                                    title: '补全资料',
+                                    content: '缺少默认联系电话',
+                                    cancelText:'下次再说',
+                                    confirmText:'去填写',
+                                    confirmColor:'#f9a93e',
+                                    success:function(res){
+                                      if(res.confirm){
+                                        wx.navigateTo({
+                                          url: '../defAddrEdit/defAddrEdit?path=certif'
+                                        })
+                                      }
+                                    }
+                                  })
+                                  wx.navigateTo({
+                                    url: '',
+                                  })
+                                }else{
+                                  wx.showModal({
+                                    title: '来晚一步',
+                                    content: '抱歉，订单已经被抢啦~',
+                                    showCancel: false,
+                                    confirmColor: '#f9a93e',
+                                    confirmText: '返回',
+                                    success: function () {
+                                      wx.switchTab({
+                                        url: '../home/home',
+                                      })
+                                    }
+                                  })  
+                                }
+                               
                             },
                         })
                     } else if (res.cancel) {

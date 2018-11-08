@@ -10,8 +10,22 @@ var url= new Object({
   postAvatar:'http://192.168.123.215:5000/v1/auth/setAvatar',//上传用户昵称头像接口
   postAddr:'http://192.168.123.215:5000/v1/addr/set',//设置默认地址接口
   getAddr: 'http://192.168.123.215:5000/v1/addr/get',
-  reqHomeOrder:'http://192.168.123.215:5000/v1/order/get',//请求订单
-  pubOrder:''//发布订单
+  reqHomeOrder:'http://192.168.123.215:5000/v1/orders/get',//请求订单
+  pubOrder:'http://192.168.123.215:5000/v1/order/pub',//发布订单
+  getOrdersList: 'http://192.168.123.215:5000/v1/orders/list',//获取首页订单列表
+  toOrderSum: 'http://192.168.123.215:5000/v1/order/preToSum',//未接单前获取大致快递信息
+  recOrder:'http://192.168.123.215:5000/v1/order/recOrder',//接受订单
+  receiverOrderDetail:'http://192.168.123.215:5000/v1/order/receiver',//接单人看具体信息接口
+  publisherOrderDetail:'http://192.168.123.215:5000/v1/order/publisher',//发布人查看订单具体信息
+  changeOrderStatus:'http://192.168.123.215:5000/v1/order/changeMode',//更改订单状态接口（除了举报状态）
+  // prePolice:'http://192.168.123.215:5000/v1/police/prepolice',//返回被举报人信息
+  policePub:'http://192.168.123.215:5000/v1/police/reportpub',//首次发起举报
+  usrinfo:'http://192.168.123.215:5000/v1/auth/usrinfo',//我的页面获取用户基本信息
+  policelist: 'http://192.168.123.215:5000/v1/police/list',//查询举报条目列表
+  reporterDetail:'',//获取举报发起人看到的详情
+  receiverDetail: '',//获取被举报人看到的详情
+  
+
 })
 
 exports.url = url;

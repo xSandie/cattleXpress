@@ -1,4 +1,5 @@
-var app = getApp()
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -36,25 +37,26 @@ Page({
      */
     onShow: function() {
         this.setData({
-            balance: app.globalData.balance
+          balance: app.globalData.balance
         })
         var that = this
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/my/personinfo', //用户余额信用获取
+          url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
-                'Uid': app.globalData.user_ID,
+                'userID': app.globalData.user_ID,
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 console.log(res)
                 that.setData({
                     balance: res.data.balance, //修改参数
                     creditScr: res.data.credit,
-                    level: res.data.Accress
+                    level: res.data.level
                 })
+              app.globalData.ourUserStatus=res.data.userStatus
                 app.globalData.balance = res.data.balance
             },
             fail: function() {},
@@ -63,7 +65,6 @@ Page({
         this.setData({
             realName: app.globalData.userName,
             schoNum: app.globalData.schoolNumb,
-
         })
         if (app.globalData.ourUserStatus != 4) {
             this.setData({
@@ -90,7 +91,40 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+      wx.showLoading({
+        title: '刷新中',
+      })
+      wx.request({
+        url: urlModel.url.usrinfo, //用户余额信用获取
+        method: 'GET',
+        data: {
+          'userID': app.globalData.user_ID,
+        },
+        // header: {
+        //     "Content-Type": "applciation/json"
+        // },
+        success: function (res) {
+          console.log(res)
+          that.setData({
+            balance: res.data.balance, //修改参数
+            creditScr: res.data.credit,
+            level: res.data.level
+          })
+          app.globalData.balance = res.data.balance
+          wx.hideLoading()
+          wx.showToast({
+            title: '刷新成功',
+          })
+        },
+        fail: function () { 
+          wx.hideLoading()
+          wx.showToast({
+            title: '刷新失败，请重试',
+            icon:'none'
+          })
+        },
+        complete: function () { }
+      })
     },
 
     /**
@@ -114,14 +148,27 @@ Page({
     },
     toPoList: function() {
         // console.log("toPoList被点击了");
-        wx.navigateTo({
+        if(app.globalData.ourUserStatus!=4){
+          wx.navigateTo({
             url: '../policeList/policeList',
-        })
+          })
+        }else{
+          wx.showToast({
+            title: '请先通过校园认证',
+            icon:'none',
+            success:function(){
+              wx.navigateTo({
+                url: '../certifPage/certifPage',
+              })
+            }
+          })
+        }
+        
     },
     supportUs: function(e) {
         wx.showModal({
             title: '感谢',
-            content: '开发团队富得很，暂时不需要支持噢！',
+            content: '开发团队暂时不需要支持噢！',
             showCancel: false,
             confirmText: '知道啦',
             confirmColor: '#faaf42'
@@ -137,8 +184,20 @@ Page({
         })
     },
   myCode:function(){
-    wx.navigateTo({
-      url: '../myCode/myCode',
-    })
+    if (app.globalData.ourUserStatus != 4) {
+      wx.navigateTo({
+        url: '../myCode/myCode',
+      })
+    } else {
+      wx.showToast({
+        title: '请先通过校园认证',
+        icon: 'none',
+        complete: function () {
+          wx.navigateTo({
+            url: '../certifPage/certifPage',
+          })
+        }
+      })
+    }
   }
 })

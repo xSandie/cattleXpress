@@ -1,4 +1,5 @@
 var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -58,15 +59,19 @@ Page({
         console.log(options)
         var that = this
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/getorderinfo/publish', //填充请求订单具体信息url
-            method: 'GET',
+          url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
+            method: 'POST',
             data: {
-                'ordNum': options.id,
+                // 'ordNum': options.id,
+              'orderID': options.id,
+              'userID': app.globalData.user_ID,
+              'schoolID': app.globalData.schoolID
+
                 // 'user_ID': app.globalData.user_ID,
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 console.log("onload", res)
                 var tdata = res.data
@@ -90,10 +95,10 @@ Page({
                     sdLoc: tdata.sdLoc,
                     weightInfo: tdata.weightInfo,
                 })
-                if (tdata.rtime) {
+                if (tdata.rtime!='') {
                     that.setData({
                         reTime: '接单时间：' + tdata.rtime,
-                        reName: tdata.Uname + ' ' + tdata.Uid,
+                        reName: tdata.Uname + '同学 ' + tdata.Uid,
                         phoneNum: tdata.phone
                     })
                 } else {
@@ -188,25 +193,132 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        // var that = this
-        // wx.request({
-        //     url: '', //填充请求订单具体信息url
-        //     method: 'GET',
-        //     data: {
-        //         'orderID': that.orderID,
-        //         'user_ID': app.globalData.user_ID,
-        //     },
-        //     header: {
-        //         "Content-Type": "applciation/json"
-        //     },
-        //     success: function(res) {
-        //         that.setData({
-        //             //设置页面参数，设置orderID
-        //         })
-        //     },
-        //     fail: function() {},
-        //     complete: function() {}
-        // })
+        var that = this
+        //刷新当前状态，可直接使用获取订单信息接口
+        //todo 防止恶意刷新，设置loading蒙层
+      var that = this
+      wx.showLoading({
+        title: '刷新中',
+      })
+      wx.request({
+        url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
+        method: 'POST',
+        data: {
+          // 'ordNum': options.id,
+          'orderID': options.id,
+          'userID': app.globalData.user_ID,
+          'schoolID': app.globalData.schoolID
+
+          // 'user_ID': app.globalData.user_ID,
+        },
+        // header: {
+        //     "Content-Type": "applciation/json"
+        // },
+        success: function (res) {
+          console.log("onPullDownRefresh", res)
+          if(res.statusCode==200){
+            var tdata = res.data
+            that.setData({
+              //设置页面参数，设置orderID
+              statusCode: tdata.state,
+              exWorry: tdata.exWorry,
+              expressID: tdata.expressID,
+              exLogo: tdata.exLogo,
+              exLocTime: '营业时间：' + tdata.exLocTime,
+              reward: tdata.reward,
+              shiText: tdata.shiText,
+              fetchCode: tdata.fetchCode,
+              pubtime: tdata.pubtime,
+              exInstance: tdata.exInstance,
+              orderID: options.id,
+              haoText: tdata.haoText,
+              jianText: tdata.jianText,
+              mingText: tdata.mingText,
+              otherInfo: tdata.otherInfo,
+              sdLoc: tdata.sdLoc,
+              weightInfo: tdata.weightInfo,
+            })
+            if (tdata.rtime != '') {
+              that.setData({
+                reTime: '接单时间：' + tdata.rtime,
+                reName: tdata.Uname + ' ' + tdata.Uid,
+                phoneNum: tdata.phone
+              })
+            } else {
+              that.setData({
+                reTime: '若是自己取快递，记得帮别人领噢',
+                reName: '暂无'
+              })
+            }
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新成功',
+            })
+          }else{
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新失败，请重试',
+              icon: 'none'
+            })
+          }
+          
+        },
+        fail: function () {
+          wx.hideLoading()
+          wx.showToast({
+            title: '刷新失败，请重试',
+            icon: 'none'
+          })
+         },
+        complete: function () {
+          if (that.data.statusCode == 0 || that.data.statusCode == 1) {
+            that.setData({
+              statusBack: "linear-gradient(90deg,#fed25c, #f9a93e)",
+            })
+          } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
+            that.setData({
+              statusBack: "linear-gradient(90deg,#4ED662, #37BD76)"
+            })
+          } else if (that.data.statusCode == 4) {
+            that.setData({
+              statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+          } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+              statusBack: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+            //异常也不让用户太糟心
+          }
+
+
+          if (that.data.statusCode == 0) {
+            that.setData({
+              status: "待收货"
+            })
+          } else if (that.data.statusCode == 1) {
+            that.setData({
+              status: "待接单"
+            })
+          } else if (that.data.statusCode == 2) {
+            that.setData({
+              status: "待送达"
+            })
+          } else if (that.data.statusCode == 3) {
+            that.setData({
+              status: "已完成"
+            })
+          } else if (that.data.statusCode == 4) {
+            that.setData({
+              status: "已过期"
+            })
+          } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+              status: "异常"
+            })
+            //异常也不让用户太糟心
+          }
+        }
+      })
     },
 
     /**
@@ -252,6 +364,7 @@ Page({
             success: function(res) {
                 if (res.confirm) {
                     console.log('用户点击确定')
+
                 } else if (res.cancel) {
                     console.log('用户点击取消')
                 }
@@ -259,33 +372,33 @@ Page({
         })
     },
     policeTA: function(event) {
-        // var that = this
-        // wx.showModal({
-        //     title: '确定举报？',
-        //     content: '请谨慎举报',
-        //     confirmText: '确认举报',
-        //     confirmColor: '#faaf42',
-        //     success: function(res) {
-        //         if (res.confirm) {
-        //             console.log('用户点击确定')
-        //             wx.redirectTo({
-        //                 url: '../policeDetailProposal/policeDetailProposal?id=' + that.data.expressID
-        //             })
-        //         } else if (res.cancel) {
-        //             console.log('用户点击取消')
-        //         }
-        //     }
-        // })
+        var that = this
         wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
+            title: '确定举报？',
+            content: '请谨慎举报',
+            confirmText: '确认举报',
             confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
             success: function(res) {
-                if (res.confirm) {}
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.redirectTo({
+                      url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderID + '&LName=' + that.data.reName
+                    })
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
             }
         })
+        // wx.showModal({
+        //     title: '敬请期待',
+        //     content: '攻城狮加紧完善中',
+        //     confirmColor: '#faaf42',
+        //     showCancel: false,
+        //     confirmText: '期待噢',
+        //     success: function(res) {
+        //         if (res.confirm) {}
+        //     }
+        // })
 
     },
     finOrder: function() {
@@ -299,26 +412,44 @@ Page({
                 if (res.confirm) {
                     console.log('用户点击确定')
                     wx.request({
-                      url: 'http://45.40.197.154/HelloWord/getorderinfo/queren', //填充完成订单url
-                        method: 'GET',
-                        data: {
-                          'ordNum': that.data.orderID
-                            // 'user_ID': app.globalData.user_ID,
-                        },
-                        header: {
-                            "Content-Type": "applciation/json"
-                        },
+                      url: urlModel.url.changeOrderStatus, //填充完成订单url
+                      method: 'POST',
+                      data: {
+                        'orderID': that.data.orderId,
+                        'userID': app.globalData.user_ID,
+                        'nextState': 3
+                      },
+                        // h
+                        // header: {
+                        //     "Content-Type": "applciation/json"
+                        // },
                         success: function(res) {
                           console.log(res)
+                          if(res.data.msg=='ok'){
                             that.setData({
-                                //设置页面参数
+                              //设置页面参数
                               statusCode: res.data.State,
                             })
                             wx.showToast({
-                                title: '已完成',
-                                icon: 'success',
-                                duration: 1000
+                              title: '请支付',
+                              icon: 'success',
+                              duration: 1000,
+                              success: function () {
+                                wx.navigateTo({
+                                  url: '../pay/pay?orderId=' + that.data.orderID,
+                                })
+                              }
                             })
+                          }else{
+                            wx.showToast({
+                              title: '请重试',
+                              icon:'none',
+                              success:function(){
+                                that.onPullDownRefresh()
+                              }
+                            })
+                          }
+                            
                         },
                         fail: function() {},
                         complete: function() {}
@@ -342,15 +473,17 @@ Page({
                 if (res.confirm) {
                     console.log('用户点击确定')
                     wx.request({
-                        url: 'http://45.40.197.154/HelloWord/getorderinfo/quxiao', //填充取消订单
-                        method: 'POST',
-                        data: {
-                            'ordNum': that.data.orderID,
-                            'uidNum': app.globalData.user_ID
-                        },
-                        header: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
+                      url: urlModel.url.changeOrderStatus, //填充完成订单url
+                      method: 'POST',
+                      data: {
+                        'orderID': that.data.orderId,
+                        'userID': app.globalData.user_ID,
+                        'nextState': 4
+                        //4为过期或取消状态
+                      },
+                        // header: {
+                        //     "Content-Type": "application/x-www-form-urlencoded"
+                        // },
                         success: function(res) {
                             console.log('取消', res)
                             if (res.statusCode == 200) {
@@ -360,14 +493,23 @@ Page({
                                     hideStatus: true
                                 })
                                 wx.showToast({
-                                    title: '已完成',
+                                    title: '取消成功',
                                     icon: 'success',
                                     duration: 1000
                                 })
-                                setTimeout(function() {}, 500);
-                                wx.switchTab({
-                                    url: '../orders/orders'
-                                })
+                                that.onPullDownRefresh()
+                                // setTimeout(function() {}, 500);
+                                // wx.switchTab({
+                                //     url: '../orders/orders'
+                                // })
+                            }else{
+                              wx.showToast({
+                                title: '取消失败，请重试',
+                                icon:'none',
+                                success:function(){
+                                  that.onPullDownRefresh()
+                                }
+                              })
                             }
 
                         },
