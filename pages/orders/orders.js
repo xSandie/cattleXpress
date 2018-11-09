@@ -1,4 +1,5 @@
-var app = getApp();
+const urlModel = require('../../utils/urlSet.js')
+app = getApp()
 Page({
 
     /**
@@ -26,7 +27,7 @@ Page({
         //     exSize: '小件',
         //     exExTime: '05-07 18:00',
         //     orderID: '12345'
-        // }, {
+        // }], 
         //     exState: '0',
         //     reward: '6',
         //     exInstance: '中通·新勇',
@@ -51,7 +52,7 @@ Page({
         //         exSize: '小件',
         //         exExTime: '05-07 18:00',
         //         orderID: '12345'
-        //     },
+        //     }],
         //     {
         //         exState: '2',
         //         reward: '16',
@@ -77,7 +78,7 @@ Page({
         //     exExTime: '05-07 18:00',
         //     pubName: '向',
         //     orderID: '12345'
-        // }, {
+        // }], {
         //     exState: '3',
         //     reward: '6',
         //     exInstance: '中通·新勇',
@@ -101,7 +102,7 @@ Page({
         //         exSize: '小件',
         //         exExTime: '05-07 18:00',
         //         orderID: '12345'
-        //     },
+        //     }],
         //     {
         //         exState: '3',
         //         reward: '16',
@@ -140,15 +141,15 @@ Page({
             // console.log(e.currentTarget.dataset.idx)
         if (e.currentTarget.dataset.idx == 0) {
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
-                method: 'GET',
+              url: urlModel.url.notHaveList, //未完成完成订单请求地址
+                method: 'POST',
                 data: {
-                    'Account': app.globalData.user_ID,
-                    'Sex': app.globalData.sex
+                    'userID': app.globalData.user_ID,
+                    // 'Sex': app.globalData.sex
                 },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     // console.log(res)
                     that.setData({
@@ -162,14 +163,14 @@ Page({
             })
         } else {
             wx.request({
-                url: 'http://45.40.197.154/HelloWord/getorderinfo/have', //已完成订单请求地址
-                method: 'GET',
+              url: urlModel.url.haveList, //已完成订单请求地址
+              method: 'POST',
                 data: {
-                    'Account': app.globalData.user_ID,
+                    'userID': app.globalData.user_ID,
                 },
-                header: {
-                    "Content-Type": "applciation/json"
-                },
+                // header: {
+                //     "Content-Type": "applciation/json"
+                // },
                 success: function(res) {
                     console.log('已完成订单请求', res)
                     
@@ -230,15 +231,15 @@ Page({
         var that = this
             //判定是否为空的函数
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
-            method: 'GET',
+            url: urlModel.url.notHaveList, //未完成完成订单请求地址
+            method: 'POST',
             data: {
-                'Account': app.globalData.user_ID,
-                'Sex': app.globalData.sex
+                'userID': app.globalData.user_ID,
+                // 'Sex': app.globalData.sex
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 console.log(res)
                 that.setData({
@@ -292,15 +293,15 @@ Page({
     onPullDownRefresh: function() {
         var that = this
         wx.request({
-            url: 'http://45.40.197.154/HelloWord/getorderinfo/nothave', //未完成完成订单请求地址
-            method: 'GET',
+            url: urlModel.url.notHaveList, //未完成完成订单请求地址
+            method: 'POST',
             data: {
-                'Account': app.globalData.user_ID,
-                'Sex': app.globalData.sex
+                'userID': app.globalData.user_ID,
+                // 'Sex': app.globalData.sex
             },
-            header: {
-                "Content-Type": "applciation/json"
-            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
             success: function(res) {
                 // console.log(res)
                 that.setData({
@@ -322,6 +323,7 @@ Page({
                 }
             }
         })
+        //考虑加入刷新已完成订单请求
     },
 
     /**

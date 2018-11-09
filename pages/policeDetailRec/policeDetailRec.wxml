@@ -12,18 +12,20 @@
         <view class="display" wx:if="{{reportProcess==1||reportProcess==2||reportProcess==3||reportProcess==4}}">
             <text class="TiMe">举报原因</text>
             <text class="displayReason">{{reportRe1}}</text>
-            <!--<view class="reImageA" wx:if="{{report1}}">
+
+            <view class="reImageA" wx:if="{{report1}}">
                 <view wx:for="{{report1}}">
                     <image mode='aspectFill' data-src="{{item}}" data-list="{{report1}}" bindtap="previewIMG" src="{{item}}"  class="reImage"></image>
                 </view>
-            </view>-->
+            </view>
+
         </view>
 
         <view class="reportIn" wx:if="{{reportProcess==1}}">
             <text class="TiMe">申诉原因</text>
             <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{lastDep}}" />
 
-            <!--<view class="imgArea">
+            <view class="imgArea">
                 <image data-src="{{img1}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
                 <image data-src="{{img2}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
                 <image data-src="{{img3}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image>
@@ -31,7 +33,8 @@
                     <image src="{{camIcon}}" class="camIcon"></image>
                     <text>上传最多三张照片</text>
                     </view>
-            </view>-->
+            </view>
+
         </view>
         <view class="display" wx:if="{{reportProcess==2||reportProcess==3||reportProcess==4}}" class="complain">
             <view class="rline"></view>
@@ -50,17 +53,20 @@
         <view class="display" wx:if="{{reportProcess==3||reportProcess==4}}">
             <text class="TiMe">再次举报原因</text>
             <text class="displayReason">{{reportRe2}}</text>
-            <!--<view class="reImageA" wx:if="{{report2}}">
+
+            <view class="reImageA" wx:if="{{report2}}">
                 <view wx:for="{{report2}}">
                     <image  data-src="{{item}}" data-list="{{report2}}" bindtap="previewIMG" mode='aspectFill' src="{{item}}" class="reImage"></image>
                 </view>
-            </view>-->
+            </view>
+
         </view>
         <view class="reportIn" wx:if="{{reportProcess==3}}">
             <view class="rline"></view>
-            <text class="TiMe">再次举报原因</text>
+            <text class="TiMe">再次申诉原因</text>
             <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{lastDep}}" />
-            <!--<view class="imgArea">
+
+            <view class="imgArea">
                 <image data-src="{{img1}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
                 <image data-src="{{img2}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
                 <image data-src="{{img3}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image>
@@ -68,31 +74,34 @@
                     <image src="{{camIcon}}" class="camIcon"></image>
                     <text>上传最多三张照片</text>
                     </view>
-            </view>-->
+            </view>
+
         </view>
 
         <view wx:if="{{reportProcess==4}}">
             <view class="rline"></view>
             <text class="TiMe">申诉原因</text>
             <text class="displayReason">{{complainRe2}}</text>
-            <!--<view class="reImageA" wx:if="{{complain2}}">
+
+            <view class="reImageA" wx:if="{{complain2}}">
                 <view wx:for="{{complain2}}">
                     <image  data-src="{{item}}" data-list="{{complain2}}" bindtap="previewIMG" mode='aspectFill' src="{{item}}" class="reImage"></image>
                 </view>
-            </view>-->
+            </view>
+
         </view>
 
     </view>
     <view class="btnA">
         <view class='BtnArea' wx:if="{{reportProcess==1}}">
-            <button hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <button hover-class="defaultHover" class='contact' formType="submit">
             <text>申诉</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess==3}}">
-            <button hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <button hover-class="defaultHover" class='contact' formType="submit">
             <text>继续申诉</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
@@ -101,4 +110,4 @@
     </view>
 </form>
 
-<!--发起举报的页面-->
+<!--接到举报的页面-->

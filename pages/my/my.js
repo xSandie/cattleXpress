@@ -51,13 +51,17 @@ Page({
             // },
             success: function(res) {
                 console.log(res)
-                that.setData({
+                if(res.statusCode==200){
+                  that.setData({
                     balance: res.data.balance, //修改参数
                     creditScr: res.data.credit,
                     level: res.data.level
-                })
-              app.globalData.ourUserStatus=res.data.userStatus
-                app.globalData.balance = res.data.balance
+                  })
+                  app.globalData.havesetPayCode = res.data.havePayCode
+                  app.globalData.ourUserStatus = res.data.userStatus
+                  app.globalData.balance = res.data.balance
+                }
+                
             },
             fail: function() {},
             complete: function() {}
@@ -105,16 +109,20 @@ Page({
         // },
         success: function (res) {
           console.log(res)
-          that.setData({
-            balance: res.data.balance, //修改参数
-            creditScr: res.data.credit,
-            level: res.data.level
-          })
-          app.globalData.balance = res.data.balance
           wx.hideLoading()
-          wx.showToast({
-            title: '刷新成功',
-          })
+          if(res.statusCode==200){
+            app.globalData.havesetPayCode = res.data.havePayCode
+            that.setData({
+              balance: res.data.balance, //修改参数
+              creditScr: res.data.credit,
+              level: res.data.level
+            })
+            app.globalData.balance = res.data.balance   
+            wx.showToast({
+              title: '刷新成功',
+            })
+          }
+          
         },
         fail: function () { 
           wx.hideLoading()

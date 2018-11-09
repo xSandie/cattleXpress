@@ -22,9 +22,11 @@ var url= new Object({
   policePub:'http://192.168.123.215:5000/v1/police/reportpub',//首次发起举报
   usrinfo:'http://192.168.123.215:5000/v1/auth/usrinfo',//我的页面获取用户基本信息
   policelist: 'http://192.168.123.215:5000/v1/police/list',//查询举报条目列表
-  reporterDetail:'',//获取举报发起人看到的详情
-  receiverDetail: '',//获取被举报人看到的详情
-  
+  reportDetail:'http://192.168.123.215:5000/v1/police/reportDetail',//获取举报详情
+  complainReport: 'http://192.168.123.215:5000/v1/police/complain',//申诉
+  haveList:'http://192.168.123.215:5000/v1/orders/haveList',//获取已完成订单列表
+  notHaveList:'http://192.168.123.215:5000/v1/orders/notHaveList',//获取未完成订单列表
+  toPayGet:'http://192.168.123.215:5000/v1/pay/get',//获取对方支付二维码接口
 
 })
 

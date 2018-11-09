@@ -50,7 +50,8 @@ App({
                                   app.globalData.column2_2 = res.data.othersarea
                                   app.globalData.column2_3 = res.data.kuaxiaoqu
                                   app.globalData.balance = res.data.balance,
-                                  app.globalData.dateRange = res.data.dateRange
+                                  app.globalData.dateRange = res.data.dateRange,
+                                    app.globalData.havesetPayCode = res.data.havePayCode
                                 }else{//没有学校设置成陕师大
                                   app.globalData.exlocArray = res.data.kuaidi
                                   app.globalData.column2_0 = res.data.sushequ
@@ -107,6 +108,7 @@ App({
             phoneRear: '四位数字',
             //date: '点击选择日期', //往后加一天
         },
-        dateRange: []
+        dateRange: [],
+        havesetPayCode:false,
     }
 })

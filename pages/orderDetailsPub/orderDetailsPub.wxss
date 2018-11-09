@@ -484,6 +484,7 @@ button::after {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     background-color: white;
     border-radius: 16rpx;
     margin-bottom: 30rpx;
@@ -500,6 +501,7 @@ button::after {
     font-weight: bold;
     flex-direction: row;
     align-items: center;
+    text-align: center;
     justify-content: center;
 }
 
@@ -550,4 +552,21 @@ button::after {
 .answerHover1 {
     background: rgba(238, 241, 253, 0.76);
     border-radius: 10rpx;
+}
+
+.toPay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #fed25c, #f9a93e);
+    border-top-right-radius: 16rpx;
+    border-bottom-right-radius: 16rpx;
+}
+
+.toPayText {
+    text-align: center;
+    font-size: 22rpx;
+    color: white;
+    margin-bottom: 6rpx;
 }

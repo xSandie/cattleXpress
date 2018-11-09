@@ -74,12 +74,9 @@ Page({
                     dText: res.data.dText
                   })
                 }else{
-                  wx.showModal({
-                    title: '来晚一步',
-                    content: '抱歉，订单已经被抢啦~',
-                    showCancel:false,
-                    confirmColor:'#f9a93e',
-                    confirmText:'返回',
+                  wx.showToast({
+                    title: '抱歉，订单已经被抢啦~',
+                    icon:'none',
                     success:function(){
                       wx.switchTab({
                         url: '../home/home',
@@ -148,7 +145,23 @@ Page({
      * 接单按钮按下
      */
     recOrder: function(event) {
-        if (app.globalData.certif == true) {
+      if (!app.globalData.havesetPayCode){
+        //未设置paycode
+        wx.showModal({
+          title: '设置收款二维码',
+          content: '暂不可接单，请前往设置收款二维码',
+          confirmColor: '#faaf42',
+          confirmText:'去设置',
+          success:function(res){
+            if(res.confirm){
+              wx.navigateTo({
+                url: '../myCode/myCode',
+              })
+            }
+          }
+        })
+      }
+        else if (app.globalData.certif == true) {
             var orderId = event.currentTarget.dataset.orderId;
             wx.showModal({
                 title: '确认接单',

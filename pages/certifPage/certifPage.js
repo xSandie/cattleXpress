@@ -103,8 +103,12 @@ Page({
         })
     },
     selTeacher: function() {
-        this.setData({
-            studentOrTeacher: false
+        // this.setData({
+        //     studentOrTeacher: false
+        // })
+        wx.showToast({
+          title: '暂时不支持 教职工/研究生 认证噢！',
+          icon:'none'
         })
     },
     schoolInput: function() {

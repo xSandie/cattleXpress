@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        reportProcess: null,
+        reportProcess: null,//卡住显示的内容
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",
@@ -46,39 +46,56 @@ Page({
     onLoad: function(options) {
       // console.log(options.orderID)
         var that = this
-        this.setData({
-          orderID: options.orderID
-        })
-      if (options.detailID){
-        // detailID即举报记录id
-        this.setData({
-          policeID: options.detailID
-        })
-        wx.request({//获取举报订单详情
-          url: urlModel.url.reporterDetail,
-          method:'GET',
-          data:{
-            'policeID': options.detailID
-          },
-          success:function(res){
-
-          }
-        })
-      }else{
-        //生成举报记录的前端时间
+      if(options.orderID){
+        //从订单过来的
         var oDate = new Date();
         var year = oDate.getFullYear();
         var month = oDate.getMonth() + 1;
         var day = oDate.getDate();
         var hour = date.getHours();
         var minute = date.getMinutes();
-        var generateTime = year + '-' + month + '-' + day + ' ' + hour+':' + minute
+        var generateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute
         that.setData({
-          reportTime:generateTime,
+          reportTime: generateTime,
           orderID: options.orderID,
-          LName:options.LName
-        })    
-    }
+          LName: options.LName
+        })   
+      }
+      if (options.detailID){
+        // detailID即举报记录id,从列表过来的
+        this.setData({
+          policeID: options.detailID
+        })
+        wx.request({//获取举报订单详情
+          url: urlModel.url.reportDetail,
+          method:'GET',
+          data:{
+            'policeID': options.detailID,
+            'getterID':app.globalData.user_ID
+          },
+          success:function(res){
+            if(res.statusCode==200){
+              //reportProcess 卡住显示的内容 设置全部内容 
+              that.setData({
+                reportProcess:res.data.Status,
+                reportRe1: res.data.reason1 ? res.data.reason1:null,
+                report1: res.data.img1 ? res.data.img1 : null,
+                complainRe1: res.data.complain1 ? res.data.complain1 : null,
+                complain1: res.data.img2 ? res.data.img2 : null,
+                reportRe2: res.data.reason2 ? res.data.reason2 : null,
+                report2: res.data.img3 ? res.data.img3 : null,
+                complainRe2: res.data.complain2 ? res.data.complain2 : null,
+                complain2: res.data.img4 ? res.data.img4 :null,
+                orderID: res.data.orderID,
+                LName: res.data.LName,
+                reportTime: res.data.pubTime
+              })
+            }
+          }
+        })
+      }
+        //生成举报记录的前端时间 
+    
     },
 
     /**
@@ -113,6 +130,54 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+      var that=this
+      wx.showLoading({
+        title: '刷新中',
+      })
+      wx.request({//获取举报订单详情
+        url: urlModel.url.reportDetail,
+        method: 'GET',
+        data: {
+          'policeID': that.data.policeID,
+          'getterID': app.globalData.user_ID
+        },
+        success: function (res) {
+          if (res.statusCode == 200) {
+            //reportProcess 卡住显示的内容 设置全部内容 
+            that.setData({
+              reportProcess: res.data.Status,
+              reportRe1: res.data.reason1 ? res.data.reason1 : null,
+              report1: res.data.img1 ? res.data.img1 : null,
+              complainRe1: res.data.complain1 ? res.data.complain1 : null,
+              complain1: res.data.img2 ? res.data.img2 : null,
+              reportRe2: res.data.reason2 ? res.data.reason2 : null,
+              report2: res.data.img3 ? res.data.img3 : null,
+              complainRe2: res.data.complain2 ? res.data.complain2 : null,
+              complain2: res.data.img4 ? res.data.img4 : null,
+              orderID: res.data.orderID,
+              LName: res.data.LName,
+              reportTime: res.data.pubTime
+            })
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新成功',
+            })
+          }else{
+            wx.hideLoading()
+            wx.showToast({
+              title: '刷新失败，请重试',
+              icon:'none'
+            })
+          }
+        },
+        fail:function(){
+          wx.hideLoading()
+          wx.showToast({
+            title: '刷新失败，请重试',
+            icon: 'none'
+          })
+        }
+      })
     },
 
     /**
@@ -135,7 +200,6 @@ Page({
       console.log("发起举报")
         console.log(e)
         var that=this
-        //发起举报
       if (that.data.reportProcess){
         //再次举报
       }else{
@@ -158,14 +222,18 @@ Page({
           success: function (res) {
             console.log(res)
             if (res.statusCode == 200) {
-              //设置返回参数
-              that.setData({
-
-              })
-              wx.showToast({
-                title: '举报成功',
-              })
-              
+              if(res.data.msg=='ok'){
+                wx.showToast({
+                  title: '举报成功',
+                })
+                //调用刷新
+                that.onPullDownRefresh()
+              }else{
+                wx.showToast({
+                  title: '举报失败请重试',
+                  icon: 'none'
+                })
+              }     
             } else {
               wx.showToast({
                 title: '举报失败请重试',
@@ -220,6 +288,12 @@ Page({
             }
         })
     },
+    // toDetail:function(){
+    //   wx.navigateTo({
+    //     url: '../',
+    //   })
+    // }
+    //todo 最后来写，目测要加一个查看页面
     // uploadIMG: function() {
     //     //上传选择的图片
     // }
