@@ -27,7 +27,7 @@
             <image src='{{cancelIcon}}' class='cancelIcon'></image>
             <text>取消订单</text>
         </view>
-        <view wx:if="{{statusCode==3||statusCode==0}}" class='toPay' bindlongtap='toPay'><view class='toPayText'>点击</view><view class='toPayText'>支付</view></view>
+        <view wx:if="{{statusCode==3||statusCode==0}}" class='toPay' bindtap='toPay'><view class='toPayText'>点击</view><view class='toPayText'>支付</view></view>
     </view>
 
     <view class="mainDetail">

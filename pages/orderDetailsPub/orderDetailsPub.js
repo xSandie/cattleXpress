@@ -196,7 +196,7 @@ Page({
         var that = this
             //刷新当前状态，可直接使用获取订单信息接口
             //todo 防止恶意刷新，设置loading蒙层
-        var that = this
+            // var that = this
         wx.showLoading({
             title: '刷新中',
         })
@@ -205,7 +205,7 @@ Page({
             method: 'POST',
             data: {
                 // 'ordNum': options.id,
-                'orderID': options.id,
+                'orderID': that.data.orderID,
                 'userID': app.globalData.user_ID,
                 'schoolID': app.globalData.schoolID
 
@@ -230,7 +230,7 @@ Page({
                         fetchCode: tdata.fetchCode,
                         pubtime: tdata.pubtime,
                         exInstance: tdata.exInstance,
-                        orderID: options.id,
+                        orderID: tdata.orderId,
                         haoText: tdata.haoText,
                         jianText: tdata.jianText,
                         mingText: tdata.mingText,
@@ -241,7 +241,7 @@ Page({
                     if (tdata.rtime != '') {
                         that.setData({
                             reTime: '接单时间：' + tdata.rtime,
-                            reName: tdata.Uname + ' ' + tdata.Uid,
+                            reName: tdata.Uname + '同学 ' + tdata.Uid,
                             phoneNum: tdata.phone
                         })
                     } else {
@@ -357,19 +357,19 @@ Page({
         })
     },
     toLaw: function() {
-      var that=this
+        var that = this
         wx.showModal({
             title: '请谨慎举报',
             content: '遇以下情况可举报用户：\r\n1、快递被接单者领走但未被送达；\r\n2、快递被接单者损坏；\r\n3、接单者送达后未收到酬劳；\r\n4、接单者送达后收到的酬劳少于接单前商定的酬劳；\r\n5、其他损害用户利益的行为。\r\n我们将视情况给予违规用户处罚。',
             confirmColor: '#faaf42',
-            showCancel:false,
-            confirmText:'知道了',
+            showCancel: false,
+            confirmText: '知道了',
             success: function(res) {
                 // if (res.confirm) {
                 //     console.log('用户点击确定')
                 // } else if (res.cancel) {
-                    console.log('用户点击')
-                // }
+                console.log('用户点击')
+                    // }
             }
         })
     },
@@ -417,7 +417,7 @@ Page({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
                         data: {
-                            'orderID': that.data.orderId,
+                            'orderID': that.data.orderID,
                             'userID': app.globalData.user_ID,
                             'nextState': 3
                         },
@@ -478,7 +478,7 @@ Page({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
                         data: {
-                            'orderID': that.data.orderId,
+                            'orderID': that.data.orderID,
                             'userID': app.globalData.user_ID,
                             'nextState': 4
                                 //4为过期或取消状态
@@ -488,11 +488,11 @@ Page({
                         // },
                         success: function(res) {
                             console.log('取消', res)
-                          if (res.statusCode == 200 && res.data.msg == 'ok') {
+                            if (res.statusCode == 200 && res.data.msg == 'ok') {
                                 that.setData({
                                     //设置页面参数，设置orderID
                                     statusCode: res.data.State,
-                                    hideStatus: true
+                                    hideStatus: true,
                                 })
                                 wx.showToast({
                                     title: '取消成功',
@@ -534,8 +534,9 @@ Page({
 
     },
     toPay: function() {
-      wx.navigateTo({
-        url: '../pay/pay?orderId=' + that.data.orderID,
-      })
+        var that = this
+        wx.navigateTo({
+            url: '../pay/pay?orderId=' + that.data.orderID,
+        })
     }
 })

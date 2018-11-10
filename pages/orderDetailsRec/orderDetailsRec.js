@@ -39,7 +39,7 @@ Page({
 
         statusCode: null,
         expressID: '',
-        orderId: ''
+        orderID: ''
 
     },
 
@@ -51,12 +51,12 @@ Page({
         var that = this
         if (options.key == null) {
             wx.request({
-              url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+                url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
                 method: 'POST',
                 data: {
                     'orderID': options.id,
                     'userID': app.globalData.user_ID,
-                  'schoolID': app.globalData.schoolID
+                    'schoolID': app.globalData.schoolID
                 },
                 success: function(res) {
                     console.log(res)
@@ -81,7 +81,7 @@ Page({
                             exInstance: res.data.exInstance,
                             expressID: res.data.expressID,
                             //以上是快递站点信息
-                            orderId: res.data.orderID,
+                            orderID: res.data.orderId,
                             sdInstance: res.data.exInstance,
                             exWorry: res.data.exWorry,
                             weightInfo: res.data.weightInfo,
@@ -95,7 +95,7 @@ Page({
                             haoText: res.data.haoText,
                             fetchCode: res.data.fetchCode,
                             otherInfo: res.data.otherInfo,
-                            statusCode: res.data.state,
+                            statusCode: res.data.State,
                             sdLoc: res.data.sdLoc
                         })
                     }
@@ -107,45 +107,45 @@ Page({
 
             //从订单页面来的接口
             wx.request({
-              url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+                url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
                 method: 'POST',
                 data: {
                     'orderID': options.id,
                     'userID': app.globalData.user_ID,
-                  'schoolID': app.globalData.schoolID
+                    'schoolID': app.globalData.schoolID
                 },
                 // header: {
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
                     console.log("从订单页面进入发送请求", res)
-                    if(res.statusCode==200){
-                      that.setData({
-                        //设置页面参数
-                        exLogo: res.data.exLogo,
-                        exLocTime: res.data.exLocTime,
-                        exInstance: res.data.exInstance,
-                        expressID: res.data.expressID,
-                        //以上是快递站点信息
-                        orderId: res.data.orderID,
-                        sdInstance: res.data.exInstance,
-                        exWorry: res.data.exWorry,
-                        weightInfo: res.data.weightInfo,
-                        reward: res.data.reward,
-                        LName: res.data.LName,
-                        pubtime: res.data.pubtime,
-                        phoneNum: res.data.phoneNum,
-                        shiText: res.data.shiText,
-                        mingText: res.data.mingText,
-                        jianText: res.data.jianText,
-                        haoText: res.data.haoText,
-                        fetchCode: res.data.fetchCode,
-                        otherInfo: res.data.otherInfo,
-                        statusCode: res.data.State,
-                        sdLoc: res.data.sdLoc
-                      })
+                    if (res.statusCode == 200) {
+                        that.setData({
+                            //设置页面参数
+                            exLogo: res.data.exLogo,
+                            exLocTime: res.data.exLocTime,
+                            exInstance: res.data.exInstance,
+                            expressID: res.data.expressID,
+                            //以上是快递站点信息
+                            orderID: res.data.orderId,
+                            sdInstance: res.data.exInstance,
+                            exWorry: res.data.exWorry,
+                            weightInfo: res.data.weightInfo,
+                            reward: res.data.reward,
+                            LName: res.data.LName,
+                            pubtime: res.data.pubtime,
+                            phoneNum: res.data.phoneNum,
+                            shiText: res.data.shiText,
+                            mingText: res.data.mingText,
+                            jianText: res.data.jianText,
+                            haoText: res.data.haoText,
+                            fetchCode: res.data.fetchCode,
+                            otherInfo: res.data.otherInfo,
+                            statusCode: res.data.State,
+                            sdLoc: res.data.sdLoc
+                        })
                     }
-                    
+
                 },
                 fail: function() {},
                 complete: function() {}
@@ -185,71 +185,71 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-      //刷新信息，同onload函数
-      //todo 防止恶意刷新，设置loading蒙层
+        //刷新信息，同onload函数
+        //todo 防止恶意刷新，设置loading蒙层
         var that = this
-      wx.showLoading({
-        title: '刷新中',
-      })
-      wx.request({
-        url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
-        method: 'POST',
-        data: {
-          'orderID': that.data.orderID,
-          'userID': app.globalData.user_ID,
-          'schoolID': app.globalData.schoolID
-        },
-        // header: {
-        //     "Content-Type": "applciation/json"
-        // },
-        success: function (res) {
-          console.log('下拉刷新')
-          if (res.statusCode == 200) {
-            that.setData({
-              //设置页面参数
-              exLogo: res.data.exLogo,
-              exLocTime: res.data.exLocTime,
-              exInstance: res.data.exInstance,
-              expressID: res.data.expressID,
-              //以上是快递站点信息
-              orderId: res.data.orderID,
-              sdInstance: res.data.exInstance,
-              exWorry: res.data.exWorry,
-              weightInfo: res.data.weightInfo,
-              reward: res.data.reward,
-              LName: res.data.LName,
-              pubtime: res.data.pubtime,
-              phoneNum: res.data.phoneNum,
-              shiText: res.data.shiText,
-              mingText: res.data.mingText,
-              jianText: res.data.jianText,
-              haoText: res.data.haoText,
-              fetchCode: res.data.fetchCode,
-              otherInfo: res.data.otherInfo,
-              statusCode: res.data.State,
-              sdLoc: res.data.sdLoc
-            })
-            wx.hideLoading()
-            wx.showToast({
-              title: '刷新完成',
-            })
-          }else{
-            wx.hideLoading()
-            wx.showToast({
-              title: '刷新失败，请重试',
-              icon:'none'
-            })
-          }
-        },
-        fail: function () {
-          wx.hideLoading()
-          wx.showToast({
-            title: '刷新失败，请重试',
-            icon: 'none'
-          })},
-        complete: function () {
-         }
-      })
+        wx.showLoading({
+            title: '刷新中',
+        })
+        wx.request({
+            url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+            method: 'POST',
+            data: {
+                'orderID': that.data.orderID,
+                'userID': app.globalData.user_ID,
+                'schoolID': app.globalData.schoolID
+            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
+            success: function(res) {
+                console.log('下拉刷新')
+                if (res.statusCode == 200) {
+                    that.setData({
+                        //设置页面参数
+                        exLogo: res.data.exLogo,
+                        exLocTime: res.data.exLocTime,
+                        exInstance: res.data.exInstance,
+                        expressID: res.data.expressID,
+                        //以上是快递站点信息
+                        orderID: res.data.orderId,
+                        sdInstance: res.data.exInstance,
+                        exWorry: res.data.exWorry,
+                        weightInfo: res.data.weightInfo,
+                        reward: res.data.reward,
+                        LName: res.data.LName,
+                        pubtime: res.data.pubtime,
+                        phoneNum: res.data.phoneNum,
+                        shiText: res.data.shiText,
+                        mingText: res.data.mingText,
+                        jianText: res.data.jianText,
+                        haoText: res.data.haoText,
+                        fetchCode: res.data.fetchCode,
+                        otherInfo: res.data.otherInfo,
+                        statusCode: res.data.State,
+                        sdLoc: res.data.sdLoc
+                    })
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新完成',
+                    })
+                } else {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新失败，请重试',
+                        icon: 'none'
+                    })
+                }
+            },
+            fail: function() {
+                wx.hideLoading()
+                wx.showToast({
+                    title: '刷新失败，请重试',
+                    icon: 'none'
+                })
+            },
+            complete: function() {}
+        })
     },
 
     /**
@@ -267,7 +267,7 @@ Page({
     },
     conTA: function() {
         wx.makePhoneCall({
-            phoneNumber: this.data.phoneNum 
+            phoneNumber: this.data.phoneNum
         })
     },
     toLaw: function() {
@@ -295,7 +295,7 @@ Page({
                 if (res.confirm) {
                     console.log('用户点击确定')
                     wx.redirectTo({
-                      url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderId + '&LName=' + that.data.LName
+                        url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderID + '&LName=' + that.data.LName
                     })
                 } else if (res.cancel) {
                     console.log('用户点击取消')
@@ -330,38 +330,38 @@ Page({
             success: function(res) {
                 if (res.confirm) {
                     wx.request({
-                      url: urlModel.url.changeOrderStatus, //填充完成订单url
+                        url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
                         data: {
-                            'orderID': that.data.orderId,
-                            'userID':app.globalData.user_ID,
-                          'nextState': 0
+                            'orderID': that.data.orderID,
+                            'userID': app.globalData.user_ID,
+                            'nextState': 0
                         },
                         // header: {
                         //     "Content-Type": "applciation/json"
                         // },
                         success: function(res) {
                             // console.log("确认送达", res)
-                            if(res.data.msg=='ok'){
-                              that.setData({
-                                //设置页面参数
-                                statusCode: res.data.State,
-                                //考虑返回发布人昵称，
-                              })
-                              wx.showToast({
-                                title: '等待对方确认',
-                                icon: 'success',
-                                duration: 1500
-                              })
-                            }else{
-                              wx.showToast({
-                                title: '出错，请重试',
-                                icon: 'none',
-                                duration: 1500,
-                                success:function(){
-                                  that.onPullDownRefresh()
-                                }
-                              })
+                            if (res.data.msg == 'ok') {
+                                that.setData({
+                                    //设置页面参数
+                                    statusCode: res.data.State,
+                                    //考虑返回发布人昵称，
+                                })
+                                wx.showToast({
+                                    title: '等待对方确认',
+                                    icon: 'success',
+                                    duration: 1500
+                                })
+                            } else {
+                                wx.showToast({
+                                    title: '出错，请重试',
+                                    icon: 'none',
+                                    duration: 1500,
+                                    success: function() {
+                                        that.onPullDownRefresh()
+                                    }
+                                })
                             }
                         },
                         fail: function() {},

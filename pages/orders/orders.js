@@ -130,18 +130,20 @@ Page({
         // ],
 
         pubIcon: '../../images/publisher.png',
-        atEnd: false
+        atEnd: false,
+        nextPage: 1
     },
     //0代表已接单待支付，1代表等待接单，2代表对方已接单未完成，3代表已完成,4代表已过期,5代表异常。
     navbarTap: function(e) {
         var that = this
         this.setData({
-                currentTab: e.currentTarget.dataset.idx
+                currentTab: e.currentTarget.dataset.idx,
+                nextPage: 1
             })
             // console.log(e.currentTarget.dataset.idx)
         if (e.currentTarget.dataset.idx == 0) {
             wx.request({
-              url: urlModel.url.notHaveList, //未完成完成订单请求地址
+                url: urlModel.url.notHaveList, //未完成完成订单请求地址
                 method: 'POST',
                 data: {
                     'userID': app.globalData.user_ID,
@@ -154,40 +156,44 @@ Page({
                     // console.log(res)
                     that.setData({
                         //修改参数
-                        ongoRecListCount: res.data[0],
-                        ongoPubListCount: res.data[1]
+                        ongoRecListCount: res.data.ongoRecListCount,
+                        ongoPubListCount: res.data.ongoPubListCount
                     })
                 },
                 fail: function() {},
-                complete: function() {}
+                complete: function() {
+                    if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
+                        that.setData({
+                            blank: true
+                        })
+                    } else {
+                        that.setData({
+                            blank: false
+                        })
+                    }
+                }
             })
         } else {
             wx.request({
-              url: urlModel.url.haveList, //已完成订单请求地址
-              method: 'POST',
+                url: urlModel.url.haveList, //已完成订单请求地址
+                method: 'POST',
                 data: {
                     'userID': app.globalData.user_ID,
+                    'nextPage': 1
                 },
-                // header: {
-                //     "Content-Type": "applciation/json"
-                // },
                 success: function(res) {
                     console.log('已完成订单请求', res)
-                    
-                    // if (res.data.message){
-                    //   that.setData({
-                    //     finRecListCount:null//修改参数
-                    //   }) 
-                    // }
-                    // else if (res.data.message) {
-                    //   that.setData({
-                    //     finPubListCount: null//修改参数
-                    //   })
-                    // } else {
-                      that.setData({
-                      finRecListCount: res.data[0],
-                      finPubListCount: res.data[1] //修改参数
-                    })
+                    if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
+                        that.setData({
+                            atEnd: true
+                        })
+                    } else {
+                        that.setData({
+                            finRecListCount: res.data.finRecListCount,
+                            finPubListCount: res.data.finPubListCount //修改参数
+                        })
+                    }
+
                 },
                 fail: function() {},
                 complete: function() {}
@@ -228,6 +234,22 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+      if (app.globalData.ourUserStatus == 1) {
+        wx.showModal({
+          title: '状态异常',
+          content: '请前往我的>举报\申诉进度查看',
+          confirmColor: '#faaf42',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              // console.log('用户点击确定')
+              wx.switchTab({
+                url: '../my/my'
+              })
+            }
+          }
+        })
+      }
         var that = this
             //判定是否为空的函数
         wx.request({
@@ -243,23 +265,23 @@ Page({
             success: function(res) {
                 console.log(res)
                 that.setData({
-                    ongoRecListCount: res.data[0],
-                    ongoPubListCount: res.data[1]
-                        //修改参数
-                })
-                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
-                    that.setData({
-                        blank: true
+                        ongoRecListCount: res.data.ongoRecListCount,
+                        ongoPubListCount: res.data.ongoPubListCount
+                            //修改参数
                     })
-                } else {
-                    that.setData({
-                        blank: false
-                    })
-                }
+                    // if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                    //     that.setData({
+                    //         blank: true
+                    //     })
+                    // } else {
+                    //     that.setData({
+                    //         blank: false
+                    //     })
+                    // }
             },
             fail: function() {},
             complete: function() {
-                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
                     that.setData({
                         blank: true
                     })
@@ -292,45 +314,87 @@ Page({
      */
     onPullDownRefresh: function() {
         var that = this
-        wx.request({
-            url: urlModel.url.notHaveList, //未完成完成订单请求地址
-            method: 'POST',
-            data: {
-                'userID': app.globalData.user_ID,
-                // 'Sex': app.globalData.sex
-            },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
-            success: function(res) {
-                // console.log(res)
-                that.setData({
-                    //修改参数,两边同时刷新
-                    ongoRecListCount: res.data[0],
-                    ongoPubListCount: res.data[1]
-                })
-            },
-            fail: function() {},
-            complete: function() {
-                if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
-                    that.setData({
-                        blank: true
-                    })
-                } else {
-                    that.setData({
-                        blank: false
-                    })
-                }
-            }
+        that.setData({
+            nextPage: 1
         })
-        //考虑加入刷新已完成订单请求
+        wx.showLoading({
+            title: '加载中',
+            mask: true
+        })
+        wx.request({
+                url: urlModel.url.notHaveList, //未完成完成订单请求地址
+                method: 'POST',
+                data: {
+                    'userID': app.globalData.user_ID,
+                },
+                success: function(res) {
+                    that.setData({
+                        //修改参数,两边同时刷新
+                        ongoRecListCount: res.data.ongoRecListCount,
+                        ongoPubListCount: res.data.ongoPubListCount
+                    })
+                },
+                fail: function() {},
+                complete: function() {
+                    if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
+                        that.setData({
+                            blank: true
+                        })
+                    } else {
+                        that.setData({
+                            blank: false
+                        })
+                    }
+                    wx.hideLoading()
+                }
+            })
+            //考虑加入刷新已完成订单请求,没必要本来变动就不大
+
+
+
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function() {
+        var that = this
+        
+            //请求已完成订单。判断currentTab在哪边
+        if (that.data.currentTab == 1) {
+            //请求已完成订单
+          wx.showLoading({
+            title: '加载中',
+            mask: true
+          })
+            that.setData({
+                nextPage: that.data.nextPage + 1
+            })
+            wx.request({
+                url: urlModel.url.haveList, //已完成订单请求地址
+                method: 'POST',
+                data: {
+                    'userID': app.globalData.user_ID,
+                    'nextPage': that.data.nextPage
+                },
+                success: function(res) {
 
+                    console.log('已完成订单请求', res)
+                    if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
+                        that.setData({
+                            atEnd: true
+                        })
+                    } else {
+                        that.setData({
+                            finRecListCount: that.data.finRecListCount.concat(res.data.finRecListCount),
+                            finPubListCount: that.data.finRecListCount.concat(res.data.finPubListCount) //修改参数
+                        })
+                    } //修改参数
+                },
+                fail: function() {},
+                complete: function() { wx.hideLoading() }
+            })
+        }
     },
 
     /**
@@ -347,7 +411,6 @@ Page({
     },
     toRecDetails: function(event) {
         var orderId = event.currentTarget.dataset.orderId
-            // console.log(event)
         wx.navigateTo({
             url: '../orderDetailsRec/orderDetailsRec?key=1&id=' + orderId,
         })

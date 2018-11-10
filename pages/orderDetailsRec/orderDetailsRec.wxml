@@ -92,8 +92,8 @@
         </view>
     </view>
     <view class='trifle'>
-        <view wx:if="{{statusCode!=3&&statusCode!=4&&statusCode!=5&&statusCode!=6}}" class='pubSum'>
-           <view>{{LName}}同学于{{pubtime}}发布 取消订单请<view style='display:inline' bindtap="conTA" class="nav">联系对方</view></view>
+        <view wx:if="{{statusCode!=5&&statusCode!=6}}" class='pubSum'>
+           <view>{{LName}} 于{{pubtime}}发布 取消订单请<view style='display:inline' bindtap="conTA" class="nav">联系对方</view></view>
         </view>
         <view wx:if="{{statusCode==5||statusCode==6}}">请至 我的 > 举报/申诉进度 查看详情</view>
     </view>
@@ -102,7 +102,7 @@
     <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
         <button hover-class="button-hover" bindtap="finOrder">
-          <text class='finText'>已经送达</text>
+          <text class='finText'>确认送达</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
         <view class="smallBtnA">

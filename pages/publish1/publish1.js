@@ -90,26 +90,22 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        // if (app.globalData.balance <= 2) {
-        //     wx.showModal({
-        //         title: '余额过低',
-        //         content: '点击确定前往充值！',
-        //         confirmColor: '#faaf42',
-        //         showCancel: true,
-        //         success: function(res) {
-        //             if (res.confirm) {
-        //                 // console.log('用户点击确定')
-        //                 wx.switchTab({
-        //                     url: '../my/my'
-        //                 })
-        //             }
-        //         }
-        //     })
-        // }
-        // console.log(app.globalData.default)
-      // if (app.globalData.default.sendLoc != null) {
-      //   
-      // }
+        if (app.globalData.ourUserStatus == 1) {
+            wx.showModal({
+                title: '状态异常',
+                content: '请前往我的>举报\申诉进度查看',
+                confirmColor: '#faaf42',
+                showCancel: false,
+                success: function(res) {
+                    if (res.confirm) {
+                        // console.log('用户点击确定')
+                        wx.switchTab({
+                            url: '../my/my'
+                        })
+                    }
+                }
+            })
+        }
         var send_data={
           'gId':app.globalData.user_ID
         }

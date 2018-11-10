@@ -6,8 +6,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        tongzhi: false,//通知显示
-        jieri: false,//控制可点击悬浮按钮显示
+        tongzhi: false, //通知显示
+        jieri: false, //控制可点击悬浮按钮显示
         tongzhiContent: '代课专区将于12月底试开放，敬请关注！',
         tongzhiSum: '点击查看新公告：代课专区开放公告',
         mySchoolName: '',
@@ -102,98 +102,99 @@ Page({
      * 会被动态设置的元素，exlocArray，sdlocArray,column2_0123,listCount
      **/
 
-    setAvatar:function(){
-      wx.getSetting({
-        success: function (res) {
-          if (res.authSetting['scope.userInfo']) {
-            wx.getUserInfo({
-              success: function (res) {
-                console.log(res)
-                send_data = {
-                  'user_nickname': res.userInfo.nickName,
-                  'user_avatarurl': res.userInfo.avatarUrl,
-                  'gId': app.globalData.user_ID
+    setAvatar: function() {
+        wx.getSetting({
+            success: function(res) {
+                if (res.authSetting['scope.userInfo']) {
+                    wx.getUserInfo({
+                        success: function(res) {
+                                console.log(res)
+                                send_data = {
+                                    'user_nickname': res.userInfo.nickName,
+                                    'user_avatarurl': res.userInfo.avatarUrl,
+                                    'gId': app.globalData.user_ID
+                                }
+                                wx.request({
+                                    url: urlModel.url.postAvatar,
+                                    method: 'POST',
+                                    data: send_data,
+                                    success: function(res) {
+                                        console.log("---上传头像--")
+                                        console.log(res)
+                                    }
+                                })
+                            } //发起发送用户头像昵称请求
+                    })
+                } else {
+                    //未授权
+                    wx.reLaunch({
+                        url: '../welcome/welcome',
+                    })
                 }
-                wx.request({
-                  url: urlModel.url.postAvatar,
-                  method: 'POST',
-                  data: send_data,
-                  success: function (res) {
-                    console.log("---上传头像--")
-                    console.log(res)
-                  }
-                })
-              }//发起发送用户头像昵称请求
-            })
-          } else {
-            //未授权
-            wx.reLaunch({
-              url: '../welcome/welcome',
-            })
-          }
-        }
-      })  
+            }
+        })
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-      var that = this
-      app.getUser().then(function (res) {
-        that.setData({
-          requestTime: 1,
-        })
-        console.log(res)
-        that.setData({
-          exlocArray: app.globalData.exlocArray,
-          column2_0: app.globalData.column2_0,
-          column2_1: app.globalData.column2_1,
-          column2_2: app.globalData.column2_2,
-          column2_3: app.globalData.column2_3,
-          mySchoolName: app.globalData.schoolName,
-          sdlocArray: [
-            ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-          ]
-        })
-        // console.log('onload', app.globalData.schoolName)
-        // console.log('onload', app.globalData.sex)
-        // console.log('onloadmy', that.data.mySchoolName)
-        var send_sendLoc = ''
-        var send_expressLoc = ''
-        if (that.data.expressLoc =='选择取快递的站点'){
-          send_expressLoc = ''
-        } if (that.data.sendLoc =='选择快递送达地点'){
-          send_sendLoc = ''
-        }
-
-        var send_data={
-          'schoolID': app.globalData.schoolID,
-          'userID': app.globalData.user_ID,
-          'exloc': send_expressLoc,
-          'sdloc': send_sendLoc,
-          'sex': app.globalData.sex,
-          'time': 1
-        }
-        wx.request({
-          url: urlModel.url.getOrdersList, //填充请求订单
-          method: 'GET',
-          data: send_data,
-          // header: {
-          //   "Content-Type": "applciation/json"
-          // },
-          success: function (res) {
+        var that = this
+        app.getUser().then(function(res) {
+            that.setData({
+                requestTime: 1,
+            })
             console.log(res)
             that.setData({
-              listCount: res.data
+                    exlocArray: app.globalData.exlocArray,
+                    column2_0: app.globalData.column2_0,
+                    column2_1: app.globalData.column2_1,
+                    column2_2: app.globalData.column2_2,
+                    column2_3: app.globalData.column2_3,
+                    mySchoolName: app.globalData.schoolName,
+                    sdlocArray: [
+                        ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+                    ]
+                })
+                // console.log('onload', app.globalData.schoolName)
+                // console.log('onload', app.globalData.sex)
+                // console.log('onloadmy', that.data.mySchoolName)
+            var send_sendLoc = ''
+            var send_expressLoc = ''
+            if (that.data.expressLoc == '选择取快递的站点') {
+                send_expressLoc = ''
+            }
+            if (that.data.sendLoc == '选择快递送达地点') {
+                send_sendLoc = ''
+            }
+
+            var send_data = {
+                'schoolID': app.globalData.schoolID,
+                'userID': app.globalData.user_ID,
+                'exloc': send_expressLoc,
+                'sdloc': send_sendLoc,
+                'sex': app.globalData.sex,
+                'time': 1
+            }
+            wx.request({
+                url: urlModel.url.getOrdersList, //填充请求订单
+                method: 'GET',
+                data: send_data,
+                // header: {
+                //   "Content-Type": "applciation/json"
+                // },
+                success: function(res) {
+                    console.log(res)
+                    that.setData({
+                        listCount: res.data
+                    })
+                },
+                fail: function() {},
+                complete: function() {}
             })
-          },
-          fail: function () { },
-          complete: function () { }
         })
-      })
-      setTimeout(that.setAvatar, 6000)
-         
+        setTimeout(that.setAvatar, 6000)
+
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -208,16 +209,16 @@ Page({
     onShow: function() {
         var that = this
         that.setData({
-                exlocArray: app.globalData.exlocArray,
-                column2_0: app.globalData.column2_0,
-                column2_1: app.globalData.column2_1,
-                column2_2: app.globalData.column2_2,
-                column2_3: app.globalData.column2_3,
-                mySchoolName: app.globalData.schoolName,
-                sdlocArray: [
-                    ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-                ]
-            })
+            exlocArray: app.globalData.exlocArray,
+            column2_0: app.globalData.column2_0,
+            column2_1: app.globalData.column2_1,
+            column2_2: app.globalData.column2_2,
+            column2_3: app.globalData.column2_3,
+            mySchoolName: app.globalData.schoolName,
+            sdlocArray: [
+                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+            ]
+        })
     },
 
     /**
@@ -241,29 +242,31 @@ Page({
         console.log("refresh")
         this.setData({
             fabuOrDingbu: true,
-          mySchoolName: app.globalData.schoolName,
+            mySchoolName: app.globalData.schoolName,
+            requestTime: 1
         })
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
-          //至少有一个没有选
-          var send_sendLoc = that.data.sendLoc
-          var send_expressLoc = that.data.expressLoc
-          if (send_expressLoc == '选择取快递的站点') {
-            send_expressLoc = ''
-          } if (send_sendLoc == '选择快递送达地点') {
-            send_sendLoc = ''
-          }
+            //至少有一个没有选
+            var send_sendLoc = that.data.sendLoc
+            var send_expressLoc = that.data.expressLoc
+            if (send_expressLoc == '选择取快递的站点') {
+                send_expressLoc = ''
+            }
+            if (send_sendLoc == '选择快递送达地点') {
+                send_sendLoc = ''
+            }
 
-          var send_data = {
-            'schoolID': app.globalData.schoolID,
-            'userID': app.globalData.user_ID,
-            'exloc': send_expressLoc,
-            'sdloc': send_sendLoc,
-            'sex': app.globalData.sex,
-            'time': 1
-          }
+            var send_data = {
+                'schoolID': app.globalData.schoolID,
+                'userID': app.globalData.user_ID,
+                'exloc': send_expressLoc,
+                'sdloc': send_sendLoc,
+                'sex': app.globalData.sex,
+                'time': 1
+            }
             wx.request({
-              url: urlModel.url.getOrdersList, //填充请求订单
+                url: urlModel.url.getOrdersList, //填充请求订单
                 method: 'GET',
                 data: send_data,
                 // header: {
@@ -275,16 +278,16 @@ Page({
                         listCount: res.data
                     })
                     wx.showToast({
-                      title: '刷新成功',
+                        title: '刷新成功',
                     })
                 },
                 fail: function() {},
                 complete: function() {}
             })
         } else {
-          //两个筛选条件都选了
+            //两个筛选条件都选了
             wx.request({
-              url: urlModel.url.getOrdersList, 
+                url: urlModel.url.getOrdersList,
                 //填充url筛选请求列表
                 method: 'GET',
                 data: {
@@ -321,36 +324,41 @@ Page({
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function() {//这里list都是append逻辑
-        console.log("到底了")
-        var that=this
-        this.setData({
-          requestTime: that.data.requestTime+1
+    onReachBottom: function() { //这里list都是append逻辑
+        wx.showLoading({
+            title: '加载中',
+            mask: true
         })
-      console.log(this.data.requestTime)
+        console.log("到底了")
+        var that = this
+        this.setData({
+            requestTime: that.data.requestTime + 1
+        })
+        console.log(this.data.requestTime)
         this.setData({
             fabuOrDingbu: false
         })
         var that = this
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
-          //至少有一个没有设置筛选
-          var send_sendLoc = that.data.sendLoc
-          var send_expressLoc = that.data.expressLoc
-          if (send_expressLoc == '选择取快递的站点') {
-            send_expressLoc = ''
-          } if (send_sendLoc == '选择快递送达地点') {
-            send_sendLoc = ''
-          }
+            //至少有一个没有设置筛选
+            var send_sendLoc = that.data.sendLoc
+            var send_expressLoc = that.data.expressLoc
+            if (send_expressLoc == '选择取快递的站点') {
+                send_expressLoc = ''
+            }
+            if (send_sendLoc == '选择快递送达地点') {
+                send_sendLoc = ''
+            }
 
-          var send_data = {
-            'schoolID': app.globalData.schoolID,
-            'userID': app.globalData.user_ID,
-            'exloc': send_expressLoc,
-            'sdloc': send_sendLoc,
-            'sex': app.globalData.sex,
-            'time': that.data.requestTime
-          }
+            var send_data = {
+                'schoolID': app.globalData.schoolID,
+                'userID': app.globalData.user_ID,
+                'exloc': send_expressLoc,
+                'sdloc': send_sendLoc,
+                'sex': app.globalData.sex,
+                'time': that.data.requestTime
+            }
             wx.request({
                 url: urlModel.url.getOrdersList, //填充请求订单
                 method: 'GET',
@@ -359,17 +367,26 @@ Page({
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    // console.log(res)
-                  var new_list = that.data.listCount.push(res.data)
-                    that.setData({
-                      listCount: new_list
-                    })
+                    console.log(res)
+                    if (res.data.length == 0) {
+                        that.setData({
+                            atEnd: true
+                        })
+                    } else {
+                        that.setData({
+                            listCount: that.data.listCount.concat(res.data)
+                        })
+                    }
+                    // that.data.listCount.push(res.data)
+
                 },
                 fail: function() {},
-                complete: function() {}
+                complete: function() {
+                    wx.hideLoading()
+                }
             })
         } else {
-          //都设置了筛选
+            //都设置了筛选
             wx.request({
                 url: urlModel.url.getOrdersList, //填充url筛选请求列表
                 method: 'GET',
@@ -385,11 +402,16 @@ Page({
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    //console.log(res)
-                  var new_list = that.data.listCount.push(res.data)
-                  that.setData({
-                    listCount: new_list
-                  })
+                    console.log(res)
+                    if (res.data.length == 0) {
+                        that.setData({
+                            atEnd: true
+                        })
+                    } else {
+                        that.setData({
+                            listCount: that.data.listCount.concat(res.data)
+                        })
+                    }
                 },
                 fail: function() {
                     wx.showModal({
@@ -400,7 +422,9 @@ Page({
                         confirmColor: '#faaf42',
                     })
                 },
-                complete: function() {}
+                complete: function() {
+                    wx.hideLoading()
+                }
             })
         }
     },
@@ -452,6 +476,22 @@ Page({
         }
     },
     toSumDetail: function(event) {
+      if (app.globalData.ourUserStatus == 1) {
+        wx.showModal({
+          title: '状态异常',
+          content: '请前往我的>举报\申诉进度查看',
+          confirmColor: '#faaf42',
+          showCancel: false,
+          success: function (res) {
+            if (res.confirm) {
+              // console.log('用户点击确定')
+              wx.switchTab({
+                url: '../my/my'
+              })
+            }
+          }
+        })
+      }else
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
                 title: '提示',
@@ -492,22 +532,23 @@ Page({
         })
         var that = this
             //发起筛选快递站点请求
-      var send_sendLoc = that.data.sendLoc
-      var send_expressLoc = that.data.expressLoc
-      if (send_expressLoc == '选择取快递的站点') {
-        send_expressLoc = ''
-      } if (send_sendLoc == '选择快递送达地点') {
-        send_sendLoc = ''
-      }
+        var send_sendLoc = that.data.sendLoc
+        var send_expressLoc = that.data.expressLoc
+        if (send_expressLoc == '选择取快递的站点') {
+            send_expressLoc = ''
+        }
+        if (send_sendLoc == '选择快递送达地点') {
+            send_sendLoc = ''
+        }
 
-      var send_data = {
-        'schoolID': app.globalData.schoolID,
-        'userID': app.globalData.user_ID,
-        'exloc': send_expressLoc,
-        'sdloc': send_sendLoc,
-        'sex': app.globalData.sex,
-        'time': 1
-      }
+        var send_data = {
+            'schoolID': app.globalData.schoolID,
+            'userID': app.globalData.user_ID,
+            'exloc': send_expressLoc,
+            'sdloc': send_sendLoc,
+            'sex': app.globalData.sex,
+            'time': 1
+        }
         var that = this
         wx.request({
             url: urlModel.url.getOrdersList, //填充url筛选请求列表
@@ -547,22 +588,23 @@ Page({
             })
             //发起筛选送达地点请求
         var that = this
-      var send_sendLoc = that.data.sendLoc
-      var send_expressLoc = that.data.expressLoc
-      if (send_expressLoc == '选择取快递的站点') {
-        send_expressLoc = ''
-      } if (send_sendLoc == '选择快递送达地点') {
-        send_sendLoc = ''
-      }
+        var send_sendLoc = that.data.sendLoc
+        var send_expressLoc = that.data.expressLoc
+        if (send_expressLoc == '选择取快递的站点') {
+            send_expressLoc = ''
+        }
+        if (send_sendLoc == '选择快递送达地点') {
+            send_sendLoc = ''
+        }
 
-      var send_data = {
-        'schoolID': app.globalData.schoolID,
-        'userID': app.globalData.user_ID,
-        'exloc': send_expressLoc,
-        'sdloc': send_sendLoc,
-        'sex': app.globalData.sex,
-        'time': 1
-      }
+        var send_data = {
+            'schoolID': app.globalData.schoolID,
+            'userID': app.globalData.user_ID,
+            'exloc': send_expressLoc,
+            'sdloc': send_sendLoc,
+            'sex': app.globalData.sex,
+            'time': 1
+        }
         wx.request({
             url: urlModel.url.getOrdersList, //填充url筛选请求列表
             method: 'GET',
@@ -588,7 +630,7 @@ Page({
             complete: function() {}
         })
         this.setData({
-            requestTime: 1//设置逻辑有误，再调整
+            requestTime: 1 //设置逻辑有误，再调整
         })
     },
     exlocColumnChange: function(e) {

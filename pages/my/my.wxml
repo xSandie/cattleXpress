@@ -10,7 +10,7 @@
                     <text class='small'>LV.{{level}} 信用分</text>
                 </view> 
             </view>
-            <view class='finanBtn'>
+            <!-- <view class='finanBtn'>
                 <view hover-class="answerHover1" class='addCre'>
                     <text>充值</text>
                 </view>
@@ -19,7 +19,7 @@
                 <view hover-class="answerHover1" class='drawCash'>
                     <text>提现</text>
                 </view>
-            </view>
+            </view> -->
         </view>
         <image class='cardBack' src='{{cardBack}}'></image>
     <view class='proA'>

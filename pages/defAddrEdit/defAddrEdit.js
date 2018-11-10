@@ -338,7 +338,8 @@ Page({
             wx.showToast({
               title: '修改成功',
               complete:function(){
-                wx.navigateBack({
+                wx.switchTab({
+                  url: '../my/my',
                 })
               }
             })

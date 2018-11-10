@@ -231,7 +231,7 @@ Page({
         var tempFilePaths
         var that = this
         wx.chooseImage({
-            count: 3, // 默认9
+            count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function(res) {
@@ -240,9 +240,9 @@ Page({
                 console.log(tempFilePaths);
                 that.setData({
                     imgUp: tempFilePaths,
-                    img1: tempFilePaths[0],
-                    img2: tempFilePaths[1],
-                    img3: tempFilePaths[2]
+                    img1: tempFilePaths,
+                    // img2: tempFilePaths[1],
+                    // img3: tempFilePaths[2]
                 })
             }
         })

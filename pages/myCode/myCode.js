@@ -123,7 +123,11 @@ Page({
                 wx.showToast({
                   title: '上传成功',
                 })
-                that.onShow()
+              app.globalData.havesetPayCode = res.data.havePayCode
+                // that.onShow()
+              wx.switchTab({
+                url: '../my/my',
+              })
             } else {
               wx.showToast({
                 title: '上传失败请重试',

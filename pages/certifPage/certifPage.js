@@ -168,18 +168,20 @@ Page({
                 wx.showToast({
                   title: '认证成功',
                   icon: 'success',
-                  duration: 1500,
-                  success: function () {
-                    wx.showToast({
-                      title: '最后，请设置默认联系方式',
-                      success:function(){
-                        wx.redirectTo({
-                          url: '../defAddrEdit/defAddrEdit?path=certif'
-                        })
-                      }
-                    })          
+                  // duration: 1500,
+                  success: function () {        
                   }
                 })
+                setTimeout(function(){},500)
+                wx.showToast({
+                  title: '最后，请设置默认联系方式',
+                  icon:'none',
+                  success: function () {
+                    wx.redirectTo({
+                      url: '../defAddrEdit/defAddrEdit?path=certif'
+                    })
+                  }
+                })  
               } else {
                 wx.showModal({
                   title: '认证失败',

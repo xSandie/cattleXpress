@@ -39,6 +39,13 @@ Page({
         this.setData({
           balance: app.globalData.balance
         })
+        if(!app.globalData.havesetPayCode){
+          wx.showToast({
+            title: '设置完 收款二维码 才能接单噢！',
+            icon:'none',
+            duration:2000
+          })
+        }
         var that = this
         wx.request({
           url: urlModel.url.usrinfo, //用户余额信用获取
@@ -95,6 +102,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+      var that = this
       wx.showLoading({
         title: '刷新中',
       })

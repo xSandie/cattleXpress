@@ -10,14 +10,14 @@
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.key}}" wx:for="{{ongoRecListCount}}" >
-                    <view class='rowFlex' data-orderstate="{{item.state}}" data-order-id="{{item.ordnum}}" bindtap="toRecDetails">
+            <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.orderID}}" wx:for="{{ongoRecListCount}}" >
+                    <view class='rowFlex' data-orderstate="{{item.exState}}" data-order-id="{{item.orderID}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
                             </view>
                             <view class='rnText'>
-                                <text>{{item.money}}</text>
+                                <text>{{item.reward}}</text>
                             </view>
                             <view class='reText'>
                                 <text>RMB</text>
@@ -29,29 +29,29 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.urgent === 'true' }}">
+                                <view class='exTagWor' wx:if="{{item.exWorry === 'true' }}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
                             <view class='fetchDe'>
                                 <view class='fetchCode'>
-                                    <text>{{item.code}}</text>
+                                    <text>{{item.fetchCode}}</text>
                                 </view>
                                 <view class='fetchName'>
-                                    <text>姓名:{{item.pubname}}</text>
+                                    <text>姓名:{{item.fetchName}}</text>
                                 </view>
                                 <view class='fatchPhone'>
-                                    <text>尾号:{{item.weihao}}</text>
+                                    <text>尾号:{{item.fatchPhone}}</text>
                                 </view>
                             </view>
                             <view class='exSum'>
-                                    <view class='tagText'><text>重量{{item.weight}} | {{item.size}} | {{item.losetime}}前取货</text></view>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前取货</text></view>
                             </view>
                         </view>
                     </view>
                     <view class='rbuttonA'>
-                            <view wx:if="{{item.state==0}}" class='waitAffirm'><text>待对方确认</text></view>
-                            <view wx:if="{{item.state==4}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==0}}" class='waitAffirm'><text>待对方确认</text></view>
+                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
                     </view>
             </view> 
         </view>
@@ -61,14 +61,14 @@
             <text>我发布的</text>
         </view>
         <view class='orderCard'>
-            <view hover-class="answerHover1" class='ongoPubList' wx:key="{{item.key}}" wx:for="{{ongoPubListCount}}">
-                <view class='rowFlex' data-order-id="{{item.ordnum}}" bindtap="toPubDetails">
+            <view hover-class="answerHover1" class='ongoPubList' wx:key="{{item.orderID}}" wx:for="{{ongoPubListCount}}">
+                <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toPubDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
                             </view>
                             <view class='rnText'>
-                                <text>{{item.money}}</text>
+                                <text>{{item.reward}}</text>
                             </view>
                             <view class='reText'>
                                 <text>RMB</text>
@@ -80,32 +80,31 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.urgent === 'true' }}">
+                                <view class='exTagWor' wx:if="{{item.exWorry === 'true' }}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
                             <view class='exTag'>
                                 <view class='exTag exTagWei'>
-                                    <view class='tagText'><text>重量{{item.weight}} | {{item.size}}</text></view>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
                                 </view>
                                 <view class='exTag exTagTime'>
-                                    <view class='tagText'><text>{{item.losetime}}前送达</text></view>
+                                    <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
                                 </view>
                             </view>
                             <view class='pubisher'>
                                 <image class='pubIcon' src="{{pubIcon}}"></image>
-                                <view wx:if="{{item.Uname}}" class='pubName'>
-                                <text>接单人：{{item.Uname+' '+item.Uid}}</text>
+                                <view class='pubName'>
+                                <text>接单人：{{item.recName}}</text>
                                 </view>
-                                <view wx:else class='pubName'>接单人：暂无</view>
                             </view>  
                         </view>
                 </view>
                 <view class='rbuttonA'>
-                    <view wx:if="{{item.state==1}}" class='waitRec'><text>待接单</text></view>
-                    <view wx:if="{{item.state==2}}" class='haveRec'><text>待送达</text></view>
-                    <view wx:if="{{item.state==5}}" class='abor'><text>异常</text></view>
-                    <view wx:if="{{item.state==0}}" class='waitAffirm'><text>待我确认</text></view>
+                    <view wx:if="{{item.exState==1}}" class='waitRec'><text>待接单</text></view>
+                    <view wx:if="{{item.exState==2}}" class='haveRec'><text>待送达</text></view>
+                    <view wx:if="{{item.exState==5}}" class='abor'><text>异常</text></view>
+                    <view wx:if="{{item.exState==0}}" class='waitAffirm'><text>待我确认</text></view>
                     
                 </view>
             </view> 
@@ -128,14 +127,14 @@
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view wx:if="{{!item.message}}" hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecListCount}}" wx:key="{{item.key}}">
-                    <view class='rowFlex' data-order-id="{{item.ordnum}}" bindtap="toRecDetails">
+            <view hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecListCount}}" wx:key="{{item.orderID}}">
+                    <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
                             </view>
                             <view class='rnText'>
-                                <text>{{item.money}}</text>
+                                <text>{{item.reward}}</text>
                             </view>
                             <view class='reText'>
                                 <text>RMB</text>
@@ -152,19 +151,19 @@
                                 </view>
                             </view>
                             <view class='finExSum'>
-                                    <view class='tagText'><text>重量{{item.weight}} | {{item.size}} | {{item.losetime}}前送达</text></view>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前送达</text></view>
                             </view>
                             <view class='finPubisher'>
                                 <image class='pubIcon' src="{{pubIcon}}"></image>
                                 <view class='pubName'>
-                                <text>发布人：{{item.pubname}}同学</text>
+                                <text>发布人：{{item.pubName}}同学</text>
                                 </view>
                             </view>
                         </view>
                     </view>
                     <view class='rbuttonAfin'>
-                            <view wx:if="{{item.state==3}}" class='finOrd'><text>已完成</text></view>  
-                            <view wx:if="{{item.state==4}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>  
+                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
                     </view>
             </view> 
         </view>
@@ -174,14 +173,14 @@
                 <text>我发布的</text>
             </view>
             <view class='orderCard'>
-                <view wx:if="{{!item.message}}" hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubListCount}}" wx:key="{{item.key}}">
-                    <view class='rowFlex' data-order-id="{{item.ordnum}}"  bindtap="toPubDetails">
+                <view hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubListCount}}" wx:key="{{item.orderID}}">
+                    <view class='rowFlex' data-order-id="{{item.orderID}}"  bindtap="toPubDetails">
                             <view class='reward'>
                                 <view class='rcText'>
                                         <text>赏金</text>
                                 </view>
                                 <view class='rnText'>
-                                    <text>{{item.money}}</text>
+                                    <text>{{item.reward}}</text>
                                 </view>
                                 <view class='reText'>
                                     <text>RMB</text>
@@ -193,16 +192,16 @@
                                 </view>
                                 <view class='sdInstance'>
                                     <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                    <view class='exTagWor' wx:if="{{item.urgent==='true'}}">
+                                    <view class='exTagWor' wx:if="{{item.exWorry==='true'}}">
                                         <view class='tagText'><text>加急</text></view> 
                                     </view>
                                 </view>
                                 <view class='exTag'>
                                     <view class='exTag finexTagWei'>
-                                        <view class='tagText'><text>重量{{item.weight}} | {{item.size}}</text></view>
+                                        <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
                                     </view>
                                     <view class='exTag finexTagTime'>
-                                        <view class='tagText'><text>{{item.losetime}}前送达</text></view>
+                                        <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
                                     </view>
                                 </view>
                                 <view class='finPubisher'>
@@ -214,14 +213,14 @@
                             </view>
                     </view>
                     <view class='rbuttonAfin'>
-                            <view wx:if="{{item.state==3}}" class='finOrd'><text>已完成</text></view>
-                            <view wx:if="{{item.state==4}}" class='finOrd'><text>已过期</text></view>  
-                            <view wx:if="{{item.state==5}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>
+                            <view wx:if="{{item.exState==4}}" class='finOrd'><text>已过期</text></view>  
+                            <view wx:if="{{item.exState==5}}" class='abor'><text>异常</text></view>
                     </view>
                 </view> 
             </view>
         </view>
-        <view wx:if="{{atEnd}}" class='prompt'>
+        <view wx:if="{{!atEnd}}" class='prompt'>
             <view class='lineCss'></view>
             <text>下拉加载更多</text>
             <view class='lineCss'></view>

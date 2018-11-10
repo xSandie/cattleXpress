@@ -1,4 +1,5 @@
-var app = getApp()
+const urlModel = require('../../utils/urlSet.js')
+app = getApp()
 Page({
 
     /**
@@ -53,7 +54,7 @@ Page({
     onShow: function() {
         var that = this
         wx.request({
-          url: urlModel.url.policelist, //查询举报条目列表
+            url: urlModel.url.policelist, //查询举报条目列表
             method: 'GET',
             data: {
                 'userID': app.globalData.user_ID,
@@ -64,9 +65,16 @@ Page({
             success: function(res) {
                 console.log(res)
                 that.setData({
-                    myPoliceList: res.data[0],
-                    policeMeList: res.data[1]
+                    myPoliceList: res.data.myPoliceList,
+                    policeMeList: res.data.policeMeList
                 })
+                if (res.data.myPoliceList.length == 0 && res.data.policeMeList.length == 0) {
+                  wx.showToast({
+                    title: '太好了,什么也没有',
+                    icon:'none',
+                    duration: 2000
+                  })
+                }
             },
             fail: function() {},
             complete: function() {}
@@ -91,7 +99,7 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-        
+
     },
 
     /**
@@ -111,7 +119,7 @@ Page({
         var that = this
         var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
-          url: '../policeDetailProposal/policeDetailProposal?detailID=' + reportOrderID,
+            url: '../policeDetailProposal/policeDetailProposal?detailID=' + reportOrderID,
         })
     },
     toDetailRec: function(event) {
