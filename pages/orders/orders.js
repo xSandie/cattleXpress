@@ -241,12 +241,12 @@ Page({
           confirmColor: '#faaf42',
           showCancel: false,
           success: function (res) {
-            if (res.confirm) {
-              // console.log('用户点击确定')
-              wx.switchTab({
-                url: '../my/my'
-              })
-            }
+            // if (res.confirm) {
+            //   // console.log('用户点击确定')
+            //   wx.switchTab({
+            //     url: '../my/my'
+            //   })
+            // }
           }
         })
       }
@@ -333,8 +333,17 @@ Page({
                         ongoRecListCount: res.data.ongoRecListCount,
                         ongoPubListCount: res.data.ongoPubListCount
                     })
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '刷新成功',
+                    duration:2000
+                  })
                 },
-                fail: function() {},
+          fail: function () { wx.hideLoading()
+            wx.showToast({
+              title: '刷新失败，请稍后重试',
+              icon: 'none'
+            })},
                 complete: function() {
                     if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
                         that.setData({
@@ -345,7 +354,7 @@ Page({
                             blank: false
                         })
                     }
-                    wx.hideLoading()
+                    
                 }
             })
             //考虑加入刷新已完成订单请求,没必要本来变动就不大

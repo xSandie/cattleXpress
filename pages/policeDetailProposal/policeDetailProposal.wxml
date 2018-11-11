@@ -6,7 +6,7 @@
             <text class="LName">{{LName}}</text>
             <text  class="reportTime">{{reportTime}}</text>
         </view>
-        <button  class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button>
+        <!-- <button  class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button> -->
     </view>
     <view class="reasonA">
         <view class="reportIn" wx:if="{{reportProcess==0}}">
@@ -86,7 +86,7 @@
     </view>
     <view class="btnA">
         <view class='BtnArea' wx:if="{{reportProcess==0}}">
-            <button  hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <button  hover-class="defaultHover" class='contact' formType="submit">
             <text>举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
@@ -106,7 +106,7 @@
         <view class='BtnArea' wx:if="{{reportProcess!=2&&reportProcess!=0}}">
             <button  hover-class="defaultHover" class='contact' bindtap="retrieve">
             <text>撤销举报</text>
-            <image mode='aspectFill' src='{{retrieveIcon}}' class='conIcon'></image>     
+            <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
             <view></view>
         </view>

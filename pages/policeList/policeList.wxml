@@ -17,10 +17,10 @@
                       <text>被举报人</text>
                   </view>
                   <view class="name">
-                      <text>{{item.beijubaoname}}同学</text>
+                      <text>{{item.LName}}同学</text>
                   </view>
                   <view class="reason">
-                      <text>举报原因:{{item.yuanyin}}</text>
+                      <text>举报原因:{{item.reason}}</text>
                   </view>  
                 </view>
                 <view class="deBtn">
@@ -48,10 +48,10 @@
                       <text>举报人</text>
                   </view>
                   <view class="name">
-                      <text>{{item.jubaoname}}同学</text>
+                      <text>{{item.LName}}同学</text>
                   </view>
                   <view class="reason">
-                      <text>举报原因:{{item.yuanyin}}</text>
+                      <text>举报原因:{{item.reason}}</text>
                   </view>  
                 </view>
                 <view class="deBtn">

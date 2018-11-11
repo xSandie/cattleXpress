@@ -2,7 +2,7 @@
 <form bindsubmit="report" class="container">
     <view hover-class="answerHover1" class="floatCard">
         <view class="people">
-            <text class="topTi">举报人</text>
+            <text class="topTi">被举报人</text>
             <text class="LName">{{LName}}</text>
             <text class="reportTime">{{reportTime}}</text>
         </view>

@@ -419,4 +419,5 @@
     padding-top: 16rpx;
     background-color: #fbbd4d;
     color: white;
+    text-align: center;
 }

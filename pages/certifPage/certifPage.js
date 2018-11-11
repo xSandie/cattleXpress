@@ -19,8 +19,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
-    },
+    onLoad: function(options) {},
 
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -33,32 +32,32 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-      var that=this
+        var that = this
         this.setData({
             schoolName: app.globalData.schoolName
         })
-      if (app.globalData.schoolName=='点击选择学校'){
-          wx.showToast({
-            title: '请先选择学校',
-            icon:'none'
-          })
-        }else{
-          send_data={
-            'gId':app.globalData.user_ID
-          }
-          wx.request({
-            url: urlModel.url.getCertifCode,
-            method:'POST',
-            data:send_data,
-            success:function(res){
-              console.log(res)
-              if(res.data.img_url){
-                that.setData({
-                  verifCodePath: res.data.img_url+'?v='+Math.random()
-                })
-              }
+        if (app.globalData.schoolName == '点击选择学校') {
+            wx.showToast({
+                title: '请先选择学校',
+                icon: 'none'
+            })
+        } else {
+            send_data = {
+                'gId': app.globalData.user_ID
             }
-          })
+            wx.request({
+                url: urlModel.url.getCertifCode,
+                method: 'POST',
+                data: send_data,
+                success: function(res) {
+                    console.log(res)
+                    if (res.data.img_url) {
+                        that.setData({
+                            verifCodePath: res.data.img_url + '?v=' + Math.random()
+                        })
+                    }
+                }
+            })
         }
         //写具体的get函数 ifschoolname=空就不发送验证，根据教职工还是学生get不同的数据
     },
@@ -107,8 +106,8 @@ Page({
         //     studentOrTeacher: false
         // })
         wx.showToast({
-          title: '暂时不支持 教职工/研究生 认证噢！',
-          icon:'none'
+            title: '暂时不支持 教职工/研究生 认证噢！',
+            icon: 'none'
         })
     },
     schoolInput: function() {
@@ -132,100 +131,107 @@ Page({
         })
     },
     certif: function(e) {
-      if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode==''){
-        wx.showModal({
-          title: '信息不全',
-          content: '请填写完整信息',
-          showCancel: false,
-          confirmText: '返回',
-          confirmColor: '#faaf42',
-        })
-      }else{
-        var that = this
-        console.log(e.detail.value)
-        wx.request({
-          url: urlModel.url.postCertifMes, //填充认证url
-          method: 'POST',
-          data: {
-            'zjh': e.detail.value.schoolNumb,
-            'mm': e.detail.value.password,
-            'yzm': e.detail.value.verifiedCode,
-            'gId': app.globalData.user_ID,
-          },
-          header: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          success: function (res) {
-            console.log(res)
-            if (res.statusCode == 200) {
-              if (res.data.status == 1) {
-
-                //设置姓名、学号、status
-                app.globalData.ourUserStatus=0
-                app.globalData.userName = res.data.name
-                app.globalData.schoolNumb = res.data.schoolNum
-                app.globalData.ourUserStatus = res.data.user_status
-                wx.showToast({
-                  title: '认证成功',
-                  icon: 'success',
-                  // duration: 1500,
-                  success: function () {        
-                  }
-                })
-                setTimeout(function(){},500)
-                wx.showToast({
-                  title: '最后，请设置默认联系方式',
-                  icon:'none',
-                  success: function () {
-                    wx.redirectTo({
-                      url: '../defAddrEdit/defAddrEdit?path=certif'
-                    })
-                  }
-                })  
-              } else {
-                wx.showModal({
-                  title: '认证失败',
-                  content: '请认真核对信息',
-                  showCancel: false,
-                  confirmText: '返回',
-                  confirmColor: '#faaf42',
-                })
-                //设置新的验证码地址
-                that.setData({
-                  verifCodePath: res.data.imgUrl + '?v=' + Math.random()
-                })
-              }
-            } else {
-
-            }
-            // setTimeout(function() {
-            //     wx.navigateBack({})
-            // }, 1000);
-          },
-          fail: function () {
-          },
-          complete: function () { }
-        })
-      }
-      
-    },
-    changeCode:function(){
-      var that=this
-      send_data = {
-        'gId': app.globalData.user_ID
-      }
-      wx.request({
-        url: urlModel.url.getCertifCode,
-        method: 'POST',
-        data: send_data,
-        success: function (res) {
-          console.log(res)
-          if (res.data.img_url) {
-            that.setData({
-              verifCodePath: res.data.img_url+'?v='+Math.random()
+        if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
+            wx.showModal({
+                title: '信息不全',
+                content: '请填写完整信息',
+                showCancel: false,
+                confirmText: '返回',
+                confirmColor: '#faaf42',
             })
-          }
+        } else {
+            wx.showLoading({
+                title: '认证中',
+                mask: true
+            })
+            var that = this
+            console.log(e.detail.value)
+            wx.request({
+                url: urlModel.url.postCertifMes, //填充认证url
+                method: 'POST',
+                data: {
+                    'zjh': e.detail.value.schoolNumb,
+                    'mm': e.detail.value.password,
+                    'yzm': e.detail.value.verifiedCode,
+                    'gId': app.globalData.user_ID,
+                },
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                success: function(res) {
+                    console.log(res)
+                    wx.hideLoading()
+                    if (res.statusCode == 200) {
+
+                        if (res.data.status == 1) {
+
+                            //设置姓名、学号、status
+                            app.globalData.ourUserStatus = 0
+                            app.globalData.userName = res.data.name
+                            app.globalData.schoolNumb = res.data.schoolNum
+                            app.globalData.ourUserStatus = res.data.user_status
+                            wx.showToast({
+                                title: '认证成功',
+                                icon: 'success',
+                                // duration: 1500,
+                                success: function() {}
+                            })
+                            setTimeout(function() {}, 1000)
+                            wx.showToast({
+                                title: '最后，请设置默认联系方式',
+                                icon: 'none',
+                                duration:4000,
+                                success: function() {
+                                }
+                            })
+                          setTimeout(function () {
+                            wx.redirectTo({
+                              url: '../defAddrEdit/defAddrEdit?path=certif'
+                            })}, 4000)
+                          
+                        } else {
+                            wx.showModal({
+                                    title: '认证失败',
+                                    content: '请认真核对信息',
+                                    showCancel: false,
+                                    confirmText: '返回',
+                                    confirmColor: '#faaf42',
+                                })
+                                //设置新的验证码地址
+                            that.setData({
+                                verifCodePath: res.data.imgUrl + '?v=' + Math.random()
+                            })
+                        }
+                    } else {
+
+                    }
+                    // setTimeout(function() {
+                    //     wx.navigateBack({})
+                    // }, 1000);
+                },
+                fail: function() {},
+                complete: function() {}
+            })
         }
-      })
+
+    },
+    changeCode: function() {
+        var that = this
+        send_data = {
+            'gId': app.globalData.user_ID
+        }
+        wx.request({
+            url: urlModel.url.getCertifCode,
+            method: 'POST',
+            data: send_data,
+            success: function(res) {
+                console.log(res)
+                if (res.data.img_url) {
+                    that.setData({
+                        verifCodePath: res.data.img_url + '?v=' + Math.random()
+                    })
+                }
+            }
+        })
     }
 })

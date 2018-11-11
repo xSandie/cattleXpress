@@ -199,6 +199,7 @@ Page({
             // var that = this
         wx.showLoading({
             title: '刷新中',
+            mask:true
         })
         wx.request({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
@@ -253,6 +254,7 @@ Page({
                     wx.hideLoading()
                     wx.showToast({
                         title: '刷新成功',
+                        duration:2000
                     })
                 } else {
                     wx.hideLoading()

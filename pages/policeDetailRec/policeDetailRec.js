@@ -10,7 +10,7 @@ Page({
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",
-      LName: "向同学",
+        LName: "向同学",
         reportTime: "",
         lastDep: '若对方举报信息不实，请申诉',
 
@@ -36,47 +36,46 @@ Page({
         img3: null,
         imgUp: [],
 
-      orderID: null,
-      policeID: null//本条举报记录的id
+        orderID: null,
+        policeID: null //本条举报记录的id
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-      var that=this
-      that.setData({
-        policeID: options.detailID
-      })
-      wx.request({//获取举报订单详情
-        url: urlModel.url.reportDetail,
-        method: 'GET',
-        data: {
-          'policeID': options.detailID,
-          'getterID': app.globalData.user_ID
-        },
-        success: function (res) {
-          if (res.statusCode == 200) {
-            //reportProcess 卡住显示的内容 设置全部内容 
-            that.setData({
-              reportProcess: res.data.Status,
-              reportRe1: res.data.reason1 ? res.data.reason1 : null,
-              report1: res.data.img1 ? res.data.img1 : null,
-              complainRe1: res.data.complain1 ? res.data.complain1 : null,
-              complain1: res.data.img2 ? res.data.img2 : null,
-              reportRe2: res.data.reason2 ? res.data.reason2 : null,
-              report2: res.data.img3 ? res.data.img3 : null,
-              complainRe2: res.data.complain2 ? res.data.complain2 : null,
-              complain2: res.data.img4 ? res.data.img4 : null,
-              orderID: res.data.orderID,
-              LName: res.data.LName,
-              reportTime: res.data.pubTime
-            })
-          }
-        },
-        fail: function () {
-        }
-      })
+        var that = this
+        that.setData({
+            policeID: options.detailID
+        })
+        wx.request({ //获取举报订单详情
+            url: urlModel.url.reportDetail,
+            method: 'GET',
+            data: {
+                'policeID': options.detailID,
+                'getterID': app.globalData.user_ID
+            },
+            success: function(res) {
+                if (res.statusCode == 200) {
+                    //reportProcess 卡住显示的内容 设置全部内容 
+                    that.setData({
+                        reportProcess: res.data.Status,
+                        reportRe1: res.data.reason1 ? res.data.reason1 : null,
+                        report1: res.data.img1 ? res.data.img1 : null,
+                        complainRe1: res.data.complain1 ? res.data.complain1 : null,
+                        complain1: res.data.img2 ? res.data.img2 : null,
+                        reportRe2: res.data.reason2 ? res.data.reason2 : null,
+                        report2: res.data.img3 ? res.data.img3 : null,
+                        complainRe2: res.data.complain2 ? res.data.complain2 : null,
+                        complain2: res.data.img4 ? res.data.img4 : null,
+                        orderID: res.data.orderID,
+                        LName: res.data.LName,
+                        reportTime: res.data.pubTime
+                    })
+                }
+            },
+            fail: function() {}
+        })
     },
 
     /**
@@ -111,54 +110,54 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-      var that = this
-      wx.showLoading({
-        title: '刷新中',
-      })
-      wx.request({//获取举报订单详情
-        url: urlModel.url.reportDetail,
-        method: 'GET',
-        data: {
-          'policeID': that.data.policeID,
-          'getterID': app.globalData.user_ID
-        },
-        success: function (res) {
-          if (res.statusCode == 200) {
-            //reportProcess 卡住显示的内容 设置全部内容 
-            that.setData({
-              reportProcess: res.data.Status,
-              reportRe1: res.data.reason1 ? res.data.reason1 : null,
-              report1: res.data.img1 ? res.data.img1 : null,
-              complainRe1: res.data.complain1 ? res.data.complain1 : null,
-              complain1: res.data.img2 ? res.data.img2 : null,
-              reportRe2: res.data.reason2 ? res.data.reason2 : null,
-              report2: res.data.img3 ? res.data.img3 : null,
-              complainRe2: res.data.complain2 ? res.data.complain2 : null,
-              complain2: res.data.img4 ? res.data.img4 : null,
-              orderID: res.data.orderID,
-              LName: res.data.LName,
-              reportTime: res.data.pubTime
-            })
-            wx.hideLoading()
-            wx.showToast({
-              title: '刷新成功',
-            })
-          } else {
-            wx.hideLoading()
-            wx.showToast({
-              title: '刷新失败，请重试',
-              icon: 'none'
-            })
-          }
-        },
-        fail: function () {
-          wx.hideLoading()
-          wx.showToast({
-            title: '刷新失败，请重试',
-            icon: 'none'
-          })
-        }
-      })
+        var that = this
+        wx.showLoading({
+            title: '刷新中',
+        })
+        wx.request({ //获取举报订单详情
+            url: urlModel.url.reportDetail,
+            method: 'GET',
+            data: {
+                'policeID': that.data.policeID,
+                'getterID': app.globalData.user_ID
+            },
+            success: function(res) {
+                if (res.statusCode == 200) {
+                    //reportProcess 卡住显示的内容 设置全部内容 
+                    that.setData({
+                        reportProcess: res.data.Status,
+                        reportRe1: res.data.reason1 ? res.data.reason1 : null,
+                        report1: res.data.img1 ? res.data.img1 : null,
+                        complainRe1: res.data.complain1 ? res.data.complain1 : null,
+                        complain1: res.data.img2 ? res.data.img2 : null,
+                        reportRe2: res.data.reason2 ? res.data.reason2 : null,
+                        report2: res.data.img3 ? res.data.img3 : null,
+                        complainRe2: res.data.complain2 ? res.data.complain2 : null,
+                        complain2: res.data.img4 ? res.data.img4 : null,
+                        orderID: res.data.orderID,
+                        LName: res.data.LName,
+                        reportTime: res.data.pubTime
+                    })
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新成功',
+                    })
+                } else {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新失败，请重试',
+                        icon: 'none'
+                    })
+                }
+            },
+            fail: function() {
+                wx.hideLoading()
+                wx.showToast({
+                    title: '刷新失败，请重试',
+                    icon: 'none'
+                })
+            }
+        })
     },
 
     /**
@@ -178,46 +177,60 @@ Page({
      * 表单提交
      */
     report: function(e) {
+        var that = this
         console.log(e)
-        //申诉
-      wx.uploadFile({
-        url: urlModel.url.complainReport,
-        filePath: that.data.imgUp,
-        name: 'police_img',
-        header: {
-          "Content-Type": "multipart/form-data",
-          'accept': 'application/json',
-          //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
-        },
-        formData: {
-          gId: app.globalData.user_ID,  //其他额外的formdata，userId
-          reason: e.detail.value.reportRe1,
-          reportID: that.data.policeID,
-          // pubTime: that.data.reportTime
-        },
-        success: function (res) {
-          console.log(res)
-          if (res.statusCode == 200) {
-            if (res.data.msg == 'ok') {
-              wx.showToast({
-                title: '举报成功',
-              })
-              //调用刷新
-              that.onPullDownRefresh()
-            } else {
-              wx.showToast({
-                title: '举报失败请重试',
-                icon: 'none'
-              })
-            }    
-          } else {
-            wx.showToast({
-              title: '上传失败请重试',
-              icon: 'none'
+            //申诉
+      if (e.detail.value.reportRe1 == '' || that.data.imgUp.length==0) {
+            wx.showModal({
+              title: '提示',
+              content: '请上传一张照片，并说明申诉原因',
+              showCancel:false,
+              confirmText:'好的',
+              confirmColor:'#faaf42'
             })
-          }
+            return
+
         }
-      })
+        wx.showLoading({
+            title: '申诉中',
+            mask: true
+        })
+        wx.uploadFile({
+            url: urlModel.url.complainReport,
+            filePath: that.data.imgUp[0],
+            name: 'police_img',
+            header: {
+                "Content-Type": "multipart/form-data",
+                'accept': 'application/json',
+                //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+            },
+            formData: {
+                gId: app.globalData.user_ID, //其他额外的formdata，userId
+                reason: e.detail.value.reportRe1,
+                reportID: that.data.policeID,
+                // pubTime: that.data.reportTime
+            },
+            success: function(res) {
+                console.log(res)
+                wx.hideLoading()
+                if (res.statusCode == 200) {
+                    wx.showToast({
+                            title: '申诉成功',
+                        })
+                        //调用刷新
+                  setTimeout(that.onPullDownRefresh(),1500)
+                    
+                } else {
+                    wx.showToast({
+                        title: '上传失败请重试',
+                        icon: 'none'
+                    })
+                }
+            },
+            fail: function() {
+                wx.hideLoading()
+            }
+        })
     },
     previewIMG: function(e) {
         var src = e.currentTarget.dataset.src
@@ -246,5 +259,10 @@ Page({
                 })
             }
         })
-    }
+    },
+  toDetail:function(){
+    wx.switchTab({
+      url: '../orders/orders',
+    })
+  }
 })

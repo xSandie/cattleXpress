@@ -201,6 +201,17 @@ Page({
         console.log("发起举报")
         console.log(e)
         var that = this
+      if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
+        wx.showModal({
+          title: '提示',
+          content: '请上传一张照片，并说明举报原因',
+          showCancel: false,
+          confirmText: '好的',
+          confirmColor: '#faaf42'
+        })
+        return
+
+      }
         if (that.data.reportProcess) {
             //再次举报
             wx.uploadFile({
@@ -222,11 +233,11 @@ Page({
                 success: function(res) {
                     console.log(res)
                     if (res.statusCode == 200) {
-                            wx.showToast({
-                                    title: '再次举报成功',
-                                })
-                                //调用刷新
-                            that.onPullDownRefresh()
+                        wx.showToast({
+                                title: '再次举报成功',
+                            })
+                            //调用刷新
+                        that.onPullDownRefresh()
                     } else {
                         wx.showToast({
                             title: '举报失败请重试',
@@ -239,7 +250,7 @@ Page({
             //初次举报
             wx.uploadFile({
                 url: urlModel.url.policePub,
-                filePath: that.data.imgUp[0],
+              filePath: that.data.imgUp[0] ? that.data.imgUp[0]:'',
                 name: 'police_img',
                 header: {
                     "Content-Type": "multipart/form-data",
@@ -255,12 +266,19 @@ Page({
                 success: function(res) {
                     console.log(res)
                     if (res.statusCode == 200) {
-                            wx.showToast({
-                                    title: '举报成功',
-                                })
-                                //调用刷新
-                            that.onPullDownRefresh()
-                        
+                        wx.showToast({
+                                title: '举报成功',
+                            })
+                            //调用刷新
+                        setTimeout(function() {}, 1000)
+                        wx.showToast({
+                                title: '请至 我的>举报/申诉进度 查看',
+                                icon: 'none'
+                            })
+                        wx.switchTab({
+                          url: '../my/my',
+                        })
+                            // that.onPullDownRefresh()
                     } else {
                         wx.showToast({
                             title: '举报失败请重试',
@@ -278,29 +296,32 @@ Page({
                 title: '确定撤销？',
                 content: '撤销后仍可重新发起新的举报',
                 confirmText: '我想好了',
-                confirmColor: '#faaf42'
+                confirmColor: '#faaf42',
+                success:function(res){
+                  if(res.confirm){
+                    wx.request({
+                      url: urlModel.url.cancelPolice,
+                      method: 'POST',
+                      data: {
+                        'gId': app.globalData.user_ID,
+                        'policeID': that.data.policeID
+                      },
+                      success: function (res) {
+                        if (res.statusCode == 200 && res.data.msg == 'ok') {
+                          wx.showToast({
+                            title: '撤销成功',
+                            icon: 'none',
+                          })
+                          that.onPullDownRefresh()
+                        }
+                      }
+
+                    })
+                  }
+                }
             })
             //发起撤销请求，上传撤销用户id，后端查询是否有权力撤销
-        wx.request({
-            url: urlModel.url.cancelPolice,
-            method: 'POST',
-            data: {
-                gId: app.globalData.user_ID, //其他额外的formdata，userId
-                // reason: e.detail.value.reportRe1,
-                policeID: that.data.policeID,
-                // orderID: that.data.orderID
-            },
-            success: function(res) {
-                if (res.statusCode == 200 && res.data.msg == 'ok') {
-                    wx.showToast({
-                        title: '撤销成功',
-                        icon: 'none',
-                    })
-                    that.onPullDownRefresh()
-                }
-            }
-
-        })
+        
 
     },
     previewIMG: function(e) {

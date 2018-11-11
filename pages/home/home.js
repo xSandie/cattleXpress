@@ -219,6 +219,16 @@ Page({
                 ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
             ]
         })
+        if (app.globalData.sys_status == 0) {
+            return
+        } else if (app.globalData.sys_status == 1) {
+            //有通知
+            that.setData({
+                tongzhi: true,
+                tongzhiContent: app.globalData.msg_con,
+                tongzhiSum: app.globalData.msg_title
+            })
+        }
     },
 
     /**
@@ -239,6 +249,10 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+      wx.showLoading({
+        title: '刷新中',
+        mask:true
+      })
         console.log("refresh")
         this.setData({
             fabuOrDingbu: true,
@@ -277,11 +291,17 @@ Page({
                     that.setData({
                         listCount: res.data
                     })
+                    wx.hideLoading()
                     wx.showToast({
                         title: '刷新成功',
                     })
                 },
-                fail: function() {},
+                fail: function() {wx.hideLoading()
+                wx.showToast({
+                  title: '刷新失败，请稍后重试',
+                  icon:'none'
+                })
+                },
                 complete: function() {}
             })
         } else {
@@ -303,11 +323,13 @@ Page({
                 // },
                 success: function(res) {
                     //console.log(res)
+                    wx.hideLoading()
                     that.setData({
                         listCount: res.data
                     })
                 },
                 fail: function() {
+                  wx.hideLoading()
                     wx.showModal({
                         title: '提示',
                         content: '网络不太畅通，请稍后再试噢',
@@ -429,9 +451,10 @@ Page({
         }
     },
     toTongzhi: function() {
+      var that=this
         wx.showModal({
             title: '公告',
-            content: this.data.tongzhiContent,
+            content: that.data.tongzhiContent,
             showCancel: false,
             confirmText: '知道啦',
             confirmColor: '#faaf42',
@@ -476,22 +499,22 @@ Page({
         }
     },
     toSumDetail: function(event) {
-      if (app.globalData.ourUserStatus == 1) {
-        wx.showModal({
-          title: '状态异常',
-          content: '请前往我的>举报\申诉进度查看',
-          confirmColor: '#faaf42',
-          showCancel: false,
-          success: function (res) {
-            if (res.confirm) {
-              // console.log('用户点击确定')
-              wx.switchTab({
-                url: '../my/my'
-              })
-            }
-          }
-        })
-      }else
+        if (app.globalData.ourUserStatus == 1) {
+            wx.showModal({
+                title: '状态异常',
+                content: '请前往我的>举报\申诉进度查看',
+                confirmColor: '#faaf42',
+                showCancel: false,
+                success: function(res) {
+                    if (res.confirm) {
+                        // console.log('用户点击确定')
+                        wx.switchTab({
+                            url: '../my/my'
+                        })
+                    }
+                }
+            })
+        } else
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
                 title: '提示',

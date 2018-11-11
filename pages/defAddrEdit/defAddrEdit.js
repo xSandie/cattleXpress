@@ -53,7 +53,7 @@ Page({
       if (options.path=='certif'){
         wx.showModal({
           title: '注意',
-          content: '接单人 和 发布人\r\n都将使用 联系电话 与您联系\r\n请准确填写常用号码！',
+          content: '请确保 联系电话 正确',
           showCancel:false,
           confirmText:'好的',
           confirmColor:'#faaf42',

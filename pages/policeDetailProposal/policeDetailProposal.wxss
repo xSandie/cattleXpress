@@ -30,7 +30,7 @@
 
 .people {
     height: 100%;
-    width: 260rpx;
+    width: 400rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

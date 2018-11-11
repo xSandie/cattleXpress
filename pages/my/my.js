@@ -66,6 +66,7 @@ Page({
                   })
                   app.globalData.havesetPayCode = res.data.havePayCode
                   app.globalData.ourUserStatus = res.data.userStatus
+                  if (res.data.userStatus != 4) { app.globalData.certif = true }
                   app.globalData.balance = res.data.balance
                 }
                 
