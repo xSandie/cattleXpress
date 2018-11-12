@@ -23,32 +23,30 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
-    },
+    onLoad: function(options) {},
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function() {
-    },
+    onReady: function() {},
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
         this.setData({
-          balance: app.globalData.balance
+            balance: app.globalData.balance
         })
-        if(!app.globalData.havesetPayCode){
-          wx.showToast({
-            title: '设置完 收款二维码 才能接单噢！',
-            icon:'none',
-            duration:2000
-          })
+        if (!app.globalData.havesetPayCode) {
+            wx.showToast({
+                title: '设置完 收款二维码 才能接单噢！',
+                icon: 'none',
+                duration: 2000
+            })
         }
         var that = this
         wx.request({
-          url: urlModel.url.usrinfo, //用户余额信用获取
+            url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
                 'userID': app.globalData.user_ID,
@@ -58,18 +56,18 @@ Page({
             // },
             success: function(res) {
                 console.log(res)
-                if(res.statusCode==200){
-                  that.setData({
-                    balance: res.data.balance, //修改参数
-                    creditScr: res.data.credit,
-                    level: res.data.level
-                  })
-                  app.globalData.havesetPayCode = res.data.havePayCode
-                  app.globalData.ourUserStatus = res.data.userStatus
-                  if (res.data.userStatus != 4) { app.globalData.certif = true }
-                  app.globalData.balance = res.data.balance
+                if (res.statusCode == 200) {
+                    that.setData({
+                        balance: res.data.balance, //修改参数
+                        creditScr: res.data.credit,
+                        level: res.data.level
+                    })
+                    app.globalData.havesetPayCode = res.data.havePayCode
+                    app.globalData.ourUserStatus = res.data.userStatus
+                    if (res.data.userStatus != 4) { app.globalData.certif = true }
+                    app.globalData.balance = res.data.balance
                 }
-                
+
             },
             fail: function() {},
             complete: function() {}
@@ -103,45 +101,45 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-      var that = this
-      wx.showLoading({
-        title: '刷新中',
-      })
-      wx.request({
-        url: urlModel.url.usrinfo, //用户余额信用获取
-        method: 'GET',
-        data: {
-          'userID': app.globalData.user_ID,
-        },
-        // header: {
-        //     "Content-Type": "applciation/json"
-        // },
-        success: function (res) {
-          console.log(res)
-          wx.hideLoading()
-          if(res.statusCode==200){
-            app.globalData.havesetPayCode = res.data.havePayCode
-            that.setData({
-              balance: res.data.balance, //修改参数
-              creditScr: res.data.credit,
-              level: res.data.level
-            })
-            app.globalData.balance = res.data.balance   
-            wx.showToast({
-              title: '刷新成功',
-            })
-          }
-          
-        },
-        fail: function () { 
-          wx.hideLoading()
-          wx.showToast({
-            title: '刷新失败，请重试',
-            icon:'none'
-          })
-        },
-        complete: function () { }
-      })
+        var that = this
+        wx.showLoading({
+            title: '刷新中',
+        })
+        wx.request({
+            url: urlModel.url.usrinfo, //用户余额信用获取
+            method: 'GET',
+            data: {
+                'userID': app.globalData.user_ID,
+            },
+            // header: {
+            //     "Content-Type": "applciation/json"
+            // },
+            success: function(res) {
+                console.log(res)
+                wx.hideLoading()
+                if (res.statusCode == 200) {
+                    app.globalData.havesetPayCode = res.data.havePayCode
+                    that.setData({
+                        balance: res.data.balance, //修改参数
+                        creditScr: res.data.credit,
+                        level: res.data.level
+                    })
+                    app.globalData.balance = res.data.balance
+                    wx.showToast({
+                        title: '刷新成功',
+                    })
+                }
+
+            },
+            fail: function() {
+                wx.hideLoading()
+                wx.showToast({
+                    title: '刷新失败，请重试',
+                    icon: 'none'
+                })
+            },
+            complete: function() {}
+        })
     },
 
     /**
@@ -165,22 +163,21 @@ Page({
     },
     toPoList: function() {
         // console.log("toPoList被点击了");
-        if(app.globalData.ourUserStatus!=4){
-          wx.navigateTo({
-            url: '../policeList/policeList',
-          })
-        }else{
-          wx.showToast({
-            title: '请先通过校园认证',
-            icon:'none',
-            success:function(){
-              wx.navigateTo({
-                url: '../certifPage/certifPage',
-              })
-            }
-          })
+        if (app.globalData.ourUserStatus != 4) {
+            wx.navigateTo({
+                url: '../policeList/policeList',
+            })
+        } else {
+            wx.showToast({
+                    title: '请先通过校园认证',
+                    icon: 'none',
+                    success: function() {}
+                })
+                wx.redirectTo({
+                    url: '../certifPage/certifPage',
+                })
         }
-        
+
     },
     supportUs: function(e) {
         wx.showModal({
@@ -200,21 +197,21 @@ Page({
             confirmColor: '#faaf42'
         })
     },
-  myCode:function(){
-    if (app.globalData.ourUserStatus != 4) {
-      wx.navigateTo({
-        url: '../myCode/myCode',
-      })
-    } else {
-      wx.showToast({
-        title: '请先通过校园认证',
-        icon: 'none',
-        complete: function () {
-          wx.navigateTo({
-            url: '../certifPage/certifPage',
-          })
+    myCode: function() {
+        if (app.globalData.ourUserStatus != 4) {
+            wx.navigateTo({
+                url: '../myCode/myCode',
+            })
+        } else {
+            wx.showToast({
+                title: '请先通过校园认证',
+                icon: 'none',
+                complete: function() {
+                    wx.redirectTo({
+                        url: '../certifPage/certifPage',
+                    })
+                }
+            })
         }
-      })
     }
-  }
 })

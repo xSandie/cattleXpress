@@ -180,15 +180,15 @@ Page({
                             wx.showToast({
                                 title: '最后，请设置默认联系方式',
                                 icon: 'none',
-                                duration:4000,
-                                success: function() {
-                                }
+                                duration: 4000,
+                                success: function() {}
                             })
-                          setTimeout(function () {
-                            wx.redirectTo({
-                              url: '../defAddrEdit/defAddrEdit?path=certif'
-                            })}, 4000)
-                          
+                            setTimeout(function() {
+                                wx.redirectTo({
+                                    url: '../defAddrEdit/defAddrEdit?path=certif'
+                                })
+                            }, 4000)
+
                         } else {
                             wx.showModal({
                                     title: '认证失败',
@@ -233,5 +233,10 @@ Page({
                 }
             }
         })
+    },
+    backHome: function() {
+      wx.switchTab({
+        url: '../home/home',
+      })
     }
 })

@@ -81,7 +81,7 @@
                         <view class="Ti">
                             <text>取货码</text>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" value="{{fetchCode}}" name="fetchCode" placeholder="{{fetchCode}}" class="fetchCode"/>
+                        <input maxlength='15' type="text" placeholder-class="placeHolder" value="{{fetchCode}}" name="fetchCode" placeholder="{{fetchCode}}" class="fetchCode"/>
                     </view>
                     <view class="sexLimitA">
                         <view class="Ti">
@@ -96,7 +96,7 @@
                     <view class="Ti">支付赏金·天气不好时记得多加点小费噢</view>
                     <view class="reInA" >
                         <view>
-                            <input type="number" name="rewardIn" placeholder-class="placeHolder" placeholder="{{reward}}" class="reIn" />
+                            <input maxlength='2' type="number" name="rewardIn" placeholder-class="placeHolder" placeholder="{{reward}}" class="reIn" />
                         </view>
                         <view class="yuan">
                             <text>元</text>

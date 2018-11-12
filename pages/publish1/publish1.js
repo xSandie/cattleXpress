@@ -31,7 +31,7 @@ Page({
         expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
         exlocfirstIndex: 0,
         exlocSecondIndex: 0,
-        sendLoc: '',//'宿舍区' + '·' + '周园', //默认
+        sendLoc: '', //'宿舍区' + '·' + '周园', //默认
         sdlocArray: [
             [],
             []
@@ -61,6 +61,20 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function() {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function() {
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
                 title: '请认证',
@@ -77,19 +91,6 @@ Page({
                 }
             })
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
         if (app.globalData.ourUserStatus == 1) {
             wx.showModal({
                 title: '状态异常',
@@ -106,26 +107,26 @@ Page({
                 }
             })
         }
-        var send_data={
-          'gId':app.globalData.user_ID
+        var send_data = {
+            'gId': app.globalData.user_ID
         }
         var that = this
         wx.request({
-          url: urlModel.url.getAddr,
-          data:send_data,
-          success:function(res){
-            if(res.data.default){
-              app.globalData.default=res.data.default
+            url: urlModel.url.getAddr,
+            data: send_data,
+            success: function(res) {
+                if (res.data.default) {
+                    app.globalData.default = res.data.default
+                }
+            },
+            complete: function() { //无论成功还是失败都会执行
+                that.setData({
+                    default: app.globalData.default,
+                    sendLoc: app.globalData.default.sendLoc
+                })
             }
-          },
-          complete:function(){//无论成功还是失败都会执行
-            that.setData({
-              default: app.globalData.default,
-              sendLoc: app.globalData.default.sendLoc
-            })
-          }
         })
-          
+
         this.setData({
                 exlocArray: app.globalData.exlocArray,
                 column2_0: app.globalData.column2_0,
@@ -135,12 +136,12 @@ Page({
                 dateRange: app.globalData.dateRange
             }) //执行完才提交
         this.setData({
-            sdlocArray: [
-                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-            ],
-            
-        })
-        // var that = this
+                sdlocArray: [
+                    ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+                ],
+
+            })
+            // var that = this
 
         //缓存信息设为默认
         // wx.getStorage({
@@ -304,43 +305,43 @@ Page({
             e.detail.value.phoneRear = this.data.default.phoneRear;
         }
 
-      if (this.check_default(e.detail.value)){
-        wx.showToast({
-          title: '输入有误，请检查',
-          icon:'none'
-        })
-      }else{//非默认值，可以进入下一个
-      //可以上传默认地址
-        if (e.detail.value.setDef==true){
-          var detail = e.detail.value
-          var send_data = {
-            'userID': app.globalData.user_ID,
-            'sdLocSum': detail.DeRecLocSel,
-            'sdLocDetail': detail.DeRecLocIn,
-            'contactNum': detail.conPhoneNum,
-            'fetchName': detail.recName,
-            'phoneRare': detail.phoneRear
-          }
-          wx.request({
-            url: urlModel.url.postAddr,
-            method: 'POST',
-            data: send_data,
-            success: function (res) {
-              console.log(res)
-              
+        if (this.check_default(e.detail.value)) {
+            wx.showToast({
+                title: '输入有误，请检查',
+                icon: 'none'
+            })
+        } else { //非默认值，可以进入下一个
+            //可以上传默认地址
+            if (e.detail.value.setDef == true) {
+                var detail = e.detail.value
+                var send_data = {
+                    'userID': app.globalData.user_ID,
+                    'sdLocSum': detail.DeRecLocSel,
+                    'sdLocDetail': detail.DeRecLocIn,
+                    'contactNum': detail.conPhoneNum,
+                    'fetchName': detail.recName,
+                    'phoneRare': detail.phoneRear
+                }
+                wx.request({
+                    url: urlModel.url.postAddr,
+                    method: 'POST',
+                    data: send_data,
+                    success: function(res) {
+                        console.log(res)
+
+                    }
+                })
             }
-          })
+            wx.setStorage({
+                key: 'FORM1',
+                data: e.detail.value,
+            })
+            wx.navigateTo({
+                url: '../publish2/publish2',
+            })
         }
-        wx.setStorage({
-          key: 'FORM1',
-          data: e.detail.value,
-        })
-        wx.navigateTo({
-          url: '../publish2/publish2',
-        })
-      }
         // console.log('form发生了submit事件，携带数据为：', e.detail.value)
-        
+
     },
     setDef: function() {
         var setDefault = this.data.setDef;
@@ -362,25 +363,25 @@ Page({
             }
         })
     },
-    check_default:function(data_tocheck){
-      for (var Key in data_tocheck) {
-          if (Key == 'conPhoneNum') {
-            // console.log(Key)
-            if (data_tocheck[Key] == '点击输入电话号码') { return true }
-          } else if (Key == 'DeRecLocIn') {
-            // console.log(Key)
-            if (data_tocheck[Key] == '填写地点') { return true }
-          } else if (Key == 'recName') {
-            // console.log(Key)
-            if (data_tocheck[Key] == '填写姓名') { return true }
-          } else if (Key == 'phoneRear') {
-            // console.log(Key)
-            if (data_tocheck[Key] =='四位数字'){return true}
-          } else if (Key == 'DeRecLocSel') {
-            // console.log(Key)
-            if (data_tocheck[Key] == '选择地点') { return true }
-          }
-      }
-      return false
+    check_default: function(data_tocheck) {
+        for (var Key in data_tocheck) {
+            if (Key == 'conPhoneNum') {
+                // console.log(Key)
+                if (data_tocheck[Key] == '点击输入电话号码') { return true }
+            } else if (Key == 'DeRecLocIn') {
+                // console.log(Key)
+                if (data_tocheck[Key] == '填写地点') { return true }
+            } else if (Key == 'recName') {
+                // console.log(Key)
+                if (data_tocheck[Key] == '填写姓名') { return true }
+            } else if (Key == 'phoneRear') {
+                // console.log(Key)
+                if (data_tocheck[Key] == '四位数字') { return true }
+            } else if (Key == 'DeRecLocSel') {
+                // console.log(Key)
+                if (data_tocheck[Key] == '选择地点') { return true }
+            }
+        }
+        return false
     }
 })

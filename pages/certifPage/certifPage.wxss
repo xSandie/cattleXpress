@@ -208,7 +208,7 @@ button::after {
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-content:flex-start;
+    align-content: flex-start;
     box-sizing: border-box;
 }
 
@@ -226,9 +226,25 @@ button::after {
     background: #DADEE2;
 }
 
-.inArea{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
+.inArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.backHome {
+    text-align: center;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #f9a93e;
+    width: 670rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100rpx;
+}
+
+.backHomeHover {
+    color: #af782c;
 }

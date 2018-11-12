@@ -52,4 +52,7 @@
             </view>
         </view>
     </form>
+    <view class='backHome' bindtap='backHome' hover-class='backHomeHover'>
+        返回首页
+    </view>
 </view>

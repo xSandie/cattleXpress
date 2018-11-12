@@ -203,7 +203,19 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {
+    onLoad: function(options) {},
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function() {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function() {
         var that = this
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
@@ -221,35 +233,15 @@ Page({
                 }
             })
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-      if (app.globalData.ourUserStatus == 1) {
-        wx.showModal({
-          title: '状态异常',
-          content: '请前往我的>举报\申诉进度查看',
-          confirmColor: '#faaf42',
-          showCancel: false,
-          success: function (res) {
-            // if (res.confirm) {
-            //   // console.log('用户点击确定')
-            //   wx.switchTab({
-            //     url: '../my/my'
-            //   })
-            // }
-          }
-        })
-      }
+        if (app.globalData.ourUserStatus == 1) {
+            wx.showModal({
+                title: '状态异常',
+                content: '请前往我的>举报\申诉进度查看',
+                confirmColor: '#faaf42',
+                showCancel: false,
+                success: function(res) {}
+            })
+        }
         var that = this
             //判定是否为空的函数
         wx.request({
@@ -333,17 +325,19 @@ Page({
                         ongoRecListCount: res.data.ongoRecListCount,
                         ongoPubListCount: res.data.ongoPubListCount
                     })
-                  wx.hideLoading()
-                  wx.showToast({
-                    title: '刷新成功',
-                    duration:2000
-                  })
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新成功',
+                        duration: 2000
+                    })
                 },
-          fail: function () { wx.hideLoading()
-            wx.showToast({
-              title: '刷新失败，请稍后重试',
-              icon: 'none'
-            })},
+                fail: function() {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新失败，请稍后重试',
+                        icon: 'none'
+                    })
+                },
                 complete: function() {
                     if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
                         that.setData({
@@ -354,7 +348,7 @@ Page({
                             blank: false
                         })
                     }
-                    
+
                 }
             })
             //考虑加入刷新已完成订单请求,没必要本来变动就不大
@@ -368,14 +362,14 @@ Page({
      */
     onReachBottom: function() {
         var that = this
-        
-            //请求已完成订单。判断currentTab在哪边
+
+        //请求已完成订单。判断currentTab在哪边
         if (that.data.currentTab == 1) {
             //请求已完成订单
-          wx.showLoading({
-            title: '加载中',
-            mask: true
-          })
+            wx.showLoading({
+                title: '加载中',
+                mask: true
+            })
             that.setData({
                 nextPage: that.data.nextPage + 1
             })

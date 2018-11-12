@@ -243,107 +243,108 @@ Page({
         e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex];
         // console.log(e.detail.value)
-        var event = e.detail.value//已经组装成可以发布了的对象了
-        //加入判空逻辑
-      if (this.check_none(event)){
-        //有空的
-        wx.showToast({
-          title: '信息有空，请补全',
-          icon:'none'
-        })
-      }else{
-        //可发布
-        var that = this
-        // console.log(app.globalData.user_ID)
-        if (event.setDef==true){
-          //上传默认地址
-          var send_data = {
-            'userID': app.globalData.user_ID,
-            'sdLocSum': event.DeRecLocSel,
-            'sdLocDetail': event.DeRecLocIn,
-            'contactNum': event.conPhoneNum,
-            'fetchName': event.recName,
-            'phoneRare': event.phoneRear
-          }
-          //发起post请求
-          wx.request({
-            url: urlModel.url.postAddr,
-            method: 'POST',
-            data: send_data,
-            success: function (res) {
-              console.log(res)
-            }
-          })
-        }
-        wx.request({
-          url: urlModel.url.pubOrder, //填充发布订单url
-          method: 'POST',
-          data: {
-            userID: app.globalData.user_ID,
-            schoolID: app.globalData.schoolID,
-            //订单具体信息
-            contactNum: event.conPhoneNum,
-            sendArea: event.DeRecLocSel,
-            sendLoc: event.DeRecLocIn,
-            recName: event.recName,
-            phoneRear: event.phoneRear,
-            setDefault: event.setDef,
-            fetchCode: event.fetchCode,
-            expressLoc: event.selExCon,
-            deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
-            sexLimit: event.sexLimit,
-            reward: event.rewardIn,
-            weightEsti: event.weightInfo,
-            sizeEsti: event.sizeInfo,
-            worried: event.worInfo,
-            depict: event.otherInfo,
-          },
-          // header: {
-          //   "Content-Type": "application/x-www-form-urlencoded"
-          // },
-          success: function (res) {
-            //console.log(res)
-            if (res.statusCode == 200) {
-              //console.log("表单提交成功")
-              if(res.data.msg='ok'){
-                
-                wx.showToast({
-                  title: '发布成功',
-                  icon: 'success',
-                  duration: 1000
+        var event = e.detail.value //已经组装成可以发布了的对象了
+            //加入判空逻辑
+        if (this.check_none(event)) {
+            //有空的
+            wx.showToast({
+                title: '信息有空，请补全',
+                icon: 'none'
+            })
+            return
+        } else {
+            //可发布
+            var that = this
+                // console.log(app.globalData.user_ID)
+            if (event.setDef == true) {
+                //上传默认地址
+                var send_data = {
+                        'userID': app.globalData.user_ID,
+                        'sdLocSum': event.DeRecLocSel,
+                        'sdLocDetail': event.DeRecLocIn,
+                        'contactNum': event.conPhoneNum,
+                        'fetchName': event.recName,
+                        'phoneRare': event.phoneRear
+                    }
+                    //发起post请求
+                wx.request({
+                    url: urlModel.url.postAddr,
+                    method: 'POST',
+                    data: send_data,
+                    success: function(res) {
+                        console.log(res)
+                    }
                 })
-                setTimeout(function () {
-                  wx.switchTab({
-                    url: '../orders/orders',
-                  })
-                }, 1000);
-              }     
-            } else {
-              wx.showModal({
-                title: '提示',
-                content: '出了点小问题，请稍后再试噢',
-                showCancel: false,
-                confirmText: '返回',
-                confirmColor: '#faaf42',
-              })
             }
-          },
-          fail: function () {
-            // wx.showToast({
-            //     title: '发布成功',
-            //     icon: 'success',
-            //     duration: 1000
-            // })
-            // setTimeout(function() {
-            //     wx.switchTab({
-            //         url: '../orders/orders',
-            //     })
-            // }, 1000);
-          },
-          complete: function () { }
-        })
-      }
-        
+            wx.request({
+                url: urlModel.url.pubOrder, //填充发布订单url
+                method: 'POST',
+                data: {
+                    userID: app.globalData.user_ID,
+                    schoolID: app.globalData.schoolID,
+                    //订单具体信息
+                    contactNum: event.conPhoneNum,
+                    sendArea: event.DeRecLocSel,
+                    sendLoc: event.DeRecLocIn,
+                    recName: event.recName,
+                    phoneRear: event.phoneRear,
+                    setDefault: event.setDef,
+                    fetchCode: event.fetchCode,
+                    expressLoc: event.selExCon,
+                    deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
+                    sexLimit: event.sexLimit,
+                    reward: event.rewardIn,
+                    weightEsti: event.weightInfo,
+                    sizeEsti: event.sizeInfo,
+                    worried: event.worInfo,
+                    depict: event.otherInfo,
+                },
+                // header: {
+                //   "Content-Type": "application/x-www-form-urlencoded"
+                // },
+                success: function(res) {
+                    //console.log(res)
+                    if (res.statusCode == 200) {
+                        //console.log("表单提交成功")
+                        if (res.data.msg = 'ok') {
+
+                            wx.showToast({
+                                title: '发布成功',
+                                icon: 'success',
+                                duration: 1000
+                            })
+                            setTimeout(function() {
+                                wx.switchTab({
+                                    url: '../orders/orders',
+                                })
+                            }, 1000);
+                        }
+                    } else {
+                        wx.showModal({
+                            title: '提示',
+                            content: '出了点小问题，请稍后再试噢',
+                            showCancel: false,
+                            confirmText: '返回',
+                            confirmColor: '#faaf42',
+                        })
+                    }
+                },
+                fail: function() {
+                    // wx.showToast({
+                    //     title: '发布成功',
+                    //     icon: 'success',
+                    //     duration: 1000
+                    // })
+                    // setTimeout(function() {
+                    //     wx.switchTab({
+                    //         url: '../orders/orders',
+                    //     })
+                    // }, 1000);
+                },
+                complete: function() {}
+            })
+        }
+
     },
     worcheck: function() {
         var worchecked1 = !this.data.worchecked;
@@ -514,15 +515,15 @@ Page({
             }
         })
     },
-    check_none:function(data_tocheck){
-      console.log(data_tocheck)
-      for (var Key in data_tocheck) {
-        if (data_tocheck[Key] == '') {//有空的返回true
-          if (Key != 'setDef' && Key != 'otherInfo' && Key !='worInfo'){
-            return true
-          }
+    check_none: function(data_tocheck) {
+        console.log(data_tocheck)
+        for (var Key in data_tocheck) {
+            if (data_tocheck[Key] == '') { //有空的返回true
+                if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {
+                    return true
+                }
+            }
         }
-      }
-      return false
+        return false
     }
 })

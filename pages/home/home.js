@@ -249,10 +249,10 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-      wx.showLoading({
-        title: '刷新中',
-        mask:true
-      })
+        wx.showLoading({
+            title: '刷新中',
+            mask: true
+        })
         console.log("refresh")
         this.setData({
             fabuOrDingbu: true,
@@ -296,11 +296,12 @@ Page({
                         title: '刷新成功',
                     })
                 },
-                fail: function() {wx.hideLoading()
-                wx.showToast({
-                  title: '刷新失败，请稍后重试',
-                  icon:'none'
-                })
+                fail: function() {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新失败，请稍后重试',
+                        icon: 'none'
+                    })
                 },
                 complete: function() {}
             })
@@ -329,7 +330,7 @@ Page({
                     })
                 },
                 fail: function() {
-                  wx.hideLoading()
+                    wx.hideLoading()
                     wx.showModal({
                         title: '提示',
                         content: '网络不太畅通，请稍后再试噢',
@@ -451,7 +452,7 @@ Page({
         }
     },
     toTongzhi: function() {
-      var that=this
+        var that = this
         wx.showModal({
             title: '公告',
             content: that.data.tongzhiContent,
@@ -490,8 +491,8 @@ Page({
                 success: function(res) {
                     if (res.confirm) {
                         //console.log('用户点击确定')
-                        wx.navigateTo({
-                            url: '../certifPage/certifPage',
+                        wx.redirectTo({
+                          url: '../certifPage/certifPage',
                         })
                     }
                 }
