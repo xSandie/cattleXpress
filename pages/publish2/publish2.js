@@ -156,102 +156,105 @@ Page({
             fail: function() {}, //接口调用失败的回调函数  
             complete: function() {} //接口调用结束的回调函数  
         })
-        if (that.data.checking == true) {
-            wx.hideLoading()
-            wx.navigateTo({
-                url: '../finPub/finPub',
-            })
-        } else {
-            wx.getStorage({
-                key: 'FORM1',
-                success: function(res) {
-                    //获取完存储的缓存后发送 发布订单请求 和 设置默认地址请求
-                    var uploadlist = Object.assign({}, res.data, e.detail.value)
-                    console.log(uploadlist)
-                    var event = uploadlist
-                        // that.setData({
-                        //     uploadList: uploadlist
-                        // })
-                        // console.log(event.DeRecLocSel)
-                        //event已经是完整可上传的对象
-                        //加入判空逻辑
-                    if (that.check_none(event)) {
-                        //有空的
-                        wx.hideLoading()
-                        wx.showToast({
-                            title: '信息有空，请补全',
-                            icon: 'none'
-                        })
-                        return
-                    } else {
-                        console.log(event)
-                        wx.request({
-                            url: urlModel.url.pubOrder, //填充发布订单url
-                            method: 'POST',
-                            data: {
-                                userID: app.globalData.user_ID,
-                                schoolID: app.globalData.schoolID,
-                                //订单具体信息
-                                contactNum: event.conPhoneNum,
-                                sendArea: event.DeRecLocSel,
-                                sendLoc: event.DeRecLocIn,
-                                recName: event.recName,
-                                phoneRear: event.phoneRear,
-                                setDefault: event.setDef,
-                                fetchCode: event.fetchCode,
-                                expressLoc: event.selExCon,
-                                deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
-                                sexLimit: event.sexLimit,
-                                reward: event.rewardIn,
-                                weightEsti: event.weightInfo,
-                                sizeEsti: event.sizeInfo,
-                                worried: event.worInfo,
-                                depict: event.otherInfo,
-                            },
-                            // header: {
-                            //     "Content-Type": "application/x-www-form-urlencoded"
-                            // },
-                            success: function(res) {
-                                if (res.statusCode == 200) {
-                                    wx.hideLoading()
-                                        //console.log("表单提交成功")
-                                    wx.showToast({
-                                        title: '发布成功',
-                                        icon: 'success',
-                                        duration: 2000
-                                    })
-                                    that.setData({
-                                        checking: false
-                                    })
-                                    setTimeout(function() {
-                                        wx.switchTab({
-                                            url: '../orders/orders',
+        setTimeout(function() {
+            if (that.data.checking == true) {
+                wx.hideLoading()
+                wx.navigateTo({
+                    url: '../finPub/finPub',
+                })
+            } else {
+                wx.getStorage({
+                    key: 'FORM1',
+                    success: function(res) {
+                        //获取完存储的缓存后发送 发布订单请求 和 设置默认地址请求
+                        var uploadlist = Object.assign({}, res.data, e.detail.value)
+                        console.log(uploadlist)
+                        var event = uploadlist
+                            // that.setData({
+                            //     uploadList: uploadlist
+                            // })
+                            // console.log(event.DeRecLocSel)
+                            //event已经是完整可上传的对象
+                            //加入判空逻辑
+                        if (that.check_none(event)) {
+                            //有空的
+                            wx.hideLoading()
+                            wx.showToast({
+                                title: '信息有空，请补全',
+                                icon: 'none'
+                            })
+                            return
+                        } else {
+                            console.log(event)
+                            wx.request({
+                                url: urlModel.url.pubOrder, //填充发布订单url
+                                method: 'POST',
+                                data: {
+                                    userID: app.globalData.user_ID,
+                                    schoolID: app.globalData.schoolID,
+                                    //订单具体信息
+                                    contactNum: event.conPhoneNum,
+                                    sendArea: event.DeRecLocSel,
+                                    sendLoc: event.DeRecLocIn,
+                                    recName: event.recName,
+                                    phoneRear: event.phoneRear,
+                                    setDefault: event.setDef,
+                                    fetchCode: event.fetchCode,
+                                    expressLoc: event.selExCon,
+                                    deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
+                                    sexLimit: event.sexLimit,
+                                    reward: event.rewardIn,
+                                    weightEsti: event.weightInfo,
+                                    sizeEsti: event.sizeInfo,
+                                    worried: event.worInfo,
+                                    depict: event.otherInfo,
+                                },
+                                // header: {
+                                //     "Content-Type": "application/x-www-form-urlencoded"
+                                // },
+                                success: function(res) {
+                                    if (res.statusCode == 200) {
+                                        wx.hideLoading()
+                                            //console.log("表单提交成功")
+                                        wx.showToast({
+                                            title: '发布成功',
+                                            icon: 'success',
+                                            duration: 2000
                                         })
-                                    }, 2000)
+                                        that.setData({
+                                            checking: false
+                                        })
+                                        setTimeout(function() {
+                                            wx.switchTab({
+                                                url: '../orders/orders',
+                                            })
+                                        }, 2000)
 
-                                }
-                            },
-                            fail: function() {
-                                wx.hideLoading()
-                                wx.showModal({
-                                        title: '提示',
-                                        content: '网络不太畅通，请稍后再试噢',
-                                        showCancel: false,
-                                        confirmText: '返回',
-                                        confirmColor: '#faaf42',
-                                    })
-                                    //console.log(app.globalData.userInfo)
-                            },
-                            complete: function() {}
-                        })
-                    }
+                                    }
+                                },
+                                fail: function() {
+                                    wx.hideLoading()
+                                    wx.showModal({
+                                            title: '提示',
+                                            content: '网络不太畅通，请稍后再试噢',
+                                            showCancel: false,
+                                            confirmText: '返回',
+                                            confirmColor: '#faaf42',
+                                        })
+                                        //console.log(app.globalData.userInfo)
+                                },
+                                complete: function() {}
+                            })
+                        }
 
 
-                },
-                fail: function(res) {},
-                complete: function(res) {},
-            })
-        }
+                    },
+                    fail: function(res) {},
+                    complete: function(res) {},
+                })
+            }
+        }, 2000)
+
 
     },
     sexLimitChange: function(e) {

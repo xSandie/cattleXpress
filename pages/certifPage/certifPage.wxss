@@ -235,7 +235,7 @@ button::after {
 
 .backHome {
     text-align: center;
-    font-size: 32rpx;
+    font-size: 28rpx;
     font-weight: bold;
     color: #f9a93e;
     width: 670rpx;
