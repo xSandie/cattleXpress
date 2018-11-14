@@ -201,3 +201,7 @@ form {
     background: rgb(240, 240, 245);
     border-radius: 16rpx;
 }
+.pullIcon {
+    height: 24rpx;
+    width: 24rpx;
+}

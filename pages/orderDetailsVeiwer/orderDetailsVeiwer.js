@@ -40,51 +40,51 @@ Page({
 
         var that = this
         wx.request({
-          url: urlModel.url.toOrderSum, //填充请求浏览者订单详情url
+            url: urlModel.url.toOrderSum, //填充请求浏览者订单详情url
             method: 'GET',
             data: {
                 'orderID': options.id,
-                'userID': app.globalData.user_ID,//为以后埋点做准备
-                'schoolID':app.globalData.schoolID
+                'userID': app.globalData.user_ID, //为以后埋点做准备
+                'schoolID': app.globalData.schoolID
             },
             // header: {
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
                 // console.log(res)
-                if(res.data.can_get==true){
-                  that.setData({
-                    //设置页面参数
-                    exLogo: res.data.exLogo,
-                    exLocTime: res.data.exLocTime,
-                    exInstance: res.data.exInstance,
-                    expressID: res.data.expressID,
-                    //以上是快递站点信息
-                    orderId: res.data.orderId,
-                    sdInstance: res.data.sdInstance,
-                    exWorry: res.data.exWorry,
-                    exWeight: res.data.exWeight,
-                    exSize: res.data.exSize,
-                    exExTime: res.data.exExTime,
-                    reward: res.data.reward,
-                    // schNum: res.data.schNum,
-                    LName: res.data.LName,
-                    pubtime: res.data.pubtime,
-                    phoneNum: res.data.phoneNum,
-                    dText: res.data.dText
-                  })
-                }else{
-                  wx.showToast({
-                    title: '抱歉，订单已经被抢啦~',
-                    icon:'none',
-                    success:function(){
-                      wx.switchTab({
-                        url: '../home/home',
-                      })
-                    }
-                  })  
+                if (res.data.can_get == true) {
+                    that.setData({
+                        //设置页面参数
+                        exLogo: res.data.exLogo,
+                        exLocTime: res.data.exLocTime,
+                        exInstance: res.data.exInstance,
+                        expressID: res.data.expressID,
+                        //以上是快递站点信息
+                        orderId: res.data.orderId,
+                        sdInstance: res.data.sdInstance,
+                        exWorry: res.data.exWorry,
+                        exWeight: res.data.exWeight,
+                        exSize: res.data.exSize,
+                        exExTime: res.data.exExTime,
+                        reward: res.data.reward,
+                        // schNum: res.data.schNum,
+                        LName: res.data.LName,
+                        pubtime: res.data.pubtime,
+                        phoneNum: res.data.phoneNum,
+                        dText: res.data.dText
+                    })
+                } else {
+                    wx.showToast({
+                        title: '抱歉，订单已经被抢啦~',
+                        icon: 'none',
+                        success: function() {
+                            wx.switchTab({
+                                url: '../home/home',
+                            })
+                        }
+                    })
                 }
-                
+
             },
             fail: function() {},
             complete: function() {}
@@ -145,23 +145,22 @@ Page({
      * 接单按钮按下
      */
     recOrder: function(event) {
-      if (!app.globalData.havesetPayCode){
-        //未设置paycode
-        wx.showModal({
-          title: '设置收款二维码',
-          content: '暂不可接单，请前往设置收款二维码',
-          confirmColor: '#faaf42',
-          confirmText:'去设置',
-          success:function(res){
-            if(res.confirm){
-              wx.navigateTo({
-                url: '../myCode/myCode',
-              })
-            }
-          }
-        })
-      }
-        else if (app.globalData.certif == true) {
+        if (!app.globalData.havesetPayCode) {
+            //未设置paycode
+            wx.showModal({
+                title: '设置收款二维码',
+                content: '暂不可接单，请前往设置收款二维码',
+                confirmColor: '#faaf42',
+                confirmText: '去设置',
+                success: function(res) {
+                    if (res.confirm) {
+                        wx.navigateTo({
+                            url: '../myCode/myCode',
+                        })
+                    }
+                }
+            })
+        } else if (app.globalData.certif == true) {
             var orderId = event.currentTarget.dataset.orderId;
             wx.showModal({
                 title: '确认接单',
@@ -182,43 +181,40 @@ Page({
                             success: function(res) {
                                 // console.log(event)
                                 // console.log(orderId)                       
-                                if(res.data.can_get==true){
-                                  wx.redirectTo({
-                                    url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
-                                  })
-                                } else if (res.data.without_addr){
-                                  wx.showModal({
-                                    title: '补全资料',
-                                    content: '缺少默认联系电话',
-                                    cancelText:'下次再说',
-                                    confirmText:'去填写',
-                                    confirmColor:'#f9a93e',
-                                    success:function(res){
-                                      if(res.confirm){
-                                        wx.navigateTo({
-                                          url: '../defAddrEdit/defAddrEdit?path=certif'
-                                        })
-                                      }
-                                    }
-                                  })
-                                  wx.navigateTo({
-                                    url: '',
-                                  })
-                                }else{
-                                  wx.showModal({
-                                    title: '来晚一步',
-                                    content: '抱歉，订单已经被抢啦~',
-                                    showCancel: false,
-                                    confirmColor: '#f9a93e',
-                                    confirmText: '返回',
-                                    success: function () {
-                                      wx.switchTab({
-                                        url: '../home/home',
-                                      })
-                                    }
-                                  })  
+                                if (res.data.can_get == true) {
+                                    wx.redirectTo({
+                                        url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
+                                    })
+                                } else if (res.data.without_addr) {
+                                    wx.showModal({
+                                        title: '补全资料',
+                                        content: '缺少默认联系电话',
+                                        cancelText: '下次再说',
+                                        confirmText: '去填写',
+                                        confirmColor: '#f9a93e',
+                                        success: function(res) {
+                                            if (res.confirm) {
+                                                wx.navigateTo({
+                                                    url: '../defAddrEdit/defAddrEdit?path=certif'
+                                                })
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    wx.showModal({
+                                        title: '来晚一步',
+                                        content: '抱歉，订单已经被抢啦~',
+                                        showCancel: false,
+                                        confirmColor: '#f9a93e',
+                                        confirmText: '返回',
+                                        success: function() {
+                                            wx.switchTab({
+                                                url: '../home/home',
+                                            })
+                                        }
+                                    })
                                 }
-                               
+
                             },
                         })
                     } else if (res.cancel) {

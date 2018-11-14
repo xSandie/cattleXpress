@@ -166,7 +166,6 @@ Page({
                         if (res.data.status == 1) {
 
                             //设置姓名、学号、status
-                            app.globalData.ourUserStatus = 0
                             app.globalData.userName = res.data.name
                             app.globalData.schoolNumb = res.data.schoolNum
                             app.globalData.ourUserStatus = res.data.user_status
@@ -235,8 +234,8 @@ Page({
         })
     },
     backHome: function() {
-      wx.switchTab({
-        url: '../home/home',
-      })
+        wx.switchTab({
+            url: '../home/home',
+        })
     }
 })

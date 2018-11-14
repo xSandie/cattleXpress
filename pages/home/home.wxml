@@ -84,7 +84,7 @@
                     </view>
                 </view>
             </view>
-            <view class='rbutton'>
+            <view data-order-id="{{item.id}}" bindtap="toSumDetail" class='rbutton'>
                 <view class='rbText'><text>详情</text></view>
 
                 <!-- 可能需要先相对定位一下然后使用button-->
