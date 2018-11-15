@@ -26,7 +26,9 @@ var url = new Object({
     haveList: 'https://www.inschool.tech/v1/orders/haveList', //获取已完成订单列表
     notHaveList: 'https://www.inschool.tech/v1/orders/notHaveList', //获取未完成订单列表
     toPayGet: 'https://www.inschool.tech/v1/pay/get', //获取对方支付二维码接口
-    cancelPolice: 'https://www.inschool.tech/v1/police/cancel' //撤销举报接口
+    cancelPolice: 'https://www.inschool.tech/v1/police/cancel', //撤销举报接口
+    changeSchool: 'https://www.inschool.tech/v1/school/change', //选择学校
+    searchSchool: 'https://www.inschool.tech/v1/school/search' //搜索学校
 })
 
 exports.url = url;

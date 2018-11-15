@@ -29,7 +29,7 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.exWorry === 'true' }}">
+                                <view class='exTagWor' wx:if="{{item.exWorry}}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
@@ -51,7 +51,7 @@
                     </view>
                     <view class='rbuttonA'>
                             <view wx:if="{{item.exState==0}}" class='waitAffirm'><text>待对方确认</text></view>
-                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==5}}" class='abor'><text>异常</text></view>
                     </view>
             </view> 
         </view>
@@ -80,7 +80,7 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.exWorry === 'true' }}">
+                                <view class='exTagWor' wx:if="{{item.exWorry}}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
@@ -163,7 +163,8 @@
                     </view>
                     <view class='rbuttonAfin'>
                             <view wx:if="{{item.exState==3}}" class='finOrd'><text>已完成</text></view>  
-                            <view wx:if="{{item.exState==4}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==6}}" class='abor'><text>异常</text></view>
+                            <view wx:if="{{item.exState==4}}" class='finOrd'><text>已过期</text></view>
                     </view>
             </view> 
         </view>
@@ -192,7 +193,7 @@
                                 </view>
                                 <view class='sdInstance'>
                                     <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                    <view class='exTagWor' wx:if="{{item.exWorry==='true'}}">
+                                    <view class='exTagWor' wx:if="{{item.exWorry}}">
                                         <view class='tagText'><text>加急</text></view> 
                                     </view>
                                 </view>

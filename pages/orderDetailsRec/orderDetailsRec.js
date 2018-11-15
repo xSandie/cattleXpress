@@ -60,7 +60,7 @@ Page({
                 },
                 success: function(res) {
                     console.log(res)
-                    if (!res.data.reward) {
+                    if (!res.data.orderId) {
                         wx.showToast({
                             title: '订单被别人抢啦',
                             icon: 'none',
@@ -190,7 +190,7 @@ Page({
         var that = this
         wx.showLoading({
             title: '刷新中',
-            mask:true
+            mask: true
         })
         wx.request({
             url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
@@ -233,7 +233,7 @@ Page({
                     wx.hideLoading()
                     wx.showToast({
                         title: '刷新完成',
-                        duration:2000
+                        duration: 2000
                     })
                 } else {
                     wx.hideLoading()
@@ -327,7 +327,7 @@ Page({
         var that = this
         wx.showModal({
             title: '确认送达？',
-          content: '确认后，请关注到账通知',
+            content: '确认后，请关注到账通知',
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {

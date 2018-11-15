@@ -170,10 +170,6 @@ Page({
                         var uploadlist = Object.assign({}, res.data, e.detail.value)
                         console.log(uploadlist)
                         var event = uploadlist
-                            // that.setData({
-                            //     uploadList: uploadlist
-                            // })
-                            // console.log(event.DeRecLocSel)
                             //event已经是完整可上传的对象
                             //加入判空逻辑
                         if (that.check_none(event)) {
@@ -209,45 +205,45 @@ Page({
                                     worried: event.worInfo,
                                     depict: event.otherInfo,
                                 },
-                                // header: {
-                                //     "Content-Type": "application/x-www-form-urlencoded"
-                                // },
                                 success: function(res) {
+                                    wx.hideLoading()
                                     if (res.statusCode == 200) {
-                                        wx.hideLoading()
-                                            //console.log("表单提交成功")
-                                        wx.showToast({
-                                            title: '发布成功',
-                                            icon: 'success',
-                                            duration: 2000
-                                        })
-                                        that.setData({
-                                            checking: false
-                                        })
-                                        setTimeout(function() {
-                                            wx.switchTab({
-                                                url: '../orders/orders',
+                                        if (res.data.msg == 'ok') {
+                                            wx.showToast({
+                                                title: '发布成功',
+                                                icon: 'success',
+                                                duration: 2000
                                             })
-                                        }, 2000)
-
+                                            that.setData({
+                                                checking: false
+                                            })
+                                            setTimeout(function() {
+                                                wx.switchTab({
+                                                    url: '../orders/orders',
+                                                })
+                                            }, 2000)
+                                        } else if (res.data.no_more_zero) {
+                                            wx.showToast({
+                                                title: '每个用户只能发布一次0元订单噢!',
+                                                icon: 'none',
+                                                duration: 3000
+                                            })
+                                        }
                                     }
                                 },
                                 fail: function() {
                                     wx.hideLoading()
                                     wx.showModal({
-                                            title: '提示',
-                                            content: '网络不太畅通，请稍后再试噢',
-                                            showCancel: false,
-                                            confirmText: '返回',
-                                            confirmColor: '#faaf42',
-                                        })
-                                        //console.log(app.globalData.userInfo)
+                                        title: '提示',
+                                        content: '网络不太畅通，请稍后再试噢',
+                                        showCancel: false,
+                                        confirmText: '返回',
+                                        confirmColor: '#faaf42',
+                                    })
                                 },
                                 complete: function() {}
                             })
                         }
-
-
                     },
                     fail: function(res) {},
                     complete: function(res) {},

@@ -254,8 +254,11 @@ Page({
             return
         } else {
             //可发布
+            wx.showLoading({
+                title: '发布中',
+                mask: true
+            })
             var that = this
-                // console.log(app.globalData.user_ID)
             if (event.setDef == true) {
                 //上传默认地址
                 var send_data = {
@@ -304,6 +307,7 @@ Page({
                 // },
                 success: function(res) {
                     //console.log(res)
+                    wx.hideLoading()
                     if (res.statusCode == 200) {
                         //console.log("表单提交成功")
                         if (res.data.msg = 'ok') {
@@ -318,6 +322,12 @@ Page({
                                     url: '../orders/orders',
                                 })
                             }, 1000);
+                        } else if (res.data.no_more_zero) {
+                            wx.showToast({
+                                title: '每个用户只能发布一次0元订单噢!',
+                                icon: 'none',
+                                duration: 3000
+                            })
                         }
                     } else {
                         wx.showModal({
@@ -330,16 +340,17 @@ Page({
                     }
                 },
                 fail: function() {
-                    // wx.showToast({
-                    //     title: '发布成功',
-                    //     icon: 'success',
-                    //     duration: 1000
-                    // })
-                    // setTimeout(function() {
-                    //     wx.switchTab({
-                    //         url: '../orders/orders',
-                    //     })
-                    // }, 1000);
+                    wx.hideLoading()
+                        // wx.showToast({
+                        //     title: '发布成功',
+                        //     icon: 'success',
+                        //     duration: 1000
+                        // })
+                        // setTimeout(function() {
+                        //     wx.switchTab({
+                        //         url: '../orders/orders',
+                        //     })
+                        // }, 1000);
                 },
                 complete: function() {}
             })
