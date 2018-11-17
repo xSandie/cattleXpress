@@ -45,7 +45,7 @@
                                 </view>
                             </view>
                             <view class='exSum'>
-                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前取货</text></view>
+                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前送达</text></view>
                             </view>
                         </view>
                     </view>

@@ -306,8 +306,9 @@ Page({
                 //   "Content-Type": "application/x-www-form-urlencoded"
                 // },
                 success: function(res) {
-                    //console.log(res)
+                    console.log(res)
                     wx.hideLoading()
+
                     if (res.statusCode == 200) {
                         //console.log("表单提交成功")
                         if (res.data.msg = 'ok') {
@@ -322,7 +323,7 @@ Page({
                                     url: '../orders/orders',
                                 })
                             }, 1000);
-                        } else if (res.data.no_more_zero) {
+                        } else if (res.data.no_more_zero == true) {
                             wx.showToast({
                                 title: '每个用户只能发布一次0元订单噢!',
                                 icon: 'none',

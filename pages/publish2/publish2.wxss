@@ -32,6 +32,8 @@ button:after {
 
 .container {
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .mainForm {
@@ -76,10 +78,12 @@ button {
     box-shadow: 0rpx 6rpx 10rpx #eef1fd;
     position: relative;
     top: -26rpx;
+    display: flex;
+    flex-direction: column;
 }
 
 .sum {
-    height: 76rpx;
+    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -88,24 +92,50 @@ button {
 
 .loc {
     width: 100%;
-    height: 36rpx;
+    height: auto;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 32rpx;
+    font-size: 28rpx;
     color: #faaf42;
 }
 
 .tline {
     height: 1rpx;
     background: linear-gradient(90deg, #f9a93e, #fed25c);
-    width: 100rpx;
+    width: 1rpx;
+    margin-right: 4rpx;
+    margin-left: 4rpx;
+    flex-grow: 2;
+}
+
+.exloc {
+    /* width: 280rpx; */
+    /* flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.sdloc {
+    /* margin-top: 8rpx; */
+    /* text-align: right; */
+    /* width: 280rpx; */
+    /* flex-wrap: wrap; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center;
+    align-items: center; */
 }
 
 .conA {
+    margin-top: 8rpx;
     color: #999ba1;
     font-size: 24rpx;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: center;

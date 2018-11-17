@@ -46,7 +46,7 @@ Page({
         column2_3: [],
 
 
-        time: '17:00',
+        time: '22:00',
         dateSel: '', //页面加载时将会获取并设置
         dateIndex: 0,
 

@@ -185,6 +185,7 @@ Page({
                             wx.request({
                                 url: urlModel.url.pubOrder, //填充发布订单url
                                 method: 'POST',
+                                // header: { "Content-Type": "application/x-www-form-urlencoded" },
                                 data: {
                                     userID: app.globalData.user_ID,
                                     schoolID: app.globalData.schoolID,
@@ -222,7 +223,7 @@ Page({
                                                     url: '../orders/orders',
                                                 })
                                             }, 2000)
-                                        } else if (res.data.no_more_zero) {
+                                        } else if (res.data.no_more_zero == true) {
                                             wx.showToast({
                                                 title: '每个用户只能发布一次0元订单噢!',
                                                 icon: 'none',

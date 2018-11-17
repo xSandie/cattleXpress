@@ -180,7 +180,8 @@ Page({
                             },
                             success: function(res) {
                                 // console.log(event)
-                                // console.log(orderId)                    
+                                // console.log(orderId)
+
                                 if (res.data.can_get == true) {
                                     wx.redirectTo({
                                         url: "../orderDetailsRec/orderDetailsRec?id=" + orderId

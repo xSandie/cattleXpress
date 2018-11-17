@@ -117,6 +117,7 @@ Page({
                                 wx.request({
                                     url: urlModel.url.postAvatar,
                                     method: 'POST',
+                                    // header: { "Content-Type": "application/x-www-form-urlencoded" },
                                     data: send_data,
                                     success: function(res) {
                                         console.log("---上传头像--")
@@ -143,7 +144,9 @@ Page({
         app.getUser().then(function(res) {
             that.setData({
                 requestTime: 1,
+                atEnd: false
             })
+
             console.log(res)
             that.setData({
                     exlocArray: app.globalData.exlocArray,
@@ -192,6 +195,7 @@ Page({
                 fail: function() {},
                 complete: function() {}
             })
+
         })
         setTimeout(that.setAvatar, 6000)
 
@@ -220,7 +224,11 @@ Page({
             ]
         })
         if (app.globalData.sys_status == 0) {
-            return
+            that.setData({
+                tongzhi: false,
+                // tongzhiContent: app.globalData.msg_con,
+                // tongzhiSum: app.globalData.msg_title
+            })
         } else if (app.globalData.sys_status == 1) {
             //有通知
             that.setData({
@@ -229,6 +237,7 @@ Page({
                 tongzhiSum: app.globalData.msg_title
             })
         }
+
     },
 
     /**
@@ -492,7 +501,7 @@ Page({
                     if (res.confirm) {
                         //console.log('用户点击确定')
                         wx.redirectTo({
-                          url: '../certifPage/certifPage',
+                            url: '../certifPage/certifPage',
                         })
                     }
                 }

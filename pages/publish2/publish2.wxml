@@ -6,16 +6,13 @@
        <image class="publishIMG2" src="{{publishIMG}}"></image>
 </view>
 <view class="container">
-     <view class='FakeCard'>
-    </view>
-    <form class='mainForm' bindsubmit="secOrdSubmit">
-        <view class='floatCard'>
+     <view class='floatCard'>
             <view class="sum">
                 <view class="loc">
-                    <view class="exloc">{{exCon}}</view>
+                    <view class="exloc"><text>{{exCon}}</text></view> 
                     <view class="tline">
                     </view>
-                    <view class="sdloc">{{sdLoc}}</view>
+                    <view class="sdloc"><text>{{sdLoc}}</text></view>
                 </view>
                 <view class="conA">
                         <view class="exName">{{recName}}</view>
@@ -23,7 +20,9 @@
                         <view class="phoneRear">{{phoneRear}}</view>
                     </view>
             </view>
-        </view> 
+    </view> 
+    <form class='mainForm' bindsubmit="secOrdSubmit">
+        
        <view class="formMain">
             <view class="deInfo">
                 <view class="secInfo">

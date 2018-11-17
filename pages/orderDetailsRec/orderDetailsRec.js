@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        exLogo: '../../images/STOLOGO.png',
+        exLogo: '',
         exLocTime: '',
         exInstance: '',
         fxIcon: '../../images/fixBtnIcon.png',
