@@ -390,7 +390,7 @@ Page({
                     } else {
                         that.setData({
                             finRecListCount: that.data.finRecListCount.concat(res.data.finRecListCount),
-                            finPubListCount: that.data.finRecListCount.concat(res.data.finPubListCount) //修改参数
+                          finPubListCount: that.data.finPubListCount.concat(res.data.finPubListCount) //修改参数
                         })
                     } //修改参数
                 },

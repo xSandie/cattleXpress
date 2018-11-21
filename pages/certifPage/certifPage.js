@@ -14,6 +14,7 @@ Page({
         row1: false,
         row2: false,
         row3: false,
+        loginHint: '账号为 4开头 的8位数噢'
     },
 
     /**
@@ -53,7 +54,15 @@ Page({
                     console.log(res)
                     if (res.data.img_url) {
                         that.setData({
-                            verifCodePath: res.data.img_url + '?v=' + Math.random()
+                                verifCodePath: res.data.img_url + '?v=' + Math.random()
+                            })
+                            //todo 后期完善动态更改提示的功能
+                        wx.showToast({
+                            title: that.data.loginHint,
+                            icon: 'none',
+                            duration: 4000,
+                            // mask: true,
+                            success: function() {}
                         })
                     }
                 }
@@ -164,8 +173,8 @@ Page({
                     if (res.statusCode == 200) {
 
                         if (res.data.status == 1) {
-
-                            //设置姓名、学号、status
+                            console.log(res)
+                                //设置姓名、学号、status
                             app.globalData.userName = res.data.name
                             app.globalData.schoolNumb = res.data.schoolNum
                             app.globalData.ourUserStatus = res.data.user_status

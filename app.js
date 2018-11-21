@@ -7,6 +7,10 @@ App({
     getUser: function() {
         var app = this
         return new Promise(function(resolve, reject) {
+            wx.showLoading({
+                title: '加载中',
+                mask: true
+            })
             wx.login({
                 success: function(res) {
                     if (res.code) {
@@ -71,10 +75,28 @@ App({
                                     app.globalData.user_ID = res.data.gId
                                     app.globalData.ourUserStatus = res.data.user_status
                                     if (res.data.user_status == 4) { app.globalData.certif = false } else { app.globalData.certif = true }
+                                    wx.hideLoading()
+                                } else {
+                                    wx.hideLoading()
+                                    wx.showToast({
+                                        title: '网络不太畅通，请检查网络，再关闭微信重试',
+                                        icon: 'none',
+                                        duration: 10000,
+                                        mask: true,
+                                        success: function() {}
+                                    })
                                 }
                                 resolve(res);
                             },
                             fail: function() {
+                                wx.hideLoading()
+                                wx.showToast({
+                                    title: '网络不太畅通，请检查网络，再关闭微信重试',
+                                    icon: 'none',
+                                    duration: 10000,
+                                    mask: true,
+                                    success: function() {}
+                                })
                                 reject('error');
                                 //app.globalData.userInfo = "dfjkadhfkahfauhf"
                             }
