@@ -11,13 +11,13 @@
     </view>
     <form bindsubmit="certif" class="certifForm">
         <view class="studentOrTeacher">
-            <view class="{{studentOrTeacher?'studentsel':'unselectedStu'}}" bindtap="selStudent">
+            <view class="{{studentOrMaster?'studentsel':'unselectedStu'}}" bindtap="selStudent">
                 <text>本科生</text>
             </view>
-            <view class="{{studentOrTeacher?'unselectedTeach':'teachersel'}}" bindtap="selTeacher">
-                <text>教职工</text>
+            <view class="{{studentOrMaster?'unselectedTeach':'teachersel'}}" bindtap="selMaster">
+                <text>研究生</text>
             </view>
-            <switch checked="{{studentOrTeacher}}" hidden name="studentOrTeacher"/>
+            <switch checked="{{studentOrMaster}}" hidden/>
             <!--true为学生，false为老师-->
         </view>
         <view hover-class="answerHover" class="selectSchool" bindtap="schoolInput">

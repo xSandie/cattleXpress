@@ -1,6 +1,6 @@
 // pages/pay/pay.js
 const urlModel = require('../../utils/urlSet.js')
-app = getApp()
+var app = getApp()
 Page({
 
     /**
@@ -121,7 +121,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     showLarge: function() {
         var that = this
@@ -131,45 +135,45 @@ Page({
     },
     saveCode: function() {
         // 接口调用询问  
-        var that=this
+        var that = this
         wx.authorize({
             scope: 'scope.writePhotosAlbum',
             success() {
                 console.log("2-授权《保存图片》权限成功");
                 // util.downloadImage(downloadUrl);
-              wx.downloadFile({
-                url: that.data.PayCode,
-                success: function (res) {
-                  console.log(res)
-                  wx.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success: function (res) {
-                      console.log(res)
-                      wx.showToast({
-                        title: '保存成功',
-                        icon: 'success',
-                        duration: 2000
-                      })
+                wx.downloadFile({
+                    url: that.data.PayCode,
+                    success: function(res) {
+                        console.log(res)
+                        wx.saveImageToPhotosAlbum({
+                            filePath: res.tempFilePath,
+                            success: function(res) {
+                                console.log(res)
+                                wx.showToast({
+                                    title: '保存成功',
+                                    icon: 'success',
+                                    duration: 2000
+                                })
+                            },
+                            fail: function(res) {
+                                console.log(res)
+                                console.log('fail')
+                            }
+                        })
                     },
-                    fail: function (res) {
-                      console.log(res)
-                      console.log('fail')
+                    fail: function() {
+                        console.log('fail')
                     }
-                  })
-                },
-                fail: function () {
-                  console.log('fail')
-                }
-              })
+                })
             },
             fail() {
                 // 用户拒绝了授权  
                 console.log("2-授权《保存图片》权限失败");
                 // 打开设置页面 
                 wx.showToast({
-                  title: '请再次点击，并授权',
-                  icon:'none'
-                }) 
+                    title: '请再次点击，并授权',
+                    icon: 'none'
+                })
             }
         })
     }

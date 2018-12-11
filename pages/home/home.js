@@ -109,7 +109,7 @@ Page({
                     wx.getUserInfo({
                         success: function(res) {
                                 console.log(res)
-                                send_data = {
+                                let send_data = {
                                     'user_nickname': res.userInfo.nickName,
                                     'user_avatarurl': res.userInfo.avatarUrl,
                                     'gId': app.globalData.user_ID
@@ -487,7 +487,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     ifCertif: function() {
         if (app.globalData.ourUserStatus == 4) {

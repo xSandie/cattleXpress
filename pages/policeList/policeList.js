@@ -1,5 +1,5 @@
 const urlModel = require('../../utils/urlSet.js')
-app = getApp()
+var app = getApp()
 Page({
 
     /**
@@ -69,11 +69,11 @@ Page({
                     policeMeList: res.data.policeMeList
                 })
                 if (res.data.myPoliceList.length == 0 && res.data.policeMeList.length == 0) {
-                  wx.showToast({
-                    title: '太好了,什么也没有',
-                    icon:'none',
-                    duration: 2000
-                  })
+                    wx.showToast({
+                        title: '太好了,什么也没有',
+                        icon: 'none',
+                        duration: 2000
+                    })
                 }
             },
             fail: function() {},
@@ -113,7 +113,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     toDetailProposal: function(event) {
         var that = this

@@ -171,7 +171,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     /**
      * 表单提交
@@ -180,13 +184,13 @@ Page({
         var that = this
         console.log(e)
             //申诉
-      if (e.detail.value.reportRe1 == '' || that.data.imgUp.length==0) {
+        if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
             wx.showModal({
-              title: '提示',
-              content: '请上传一张照片，并说明申诉原因',
-              showCancel:false,
-              confirmText:'好的',
-              confirmColor:'#faaf42'
+                title: '提示',
+                content: '请上传一张照片，并说明申诉原因',
+                showCancel: false,
+                confirmText: '好的',
+                confirmColor: '#faaf42'
             })
             return
 
@@ -218,8 +222,8 @@ Page({
                             title: '申诉成功',
                         })
                         //调用刷新
-                  setTimeout(that.onPullDownRefresh(),1500)
-                    
+                    setTimeout(that.onPullDownRefresh(), 1500)
+
                 } else {
                     wx.showToast({
                         title: '上传失败请重试',
@@ -260,9 +264,9 @@ Page({
             }
         })
     },
-  toDetail:function(){
-    wx.switchTab({
-      url: '../orders/orders',
-    })
-  }
+    toDetail: function() {
+        wx.switchTab({
+            url: '../orders/orders',
+        })
+    }
 })

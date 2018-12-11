@@ -1,5 +1,5 @@
 const urlModel = require('../../utils/urlSet.js')
-app = getApp()
+var app = getApp()
 Page({
 
     /**
@@ -390,7 +390,7 @@ Page({
                     } else {
                         that.setData({
                             finRecListCount: that.data.finRecListCount.concat(res.data.finRecListCount),
-                          finPubListCount: that.data.finPubListCount.concat(res.data.finPubListCount) //修改参数
+                            finPubListCount: that.data.finPubListCount.concat(res.data.finPubListCount) //修改参数
                         })
                     } //修改参数
                 },
@@ -404,7 +404,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     toPubDetails: function(event) {
         var orderId = event.currentTarget.dataset.orderId

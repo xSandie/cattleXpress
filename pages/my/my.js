@@ -153,7 +153,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     toAddrEdit: function() {
         // console.log("addr被点击了");
@@ -169,13 +173,13 @@ Page({
             })
         } else {
             wx.showToast({
-                    title: '请先通过校园认证',
-                    icon: 'none',
-                    success: function() {}
-                })
-                wx.redirectTo({
-                    url: '../certifPage/certifPage',
-                })
+                title: '请先通过校园认证',
+                icon: 'none',
+                success: function() {}
+            })
+            wx.redirectTo({
+                url: '../certifPage/certifPage',
+            })
         }
 
     },

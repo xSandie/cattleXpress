@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        studentOrTeacher: true,
+        studentOrMaster: true, //true为本科生
         schoolIcon: "../../images/schoolIcon.png",
         passCertifIcon: "../../images/next.png",
         verifCodePath: '', //验证码路径
@@ -14,7 +14,8 @@ Page({
         row1: false,
         row2: false,
         row3: false,
-        loginHint: '账号为 4开头 的8位数噢'
+        loginHint: '账号为 4开头 的8位数噢',
+        identity: 1 //1为本科生，2为研究生
     },
 
     /**
@@ -43,8 +44,18 @@ Page({
                 icon: 'none'
             })
         } else {
-            send_data = {
-                'gId': app.globalData.user_ID
+            if (this.studentOrMaster) { //true为本科生
+                this.setData({
+                    identity: 1
+                })
+            } else {
+                this.setData({
+                    identity: 2
+                })
+            }
+            var send_data = {
+                'gId': app.globalData.user_ID,
+                'identity': this.data.identity
             }
             wx.request({
                 url: urlModel.url.getCertifCode,
@@ -103,21 +114,84 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     selStudent: function() {
-        this.setData({
-            studentOrTeacher: true
-        })
+
+        if (this.data.identity == 1) {
+            return
+        } else {
+            this.setData({
+                studentOrMaster: true, //true为本科生
+                identity: 1,
+                loginHint: '账号为 4开头 的8位数噢'
+            })
+            var send_data = {
+                'gId': app.globalData.user_ID,
+                'identity': this.data.identity
+            }
+            wx.request({
+                url: urlModel.url.getCertifCode,
+                method: 'POST',
+                data: send_data,
+                success: function(res) {
+                    console.log(res)
+                    if (res.data.img_url) {
+                        that.setData({
+                                verifCodePath: res.data.img_url + '?v=' + Math.random()
+                            })
+                            //todo 后期完善动态更改提示的功能
+                        wx.showToast({
+                            title: that.data.loginHint,
+                            icon: 'none',
+                            duration: 4000,
+                            // mask: true,
+                            success: function() {}
+                        })
+                    }
+                }
+            })
+
+
+        }
     },
-    selTeacher: function() {
-        // this.setData({
-        //     studentOrTeacher: false
-        // })
-        wx.showToast({
-            title: '暂时不支持 教职工/研究生 认证噢！',
-            icon: 'none'
+    selMaster: function() {
+        var that = this
+        this.setData({
+            studentOrMaster: false,
+            identity: 2,
+            loginHint: '帐号为 1（入学年份）开头的帐号噢'
         })
+        var send_data = {
+            'gId': app.globalData.user_ID,
+            'identity': this.data.identity
+        }
+        wx.request({
+            url: urlModel.url.getCertifCode,
+            method: 'POST',
+            data: send_data,
+            success: function(res) {
+                console.log(res)
+                if (res.data.img_url) {
+                    that.setData({
+                            verifCodePath: res.data.img_url + '?v=' + Math.random()
+                        })
+                        //todo 后期完善动态更改提示的功能
+                    wx.showToast({
+                        title: that.data.loginHint,
+                        icon: 'none',
+                        duration: 4000,
+                        // mask: true,
+                        success: function() {}
+                    })
+                }
+            }
+        })
+
     },
     schoolInput: function() {
         wx.navigateTo({
@@ -140,6 +214,7 @@ Page({
         })
     },
     certif: function(e) {
+        var that = this
         if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
             wx.showModal({
                 title: '信息不全',
@@ -153,7 +228,6 @@ Page({
                 title: '认证中',
                 mask: true
             })
-            var that = this
             console.log(e.detail.value)
             wx.request({
                 url: urlModel.url.postCertifMes, //填充认证url
@@ -163,6 +237,7 @@ Page({
                     'mm': e.detail.value.password,
                     'yzm': e.detail.value.verifiedCode,
                     'gId': app.globalData.user_ID,
+                    'identity': that.data.identity
                 },
                 header: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -225,8 +300,9 @@ Page({
     },
     changeCode: function() {
         var that = this
-        send_data = {
-            'gId': app.globalData.user_ID
+        var send_data = {
+            'gId': app.globalData.user_ID,
+            'identity': this.data.identity
         }
         wx.request({
             url: urlModel.url.getCertifCode,

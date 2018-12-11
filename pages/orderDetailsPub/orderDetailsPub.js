@@ -199,7 +199,7 @@ Page({
             // var that = this
         wx.showLoading({
             title: '刷新中',
-            mask:true
+            mask: true
         })
         wx.request({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
@@ -254,7 +254,7 @@ Page({
                     wx.hideLoading()
                     wx.showToast({
                         title: '刷新成功',
-                        duration:2000
+                        duration: 2000
                     })
                 } else {
                     wx.hideLoading()
@@ -334,7 +334,11 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function() {
-
+        return {
+            title: '校园快递互助代取平台',
+            path: '/pages/home/home',
+            imageUrl: '/images/sharePic.jpg'
+        }
     },
     toFix: function(event) {
         // var expressID = event.currentTarget.dataset.expressId
