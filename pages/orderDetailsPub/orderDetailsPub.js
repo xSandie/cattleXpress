@@ -56,7 +56,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) { //要复制到下拉刷新中去
-        console.log(options)
+        // console.log(options)
         var that = this
         wx.request({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
@@ -73,7 +73,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log("onload", res)
+                // console.log("onload", res)
                 var tdata = res.data
                 that.setData({
                     //设置页面参数，设置orderID
@@ -216,7 +216,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log("onPullDownRefresh", res)
+                // console.log("onPullDownRefresh", res)
                 if (res.statusCode == 200) {
                     var tdata = res.data
                     that.setData({
@@ -358,12 +358,36 @@ Page({
         })
     },
     conTA: function() {
-        wx.makePhoneCall({
-            phoneNumber: this.data.phoneNum //仅为示例，并非真实的电话号码
+        var that = this
+        wx.showModal({
+            title: '发短信还是拨打电话？',
+            content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
+            confirmColor: '#faaf42',
+            confirmText: '发送短信',
+            cancelColor: '#faaf42',
+            cancelText: '拨打号码',
+            success: function(res) {
+                if (res.confirm) {
+                    // console.log('用户点击确定')
+                    wx.setClipboardData({
+                            data: that.data.phoneNum,
+                        })
+                        // wx.showToast({
+                        //     title: '号码已复制',
+                        //     icon: 'success'
+                        // })
+
+                } else if (res.cancel) {
+                    // console.log('用户点击取消')
+                    wx.makePhoneCall({
+                        phoneNumber: that.data.phoneNum //仅为示例，并非真实的电话号码
+                    })
+                }
+            }
         })
     },
     toLaw: function() {
-        var that = this
+        // var that = this
         wx.showModal({
             title: '请谨慎举报',
             content: '遇以下情况可举报用户：\r\n1、快递被接单者领走但未被送达；\r\n2、快递被接单者损坏；\r\n3、接单者送达后未收到酬劳；\r\n4、接单者送达后收到的酬劳少于接单前商定的酬劳；\r\n5、其他损害用户利益的行为。\r\n我们将视情况给予违规用户处罚。',
@@ -374,13 +398,13 @@ Page({
                 // if (res.confirm) {
                 //     console.log('用户点击确定')
                 // } else if (res.cancel) {
-                console.log('用户点击')
-                    // }
+                // console.log('用户点击')
+                // }
             }
         })
     },
-    policeTA: function(event) {
-        var that = this
+    policeTA: function() {
+        // var that = this
         wx.showModal({
                 title: '确定举报？',
                 content: '请谨慎举报',
@@ -388,12 +412,12 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        console.log('用户点击确定')
+                        // console.log('用户点击确定')
                         wx.redirectTo({
                             url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderID + '&LName=' + that.data.reName
                         })
                     } else if (res.cancel) {
-                        console.log('用户点击取消')
+                        // console.log('用户点击取消')
                     }
                 }
             })
@@ -418,7 +442,7 @@ Page({
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
-                    console.log('用户点击确定')
+                    // console.log('用户点击确定')
                     wx.request({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
@@ -432,7 +456,7 @@ Page({
                         //     "Content-Type": "applciation/json"
                         // },
                         success: function(res) {
-                            console.log(res)
+                            // console.log(res)
                             if (res.data.msg == 'ok') {
                                 that.setData({
                                     //设置页面参数
@@ -479,7 +503,7 @@ Page({
             confirmColor: '#999ba1',
             success: function(res) {
                 if (res.confirm) {
-                    console.log('用户点击确定')
+                    // console.log('用户点击确定')
                     wx.request({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
@@ -493,7 +517,7 @@ Page({
                         //     "Content-Type": "application/x-www-form-urlencoded"
                         // },
                         success: function(res) {
-                            console.log('取消', res)
+                            // console.log('取消', res)
                             if (res.statusCode == 200 && res.data.msg == 'ok') {
                                 that.setData({
                                     //设置页面参数，设置orderID
@@ -540,7 +564,7 @@ Page({
 
     },
     toPay: function() {
-        var that = this
+        // var that = this
         wx.navigateTo({
             url: '../pay/pay?orderId=' + that.data.orderID,
         })

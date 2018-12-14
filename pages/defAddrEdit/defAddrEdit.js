@@ -107,8 +107,8 @@ Page({
             success: function(res) {
                 //与发布界面 一致
                 if (res.statusCode == 200) {
-                    console.log('获取默认地址成功')
-                    console.log(res)
+                    // console.log('获取默认地址成功')
+                    // console.log(res)
                     if (res.data.default) {
                         app.globalData.default = res.data.default
                     }
@@ -260,15 +260,15 @@ Page({
         })
     },
     replaceAddr: function(e) {
-        console.log('submit')
-        console.log(e)
+        // console.log('submit')
+        // console.log(e)
         var detail = e.detail.value
         var that = this
         if (that.checkNone(detail)) {
             //check none 一定要在上
             //默认情况 要 补全逻辑 返回detail
             detail = that.fill_detail(detail)
-            console.log('信息完整')
+                // console.log('信息完整')
 
             var send_data = {
                     'userID': app.globalData.user_ID,
@@ -284,7 +284,7 @@ Page({
                 method: 'POST',
                 data: send_data,
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (res.data.msg == 'ok') {
                         wx.showToast({
                             title: '修改成功',
@@ -341,7 +341,7 @@ Page({
 
             }
         }
-        console.log(detail_to_fill)
+        // console.log(detail_to_fill)
         return detail_to_fill
     }
 })

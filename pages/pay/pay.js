@@ -128,7 +128,7 @@ Page({
         }
     },
     showLarge: function() {
-        var that = this
+        // var that = this
         wx.previewImage({
             urls: [that.data.PayCode],
         })
@@ -139,16 +139,16 @@ Page({
         wx.authorize({
             scope: 'scope.writePhotosAlbum',
             success() {
-                console.log("2-授权《保存图片》权限成功");
+                // console.log("2-授权《保存图片》权限成功");
                 // util.downloadImage(downloadUrl);
                 wx.downloadFile({
                     url: that.data.PayCode,
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
                         wx.saveImageToPhotosAlbum({
                             filePath: res.tempFilePath,
                             success: function(res) {
-                                console.log(res)
+                                // console.log(res)
                                 wx.showToast({
                                     title: '保存成功',
                                     icon: 'success',
@@ -156,19 +156,19 @@ Page({
                                 })
                             },
                             fail: function(res) {
-                                console.log(res)
-                                console.log('fail')
+                                // console.log(res)
+                                // console.log('fail')
                             }
                         })
                     },
                     fail: function() {
-                        console.log('fail')
+                        // console.log('fail')
                     }
                 })
             },
             fail() {
                 // 用户拒绝了授权  
-                console.log("2-授权《保存图片》权限失败");
+                // console.log("2-授权《保存图片》权限失败");
                 // 打开设置页面 
                 wx.showToast({
                     title: '请再次点击，并授权',

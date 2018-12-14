@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.94",
+	"libVersion": "2.4.2",
 	"appid": "wx39d0c74824094c27",
 	"projectname": "cattleExpress",
 	"isGameTourist": false,

@@ -202,8 +202,8 @@ Page({
      * 表单提交
      */
     report: function(e) {
-        console.log("发起举报")
-        console.log(e)
+        // console.log("发起举报")
+        // console.log(e)
         var that = this
         if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
             wx.showModal({
@@ -235,7 +235,7 @@ Page({
                         // pubTime: that.data.reportTime
                 },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (res.statusCode == 200) {
                         wx.showToast({
                                 title: '再次举报成功',
@@ -268,7 +268,7 @@ Page({
                     pubTime: that.data.reportTime
                 },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (res.statusCode == 200) {
                         wx.showToast({
                                 title: '举报成功',
@@ -346,7 +346,7 @@ Page({
             success: function(res) {
                 // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
                 var tempFilePaths = res.tempFilePaths
-                console.log(tempFilePaths);
+                    // console.log(tempFilePaths);
                 that.setData({
                     imgUp: tempFilePaths,
                     img1: tempFilePaths,

@@ -36,7 +36,7 @@ Page({
                 gId: app.globalData.user_ID
             },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
                 if (res.statusCode == 200) {
                     that.setData({
                         myPayCode: res.data.myPayCode + '?v=' + Math.random(),
@@ -108,7 +108,7 @@ Page({
             sizeType: ['compressed'],
             success: function(res) {
                 //发起上传图片请求
-                tempFilePaths = res.tempFilePaths
+                var tempFilePaths = res.tempFilePaths
                 wx.uploadFile({
                     url: urlModel.url.changePayCode,
                     filePath: tempFilePaths[0],
@@ -122,7 +122,7 @@ Page({
                         gId: app.globalData.user_ID //其他额外的formdata，userId
                     },
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
                         if (res.statusCode == 200) {
                             wx.showToast({
                                 title: '上传成功',

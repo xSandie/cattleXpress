@@ -94,7 +94,7 @@ Page({
         if (app.globalData.ourUserStatus == 1) {
             wx.showModal({
                 title: '状态异常',
-                content: '请前往我的>举报\申诉进度查看',
+                content: '请前往我的>举报/申诉进度查看',
                 confirmColor: '#faaf42',
                 showCancel: false,
                 success: function(res) {
@@ -331,7 +331,7 @@ Page({
                     method: 'POST',
                     data: send_data,
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
 
                     }
                 })

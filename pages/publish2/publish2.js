@@ -123,9 +123,9 @@ Page({
     },
     checking: function() {
         this.setData({
-            checking: true
-        })
-        console.log("检查按钮被点击了")
+                checking: true
+            })
+            // console.log("检查按钮被点击了")
     },
 
 
@@ -142,7 +142,7 @@ Page({
         }
         e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex]
-        console.log(e.detail.value)
+            // console.log(e.detail.value)
         var that = this;
         wx.setStorage({
                 key: 'sizeArr',
@@ -172,7 +172,7 @@ Page({
                     success: function(res) {
                         //获取完存储的缓存后发送 发布订单请求 和 设置默认地址请求
                         var uploadlist = Object.assign({}, res.data, e.detail.value)
-                        console.log(uploadlist)
+                            // console.log(uploadlist)
                         var event = uploadlist
                             //event已经是完整可上传的对象
                             //加入判空逻辑
@@ -185,7 +185,7 @@ Page({
                             })
                             return
                         } else {
-                            console.log(event)
+                            // console.log(event)
                             wx.request({
                                 url: urlModel.url.pubOrder, //填充发布订单url
                                 method: 'POST',
@@ -334,7 +334,7 @@ Page({
         // console.log('赏金checkbox发生change事件，携带value值为：', e.detail.value)
     },
     check_none: function(data_tocheck) {
-        console.log(data_tocheck)
+        // console.log(data_tocheck)
         for (var Key in data_tocheck) {
             if (data_tocheck[Key] == '') { //有空的返回true
                 if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {

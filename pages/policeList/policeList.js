@@ -63,7 +63,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
                 that.setData({
                     myPoliceList: res.data.myPoliceList,
                     policeMeList: res.data.policeMeList
@@ -120,14 +120,14 @@ Page({
         }
     },
     toDetailProposal: function(event) {
-        var that = this
+        // var that = this
         var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
             url: '../policeDetailProposal/policeDetailProposal?detailID=' + reportOrderID,
         })
     },
     toDetailRec: function(event) {
-        var that = this
+        // var that = this
         var reportOrderID = event.currentTarget.dataset.reportorderid;
         wx.navigateTo({
             url: '../policeDetailRec/policeDetailRec?detailID=' + reportOrderID,

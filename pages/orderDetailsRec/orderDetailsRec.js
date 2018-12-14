@@ -47,7 +47,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        console.log(options)
+        // console.log(options)
         var that = this
         if (options.key == null) {
             wx.request({
@@ -59,7 +59,7 @@ Page({
                     'schoolID': app.globalData.schoolID
                 },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (!res.data.orderId) {
                         wx.showToast({
                             title: '订单被别人抢啦',
@@ -118,7 +118,7 @@ Page({
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    console.log("从订单页面进入发送请求", res)
+                    // console.log("从订单页面进入发送请求", res)
                     if (res.statusCode == 200) {
                         that.setData({
                             //设置页面参数
@@ -204,7 +204,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log('下拉刷新')
+                // console.log('下拉刷新')
                 if (res.statusCode == 200) {
                     that.setData({
                         //设置页面参数
@@ -272,8 +272,32 @@ Page({
         }
     },
     conTA: function() {
-        wx.makePhoneCall({
-            phoneNumber: this.data.phoneNum
+        var that = this
+        wx.showModal({
+            title: '发短信还是拨打电话？',
+            content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
+            confirmColor: '#faaf42',
+            confirmText: '发送短信',
+            cancelColor: '#faaf42',
+            cancelText: '拨打号码',
+            success: function(res) {
+                if (res.confirm) {
+                    // console.log('用户点击确定')
+                    wx.setClipboardData({
+                            data: that.data.phoneNum,
+                        })
+                        // wx.showToast({
+                        //     title: '号码已复制',
+                        //     icon: 'success'
+                        // })
+
+                } else if (res.cancel) {
+                    // console.log('用户点击取消')
+                    wx.makePhoneCall({
+                        phoneNumber: that.data.phoneNum //仅为示例，并非真实的电话号码
+                    })
+                }
+            }
         })
     },
     toLaw: function() {
@@ -290,8 +314,7 @@ Page({
             }
         })
     },
-    policeTA: function(event) {
-        var that = this
+    policeTA: function() {
         wx.showModal({
             title: '确定举报？',
             content: '请谨慎举报',
@@ -299,12 +322,12 @@ Page({
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
-                    console.log('用户点击确定')
+                    // console.log('用户点击确定')
                     wx.redirectTo({
                         url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderID + '&LName=' + that.data.LName
                     })
                 } else if (res.cancel) {
-                    console.log('用户点击取消')
+                    // console.log('用户点击取消')
                 }
             }
         })

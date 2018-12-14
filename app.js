@@ -14,8 +14,8 @@ App({
             wx.login({
                 success: function(res) {
                     if (res.code) {
-                        console.log(res.code)
-                            //发起网络请求
+                        // console.log(res.code)
+                        //发起网络请求
                         wx.request({
                             url: urlModel.url.codeUrl,
                             data: {
@@ -23,8 +23,8 @@ App({
                             },
                             success: function(res) {
                                 //   console.log(res.data)//服务器解密后，客户端收到基本信息                      
-                                console.log('code')
-                                console.log(res)
+                                // console.log('code')
+                                // console.log(res)
                                 if (res.statusCode == 200 && !res.data.reqExceed) {
                                     // if(res.data.noshool==true){
                                     //   wx.showModal({
@@ -103,7 +103,7 @@ App({
                         })
                     } else {
                         reject('error');
-                        console.log('登录失败！' + res.errMsg)
+                        // console.log('登录失败！' + res.errMsg)
                     }
                 }
             })

@@ -182,7 +182,7 @@ Page({
                     'nextPage': 1
                 },
                 success: function(res) {
-                    console.log('已完成订单请求', res)
+                    // console.log('已完成订单请求', res)
                     if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
                         that.setData({
                             atEnd: true
@@ -236,14 +236,13 @@ Page({
         if (app.globalData.ourUserStatus == 1) {
             wx.showModal({
                 title: '状态异常',
-                content: '请前往我的>举报\申诉进度查看',
+                content: '请前往我的>举报 申诉进度查看',
                 confirmColor: '#faaf42',
                 showCancel: false,
                 success: function(res) {}
             })
         }
-        var that = this
-            //判定是否为空的函数
+        //判定是否为空的函数
         wx.request({
             url: urlModel.url.notHaveList, //未完成完成订单请求地址
             method: 'POST',
@@ -255,7 +254,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
                 that.setData({
                         ongoRecListCount: res.data.ongoRecListCount,
                         ongoPubListCount: res.data.ongoPubListCount
@@ -382,7 +381,7 @@ Page({
                 },
                 success: function(res) {
 
-                    console.log('已完成订单请求', res)
+                    // console.log('已完成订单请求', res)
                     if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
                         that.setData({
                             atEnd: true

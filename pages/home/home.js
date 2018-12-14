@@ -108,7 +108,7 @@ Page({
                 if (res.authSetting['scope.userInfo']) {
                     wx.getUserInfo({
                         success: function(res) {
-                                console.log(res)
+                                // console.log(res)
                                 let send_data = {
                                     'user_nickname': res.userInfo.nickName,
                                     'user_avatarurl': res.userInfo.avatarUrl,
@@ -120,8 +120,8 @@ Page({
                                     // header: { "Content-Type": "application/x-www-form-urlencoded" },
                                     data: send_data,
                                     success: function(res) {
-                                        console.log("---上传头像--")
-                                        console.log(res)
+                                        // console.log("---上传头像--")
+                                        // console.log(res)
                                     }
                                 })
                             } //发起发送用户头像昵称请求
@@ -147,7 +147,7 @@ Page({
                 atEnd: false
             })
 
-            console.log(res)
+            // console.log(res)
             that.setData({
                     exlocArray: app.globalData.exlocArray,
                     column2_0: app.globalData.column2_0,
@@ -187,7 +187,7 @@ Page({
                 //   "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     that.setData({
                         listCount: res.data
                     })
@@ -259,10 +259,10 @@ Page({
      */
     onPullDownRefresh: function() {
         wx.showLoading({
-            title: '刷新中',
-            mask: true
-        })
-        console.log("refresh")
+                title: '刷新中',
+                mask: true
+            })
+            // console.log("refresh")
         this.setData({
             fabuOrDingbu: true,
             mySchoolName: app.globalData.schoolName,
@@ -358,19 +358,18 @@ Page({
      */
     onReachBottom: function() { //这里list都是append逻辑
         wx.showLoading({
-            title: '加载中',
-            mask: true
-        })
-        console.log("到底了")
+                title: '加载中',
+                mask: true
+            })
+            // console.log("到底了")
         var that = this
         this.setData({
-            requestTime: that.data.requestTime + 1
-        })
-        console.log(this.data.requestTime)
+                requestTime: that.data.requestTime + 1
+            })
+            // console.log(this.data.requestTime)
         this.setData({
             fabuOrDingbu: false
         })
-        var that = this
         var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
             //至少有一个没有设置筛选
@@ -399,7 +398,7 @@ Page({
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (res.data.length == 0) {
                         that.setData({
                             atEnd: true
@@ -434,7 +433,7 @@ Page({
                 //     "Content-Type": "applciation/json"
                 // },
                 success: function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if (res.data.length == 0) {
                         that.setData({
                             atEnd: true
@@ -461,7 +460,7 @@ Page({
         }
     },
     toTongzhi: function() {
-        var that = this
+        // var that = this
         wx.showModal({
             title: '公告',
             content: that.data.tongzhiContent,

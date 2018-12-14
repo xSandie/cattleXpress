@@ -182,7 +182,7 @@ Page({
      */
     report: function(e) {
         var that = this
-        console.log(e)
+            // console.log(e)
             //申诉
         if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
             wx.showModal({
@@ -215,7 +215,7 @@ Page({
                 // pubTime: that.data.reportTime
             },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
                 wx.hideLoading()
                 if (res.statusCode == 200) {
                     wx.showToast({
@@ -254,12 +254,12 @@ Page({
             success: function(res) {
                 // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
                 var tempFilePaths = res.tempFilePaths
-                console.log(tempFilePaths);
+                    // console.log(tempFilePaths);
                 that.setData({
                     imgUp: tempFilePaths,
-                    img1: tempFilePaths,
-                    // img2: tempFilePaths[1],
-                    // img3: tempFilePaths[2]
+                    img1: tempFilePaths
+                        // img2: tempFilePaths[1],
+                        // img3: tempFilePaths[2]
                 })
             }
         })

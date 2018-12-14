@@ -279,7 +279,7 @@ Page({
                     method: 'POST',
                     data: send_data,
                     success: function(res) {
-                        console.log(res)
+                        // console.log(res)
                     }
                 })
             }
@@ -532,7 +532,7 @@ Page({
         })
     },
     check_none: function(data_tocheck) {
-        console.log(data_tocheck)
+        // console.log(data_tocheck)
         for (var Key in data_tocheck) {
             if (data_tocheck[Key] == '') { //有空的返回true
                 if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {

@@ -36,7 +36,7 @@ Page({
      */
     onLoad: function(options) {
         // console.log(options)
-        console.log(options.id);
+        // console.log(options.id);
 
         var that = this
         wx.request({
@@ -247,6 +247,7 @@ Page({
 
     },
     conTA: function() {
+        var that = this
         if (app.globalData.certif == false) {
             wx.showModal({
                 title: '请认证',
@@ -264,9 +265,33 @@ Page({
                 }
             })
         } else {
-            wx.makePhoneCall({
-                phoneNumber: this.data.phoneNum //仅为示例，并非真实的电话号码
+            wx.showModal({
+                title: '发短信还是拨打电话？',
+                content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
+                confirmColor: '#faaf42',
+                confirmText: '发送短信',
+                cancelColor: '#faaf42',
+                cancelText: '拨打号码',
+                success: function(res) {
+                    if (res.confirm) {
+                        // console.log('用户点击确定')
+                        wx.setClipboardData({
+                                data: that.data.phoneNum,
+                            })
+                            //   wx.showToast({
+                            //     title: '号码已复制',
+                            //     icon:'success'
+                            //   })
+
+                    } else if (res.cancel) {
+                        // console.log('用户点击取消')
+                        wx.makePhoneCall({
+                            phoneNumber: that.data.phoneNum //仅为示例，并非真实的电话号码
+                        })
+                    }
+                }
             })
+
         }
     },
     toFix: function(event) {

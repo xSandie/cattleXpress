@@ -55,7 +55,7 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
                 if (res.statusCode == 200) {
                     that.setData({
                         balance: res.data.balance, //修改参数
