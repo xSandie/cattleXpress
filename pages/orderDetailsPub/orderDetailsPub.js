@@ -404,7 +404,7 @@ Page({
         })
     },
     policeTA: function() {
-        // var that = this
+        var that = this
         wx.showModal({
                 title: '确定举报？',
                 content: '请谨慎举报',
@@ -564,7 +564,7 @@ Page({
 
     },
     toPay: function() {
-        // var that = this
+        var that = this
         wx.navigateTo({
             url: '../pay/pay?orderId=' + that.data.orderID,
         })

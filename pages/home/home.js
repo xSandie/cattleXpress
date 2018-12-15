@@ -368,9 +368,9 @@ Page({
             })
             // console.log(this.data.requestTime)
         this.setData({
-            fabuOrDingbu: false
-        })
-        var that = this
+                fabuOrDingbu: false
+            })
+            // var that = this
         if (that.data.expressLoc == "选择取快递的站点" || that.data.sendLoc == "选择快递送达地点") {
             //至少有一个没有设置筛选
             var send_sendLoc = that.data.sendLoc
@@ -460,7 +460,7 @@ Page({
         }
     },
     toTongzhi: function() {
-        // var that = this
+        var that = this
         wx.showModal({
             title: '公告',
             content: that.data.tongzhiContent,

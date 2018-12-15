@@ -315,6 +315,7 @@ Page({
         })
     },
     policeTA: function() {
+        var that = this
         wx.showModal({
             title: '确定举报？',
             content: '请谨慎举报',

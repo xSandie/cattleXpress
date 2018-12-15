@@ -1,5 +1,5 @@
 <view wx:if="{{tongzhi}}" bindtap="toTongzhi" class='tongzhi'>
-    <text>{{tongzhiSum}}</text>   
+    <text selectable>{{tongzhiSum}}</text>   
 </view>
 <view class='container'>
     <view class='select'>

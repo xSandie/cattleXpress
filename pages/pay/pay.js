@@ -128,7 +128,7 @@ Page({
         }
     },
     showLarge: function() {
-        // var that = this
+        var that = this
         wx.previewImage({
             urls: [that.data.PayCode],
         })

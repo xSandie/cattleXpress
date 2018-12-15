@@ -44,7 +44,7 @@ Page({
                 icon: 'none'
             })
         } else {
-            if (this.studentOrMaster) { //true为本科生
+            if (this.data.studentOrMaster) { //true为本科生
                 this.setData({
                     identity: 1
                 })
@@ -121,7 +121,7 @@ Page({
         }
     },
     selStudent: function() {
-
+        var that = this
         if (this.data.identity == 1) {
             return
         } else {
@@ -132,7 +132,7 @@ Page({
             })
             var send_data = {
                 'gId': app.globalData.user_ID,
-                'identity': this.data.identity
+                'identity': 1
             }
             wx.request({
                 url: urlModel.url.getCertifCode,
@@ -215,6 +215,7 @@ Page({
     },
     certif: function(e) {
         var that = this
+        console.log(e)
         if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
             wx.showModal({
                 title: '信息不全',
