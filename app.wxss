@@ -10,23 +10,112 @@ page {
     height: auto;
     width: 100%;
     display: flex;
+    flex-direction: column;
     padding-left: 40rpx;
     padding-right: 40rpx;
     box-sizing: border-box;
     background-color: #f5f8fd;
-    /* padding-bottom:40rpx;  */
 }
 
-.defaultHover {
-    color: #6D6141;
+.my-bold {
+    font-weight: bold;
 }
 
-.answerHover {
-    color: #999ba1;
-    background: #DADEE2;
-    border-radius: 10rpx;
+.my-shadow {
+    box-shadow: 0rpx 8rpx 8rpx #eef1fd;
+    /* 卡片阴影 */
+}
+
+.xxxxl-font {
+    font-size: 80rpx;
+}
+
+.xxxl-font {
+    font-size: 60rpx;
+}
+
+.xxl-font {
+    font-size: 48rpx;
+}
+
+.xl-font {
+    font-size: 36rpx;
+}
+
+.l-font {
+    font-size: 32rpx;
+}
+
+.m-font {
+    font-size: 28rpx;
+}
+
+.s-font {
+    font-size: 24rpx;
+}
+
+.xs-font {
+    font-size: 22rpx;
+}
+
+.xxs-font {
+    font-size: 20rpx;
+}
+
+.main-yellow {
+    color: #FBBD4B;
+}
+
+.my-grey {
+    color: #999BA1;
+}
+
+.my-black {
+    color: #373c46;
+}
+
+.my-white {
+    color: white;
+}
+
+.white-card-hover {
+    background: #F0F0F5;
 }
 
 .answerHover1 {
     background: #DADEE2;
+}
+
+.main-btn {
+    border: 0rpx;
+    width: 246rpx;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 32rpx;
+    height: 100rpx;
+}
+
+.btn-hover {
+    background: linear-gradient(90deg, #af782c, #b39340);
+}
+
+.btn-icon-right {
+    height: 40rpx;
+    width: 40rpx;
+    margin-right: 10rpx;
+}
+
+.btn-icon-left {
+    height: 40rpx;
+    width: 40rpx;
+    margin-left: 10rpx;
+}
+
+button::after {
+    border: none;
 }

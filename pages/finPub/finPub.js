@@ -1,4 +1,4 @@
-var app = getApp();
+const app = getApp();
 const urlModel = require('../../utils/urlSet.js');
 Page({
 
@@ -6,17 +6,12 @@ Page({
      * 页面的初始数据
      */
     data: {
-        sendLocIn: '',
-        index: 0,
-        selExCon: [
-            ['阳光苑', '硕士楼负一层', '新勇'],
-            ['申通', '韵达', '中通', '京东']
-        ],
+        sendLocInput: '',
 
         default: {
-            conPhoneNum: '',
-            sendLoc: '',
-            sendLocIn: '',
+            conPhone: '',
+            sendLocSelect: '',
+            sendLocInput: '',
             recName: '',
             phoneRear: '',
 
@@ -24,40 +19,37 @@ Page({
         dateRange: [],
 
 
-        exlocArray: [
+        expressLocArray: [
             [],
             []
         ],
         expressLoc: '', //这就是默认
-        exlocfirstIndex: 0,
-        exlocSecondIndex: 0,
-        sendLoc: '宿舍区' + '·' + '周园',
-        sdlocArray: [
+        expFirstIndex: 0,
+        expSecondIndex: 0,
+
+        sendLocSelect: '宿舍区' + '·' + '周园',
+        sendLocArray: [
             ['宿舍区', '教学区', '其他区域', '跨校区'],
             []
         ],
-        sdlocIndex: [0, 0],
-        sdlocfirstIndex: 0,
-        sdlocSecondIndex: 0,
+        sendLocIndex: [0, 0],
+        sendLocFirstIndex: 0,
+        sendLocSecondIndex: 0,
 
-        column2_0: [],
-        column2_1: [],
-        column2_2: [],
-        column2_3: [],
+        dormArea: [],
+        teachArea: [],
+        otherArea: [],
+        transCampus: [],
 
 
-        time: '17:00',
-        dateSel: '', //页面加载时将会获取并设置
+        endTime: '22:00',
+        dateSelect: '', //页面加载时将会获取并设置
         dateIndex: 0,
 
 
-        nbtnIcon: "../../images/next.png",
+        nextIcon: "../../images/next.png",
 
-        checkBtnIcon: "../../images/next.png",
-
-        exCon: '',
-        sdLoc: '',
-        conPhoneNum: '',
+        conPhone: '',
         phoneRear: '',
         recName: '',
         fetchCode: '',
@@ -70,20 +62,18 @@ Page({
         sexIndex: 0,
 
 
-        lastDep: "简单描述下您的快递（不超过50字）",
-        worchecked: false,
-        exWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
-        weIndex: 0,
-        checkboxItems: [
+        expDescript: "简单描述下您的快递（不超过50字）",
+        urgentChecked: false,
+        expWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
+        weightIndex: 0,
+        sizeCheckBox: [
             { name: 'BEx', value: '大件' },
             { name: 'MEx', value: '中件' },
             { name: 'SEx', value: '小件', checked: true }
         ],
 
         reward: '',
-        setDef: false,
-
-
+        setDefFlag: false,
     },
 
     /**
@@ -106,34 +96,34 @@ Page({
     onShow: function() {
         var that = this
         this.setData({
-            exlocArray: app.globalData.exlocArray,
-            column2_0: app.globalData.column2_0,
-            column2_1: app.globalData.column2_1,
-            column2_2: app.globalData.column2_2,
-            column2_3: app.globalData.column2_3,
-            dateRange: app.globalData.dateRange
+            expressLocArray: app.globalData.expressLocArray,
+            dormArea: app.globalData.dormArea,
+            teachArea: app.globalData.teachArea,
+            otherArea: app.globalData.otherArea,
+            transCampus: app.globalData.transCampus,
+            dateSelect: app.globalData.dateRange
         })
         this.setData({
-            sdlocArray: [
-                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
+            sendLocArray: [
+                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
             ],
-            sendLoc: that.data.default.sendLoc
+            sendLocSelect: that.data.default.sendLocSelect
         })
         wx.getStorage({
             key: 'sizeArr',
             success: function(res) {
                 that.setData({
-                    checkboxItems: res.data
+                    sizeCheckBox: res.data
                 })
             },
         })
         wx.getStorage({
-            key: 'FORMrow1',
+            key: 'FORMRaw1',
             success: function(res) {
                 that.setData({
-                    sdlocIndex: res.data.DeRecLocSel,
+                    sendLocIndex: res.data.DeRecLocSel,
                     dateIndex: res.data.exTimeConDate,
-                    setDef: res.data.setDef
+                    setDefFlag: res.data.setDefFlag
                 })
             }
         })
@@ -141,9 +131,9 @@ Page({
             key: 'FORM1',
             success: function(res) {
                 that.setData({
-                    conPhoneNum: res.data.conPhoneNum,
-                    sendLoc: res.data.DeRecLocSel,
-                    sendLocIn: res.data.DeRecLocIn,
+                    conPhone: res.data.conPhone,
+                    sendLocSelect: res.data.DeRecLocSel,
+                    sendLocInput: res.data.recLocInput,
                     recName: res.data.recName,
                     phoneRear: res.data.phoneRear,
                     expressLoc: res.data.selExCon,
@@ -151,12 +141,12 @@ Page({
             },
         })
         wx.getStorage({
-            key: 'FORMrow2',
+            key: 'FORMRaw2',
             success: function(res) {
                 that.setData({
                     fetchCode: res.data.fetchCode,
                     sexIndex: res.data.sexLimit,
-                    weIndex: res.data.weightInfo,
+                    weightIndex: res.data.weightInfo,
                 })
             },
         })
@@ -173,8 +163,8 @@ Page({
                     })
                 }
                 that.setData({
-                    worchecked: res.data.worInfo,
-                    lastDep: res.data.otherInfo
+                    urgentChecked: res.data.worInfo,
+                    expDescript: res.data.otherInfo
                 })
             },
         })
@@ -222,15 +212,15 @@ Page({
         //   console.log(this.data.dateIndex)
         //   console.log(this.data.dateRange)
         //default早已存在缓存中
-        e.detail.value.DeRecLocSel = this.data.sendLoc;
+        e.detail.value.DeRecLocSel = this.data.sendLocSelect;
         e.detail.value.selExCon = this.data.expressLoc;
-        // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+        // e.detail.value.weightInfo = this.data.expWeight[this.data.weightIndex];
         e.detail.value.exTimeConDate = this.data.dateRange[this.data.dateIndex]
-        if (e.detail.value.DeRecLocIn == '') {
-            e.detail.value.DeRecLocIn = this.data.sendLocIn;
+        if (e.detail.value.recLocInput == '') {
+            e.detail.value.DeRecLocIn = this.data.sendLocInput;
         }
-        if (e.detail.value.conPhoneNum == '') {
-            e.detail.value.conPhoneNum = this.data.conPhoneNum;
+        if (e.detail.value.conPhone == '') {
+            e.detail.value.conPhoneNum = this.data.conPhone;
         }
         if (e.detail.value.recName == '') {
             e.detail.value.recName = this.data.recName;
@@ -242,9 +232,9 @@ Page({
             e.detail.value.rewardIn = this.data.reward;
         }
         if (e.detail.value.otherInfo == '') {
-            e.detail.value.otherInfo = this.data.lastDep
+            e.detail.value.otherInfo = this.data.expDescript
         }
-        e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+        e.detail.value.weightInfo = this.data.expWeight[this.data.weightIndex];
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex];
         // console.log(e.detail.value)
         var event = e.detail.value //已经组装成可以发布了的对象了
@@ -263,13 +253,13 @@ Page({
                 mask: true
             })
             var that = this
-            if (event.setDef == true) {
+            if (event.setDefFlag == true) {
                 //上传默认地址
                 var send_data = {
-                        'userID': app.globalData.user_ID,
+                        'userID': app.globalData.sessionID,
                         'sdLocSum': event.DeRecLocSel,
-                        'sdLocDetail': event.DeRecLocIn,
-                        'contactNum': event.conPhoneNum,
+                        'sdLocDetail': event.recLocInput,
+                        'contactNum': event.conPhone,
                         'fetchName': event.recName,
                         'phoneRare': event.phoneRear
                     }
@@ -287,15 +277,15 @@ Page({
                 url: urlModel.url.pubOrder, //填充发布订单url
                 method: 'POST',
                 data: {
-                    userID: app.globalData.user_ID,
+                    userID: app.globalData.sessionID,
                     schoolID: app.globalData.schoolID,
                     //订单具体信息
-                    contactNum: event.conPhoneNum,
+                    contactNum: event.conPhone,
                     sendArea: event.DeRecLocSel,
-                    sendLoc: event.DeRecLocIn,
+                    sendLocSelect: event.recLocInput,
                     recName: event.recName,
                     phoneRear: event.phoneRear,
-                    setDefault: event.setDef,
+                    setDefault: event.setDefFlag,
                     fetchCode: event.fetchCode,
                     expressLoc: event.selExCon,
                     deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
@@ -363,11 +353,11 @@ Page({
 
     },
     worcheck: function() {
-        var worchecked1 = !this.data.worchecked;
+        var worchecked1 = !this.data.urgentChecked;
         this.setData({
-                worchecked: worchecked1
+                urgentChecked: worchecked1
             })
-            // console.log(this.data.worchecked)
+            // console.log(this.data.urgentChecked)
     },
     checkboxChange: function(e) {
         // console.log('大小估计radio发生change事件，携带value值为：', e.detail.value)
@@ -375,7 +365,7 @@ Page({
         switch (e.detail.value) {
             case '大件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件', checked: true },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件', checked: true },
                         { name: 'MEx', value: '中件' },
                         { name: 'SEx', value: '小件' }
                     ]
@@ -383,7 +373,7 @@ Page({
                 break;
             case '中件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件' },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件' },
                         { name: 'MEx', value: '中件', checked: true },
                         { name: 'SEx', value: '小件' }
                     ]
@@ -391,7 +381,7 @@ Page({
                 break;
             case '小件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件' },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件' },
                         { name: 'MEx', value: '中件' },
                         { name: 'SEx', value: '小件', checked: true }
                     ]
@@ -402,7 +392,7 @@ Page({
     weInfoChange: function(e) {
         // console.log(e);
         this.setData({
-            weIndex: e.detail.value
+            weightIndex: e.detail.value
         })
     },
     sexLimitChange: function(e) {
@@ -414,7 +404,7 @@ Page({
     exlocChange: function(e) {
         // console.log(e);
         // console.log('时间picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+        var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
         this.setData({
             expressLoc: selected
         })
@@ -424,18 +414,18 @@ Page({
         // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         if (e.detail.column == 0) {
             this.setData({
-                exlocfirstIndex: e.detail.value
+                expFirstIndex: e.detail.value
             })
         } else {
             this.setData({
-                exlocSecondIndex: e.detail.value
+                expSecondIndex: e.detail.value
             })
         }
     },
     exlocChange: function(e) {
         // console.log(e);
         // console.log('时间picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+        var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
         this.setData({
             expressLoc: selected
         })
@@ -445,11 +435,11 @@ Page({
         // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         if (e.detail.column == 0) {
             this.setData({
-                exlocfirstIndex: e.detail.value
+                expFirstIndex: e.detail.value
             })
         } else {
             this.setData({
-                exlocSecondIndex: e.detail.value
+                expSecondIndex: e.detail.value
             })
         }
     },
@@ -457,40 +447,40 @@ Page({
     sdlocChange: function(e) {
         // console.log(e);
         // console.log('picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.sdlocArray[0][this.data.sdlocIndex[0]] + '·' + this.data.sdlocArray[1][this.data.sdlocIndex[1]]
+        var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
         this.setData({
-            sendLoc: selected
+            sendLocSelect: selected
         })
     },
     sdlocColumnChange: function(e) {
         // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         var data = {
-            sdlocArray: this.data.sdlocArray,
-            sdlocIndex: this.data.sdlocIndex
+            sendLocArray: this.data.sendLocArray,
+            sendLocIndex: this.data.sendLocIndex
         }
-        data.sdlocIndex[e.detail.column] = e.detail.value;
+        data.sendLocIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
             case 0:
-                switch (data.sdlocIndex[0]) {
+                switch (data.sendLocIndex[0]) {
                     case 0:
-                        data.sdlocArray[1] = this.data.column2_0;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.dormArea;
+                        // console.log(data.sendLocArray[1])
                         break;
 
                     case 1:
-                        data.sdlocArray[1] = this.data.column2_1;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.teachArea;
+                        // console.log(data.sendLocArray[1])
                         break;
                     case 2:
-                        data.sdlocArray[1] = this.data.column2_2;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.otherArea;
+                        // console.log(data.sendLocArray[1])
                         break;
                     case 3:
-                        data.sdlocArray[1] = this.data.column2_3;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.transCampus;
+                        // console.log(data.sendLocArray[1])
                         break;
                 }
-                data.sdlocIndex[1] = 0;
+                data.sendLocIndex[1] = 0;
                 break;
 
             case 1:
@@ -508,13 +498,13 @@ Page({
     bindTimeChange: function(e) {
         // console.log('picker发送选择改变，携带值为', e.detail.value)
         this.setData({
-            time: e.detail.value
+            endTime: e.detail.value
         })
     },
-    setDef: function() {
-        var setDefault = this.data.setDef;
+    setDefFlag: function() {
+        var setDefault = this.data.setDefFlag;
         this.setData({
-            setDef: !setDefault
+            setDefFlag: !setDefault
         })
     },
     differLink: function() {
@@ -535,7 +525,7 @@ Page({
         // console.log(data_tocheck)
         for (var Key in data_tocheck) {
             if (data_tocheck[Key] == '') { //有空的返回true
-                if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {
+                if (Key != 'setDefFlag' && Key != 'otherInfo' && Key != 'worInfo') {
                     return true
                 }
             }

@@ -1,6 +1,20 @@
-.container {
-    flex-direction: column;
-    height: auto;
+swiper {
+    border-radius: 16rpx;
+    overflow: hidden;
+    transform: translateY(0);
+    display: block;
+    height: 238rpx;
+    width: 670rpx;
+}
+
+.swiper-item {
+    width: 670rpx;
+    height: 238rpx;
+}
+
+.swiper-outer {
+    border-radius: 16rpx;
+    overflow: hidden;
 }
 
 .pullIcon {
@@ -9,11 +23,16 @@
 }
 
 .select {
+    background: #ffffff;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    padding-bottom: 40rpx;
     position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     padding-top: 12rpx;
+    box-shadow: 0rpx 8rpx 8rpx #eef1fd;
 }
 
 .school {
@@ -26,18 +45,8 @@
     width: 100%;
 }
 
-.expressLoc {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 138rpx;
-    width: 320rpx;
-    background-color: white;
-    box-shadow: 0rpx 8rpx 8rpx #eef1fd;
-    border-radius: 68rpx;
-}
 
-.sendLoc {
+/* .sendLoc {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -46,7 +55,7 @@
     background-color: white;
     box-shadow: 0rpx 8rpx 8rpx #eef1fd;
     border-radius: 68rpx;
-}
+} */
 
 .lText {
     height: 70rpx;
@@ -69,6 +78,8 @@
     width: 32rpx;
 }
 
+
+/* 
 .elIcon {
     display: flex;
     flex-direction: row;
@@ -101,7 +112,7 @@
     font-size: 28rpx;
     font-weight: bold;
     color: #373c46;
-}
+} */
 
 .lTextSmall {
     position: relative;
@@ -147,6 +158,14 @@
     height: 50rpx;
     border-radius: 30rpx;
     border: 1rpx solid #faaf42;
+}
+
+.recBadge {
+    position: absolute;
+    width: 200rpx;
+    height: 200rpx;
+    bottom: 20rpx;
+    right: 0rpx;
 }
 
 .rbText {
@@ -196,6 +215,7 @@
     display: flex;
     flex-direction: row;
     align-content: center;
+    z-index: 3;
 }
 
 .body {
@@ -224,7 +244,7 @@
 
 .sdIText {
     font-size: 48rpx;
-    color: #373c46;
+    color: #373C46;
     font-weight: bold;
     margin-right: 16rpx;
 }
@@ -286,6 +306,12 @@
 .pubIcon {
     height: 22rpx;
     width: 22rpx;
+}
+
+.view_eye {
+    margin-left: 10rpx;
+    height: 20rpx;
+    width: 20rpx;
 }
 
 .pubName {
@@ -384,13 +410,13 @@
 }
 
 .answerHover {
-    color: #999ba1;
+    color: #999BA1;
     background: #DADEE2;
     border-radius: 10rpx;
 }
 
 .answerHover1 {
-    background: rgb(240, 240, 245);
+    background: #F0F0F5;
     /*background: #DADEE2;*/
 }
 
@@ -417,7 +443,15 @@
     font-size: 24rpx;
     padding-bottom: 16rpx;
     padding-top: 16rpx;
-    background-color: #fbbd4d;
+    background-color: #FBBD4B;
     color: white;
     text-align: center;
+}
+
+.my-silver-bg {
+    background: #f2f2f2;
+}
+
+.my-grey {
+    color: #999BA1;
 }

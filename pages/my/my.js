@@ -6,18 +6,16 @@ Page({
      * 页面的初始数据
      */
     data: {
-        cardBack: "../../images/bigback.png",
+        cardBg: "../../images/bigback.png",
         balance: null,
-        creditScr: 0,
+        creditScore: 0,
         level: 1,
         realName: "",
-        // certif: false,
-        certif: false,
-        schoNum: "",
+        haveCertif: false,
+        schoolNumb: "",
         addressIcon: "../../images/myAdress.png",
         policeIcon: "../../images/police.png",
         nextIcon: "../../images/nextBlack.png",
-        tempName: '实习黄牛'
     },
 
     /**
@@ -37,7 +35,7 @@ Page({
         this.setData({
             balance: app.globalData.balance
         })
-        if (!app.globalData.havesetPayCode) {
+        if (!app.globalData.havePayCode) {
             wx.showToast({
                 title: '设置完 收款二维码 才能接单噢！',
                 icon: 'none',
@@ -49,7 +47,7 @@ Page({
             url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
-                'userID': app.globalData.user_ID,
+                'userID': app.globalData.sessionID,
             },
             // header: {
             //     "Content-Type": "applciation/json"
@@ -59,12 +57,12 @@ Page({
                 if (res.statusCode == 200) {
                     that.setData({
                         balance: res.data.balance, //修改参数
-                        creditScr: res.data.credit,
+                        creditScore: res.data.credit,
                         level: res.data.level
                     })
-                    app.globalData.havesetPayCode = res.data.havePayCode
+                    app.globalData.havePayCode = res.data.havePayCode
                     app.globalData.ourUserStatus = res.data.userStatus
-                    if (res.data.userStatus != 4) { app.globalData.certif = true }
+                    if (res.data.userStatus != 4) { app.globalData.haveCertif = true }
                     app.globalData.balance = res.data.balance
                 }
 
@@ -74,11 +72,11 @@ Page({
         })
         this.setData({
             realName: app.globalData.userName,
-            schoNum: app.globalData.schoolNumb,
+            schoolNumb: app.globalData.schoolNumb,
         })
         if (app.globalData.ourUserStatus != 4) {
             this.setData({
-                certif: true
+                haveCertif: true
             })
         }
     },
@@ -109,7 +107,7 @@ Page({
             url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
-                'userID': app.globalData.user_ID,
+                'userID': app.globalData.sessionID,
             },
             // header: {
             //     "Content-Type": "applciation/json"
@@ -118,10 +116,10 @@ Page({
                 console.log(res)
                 wx.hideLoading()
                 if (res.statusCode == 200) {
-                    app.globalData.havesetPayCode = res.data.havePayCode
+                    app.globalData.havePayCode = res.data.havePayCode
                     that.setData({
                         balance: res.data.balance, //修改参数
-                        creditScr: res.data.credit,
+                        creditScore: res.data.credit,
                         level: res.data.level
                     })
                     app.globalData.balance = res.data.balance

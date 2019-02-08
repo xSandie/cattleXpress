@@ -13,7 +13,7 @@
             <view class='contactNum'>
                 <text class='contactNumTi'>联系电话</text>
                 <view>
-                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{conPhoneNum}}" class='contactNumCon' />
+                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{conPhone}}" class='contactNumCon' />
                 </view>
             </view>
             <view class='tline'>   
@@ -21,10 +21,10 @@
             <view class='recLoc'>
                 <text class='recLocTi'>送达地址</text>
                     <view class='recLocDetail'>
-                        <picker value="{{sdlocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}</picker>
+                        <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLocSelect}}</picker>
                         <view class='cline'>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{sendLocIn}}" class='DeRecLocIn'/>
+                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{sendLocInput}}" class='DeRecLocIn'/>
                     </view>
             </view>
             <view class='tline'>   
@@ -41,10 +41,10 @@
                     <input type="number" maxlength='4' placeholder="{{phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
                 </view>
             </view>
-            <view class='setDef' bindtap="setDef">
-                <text wx:if="{{setDef==true}}">取消设为默认</text>
-                <text wx:if="{{setDef==false}}">设为默认</text>
-                <switch checked="{{setDef}}" hidden name="setDef"/>       
+            <view class='setDef' bindtap="setDefFlag">
+                <text wx:if="{{setDefFlag==true}}">取消设为默认</text>
+                <text wx:if="{{setDefFlag==false}}">设为默认</text>
+                <switch checked="{{setDefFlag}}" hidden name="setDef"/>
             </view>
             <view class='differLink' catchtap="differLink">
                 <text>· 联系电话与收货手机号的区别</text>
@@ -56,7 +56,7 @@
                     <text>选择快递</text>
                 </view>
                 <view>
-                    <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
+                    <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
                 </view>
             </view>
             <view class='rline'>
@@ -69,7 +69,7 @@
                     <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{dateRange}}" mode="selector">{{dateRange[dateIndex]}}</picker>
                     <view class='cline'>
                     </view>
-                    <picker name="exTimeConTime" class='TimePi' value="{{time}}" bindchange="bindTimeChange" mode="time" start="00:00" end="24:00">{{time}}</picker>
+                    <picker name="exTimeConTime" class='TimePi' value="{{endTime}}" bindchange="bindTimeChange" mode="endTime" start="00:00" end="24:00">{{endTime}}</picker>
                 </view>
             </view>
             <view class='rline'>
@@ -112,7 +112,7 @@
                             <text>快递重量估计</text>
                         </view>
                         <view>
-                            <picker value="{{weIndex}}" bindchange="weInfoChange" range="{{exWeight}}" name="weightInfo" mode="selector" class='weInfoCon' >{{exWeight[weIndex]}}</picker>
+                            <picker value="{{weightIndex}}" bindchange="weInfoChange" range="{{expWeight}}" name="weightInfo" mode="selector" class='weInfoCon' >{{expWeight[weightIndex]}}</picker>
                         </view>                    
                     </view>
                     <view class='twoInfo'>
@@ -122,7 +122,7 @@
                             </view>
                             <view>
                                 <radio-group name="sizeInfo" class="group" bindchange="checkboxChange">
-                                <view class="label-1" wx:for="{{checkboxItems}}">
+                                <view class="label-1" wx:for="{{sizeCheckBox}}">
                                     <label>
                                     <radio hidden  value="{{item.value}}" checked="{{item.checked}}"></radio> 
                                     <view class="label-1__icon" style="color:{{item.checked ? 'white': '#999ba1'}};background:{{item.checked ? '#faaf42': ''}};" ><text>{{item.value}}</text></view>
@@ -133,7 +133,7 @@
                         </view>
                         <view bindtap="worcheck" class='worInfo'style="color:{{worchecked?'white':'#999ba1'}};border: {{worchecked?'':'1rpx solid #999ba1'}};background:{{worchecked?'#faaf42':''}};">
                             <text>加急</text>
-                            <switch checked="{{worchecked}}" hidden name="worInfo"/>
+                            <switch checked="{{urgentChecked}}" hidden name="worInfo"/>
                         </view> 
                     </view>                
                 </view>
@@ -144,7 +144,7 @@
                         <text>快递描述</text>
                     </view>
                     <view>
-                        <textarea name="otherInfo" maxlength='50' type="text" class='othersCon' placeholder="{{lastDep}}" />
+                        <textarea name="otherInfo" maxlength='50' type="text" class='othersCon' placeholder="{{expDescript}}" />
                     </view>
                 </view>
             </view>
@@ -152,7 +152,7 @@
             <button hover-class="button-hover" class='fakeBtn' formType="submit"><view class='nbtnT'>
                     <text>发布</text>
                 </view>    
-                <image class='nbtnIcon' src="{{nbtnIcon}}"></image></button>
+                <image class='nbtnIcon' src="{{nextIcon}}"></image></button>
         </view>
         
     </form>

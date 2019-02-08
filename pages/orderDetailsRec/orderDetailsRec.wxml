@@ -1,14 +1,14 @@
 <view class='container'>
     <view class='exLocDe'>
-        <image class='exLogo' src="{{exLogo}}"></image>
+        <image class='exLogo' src="{{expLogoUrl}}"></image>
         <view class='exDetail'>
-            <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>营业时间:{{exLocTime}}</text>
+            <text class='exInstance'>{{expStationName}}</text>
+            <text class='exLocTime'>营业时间:{{expOpenTime}}</text>
         </view>
         <view class='cline'>   
         </view>
-        <view bindtap="toFix" hover-class="answerHover1" data-express-id="{{expressID}}" class='fixBtn'>
-            <image src="{{fxIcon}}" class='fxIcon'></image>
+        <view bindtap="toFix" hover-class="answerHover1" data-express-id="{{expressId}}" class='fixBtn'>
+            <image src="{{fixIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
     </view>
@@ -24,36 +24,36 @@
              <view class="column">
                  <view class="item" wx:if="{{statusCode==0||statusCode==2}}">
                      <view>
-                         <image class="deIcon" src='{{haoIcon}}'></image>
+                         <image class="deIcon" src='{{phoneRearIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>手机尾号：<text class="impText">{{haoText}}</text></text>
+                         <text>手机尾号：<text class="impText">{{phoneRear}}</text></text>
                      </view>
                  </view>
                  <view class="item">
                      <view>
-                          <image class="deIcon" src='{{jianIcon}}'></image>                    
+                          <image class="deIcon" src='{{sizeIcon}}'></image>
                      </view>
                      <view class="norText">
-                        <text>物品大小：<text class="impText">{{jianText}}</text></text>
+                        <text>物品大小：<text class="impText">{{expSize}}</text></text>
                      </view>
                  </view>
              </view>
              <view class="column1">
                  <view class="item" wx:if="{{statusCode==0||statusCode==2}}">
                      <view>
-                         <image class="deIcon" src='{{mingIcon}}'></image>
+                         <image class="deIcon" src='{{nameIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>取货姓名：<text class="impText">{{mingText}}</text></text>
+                         <text>取货姓名：<text class="impText">{{recName}}</text></text>
                      </view>
                  </view>
                  <view class="item">
                      <view>
-                         <image class="deIcon" src='{{shiIcon}}'></image>
+                         <image class="deIcon" src='{{timeIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text><text class="impText">{{shiText}}</text>前送达</text>
+                         <text><text class="impText">{{endTime}}</text>前送达</text>
                      </view>
                  </view>
              </view>
@@ -64,10 +64,10 @@
                 <text>送至 DELIVER TO</text>
             </view>
             <view class="sdLoc">
-                <text>{{sdLoc}}</text>
+                <text>{{sendLocAll}}</text>
             </view>
         </view>
-        <view class='worTag' wx:if="{{exWorry=== 'true'}}"><text>加急</text></view>
+        <view class='worTag' wx:if="{{urgent=== 'true'}}"><text>加急</text></view>
     </view>
     <view class='mainSum'>
         <view class='reward'>
@@ -93,7 +93,7 @@
     </view>
     <view class='trifle'>
         <view wx:if="{{statusCode!=5&&statusCode!=6}}" class='pubSum'>
-           <view>{{LName}} 于{{pubtime}}发布 取消订单请<view style='display:inline' bindtap="conTA" class="nav">联系对方</view></view>
+           <view>{{pubLastName}} 于{{pubTime}}发布 取消订单请<view style='display:inline' bindtap="conTA" class="nav">联系对方</view></view>
         </view>
         <view wx:if="{{statusCode==5||statusCode==6}}">请至 我的 > 举报/申诉进度 查看详情</view>
     </view>
@@ -107,11 +107,11 @@
         </button>
         <view class="smallBtnA">
             <view bindtap="conTA" hover-class="answerHover1" class="sBtnA">
-                <image src='{{conTAIcon}}' class='dimIcon'></image> 
+                <image src='{{contactIconDim}}' class='dimIcon'></image>
                 <text class='dimText'>联系TA</text>
             </view>
             <view hover-class="answerHover1" data-order-id="{{orderId}}" bindtap="policeTA" class="sBtnA">
-                <image src='{{policeTAIcon}}' class='dimIcon'></image>  
+                <image src='{{policeIconDim}}' class='dimIcon'></image>
                 <text class='dimText'>举报</text>
             </view>
         </view>
@@ -120,7 +120,7 @@
         <view class='fxdBtnBac'></view>
         <button hover-class="button-hover" bindtap="conTA">
           <text>联系TA</text>
-          <image src='{{conIcon}}' class='finIcon'></image>     
+          <image src='{{contactIcon}}' class='finIcon'></image>
         </button>
          <view bindtap="policeTA" data-order-id="{{orderId}}" class='dirGet'>
             <view hover-class="defaultHover" class='lDGT'>

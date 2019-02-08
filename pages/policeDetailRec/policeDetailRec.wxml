@@ -3,7 +3,7 @@
     <view hover-class="answerHover1" class="floatCard">
         <view class="people">
             <text class="topTi">被举报人</text>
-            <text class="LName">{{LName}}</text>
+            <text class="LName">{{pubLastName}}</text>
             <text class="reportTime">{{reportTime}}</text>
         </view>
         <button class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button>
@@ -23,13 +23,13 @@
 
         <view class="reportIn" wx:if="{{reportProcess==1}}">
             <text class="TiMe">申诉原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{lastDep}}" />
+            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
 
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUp.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
+                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
+                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
+                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
+                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
                     <image src="{{camIcon}}" class="camIcon"></image>
                     <text>允许上传一张图片</text>
                     </view>
@@ -64,13 +64,13 @@
         <view class="reportIn" wx:if="{{reportProcess==3}}">
             <view class="rline"></view>
             <text class="TiMe">再次申诉原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{lastDep}}" />
+            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
 
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUp}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUp.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
+                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
+                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
+                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
+                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
                     <image src="{{camIcon}}" class="camIcon"></image>
                     <text>允许上传一张图片</text>
                     </view>

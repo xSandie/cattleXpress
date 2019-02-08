@@ -6,40 +6,40 @@ Page({
      * 页面的初始数据
      */
     data: {
-        exLogo: '',
-        exLocTime: '',
-        exInstance: '',
-        fxIcon: '../../images/fixBtnIcon.png',
-        LName: '',
-        pubtime: '',
+        expLogoUrl: '',
+        expOpenTime: '',
+        expStationName: '',
+        fixIcon: '../../images/fixBtnIcon.png',
+        pubLastName: '',
+        pubTime: '',
         reward: '',
-
+        //图标类
         finIcon: '../../images/checkLight.png',
-        policeTAIcon: '../../images/policeDim.png',
-        conTAIcon: '../../images/conDim.png',
-        conIcon: '../../images/conIcon.png',
+        policeIconDim: '../../images/policeDim.png',
+        contactIconDim: '../../images/conDim.png',
+        contactIcon: '../../images/contactIcon.png',
         policeIcon: '../../images/policeLight.png',
 
         fetchCode: '',
-        haoIcon: '../../images/numRear.png',
-        mingIcon: '../../images/deName.png',
-        jianIcon: '../../images/sizeIcon.png',
-        shiIcon: '../../images/timeIcon.png',
+        phoneRearIcon: '../../images/numRear.png',
+        nameIcon: '../../images/deName.png',
+        sizeIcon: '../../images/sizeIcon.png',
+        timeIcon: '../../images/timeIcon.png',
 
-        shiText: '',
-        mingText: '',
-        jianText: '',
-        haoText: '',
+        endTime: '',
+        recName: '',
+        expSize: '',
+        phoneRear: '',
 
-        sdLoc: '',
+        sendLocAll: '',
         weightInfo: '',
         otherInfo: '',
-        exWorry: null,
-        phoneNum: '',
+        urgent: null,
+        receiverPhone: '',
 
         statusCode: null,
-        expressID: '',
-        orderID: ''
+        expressId: '',
+        orderId: ''
 
     },
 
@@ -54,8 +54,8 @@ Page({
                 url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
                 method: 'POST',
                 data: {
-                    'orderID': options.id,
-                    'userID': app.globalData.user_ID,
+                    'orderId': options.id,
+                    'userID': app.globalData.sessionID,
                     'schoolID': app.globalData.schoolID
                 },
                 success: function(res) {
@@ -76,27 +76,27 @@ Page({
                     } else {
                         that.setData({
                             //设置页面参数
-                            exLogo: res.data.exLogo,
-                            exLocTime: res.data.exLocTime,
-                            exInstance: res.data.exInstance,
-                            expressID: res.data.expressID,
+                            expLogoUrl: res.data.expLogoUrl,
+                            expOpenTime: res.data.expOpenTime,
+                            expStationName: res.data.expStationName,
+                            expressId: res.data.expressId,
                             //以上是快递站点信息
-                            orderID: res.data.orderId,
-                            sdInstance: res.data.exInstance,
-                            exWorry: res.data.exWorry,
+                            orderId: res.data.orderId,
+                            sdInstance: res.data.expStationName,
+                            urgent: res.data.urgent,
                             weightInfo: res.data.weightInfo,
                             reward: res.data.reward,
-                            LName: res.data.LName,
-                            pubtime: res.data.pubtime,
-                            phoneNum: res.data.phoneNum,
-                            shiText: res.data.shiText,
-                            mingText: res.data.mingText,
-                            jianText: res.data.jianText,
-                            haoText: res.data.haoText,
+                            pubLastName: res.data.pubLastName,
+                            pubTime: res.data.pubTime,
+                            receiverPhone: res.data.receiverPhone,
+                            endTime: res.data.endTime,
+                            recName: res.data.recName,
+                            expSize: res.data.expSize,
+                            phoneRear: res.data.phoneRear,
                             fetchCode: res.data.fetchCode,
                             otherInfo: res.data.otherInfo,
                             statusCode: res.data.State,
-                            sdLoc: res.data.sdLoc
+                            sendLocAll: res.data.sendLocAll
                         })
                     }
                 },
@@ -110,8 +110,8 @@ Page({
                 url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
                 method: 'POST',
                 data: {
-                    'orderID': options.id,
-                    'userID': app.globalData.user_ID,
+                    'orderId': options.id,
+                    'userID': app.globalData.sessionID,
                     'schoolID': app.globalData.schoolID
                 },
                 // header: {
@@ -122,27 +122,27 @@ Page({
                     if (res.statusCode == 200) {
                         that.setData({
                             //设置页面参数
-                            exLogo: res.data.exLogo,
-                            exLocTime: res.data.exLocTime,
-                            exInstance: res.data.exInstance,
-                            expressID: res.data.expressID,
+                            expLogoUrl: res.data.expLogoUrl,
+                            expOpenTime: res.data.expOpenTime,
+                            expStationName: res.data.expStationName,
+                            expressId: res.data.expressId,
                             //以上是快递站点信息
-                            orderID: res.data.orderId,
-                            sdInstance: res.data.exInstance,
-                            exWorry: res.data.exWorry,
+                            orderId: res.data.orderId,
+                            sdInstance: res.data.expStationName,
+                            urgent: res.data.urgent,
                             weightInfo: res.data.weightInfo,
                             reward: res.data.reward,
-                            LName: res.data.LName,
-                            pubtime: res.data.pubtime,
-                            phoneNum: res.data.phoneNum,
-                            shiText: res.data.shiText,
-                            mingText: res.data.mingText,
-                            jianText: res.data.jianText,
-                            haoText: res.data.haoText,
+                            pubLastName: res.data.pubLastName,
+                            pubTime: res.data.pubTime,
+                            receiverPhone: res.data.receiverPhone,
+                            endTime: res.data.endTime,
+                            recName: res.data.recName,
+                            expSize: res.data.expSize,
+                            phoneRear: res.data.phoneRear,
                             fetchCode: res.data.fetchCode,
                             otherInfo: res.data.otherInfo,
                             statusCode: res.data.State,
-                            sdLoc: res.data.sdLoc
+                            sendLocAll: res.data.sendLocAll
                         })
                     }
 
@@ -196,8 +196,8 @@ Page({
             url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
             method: 'POST',
             data: {
-                'orderID': that.data.orderID,
-                'userID': app.globalData.user_ID,
+                'orderId': that.data.orderId,
+                'userID': app.globalData.sessionID,
                 'schoolID': app.globalData.schoolID
             },
             // header: {
@@ -208,27 +208,27 @@ Page({
                 if (res.statusCode == 200) {
                     that.setData({
                         //设置页面参数
-                        exLogo: res.data.exLogo,
-                        exLocTime: res.data.exLocTime,
-                        exInstance: res.data.exInstance,
-                        expressID: res.data.expressID,
+                        expLogoUrl: res.data.expLogoUrl,
+                        expOpenTime: res.data.expOpenTime,
+                        expStationName: res.data.expStationName,
+                        expressId: res.data.expressId,
                         //以上是快递站点信息
-                        orderID: res.data.orderId,
-                        sdInstance: res.data.exInstance,
-                        exWorry: res.data.exWorry,
+                        orderId: res.data.orderId,
+                        sdInstance: res.data.expStationName,
+                        urgent: res.data.urgent,
                         weightInfo: res.data.weightInfo,
                         reward: res.data.reward,
-                        LName: res.data.LName,
-                        pubtime: res.data.pubtime,
-                        phoneNum: res.data.phoneNum,
-                        shiText: res.data.shiText,
-                        mingText: res.data.mingText,
-                        jianText: res.data.jianText,
-                        haoText: res.data.haoText,
+                        pubLastName: res.data.pubLastName,
+                        pubTime: res.data.pubTime,
+                        receiverPhone: res.data.receiverPhone,
+                        endTime: res.data.endTime,
+                        recName: res.data.recName,
+                        expSize: res.data.expSize,
+                        phoneRear: res.data.phoneRear,
                         fetchCode: res.data.fetchCode,
                         otherInfo: res.data.otherInfo,
                         statusCode: res.data.State,
-                        sdLoc: res.data.sdLoc
+                        sendLocAll: res.data.sendLocAll
                     })
                     wx.hideLoading()
                     wx.showToast({
@@ -284,7 +284,7 @@ Page({
                 if (res.confirm) {
                     // console.log('用户点击确定')
                     wx.setClipboardData({
-                            data: that.data.phoneNum,
+                            data: that.data.receiverPhone,
                         })
                         // wx.showToast({
                         //     title: '号码已复制',
@@ -294,7 +294,7 @@ Page({
                 } else if (res.cancel) {
                     // console.log('用户点击取消')
                     wx.makePhoneCall({
-                        phoneNumber: that.data.phoneNum //仅为示例，并非真实的电话号码
+                        phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
                     })
                 }
             }
@@ -325,7 +325,7 @@ Page({
                 if (res.confirm) {
                     // console.log('用户点击确定')
                     wx.redirectTo({
-                        url: '../policeDetailProposal/policeDetailProposal?orderID=' + that.data.orderID + '&LName=' + that.data.LName
+                        url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.pubLastName
                     })
                 } else if (res.cancel) {
                     // console.log('用户点击取消')
@@ -334,10 +334,10 @@ Page({
         })
     },
     toFix: function(event) {
-        // var expressID = event.currentTarget.dataset.expressId
-        // console.log(expressID)
+        // var expressId = event.currentTarget.dataset.expressId
+        // console.log(expressId)
         // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressID,
+        //     url: '../reportExError/reportExError?id=' + expressId,
         // })
         wx.showModal({
             title: '敬请期待',
@@ -363,8 +363,8 @@ Page({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
                         data: {
-                            'orderID': that.data.orderID,
-                            'userID': app.globalData.user_ID,
+                            'orderId': that.data.orderId,
+                            'userID': app.globalData.sessionID,
                             'nextState': 0
                         },
                         // header: {

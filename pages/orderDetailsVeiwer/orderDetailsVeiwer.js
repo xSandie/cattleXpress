@@ -6,28 +6,29 @@ Page({
      * 页面的初始数据
      */
     data: {
-        exLogo: '',
-        exLocTime: '',
-        exInstance: '',
-        fxIcon: '../../images/fixBtnIcon.png',
-        conIcon: '../../images/checkLight.png',
+        expLogoUrl: '',
+        expOpenTime: '',
+        expStationName: '',
+        fixIcon: '../../images/fixBtnIcon.png',
+
+        contactIcon: '../../images/checkLight.png',
         sdInstance: '',
 
-        exWorry: null,
-        exWeight: '',
-        exSize: '',
-        exExTime: '',
+        urgent: null,
+        expWeight: '',
+        expSize: '',
+        endTime: '',
 
-        dText: '',
+        expDescript: '',
 
         reward: '',
-        schNum: '',
-        LName: '',
-        pubtime: '',
+        // schNum: ''暂时没有用上学号,
+        pubLastName: '',
+        pubTime: '',
         orderId: '',
-        phoneNum: '',
+        receiverPhone: '',
 
-        expressID: ''
+        expressId: ''
 
     },
 
@@ -43,8 +44,8 @@ Page({
             url: urlModel.url.toOrderSum, //填充请求浏览者订单详情url
             method: 'GET',
             data: {
-                'orderID': options.id,
-                'userID': app.globalData.user_ID, //为以后埋点做准备
+                'orderId': options.id,
+                'userID': app.globalData.sessionID, //为以后埋点做准备
                 'schoolID': app.globalData.schoolID
             },
             // header: {
@@ -55,23 +56,23 @@ Page({
                 if (res.data.can_get == true) {
                     that.setData({
                         //设置页面参数
-                        exLogo: res.data.exLogo,
-                        exLocTime: res.data.exLocTime,
-                        exInstance: res.data.exInstance,
-                        expressID: res.data.expressID,
+                        expLogoUrl: res.data.expLogoUrl,
+                        expOpenTime: res.data.expOpenTime,
+                        expStationName: res.data.expStationName,
+                        expressId: res.data.expressId,
                         //以上是快递站点信息
                         orderId: res.data.orderId,
                         sdInstance: res.data.sdInstance,
-                        exWorry: res.data.exWorry,
-                        exWeight: res.data.exWeight,
-                        exSize: res.data.exSize,
-                        exExTime: res.data.exExTime,
+                        urgent: res.data.urgent,
+                        expWeight: res.data.expWeight,
+                        expSize: res.data.expSize,
+                        endTime: res.data.endTime,
                         reward: res.data.reward,
                         // schNum: res.data.schNum,
-                        LName: res.data.LName,
-                        pubtime: res.data.pubtime,
-                        phoneNum: res.data.phoneNum,
-                        dText: res.data.dText
+                        pubLastName: res.data.pubLastName,
+                        pubTime: res.data.pubTime,
+                        receiverPhone: res.data.receiverPhone,
+                        expDescript: res.data.expDescript
                     })
                 } else {
                     wx.showToast({
@@ -149,7 +150,7 @@ Page({
      * 接单按钮按下
      */
     recOrder: function(event) {
-        if (!app.globalData.havesetPayCode) {
+        if (!app.globalData.havePayCode) {
             //未设置paycode
             wx.showModal({
                 title: '设置收款二维码',
@@ -164,7 +165,7 @@ Page({
                     }
                 }
             })
-        } else if (app.globalData.certif == true) {
+        } else if (app.globalData.haveCertif == true) {
             var orderId = event.currentTarget.dataset.orderId;
             wx.showModal({
                 title: '确认接单',
@@ -178,8 +179,8 @@ Page({
                             url: urlModel.url.recOrder, //订单动作接口
                             method: 'GET',
                             data: {
-                                'orderID': orderId,
-                                'userID': app.globalData.user_ID,
+                                'orderId': orderId,
+                                'userID': app.globalData.sessionID,
                                 'nextStat': 2
                             },
                             success: function(res) {
@@ -200,7 +201,7 @@ Page({
                                         success: function(res) {
                                             if (res.confirm) {
                                                 wx.navigateTo({
-                                                    url: '../defAddrEdit/defAddrEdit?path=certif'
+                                                    url: '../defAddrEdit/defAddrEdit?path=haveCertif'
                                                 })
                                             }
                                         }
@@ -248,7 +249,7 @@ Page({
     },
     conTA: function() {
         var that = this
-        if (app.globalData.certif == false) {
+        if (app.globalData.haveCertif == false) {
             wx.showModal({
                 title: '请认证',
                 content: '点击确定前往教务系统认证！',
@@ -276,7 +277,7 @@ Page({
                     if (res.confirm) {
                         // console.log('用户点击确定')
                         wx.setClipboardData({
-                                data: that.data.phoneNum,
+                                data: that.data.receiverPhone,
                             })
                             //   wx.showToast({
                             //     title: '号码已复制',
@@ -286,7 +287,7 @@ Page({
                     } else if (res.cancel) {
                         // console.log('用户点击取消')
                         wx.makePhoneCall({
-                            phoneNumber: that.data.phoneNum //仅为示例，并非真实的电话号码
+                            phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
                         })
                     }
                 }
@@ -295,10 +296,10 @@ Page({
         }
     },
     toFix: function(event) {
-        // var expressID = event.currentTarget.dataset.expressId
-        // console.log(expressID)
+        // var expressId = event.currentTarget.dataset.expressId
+        // console.log(expressId)
         // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressID,
+        //     url: '../reportExError/reportExError?id=' + expressId,
         // })
         wx.showModal({
             title: '敬请期待',

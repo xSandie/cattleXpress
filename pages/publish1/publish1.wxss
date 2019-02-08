@@ -266,19 +266,12 @@ form {
     vertical-align: center;
 }
 
-
-/* .fakeBtn {
-    height: 100rpx;
-    width: 246rpx;
-} */
-
 button {
     margin: 0rpx;
     margin-top: 50rpx;
     border-radius: 10rpx;
     box-sizing: border-box;
     background: linear-gradient(90deg, #f9a93e, #fed25c);
-    border-radius: 10rpx;
     height: 100rpx;
     padding: 30rpx;
     width: 246rpx;
@@ -287,25 +280,30 @@ button {
     justify-content: center;
     color: white;
     border: 0rpx;
+    font-weight: bold;
+    font-size: 32rpx;
 }
 
-.button-hover {
+
+/* .button-hover {
     color: white;
     background: linear-gradient(90deg, #af782c, #b39340);
-}
+} */
 
-.nbtnT {
+
+/* .nbtnT {
     vertical-align: center;
     margin-left: 10rpx;
     font-size: 32rpx;
     font-weight: bold;
     text-align: center;
-}
+} */
 
-.nbtnIcon {
+
+/* .nextIcon {
     height: 40rpx;
     width: 40rpx;
-}
+} */
 
 .placeHold {
     text-align: left;

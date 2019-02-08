@@ -8,12 +8,12 @@ Page({
     data: {
         studentOrMaster: true, //true为本科生
         schoolIcon: "../../images/schoolIcon.png",
-        passCertifIcon: "../../images/next.png",
-        verifCodePath: '', //验证码路径
+        nextIcon: "../../images/next.png",
+        verifyCodeUrl: '', //验证码路径
         schoolName: "点击选择学校",
-        row1: false,
-        row2: false,
-        row3: false,
+        row1Flag: false,
+        row2Flag: false,
+        row3Flag: false,
         loginHint: '账号为 4开头 的8位数噢',
         identity: 1 //1为本科生，2为研究生
     },
@@ -54,7 +54,7 @@ Page({
                 })
             }
             var send_data = {
-                'gId': app.globalData.user_ID,
+                'gId': app.globalData.sessionID,
                 'identity': this.data.identity
             }
             wx.request({
@@ -65,7 +65,7 @@ Page({
                     console.log(res)
                     if (res.data.img_url) {
                         that.setData({
-                                verifCodePath: res.data.img_url + '?v=' + Math.random()
+                                verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                             })
                             //todo 后期完善动态更改提示的功能
                         wx.showToast({
@@ -131,7 +131,7 @@ Page({
                 loginHint: '账号为 4开头 的8位数噢'
             })
             var send_data = {
-                'gId': app.globalData.user_ID,
+                'gId': app.globalData.sessionID,
                 'identity': 1
             }
             wx.request({
@@ -142,7 +142,7 @@ Page({
                     console.log(res)
                     if (res.data.img_url) {
                         that.setData({
-                                verifCodePath: res.data.img_url + '?v=' + Math.random()
+                                verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                             })
                             //todo 后期完善动态更改提示的功能
                         wx.showToast({
@@ -167,7 +167,7 @@ Page({
             loginHint: '帐号为 1（入学年份）开头的帐号噢'
         })
         var send_data = {
-            'gId': app.globalData.user_ID,
+            'gId': app.globalData.sessionID,
             'identity': this.data.identity
         }
         wx.request({
@@ -178,7 +178,7 @@ Page({
                 console.log(res)
                 if (res.data.img_url) {
                     that.setData({
-                            verifCodePath: res.data.img_url + '?v=' + Math.random()
+                            verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                         })
                         //todo 后期完善动态更改提示的功能
                     wx.showToast({
@@ -200,20 +200,20 @@ Page({
     },
     change1: function() {
         this.setData({
-            row1: true
+            row1Flag: true
         })
     },
     change2: function() {
         this.setData({
-            row2: true
+            row2Flag: true
         })
     },
     change3: function() {
         this.setData({
-            row3: true
+            row3Flag: true
         })
     },
-    certif: function(e) {
+    haveCertif: function(e) {
         var that = this
         console.log(e)
         if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
@@ -237,7 +237,7 @@ Page({
                     'zjh': e.detail.value.schoolNumb,
                     'mm': e.detail.value.password,
                     'yzm': e.detail.value.verifiedCode,
-                    'gId': app.globalData.user_ID,
+                    'gId': app.globalData.sessionID,
                     'identity': that.data.identity
                 },
                 header: {
@@ -250,7 +250,7 @@ Page({
 
                         if (res.data.status == 1) {
                             console.log(res)
-                                //设置姓名、学号、status
+                                //设置姓名、学号、statusName
                             app.globalData.userName = res.data.name
                             app.globalData.schoolNumb = res.data.schoolNum
                             app.globalData.ourUserStatus = res.data.user_status
@@ -269,7 +269,7 @@ Page({
                             })
                             setTimeout(function() {
                                 wx.redirectTo({
-                                    url: '../defAddrEdit/defAddrEdit?path=certif'
+                                    url: '../defAddrEdit/defAddrEdit?path=haveCertif'
                                 })
                             }, 3000)
 
@@ -283,7 +283,7 @@ Page({
                                 })
                                 //设置新的验证码地址
                             that.setData({
-                                verifCodePath: res.data.imgUrl + '?v=' + Math.random()
+                                verifyCodeUrl: res.data.imgUrl + '?v=' + Math.random()
                             })
                         }
                     } else {
@@ -302,7 +302,7 @@ Page({
     changeCode: function() {
         var that = this
         var send_data = {
-            'gId': app.globalData.user_ID,
+            'gId': app.globalData.sessionID,
             'identity': this.data.identity
         }
         wx.request({
@@ -313,7 +313,7 @@ Page({
                 console.log(res)
                 if (res.data.img_url) {
                     that.setData({
-                        verifCodePath: res.data.img_url + '?v=' + Math.random()
+                        verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                     })
                 }
             }

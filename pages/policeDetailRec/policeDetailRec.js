@@ -10,9 +10,9 @@ Page({
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",
-        LName: "向同学",
+        pubLastName: "向同学",
         reportTime: "",
-        lastDep: '若对方举报信息不实，请申诉',
+        description: '若对方举报信息不实，请申诉',
 
         reportRe1: '',
         report1: [
@@ -34,10 +34,10 @@ Page({
         img1: null,
         img2: null,
         img3: null,
-        imgUp: [],
+        imgUpList: [],
 
-        orderID: null,
-        policeID: null //本条举报记录的id
+        orderId: null,
+        policeId: null //本条举报记录的id
     },
 
     /**
@@ -46,14 +46,14 @@ Page({
     onLoad: function(options) {
         var that = this
         that.setData({
-            policeID: options.detailID
+            policeId: options.detailID
         })
         wx.request({ //获取举报订单详情
             url: urlModel.url.reportDetail,
             method: 'GET',
             data: {
-                'policeID': options.detailID,
-                'getterID': app.globalData.user_ID
+                'policeId': options.detailID,
+                'getterID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
@@ -68,8 +68,8 @@ Page({
                         report2: res.data.img3 ? res.data.img3 : null,
                         complainRe2: res.data.complain2 ? res.data.complain2 : null,
                         complain2: res.data.img4 ? res.data.img4 : null,
-                        orderID: res.data.orderID,
-                        LName: res.data.LName,
+                        orderId: res.data.orderId,
+                        pubLastName: res.data.pubLastName,
                         reportTime: res.data.pubTime
                     })
                 }
@@ -118,8 +118,8 @@ Page({
             url: urlModel.url.reportDetail,
             method: 'GET',
             data: {
-                'policeID': that.data.policeID,
-                'getterID': app.globalData.user_ID
+                'policeId': that.data.policeId,
+                'getterID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
@@ -134,8 +134,8 @@ Page({
                         report2: res.data.img3 ? res.data.img3 : null,
                         complainRe2: res.data.complain2 ? res.data.complain2 : null,
                         complain2: res.data.img4 ? res.data.img4 : null,
-                        orderID: res.data.orderID,
-                        LName: res.data.LName,
+                        orderId: res.data.orderId,
+                        pubLastName: res.data.pubLastName,
                         reportTime: res.data.pubTime
                     })
                     wx.hideLoading()
@@ -184,7 +184,7 @@ Page({
         var that = this
             // console.log(e)
             //申诉
-        if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
+        if (e.detail.value.reportRe1 == '' || that.data.imgUpList.length == 0) {
             wx.showModal({
                 title: '提示',
                 content: '请上传一张照片，并说明申诉原因',
@@ -201,7 +201,7 @@ Page({
         })
         wx.uploadFile({
             url: urlModel.url.complainReport,
-            filePath: that.data.imgUp[0],
+            filePath: that.data.imgUpList[0],
             name: 'police_img',
             header: {
                 "Content-Type": "multipart/form-data",
@@ -209,9 +209,9 @@ Page({
                 //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
             },
             formData: {
-                gId: app.globalData.user_ID, //其他额外的formdata，userId
+                gId: app.globalData.sessionID, //其他额外的formdata，userId
                 reason: e.detail.value.reportRe1,
-                reportID: that.data.policeID,
+                reportID: that.data.policeId,
                 // pubTime: that.data.reportTime
             },
             success: function(res) {
@@ -256,7 +256,7 @@ Page({
                 var tempFilePaths = res.tempFilePaths
                     // console.log(tempFilePaths);
                 that.setData({
-                    imgUp: tempFilePaths,
+                    imgUpList: tempFilePaths,
                     img1: tempFilePaths
                         // img2: tempFilePaths[1],
                         // img3: tempFilePaths[2]

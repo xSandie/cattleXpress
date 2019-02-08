@@ -1,14 +1,14 @@
 <view class='container'>
     <view class='exLocDe'>
-        <image class='exLogo' src="{{exLogo}}"></image>
+        <image class='exLogo' src="{{expLogoUrl}}"></image>
         <view class='exDetail'>
-            <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>营业时间:{{exLocTime}}</text>
+            <text class='exInstance'>{{expStationName}}</text>
+            <text class='exLocTime'>营业时间:{{expOpenTime}}</text>
         </view>
         <view class='cline'>   
         </view>
-        <view  hover-class="answerHover1"  data-express-id="{{expressID}}" class='fixBtn' bindtap='toFix'>
-            <image src="{{fxIcon}}" class='fxIcon'></image>
+        <view  hover-class="answerHover1"  data-express-id="{{expressId}}" class='fixBtn' bindtap='toFix'>
+            <image src="{{fixIcon}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
     </view>
@@ -24,16 +24,16 @@
             </view>
             <view class='sdTag'>
                 <view class='exExTime'>
-                    <text>{{exExTime}}前送达</text>
+                    <text>{{endTime}}前送达</text>
                 </view>
                 <view class='exWeight'>
-                    <text>重量{{exWeight}}</text>
+                    <text>重量{{expWeight}}</text>
                 </view>
                 <view class='exSize'>
-                    <text>{{exSize}}物品</text>
+                    <text>{{expSize}}物品</text>
                 </view>
             </view>
-            <view class='worTag' wx:if="{{exWorry}}">
+            <view class='worTag' wx:if="{{urgent}}">
                 <text>加急</text>
             </view>
         </view>
@@ -44,7 +44,7 @@
                 <text>快递描述 DETAILS</text>
             </view>
             <view class='sText'>
-                <text>{{dText}}</text>
+                <text>{{expDescript}}</text>
             </view>
         </view>
         <view class='rline1'>
@@ -63,7 +63,7 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <text>{{LName}}同学于 {{pubtime}} 发布</text>
+           <text>{{pubLastName}}同学于 {{pubTime}} 发布</text>
         </view>
         <view class='instr'>
             <view>其他具体信息<view class='nav'><text>接单</text></view>后可见</view>
@@ -76,7 +76,7 @@
     <view class='fxdBtnArea'>
         <view class='contact' hover-class="button-hover" data-order-id="{{orderId}}" bindtap="recOrder">
           <text>点此接单</text>
-          <image src='{{conIcon}}' class='conIcon'></image>     
+          <image src='{{contactIcon}}' class='conIcon'></image>
         </view>
         <view class='dirGet' bindtap="conTA">
             <view hover-class="defaultHover" class='lDGT'>

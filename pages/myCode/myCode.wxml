@@ -1,11 +1,11 @@
 <!--pages/myCode/myCode.wxml-->
 <view class='container'>
   <view class='payCode'>
-    <image class='codeImg' bindtap='showLarge' src='{{myPayCode}}' mode='widthFix'></image>
+    <image class='codeImg' bindtap='showLarge' src='{{myPayCodeUrl}}' mode='widthFix'></image>
   </view>
   <view class='helpArea' bindtap='showHelp'>
     <view class='help'><text>如何找到我的收款二维码？</text></view>
   </view>
-    <view class='btnArea' hover-class='button-hover' bindtap='upOrChangeCode'><text>{{can_change?'更改':'选择'}}收款二维码</text>
+    <view class='btnArea' hover-class='button-hover' bindtap='upOrChangeCode'><text>{{canChange?'更改':'选择'}}收款二维码</text>
   </view>
 </view>

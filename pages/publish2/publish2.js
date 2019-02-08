@@ -6,45 +6,36 @@ Page({
      * 页面的初始数据
      */
     data: {
-        uploadList: null,
         checkBtnIcon: "../../images/next.png",
 
-        exCon: '',
-        sdLoc: '',
-        conPhoneNum: '',
+        expStation: '',
+        sendLoc: '',
+        conPhone: '',
         phoneRear: '',
         recName: '',
 
         checking: false,
-
         sexLimRange: [
             "无性别限制",
             "男",
             "女"
         ],
         sexIndex: 0,
-
-
-        lastDep: "简单描述下您的快递（不超过50字）",
-        worchecked: false,
-        exWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
-        weIndex: 0,
-        checkboxItems: [
+        expDescript: "简单描述下您的快递（不超过50字）",
+        urgentChecked: false,
+        expWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
+        weightIndex: 0,
+        sizeCheckBox: [
             { name: 'BEx', value: '大件' },
             { name: 'MEx', value: '中件' },
             { name: 'SEx', value: '小件', checked: true }
         ],
-
         rewardBoxItems: [
             { name: 2, value: '2元', checked: true },
             { name: 5, value: '5元' },
             { name: 10, value: '10元' }
         ],
-        rewardTapTime: [
-            0, 0, 0
-        ],
-
-        publishIMG: "../../images/publishIMG2.png"
+        pubImg2: "../../images/publishIMG2.png"
     },
 
     /**
@@ -73,9 +64,9 @@ Page({
             key: 'FORM1',
             success: function(res) {
                 that.setData({
-                    exCon: res.data.selExCon,
-                    sdLoc: res.data.DeRecLocSel,
-                    conPhoneNum: res.data.conPhoneNum,
+                    expStation: res.data.selExCon,
+                    sendLoc: res.data.DeRecLocSel,
+                    conPhone: res.data.conPhone,
                     phoneRear: res.data.phoneRear,
                     recName: res.data.recName
                 })
@@ -131,8 +122,8 @@ Page({
 
 
     secOrdSubmit: function(e) {
-        wx.setStorage({
-            key: 'FORMrow2',
+        wx.setStorageSync({
+            key: 'FORMRaw2',
             data: e.detail.value,
         })
 
@@ -140,16 +131,16 @@ Page({
         if (e.detail.value.rewardIn == '') {
             e.detail.value.rewardIn = e.detail.value.reward;
         }
-        e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+        e.detail.value.weightInfo = this.data.expWeight[this.data.weightIndex];
         e.detail.value.sexLimit = this.data.sexLimRange[this.data.sexIndex]
             // console.log(e.detail.value)
         var that = this;
-        wx.setStorage({
+        wx.setStorageSync({
                 key: 'sizeArr',
-                data: that.data.checkboxItems,
+                data: that.data.sizeCheckBox,
             })
             // setTimeout(function() {
-        wx.setStorage({
+        wx.setStorageSync({
             key: 'FORM2',
             data: e.detail.value,
         })
@@ -191,15 +182,15 @@ Page({
                                 method: 'POST',
                                 // header: { "Content-Type": "application/x-www-form-urlencoded" },
                                 data: {
-                                    userID: app.globalData.user_ID,
+                                    userID: app.globalData.sessionID,
                                     schoolID: app.globalData.schoolID,
                                     //订单具体信息
-                                    contactNum: event.conPhoneNum,
+                                    contactNum: event.conPhone,
                                     sendArea: event.DeRecLocSel,
-                                    sendLoc: event.DeRecLocIn,
+                                    sendLocSelect: event.recLocInput,
                                     recName: event.recName,
                                     phoneRear: event.phoneRear,
-                                    setDefault: event.setDef,
+                                    setDefault: event.setDefFlag,
                                     fetchCode: event.fetchCode,
                                     expressLoc: event.selExCon,
                                     deadline: event.exTimeConDate + ' ' + event.exTimeConTime,
@@ -271,14 +262,14 @@ Page({
     weInfoChange: function(e) {
         // console.log(e);
         this.setData({
-            weIndex: e.detail.value
+            weightIndex: e.detail.value
         })
     },
 
     worcheck: function() {
-        var worchecked1 = !this.data.worchecked;
+        var worchecked1 = !this.data.urgentChecked;
         this.setData({
-            worchecked: worchecked1
+            urgentChecked: worchecked1
         })
     },
 
@@ -288,7 +279,7 @@ Page({
         switch (e.detail.value) {
             case '大件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件', checked: true },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件', checked: true },
                         { name: 'MEx', value: '中件' },
                         { name: 'SEx', value: '小件' }
                     ]
@@ -296,7 +287,7 @@ Page({
                 break;
             case '中件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件' },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件' },
                         { name: 'MEx', value: '中件', checked: true },
                         { name: 'SEx', value: '小件' }
                     ]
@@ -304,7 +295,7 @@ Page({
                 break;
             case '小件':
                 this.setData({
-                    checkboxItems: [{ name: 'BEx', value: '大件' },
+                    sizeCheckBox: [{ name: 'BEx', value: '大件' },
                         { name: 'MEx', value: '中件' },
                         { name: 'SEx', value: '小件', checked: true }
                     ]
@@ -337,7 +328,7 @@ Page({
         // console.log(data_tocheck)
         for (var Key in data_tocheck) {
             if (data_tocheck[Key] == '') { //有空的返回true
-                if (Key != 'setDef' && Key != 'otherInfo' && Key != 'worInfo') {
+                if (Key != 'setDefFlag' && Key != 'otherInfo' && Key != 'worInfo') {
                     return true
                 }
             }

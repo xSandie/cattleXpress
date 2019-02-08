@@ -8,12 +8,12 @@ Page({
     data: {
         myPoliceList: [
             // myPoliceList: [{
-            //     LName: '',
+            //     pubLastName: '',
             //     policeStatus: null,
             //     reason: "",
             //     reportOrderID: '',
             // }, {
-            //     LName: '',
+            //     pubLastName: '',
             //     policeStatus: null,
             //     reason: "",
             //     reportOrderID: '',
@@ -21,12 +21,12 @@ Page({
         ],
         policeMeList: [
             //     {
-            //     LName: '',
+            //     pubLastName: '',
             //     policeStatus: null,
             //     reason: "",
             //     reportOrderID: '',
             // }, {
-            //     LName: '',
+            //     pubLastName: '',
             //     policeStatus: null,
             //     reason: "",
             //     reportOrderID: '',
@@ -57,7 +57,7 @@ Page({
             url: urlModel.url.policelist, //查询举报条目列表
             method: 'GET',
             data: {
-                'userID': app.globalData.user_ID,
+                'userID': app.globalData.sessionID,
             },
             // header: {
             //     "Content-Type": "applciation/json"

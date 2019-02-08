@@ -4,7 +4,7 @@
             <view class='contactNum'>
                 <text class='contactNumTi'>联系电话</text>
                 <view>
-                <input type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhoneNum}}" class='contactNumCon' />
+                <input bindblur='extractPhoneRear' type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhone}}" class='contactNumCon' />
                 </view>
             </view>
             <view class='tline'>   
@@ -12,10 +12,10 @@
             <view class='recLoc'>
                 <text class='recLocTi'>送达地址</text>
                     <view class='recLocDetail'>
-                        <picker value="{{sendLoc}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLoc}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
+                        <picker value="{{sendLocSelect}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
                         <view class='cline'>
                         </view>
-                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocIn}}" class='DeRecLocIn'/>
+                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocInput}}" class='DeRecLocIn'/>
                     </view>
             </view>
             <view class='tline'>   
@@ -37,7 +37,7 @@
             </view>
         </view>
         <button hover-class="answerHover" formType="submit">
-            <text>确认修改</text> 
+            <text>{{btnText}}</text> 
         </button>
     </form>
 </view>

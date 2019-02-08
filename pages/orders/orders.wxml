@@ -1,6 +1,6 @@
 <!--导航条-->  
 <view class="navbar">  
-  <view wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap"><text>{{item}}</text></view>  
+  <view wx:for="{{navBar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap"><text>{{item}}</text></view>
 </view>  
 <view class='container'>
 <!--未完成-->  
@@ -10,8 +10,8 @@
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.orderID}}" wx:for="{{ongoRecListCount}}" >
-                    <view class='rowFlex' data-orderstate="{{item.exState}}" data-order-id="{{item.orderID}}" bindtap="toRecDetails">
+            <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.orderId}}" wx:for="{{ongoRecList}}" >
+                    <view class='rowFlex' data-orderstate="{{item.exState}}" data-order-id="{{item.orderId}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -25,11 +25,11 @@
                         </view>
                         <view class='body'>
                             <view class='exInstance'>
-                                <text>{{item.exInstance}} 送至</text> 
+                                <text>{{item.expStationName}} 送至</text>
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                <view class='exTagWor' wx:if="{{item.urgent}}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
@@ -45,7 +45,7 @@
                                 </view>
                             </view>
                             <view class='exSum'>
-                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前送达</text></view>
+                                    <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}前送达</text></view>
                             </view>
                         </view>
                     </view>
@@ -61,8 +61,8 @@
             <text>我发布的</text>
         </view>
         <view class='orderCard'>
-            <view hover-class="answerHover1" class='ongoPubList' wx:key="{{item.orderID}}" wx:for="{{ongoPubListCount}}">
-                <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toPubDetails">
+            <view hover-class="answerHover1" class='ongoPubList' wx:key="{{item.orderId}}" wx:for="{{ongoPubList}}">
+                <view class='rowFlex' data-order-id="{{item.orderId}}" bindtap="toPubDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -76,24 +76,24 @@
                         </view>
                         <view class='body'>
                             <view class='exInstance'>
-                                <text>{{item.exInstance}} 送至</text> 
+                                <text>{{item.expStationName}} 送至</text>
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                <view class='exTagWor' wx:if="{{item.urgent}}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
                             <view class='exTag'>
                                 <view class='exTag exTagWei'>
-                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                                    <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
                                 </view>
                                 <view class='exTag exTagTime'>
-                                    <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
+                                    <view class='tagText'><text>{{item.endTime}}前送达</text></view>
                                 </view>
                             </view>
                             <view class='pubisher'>
-                                <image class='pubIcon' src="{{pubIcon}}"></image>
+                                <image class='pubIcon' src="{{pubPersonIcon}}"></image>
                                 <view class='pubName'>
                                 <text>接单人：{{item.recName}}</text>
                                 </view>
@@ -127,8 +127,8 @@
             <text>我接到的</text>
         </view>
         <view class='orderCard'>
-            <view hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecListCount}}" wx:key="{{item.orderID}}">
-                    <view class='rowFlex' data-order-id="{{item.orderID}}" bindtap="toRecDetails">
+            <view hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecList}}" wx:key="{{item.orderId}}">
+                    <view class='rowFlex' data-order-id="{{item.orderId}}" bindtap="toRecDetails">
                         <view class='reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
@@ -142,19 +142,19 @@
                         </view>
                         <view class='body'>
                             <view class='exInstance'>
-                                <text>{{item.exInstance}} 送至</text> 
+                                <text>{{item.expStationName}} 送至</text>
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                <view class='exTagWor' wx:if="{{item.urgent}}">
                                     <view class='tagText'><text>加急</text></view> 
                                 </view>
                             </view>
                             <view class='finExSum'>
-                                    <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}} | {{item.exExTime}}前送达</text></view>
+                                    <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}前送达</text></view>
                             </view>
                             <view class='finPubisher'>
-                                <image class='pubIcon' src="{{pubIcon}}"></image>
+                                <image class='pubIcon' src="{{pubPersonIcon}}"></image>
                                 <view class='pubName'>
                                 <text>发布人：{{item.pubName}}同学</text>
                                 </view>
@@ -174,8 +174,8 @@
                 <text>我发布的</text>
             </view>
             <view class='orderCard'>
-                <view hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubListCount}}" wx:key="{{item.orderID}}">
-                    <view class='rowFlex' data-order-id="{{item.orderID}}"  bindtap="toPubDetails">
+                <view hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubList}}" wx:key="{{item.orderId}}">
+                    <view class='rowFlex' data-order-id="{{item.orderId}}"  bindtap="toPubDetails">
                             <view class='reward'>
                                 <view class='rcText'>
                                         <text>赏金</text>
@@ -189,24 +189,24 @@
                             </view>
                             <view class='body'>
                                 <view class='exInstance'>
-                                    <text>{{item.exInstance}} 送至</text> 
+                                    <text>{{item.expStationName}} 送至</text>
                                 </view>
                                 <view class='sdInstance'>
                                     <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                    <view class='exTagWor' wx:if="{{item.exWorry}}">
+                                    <view class='exTagWor' wx:if="{{item.urgent}}">
                                         <view class='tagText'><text>加急</text></view> 
                                     </view>
                                 </view>
                                 <view class='exTag'>
                                     <view class='exTag finexTagWei'>
-                                        <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                                        <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
                                     </view>
                                     <view class='exTag finexTagTime'>
-                                        <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
+                                        <view class='tagText'><text>{{item.endTime}}前送达</text></view>
                                     </view>
                                 </view>
                                 <view class='finPubisher'>
-                                    <image class='pubIcon' src="{{pubIcon}}"></image>
+                                    <image class='pubIcon' src="{{pubPersonIcon}}"></image>
                                     <view class='pubName'>
                                     <text>接单人：{{item.recName}}</text>
                                     </view>
@@ -221,7 +221,7 @@
                 </view> 
             </view>
         </view>
-        <view wx:if="{{!atEnd}}" class='prompt'>
+        <view wx:if="{{!atEndFlag}}" class='prompt'>
             <view class='lineCss'></view>
             <text>下拉加载更多</text>
             <view class='lineCss'></view>

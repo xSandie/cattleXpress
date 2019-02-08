@@ -1,14 +1,14 @@
 <view class='container'>
     <view class='exLocDe'>
-        <image class='exLogo' src="{{exLogo}}"></image>
+        <image class='exLogo' src="{{expLogoUrl}}"></image>
         <view class='exDetail'>
-            <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>营业时间：{{exLocTime}}</text>
+            <text class='exInstance'>{{expStationName}}</text>
+            <text class='exLocTime'>营业时间：{{expOpenTime}}</text>
         </view>
     </view>
     <form class='mainForm' bindsubmit="fixReport">
         <view class='floatCard'>
-            <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
+            <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
             <view class="tline"></view>
             <input class="inputCorrect" type="text" name="reportIn" placeholder="输入更正的营业时间"/>
         </view>

@@ -10,43 +10,35 @@ Page({
 
         policeIcon: "../../images/policeLight.png",
         camIcon: "../../images/photo.png",
-        LName: "",
+        recLastName: "",//被举报人姓
         reportTime: "暂未生成",
-        lastDep: '乱举报也会被封号，请谨慎举报',
+        description: '乱举报也会被封号，请谨慎举报',
 
         reportRe1: '',
-        report1: [
-            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
-        ],
+        report1: [],
         complainRe1: '',
-        complain1: [
-            // "http://img02.tooopen.com/images/20150514/tooopen_sy_122783536345.jpg", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
-        ],
+        complain1: [],
         reportRe2: '',
-        report2: [
-            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
-        ],
+        report2: [],
         complainRe2: '',
-        complain2: [
-            // "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png", "http://p1.qzone.la/upload/20150311/tsljdoeq.png"
-        ],
+        complain2: [],
         //图片上传相关
         img1: null,
         img2: null,
         img3: null,
-        imgUp: [],
+        imgUpList: [],
 
-        orderID: null,
-        policeID: null //本条举报记录的id
+        orderId: null,
+        policeId: null //本条举报记录的id
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        // console.log(options.orderID)
+        // console.log(options.orderId)
         var that = this
-        if (options.orderID) {
+        if (options.orderId) {
             //从订单过来的
             var oDate = new Date();
             var year = oDate.getFullYear();
@@ -57,22 +49,22 @@ Page({
             var generateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute
             that.setData({
                 reportTime: generateTime,
-                orderID: options.orderID,
-                LName: options.LName,
+                orderId: options.orderId,
+                recLastName: options.pubLastName,
                 reportProcess: 0
             })
         }
         if (options.detailID) {
             // detailID即举报记录id,从列表过来的
             this.setData({
-                policeID: options.detailID
+                policeId: options.detailID
             })
             wx.request({ //获取举报订单详情
                 url: urlModel.url.reportDetail,
                 method: 'GET',
                 data: {
-                    'policeID': options.detailID,
-                    'getterID': app.globalData.user_ID
+                    'policeId': options.detailID,
+                    'getterID': app.globalData.sessionID
                 },
                 success: function(res) {
                     if (res.statusCode == 200) {
@@ -87,8 +79,8 @@ Page({
                             report2: res.data.img3 ? res.data.img3 : null,
                             complainRe2: res.data.complain2 ? res.data.complain2 : null,
                             complain2: res.data.img4 ? res.data.img4 : null,
-                            orderID: res.data.orderID,
-                            LName: res.data.LName,
+                            orderId: res.data.orderId,
+                            recLastName: res.data.pubLastName,
                             reportTime: res.data.pubTime
                         })
                     }
@@ -139,8 +131,8 @@ Page({
             url: urlModel.url.reportDetail,
             method: 'GET',
             data: {
-                'policeID': that.data.policeID,
-                'getterID': app.globalData.user_ID
+                'policeId': that.data.policeId,
+                'getterID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
@@ -155,8 +147,8 @@ Page({
                         report2: res.data.img3 ? res.data.img3 : null,
                         complainRe2: res.data.complain2 ? res.data.complain2 : null,
                         complain2: res.data.img4 ? res.data.img4 : null,
-                        orderID: res.data.orderID,
-                        LName: res.data.LName,
+                        orderId: res.data.orderId,
+                        recLastName: res.data.pubLastName,
                         reportTime: res.data.pubTime
                     })
                     wx.hideLoading()
@@ -205,7 +197,7 @@ Page({
         // console.log("发起举报")
         // console.log(e)
         var that = this
-        if (e.detail.value.reportRe1 == '' || that.data.imgUp.length == 0) {
+        if (e.detail.value.reportRe1 == '' || that.data.imgUpList.length == 0) {
             wx.showModal({
                 title: '提示',
                 content: '请上传一张照片，并说明举报原因',
@@ -220,7 +212,7 @@ Page({
             //再次举报
             wx.uploadFile({
                 url: urlModel.url.policePub,
-                filePath: that.data.imgUp[0],
+                filePath: that.data.imgUpList[0],
                 name: 'police_img',
                 header: {
                     "Content-Type": "multipart/form-data",
@@ -228,10 +220,10 @@ Page({
                     //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
                 },
                 formData: {
-                    gId: app.globalData.user_ID, //其他额外的formdata，userId
+                    gId: app.globalData.sessionID, //其他额外的formdata，userId
                     reason: e.detail.value.reportRe1,
-                    policeID: that.data.policeID,
-                    orderID: that.data.orderID
+                    policeId: that.data.policeId,
+                    orderId: that.data.orderId
                         // pubTime: that.data.reportTime
                 },
                 success: function(res) {
@@ -254,7 +246,7 @@ Page({
             //初次举报
             wx.uploadFile({
                 url: urlModel.url.policePub,
-                filePath: that.data.imgUp[0] ? that.data.imgUp[0] : '',
+                filePath: that.data.imgUpList[0] ? that.data.imgUpList[0] : '',
                 name: 'police_img',
                 header: {
                     "Content-Type": "multipart/form-data",
@@ -262,9 +254,9 @@ Page({
                     //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
                 },
                 formData: {
-                    gId: app.globalData.user_ID, //其他额外的formdata，userId
+                    gId: app.globalData.sessionID, //其他额外的formdata，userId
                     reason: e.detail.value.reportRe1,
-                    orderID: that.data.orderID,
+                    orderId: that.data.orderId,
                     pubTime: that.data.reportTime
                 },
                 success: function(res) {
@@ -307,8 +299,8 @@ Page({
                             url: urlModel.url.cancelPolice,
                             method: 'POST',
                             data: {
-                                'gId': app.globalData.user_ID,
-                                'policeID': that.data.policeID
+                                'gId': app.globalData.sessionID,
+                                'policeId': that.data.policeId
                             },
                             success: function(res) {
                                 if (res.statusCode == 200 && res.data.msg == 'ok') {
@@ -348,7 +340,7 @@ Page({
                 var tempFilePaths = res.tempFilePaths
                     // console.log(tempFilePaths);
                 that.setData({
-                    imgUp: tempFilePaths,
+                    imgUpList: tempFilePaths,
                     img1: tempFilePaths,
                     // img2: tempFilePaths[1],
                     // img3: tempFilePaths[2]

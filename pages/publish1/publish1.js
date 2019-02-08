@@ -6,17 +6,10 @@ Page({
      * 页面的初始数据
      */
     data: {
-        DeRecLocIn: '',
-        index: 0,
-        selExCon: [
-            [],
-            []
-        ],
-
         default: {
-            conPhoneNum: '点击输入电话号码',
-            sendLoc: '选择地点',
-            sendLocIn: '填写地点',
+            conPhone: '点击输入电话号码',
+            sendLocSelect: '选择地点',
+            sendLocInput: '填写地点',
             recName: '填写姓名',
             phoneRear: '四位数字',
             //date: '点击选择日期', //往后加一天
@@ -24,36 +17,36 @@ Page({
         dateRange: [],
 
 
-        exlocArray: [
+        expressLocArray: [
             [],
             []
         ],
         expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
-        exlocfirstIndex: 0,
-        exlocSecondIndex: 0,
-        sendLoc: '', //'宿舍区' + '·' + '周园', //默认
-        sdlocArray: [
+        expFirstIndex: 0,
+        expSecondIndex: 0,
+        sendLocSelect: '', //'宿舍区' + '·' + '周园', //默认
+        sendLocArray: [
             [],
             []
         ],
-        sdlocIndex: [0, 0],
-        sdlocfirstIndex: 0,
-        sdlocSecondIndex: 0,
+        sendLocIndex: [0, 0],
+        sendLocFirstIndex: 0,
+        sendLocSecondIndex: 0,
 
-        column2_0: [],
-        column2_1: [],
-        column2_2: [],
-        column2_3: [],
+        dormArea: [],
+        teachArea: [],
+        otherArea: [],
+        transCampus: [],
 
 
-        time: '22:00',
-        dateSel: '', //页面加载时将会获取并设置
+        endTime: '22:00',
+        dateSelect: '', //页面加载时将会获取并设置
         dateIndex: 0,
 
 
-        nbtnIcon: "../../images/next.png",
-        setDef: false,
-        publishIMG: "../../images/publishIMG1.png",
+        nextBtnIcon: "../../images/next.png",
+        setDefFlag: false,
+        pubImg: "../../images/publishIMG1.png",
 
     },
 
@@ -108,7 +101,7 @@ Page({
             })
         }
         var send_data = {
-            'gId': app.globalData.user_ID
+            'gId': app.globalData.sessionID
         }
         var that = this
         wx.request({
@@ -122,51 +115,25 @@ Page({
             complete: function() { //无论成功还是失败都会执行
                 that.setData({
                     default: app.globalData.default,
-                    sendLoc: app.globalData.default.sendLoc
+                    sendLocSelect: app.globalData.default.sendLocSelect
                 })
             }
         })
 
         this.setData({
-                exlocArray: app.globalData.exlocArray,
-                column2_0: app.globalData.column2_0,
-                column2_1: app.globalData.column2_1,
-                column2_2: app.globalData.column2_2,
-                column2_3: app.globalData.column2_3,
+                expressLocArray: app.globalData.expressLocArray,
+                dormArea: app.globalData.dormArea,
+                teachArea: app.globalData.teachArea,
+                otherArea: app.globalData.otherArea,
+                transCampus: app.globalData.transCampus,
                 dateRange: app.globalData.dateRange
             }) //执行完才提交
         this.setData({
-                sdlocArray: [
-                    ['宿舍区', '教学区', '其他区', '跨校区'], that.data.column2_0
-                ],
+            sendLocArray: [
+                ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
+            ],
 
-            })
-            // var that = this
-
-        //缓存信息设为默认
-        // wx.getStorage({
-        //     key: 'FORMrow1',
-        //     success: function(res) {
-        //         that.setData({
-        //             sdlocIndex: res.data.DeRecLocSel,
-        //             dateIndex: res.data.exTimeConDate,
-        //             // setDef: res.data.setDef
-        //         })
-        //     }
-        // })
-        // wx.getStorage({
-        //     key: 'FORM1',
-        //     success: function(res) {
-        //         that.setData({
-        //             conPhoneNum: res.data.conPhoneNum,
-        //             sendLoc: res.data.DeRecLocSel,
-        //             sendLocIn: res.data.DeRecLocIn,
-        //             recName: res.data.recName,
-        //             phoneRear: res.data.phoneRear,
-        //             expressLoc: res.data.selExCon,
-        //         })
-        //     },
-        // })
+        })
     },
 
     /**
@@ -210,40 +177,38 @@ Page({
     sdlocChange: function(e) {
         // console.log(e);
         // console.log('picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.sdlocArray[0][this.data.sdlocIndex[0]] + '·' + this.data.sdlocArray[1][this.data.sdlocIndex[1]]
+        var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
         this.setData({
-            sendLoc: selected
+            sendLocSelect: selected
         })
     },
     sdlocColumnChange: function(e) {
         // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         var data = {
-            sdlocArray: this.data.sdlocArray,
-            sdlocIndex: this.data.sdlocIndex
+            sendLocArray: this.data.sendLocArray,
+            sendLocIndex: this.data.sendLocIndex
         }
-        data.sdlocIndex[e.detail.column] = e.detail.value;
+        data.sendLocIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
             case 0:
-                switch (data.sdlocIndex[0]) {
+                switch (data.sendLocIndex[0]) {
                     case 0:
-                        data.sdlocArray[1] = this.data.column2_0;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.dormArea;
                         break;
 
                     case 1:
-                        data.sdlocArray[1] = this.data.column2_1;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.teachArea;
                         break;
                     case 2:
-                        data.sdlocArray[1] = this.data.column2_2;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.otherArea;
+                        // console.log(data.sendLocArray[1])
                         break;
                     case 3:
-                        data.sdlocArray[1] = this.data.column2_3;
-                        // console.log(data.sdlocArray[1])
+                        data.sendLocArray[1] = this.data.transCampus;
+                        // console.log(data.sendLocArray[1])
                         break;
                 }
-                data.sdlocIndex[1] = 0;
+                data.sendLocIndex[1] = 0;
                 break;
 
             case 1:
@@ -257,7 +222,7 @@ Page({
     exlocChange: function(e) {
         // console.log(e);
         // console.log('时间picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.exlocArray[0][this.data.exlocfirstIndex] + '·' + this.data.exlocArray[1][this.data.exlocSecondIndex]
+        var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
         this.setData({
             expressLoc: selected
         })
@@ -267,40 +232,39 @@ Page({
         // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         if (e.detail.column == 0) {
             this.setData({
-                exlocfirstIndex: e.detail.value
+                expFirstIndex: e.detail.value
             })
         } else {
             this.setData({
-                exlocSecondIndex: e.detail.value
+                expSecondIndex: e.detail.value
             })
         }
     },
     dateChange: function(e) {
-        // console.log(e);
+        // 设置日期
         this.setData({
             dateIndex: e.detail.value
         })
     },
-    bindTimeChange: function(e) {
-        // console.log('picker发送选择改变，携带值为', e.detail.value)
+    bindTimeChange: function(e) { //设置时间
         this.setData({
-            time: e.detail.value
+            endTime: e.detail.value
         })
     },
     firstOrdSubmit: function(e) {
-        wx.setStorage({
-                key: 'FORMrow1',
+        wx.setStorageSync({
+                key: 'FORMRaw1',
                 data: e.detail.value,
-            }) //设置原始数据缓存,后面会用到
-        e.detail.value.DeRecLocSel = this.data.sendLoc;
+            }) //设置 原始数据 缓存,后面会用到
+        e.detail.value.DeRecLocSel = this.data.sendLocSelect;
         e.detail.value.selExCon = this.data.expressLoc;
-        // e.detail.value.weightInfo = this.data.exWeight[this.data.weIndex];
+        // e.detail.value.weightInfo = this.data.expWeight[this.data.weightIndex];
         e.detail.value.exTimeConDate = this.data.dateRange[this.data.dateIndex]
-        if (e.detail.value.DeRecLocIn == '') {
-            e.detail.value.DeRecLocIn = this.data.default.sendLocIn;
+        if (e.detail.value.recLocInput == '') {
+            e.detail.value.DeRecLocIn = this.data.default.sendLocInput;
         }
-        if (e.detail.value.conPhoneNum == '') {
-            e.detail.value.conPhoneNum = this.data.default.conPhoneNum;
+        if (e.detail.value.conPhone == '') {
+            e.detail.value.conPhoneNum = this.data.default.conPhone;
         }
         if (e.detail.value.recName == '') {
             e.detail.value.recName = this.data.default.recName;
@@ -309,20 +273,20 @@ Page({
             e.detail.value.phoneRear = this.data.default.phoneRear;
         }
 
-        if (this.check_default(e.detail.value)) {
+        if (this.check_default_notset(e.detail.value)) {
             wx.showToast({
                 title: '输入有误，请检查',
                 icon: 'none'
             })
         } else { //非默认值，可以进入下一个
             //可以上传默认地址
-            if (e.detail.value.setDef == true) {
+            if (e.detail.value.setDefFlag == true) {
                 var detail = e.detail.value
                 var send_data = {
-                    'userID': app.globalData.user_ID,
+                    'userID': app.globalData.sessionID,
                     'sdLocSum': detail.DeRecLocSel,
-                    'sdLocDetail': detail.DeRecLocIn,
-                    'contactNum': detail.conPhoneNum,
+                    'sdLocDetail': detail.recLocInput,
+                    'contactNum': detail.conPhone,
                     'fetchName': detail.recName,
                     'phoneRare': detail.phoneRear
                 }
@@ -336,7 +300,7 @@ Page({
                     }
                 })
             }
-            wx.setStorage({
+            wx.setStorageSync({
                 key: 'FORM1',
                 data: e.detail.value,
             })
@@ -347,10 +311,10 @@ Page({
         // console.log('form发生了submit事件，携带数据为：', e.detail.value)
 
     },
-    setDef: function() {
-        var setDefault = this.data.setDef;
+    setDefFlag: function() {
+        var setDefault = this.data.setDefFlag;
         this.setData({
-            setDef: !setDefault
+            setDefFlag: !setDefault
         })
     },
     differLink: function() {
@@ -367,12 +331,12 @@ Page({
             }
         })
     },
-    check_default: function(data_tocheck) {
+    check_default_notset: function(data_tocheck) {
         for (var Key in data_tocheck) {
-            if (Key == 'conPhoneNum') {
+            if (Key == 'conPhone') {
                 // console.log(Key)
                 if (data_tocheck[Key] == '点击输入电话号码') { return true }
-            } else if (Key == 'DeRecLocIn') {
+            } else if (Key == 'recLocInput') {
                 // console.log(Key)
                 if (data_tocheck[Key] == '填写地点') { return true }
             } else if (Key == 'recName') {

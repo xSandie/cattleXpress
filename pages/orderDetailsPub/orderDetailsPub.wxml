@@ -1,25 +1,25 @@
 <view class='container'>
     <view class='exLocDe'>
-        <image class='exLogo' src="{{exLogo}}"></image>
+        <image class='exLogo' src="{{expLogoUrl}}"></image>
         <view class='exDetail'>
-            <text class='exInstance'>{{exInstance}}</text>
-            <text class='exLocTime'>{{exLocTime}}</text>
+            <text class='exInstance'>{{expStationName}}</text>
+            <text class='exLocTime'>{{expOpenTime}}</text>
         </view>
         <view class='cline'>   
         </view>
         <view  hover-class="answerHover1" class='fixBtn'>
-            <image src="{{fxIcon}}" bindtap="toFix" data-express-id="{{expressID}}" class='fxIcon'></image>
+            <image src="{{fixIcon}}" bindtap="toFix" data-express-id="{{expressId}}" class='fxIcon'></image>
             <text class='fxText'>报错</text>
         </view>
     </view>
 
-    <view wx:if="{{!hideStatus}}" class="statusBar">
+    <view wx:if="{{!hideStatusBar}}" class="statusBar">
         <view class="status" style="background: {{statusBack}}">
-            <text>{{status}}</text>
+            <text>{{statusName}}</text>
         </view>
         <view class="receive">
-            <text class="reName">接单人：{{reName}}</text>
-            <text class="reTime">{{reTime}}</text>
+            <text class="reName">接单人：{{receiverName}}</text>
+            <text class="reTime">{{receiveTime}}</text>
         </view>
         <view class='cline1'wx:if="{{statusCode==1||statusCode==2}}">   
         </view>
@@ -43,36 +43,36 @@
              <view class="column">
                  <view class="item">
                      <view>
-                         <image class="deIcon" src='{{haoIcon}}'></image>
+                         <image class="deIcon" src='{{phoneRearIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>手机尾号：<text class="impText">{{haoText}}</text></text>
+                         <text>手机尾号：<text class="impText">{{phoneRear}}</text></text>
                      </view>
                  </view>
                  <view class="item">
                      <view>
-                          <image class="deIcon" src='{{jianIcon}}'></image>                    
+                          <image class="deIcon" src='{{sizeIcon}}'></image>
                      </view>
                      <view class="norText">
-                        <text>物品大小：<text class="impText">{{jianText}}</text></text>
+                        <text>物品大小：<text class="impText">{{expSize}}</text></text>
                      </view>
                  </view>
              </view>
              <view class="column1">
                  <view class="item">
                      <view>
-                         <image class="deIcon" src='{{mingIcon}}'></image>
+                         <image class="deIcon" src='{{nameIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>取货姓名：<text class="impText">{{mingText}}</text></text>
+                         <text>取货姓名：<text class="impText">{{recName}}</text></text>
                      </view>
                  </view>
                  <view class="item">
                      <view>
-                         <image class="deIcon" src='{{shiIcon}}'></image>
+                         <image class="deIcon" src='{{timeIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text><text class="impText">{{shiText}}</text>送达</text>
+                         <text><text class="impText">{{endTime}}</text>送达</text>
                      </view>
                  </view>
              </view>
@@ -83,10 +83,10 @@
                 <text>送至 DELIVER TO</text>
             </view>
             <view class="sdLoc">
-                <text>{{sdLoc}}</text>
+                <text>{{sendLocAll}}</text>
             </view>
         </view>
-        <view class='worTag' wx:if="{{exWorry=== 'true'}}"><text>加急</text></view>
+        <view class='worTag' wx:if="{{urgent=== 'true'}}"><text>加急</text></view>
     </view>
     <view class='mainSum'>
         <view class='reward'>
@@ -112,7 +112,7 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <view wx:if="{{reTime!='若是自己取快递，记得帮别人领噢'&&(statusCode!=3&&statusCode!=5&&statusCode!=6)}}">取消订单请先<view bindtap="conTA" style='display:inline' class="nav">联系对方</view></view>
+           <view wx:if="{{receiveTime!='若是自己取快递，记得帮别人领噢'&&(statusCode!=3&&statusCode!=5&&statusCode!=6)}}">取消订单请先<view bindtap="conTA" style='display:inline' class="nav">联系对方</view></view>
            <view wx:if="{{statusCode==5||statusCode==6}}">
                请至 我的 > 举报/申诉进度 查看详情
            </view>
@@ -129,11 +129,11 @@
         </button>
         <view class="smallBtnA">
             <view hover-class="answerHover1" bindtap="conTA" class="sBtnA">
-                <image src='{{conTAIcon}}' class='dimIcon'></image> 
+                <image src='{{contactIconDim}}' class='dimIcon'></image>
                 <text class='dimText'>联系TA</text>
             </view>
             <view bindtap="policeTA" hover-class="answerHover1" data-order-id="{{orderId}}" class="sBtnA">
-                <image src='{{policeTAIcon}}' class='dimIcon'></image>
+                <image src='{{policeIconDim}}' class='dimIcon'></image>
                 <text class='dimText'>举报</text>
             </view>
         </view>

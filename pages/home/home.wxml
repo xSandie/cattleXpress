@@ -1,17 +1,13 @@
-<view wx:if="{{tongzhi}}" bindtap="toTongzhi" class='tongzhi'>
-    <text selectable>{{tongzhiSum}}</text>   
-</view>
-<view class='container'>
-    <view class='select'>
+<view class='select'>
         <view class='school' bindtap='changeSchool' >
-            <image class='locIcon' src="{{loctionSrc}}"></image>
+            <image class='locIcon' src="{{locIcon}}"></image>
             <view class='schoolText'>
-                <view hover-class="answerHover" class='realSNText'><text>{{mySchoolName}}</text></view>
+                <view hover-class="answerHover" class='realSNText'><text>{{schoolName}}</text></view>
             </view>
             <image class='pullIcon' src='{{pullIcon}}'></image>
         </view>
-        <view bindtap="ifCertif" class='mainSelect'>
-            <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{exlocArray}}">
+        <!--<view bindtap="ifCertif" class='mainSelect'>
+            <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}">
                <view hover-class="answerHover1" class='expressLoc'>
                     <view class='elIcon'>
                     <image class='elIconImg' src="{{elIconImg}}"></image>
@@ -26,7 +22,7 @@
                     </view>
                </view>
             </picker>
-            <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sdlocArray}}">
+            <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}">
                 <view  hover-class="answerHover1" class='sendLoc'>
                     <view class='slIcon'>
                     <image class='slIconImg' src="{{slIconImg}}"></image>
@@ -36,16 +32,25 @@
                         <text>送达地点</text>
                         </view>
                         <view class='lTextSmall'>
-                        <text>{{sendLoc}}</text>
+                        <text>{{sendLocSelect}}</text>
                         </view>
                     </view>
                 </view>
             </picker>
-        </view>
+        </view>-->
+        <view class='swiper-outer'><swiper
+        indicator-dots="true" autoplay="true" circular="true" 
+        interval="5000" duration="500">
+        <block wx:for="{{ads}}" wx:key="*this">
+          <swiper-item>
+            <image class="swiper-item" src="{{item}}"/>
+          </swiper-item>
+        </block>
+      </swiper></view>
     </view>
-
+<view class='container'>
     <view class='list'>
-        <view class='listItem' hover-class="answerHover1" wx:key="{{item.id}}" wx:for="{{listCount}}">
+        <view class='listItem' hover-class="answerHover1" wx:key="{{item.id}}" wx:for="{{orderList}}">
             <view class='rowFlex'  data-order-id="{{item.id}}" bindtap="toSumDetail">
                 <view class='reward'>
                         <view class='rcText'>
@@ -60,27 +65,34 @@
                 </view>
                 <view class='body'>
                     <view class='exInstance'>
-                       <text>{{item.exInstance}} 送至</text>
+                       <text>{{item.expStationName}} 送至</text>
                     </view>
                     <view class='sdInstance'>
-                        <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                        <view class='exTagWor' wx:if="{{item.exWorry}}">
-                            <view class='tagText'><text>加急</text></view>
+                        <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
+                        <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                            <view class='tagText'><text>限团队</text></view>
+                        </view>
+                        <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                            <view class='tagText'><text>限女生</text></view>
+                        </view>
+                        <view class='exTagWor' wx:if="{{item.manOnly}}">
+                            <view class='tagText'><text>限男生</text></view>
                         </view>
                     </view>
                     <view class='exTag'>
                         <view class='exTag exTagWei'>
-                            <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                            <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
                         </view>
                         <view class='exTag exTagTime'>
-                            <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
+                            <view class='tagText'><text>{{item.endTime}}前送达</text></view>
                         </view>
                     </view>
                     <view class='pubisher'>
-                        <image class='pubIcon' src="{{pubIcon}}"></image>
+                        <image class='pubIcon' src="{{pubPersonIcon}}"></image>
                         <view class='pubName'>
                         <text>发布人：{{item.pubName}}</text>
                         </view>
+                        <image src="{{viewEye}}" class='view_eye' /><text class='pubName'>{{item.pv ||1}}人查看</text>
                     </view>
                 </view>
             </view>
@@ -88,9 +100,10 @@
                 <view class='rbText'><text>详情</text></view>
                 <!-- 可能需要先相对定位一下然后使用button-->
             </view>
-
-            <!--<view class='rowFlex' wx:if="{{!item.can_get}}" data-order-id="{{item.id}}">
-                <view class='reward'>
+        </view>
+        <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
+            <view class='rowFlex'  data-order-id="{{item.id}}">
+                <view class='my-silver-bg reward'>
                         <view class='rcText'>
                            <text>赏金</text>
                         </view>
@@ -103,58 +116,44 @@
                 </view>
                 <view class='body'>
                     <view class='exInstance'>
-                       <text>{{item.exInstance}} 送至</text>
+                       <text>{{item.expStationName}} 送至</text>
                     </view>
                     <view class='sdInstance'>
-                        <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                        <view class='exTagWor' wx:if="{{item.exWorry}}">
-                            <view class='tagText'><text>加急</text></view>
-                        </view>
+                        <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
                     </view>
                     <view class='exTag'>
-                        <view class='exTag exTagWei'>
-                            <view class='tagText'><text>重量{{item.exWeight}} | {{item.exSize}}</text></view>
+                        <view class='exTag exTagWei my-silver-bg'>
+                            <view class='tagText my-grey'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
                         </view>
-                        <view class='exTag exTagTime'>
-                            <view class='tagText'><text>{{item.exExTime}}前送达</text></view>
+                        <view class='exTag exTagTime my-silver-bg'>
+                            <view class='tagText my-grey'><text>{{item.endTime}}前送达</text></view>
                         </view>
                     </view>
                     <view class='pubisher'>
-                        <image class='pubIcon' src="{{pubIcon}}"></image>
-                        <view class='pubName'>
+                        <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
+                        <view class='pubName my-grey'>
                         <text>发布人：{{item.pubName}}</text>
                         </view>
                     </view>
                 </view>
             </view>
-            <view wx:if="{{!item.can_get}}" class='rbutton'>
-                <view class='rbText'><text>已被抢</text></view>-->
-
+            <image class='recBadge' src="{{recBadge}}" />
         </view>
     </view>
     <view class='fbtnBox'>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{!fabuOrDingbu}}" bindtap="toTop">
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{!pubOrTop}}" bindtap="toTop">
             <text class='hBtnText'>回到顶部</text>
             <image class='hBtnIcon' src='{{topIcon}}'></image>
         </view>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{fabuOrDingbu}}" bindtap="toPub">
-            <text class='hBtnText'>发布</text>
-            <image class='hBtnIcon' src='{{topubIcon}}'></image>
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{pubOrTop}}" bindtap="toPub">
+            <text class='hBtnText'>智能发布</text>
+            <image class='hBtnIcon' src='{{toTopIcon}}'></image>
         </view>
-        <view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>
+        <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
     </view>
-    <view wx:if="{{atEnd}}" class='prompt'>
+    <view wx:if="{{atEndFlag}}" class='prompt'>
         <view class='lineCss'></view>
         <text>黄牛是有底线的</text>
-        <view class='lineCss'></view>
-    </view>
-     <view class="blankArea" wx:if="{{listCount==false}}">
-     <!-- <view class="blankArea" wx:if="{{!listCount}}"> -->
-        <image class='blankIcon' src='{{blankIcon}}'></image>
-    </view>
-    <view wx:if="{{listCount==false}}" class='prompt'>
-        <view class='lineCss'></view>
-        <text>暂无订单</text>
         <view class='lineCss'></view>
     </view>
 </view>

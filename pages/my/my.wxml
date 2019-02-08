@@ -6,7 +6,7 @@
                     <text class='small'>代领总收入</text>
                 </view>
                 <view class='achie'>
-                    <text>{{creditScr}}</text>
+                    <text>{{creditScore}}</text>
                     <text class='small'>LV.{{level}} 信用分</text>
                 </view> 
             </view>
@@ -21,14 +21,14 @@
                 </view>
             </view> -->
         </view>
-        <image class='cardBack' src='{{cardBack}}'></image>
+        <image class='cardBack' src='{{cardBg}}'></image>
     <view class='proA'>
         <view class='prof'>
             <open-data type="userAvatarUrl" class='profImg'></open-data>
         </view>
         <view class='info'>
             <view class='nameA'>
-                <view wx:if="{{!certif}}">
+                <view wx:if="{{!haveCertif}}">
                     <open-data type="userNickName"></open-data>
                 </view> 
                 <view class='certif' wx:else>
@@ -39,11 +39,11 @@
                 </view>
             </view>
             <view class='schoNum'>
-                <view wx:if="{{!certif}}">
+                <view wx:if="{{!haveCertif}}">
                     <text>学号：66666666</text>
                 </view>
                 <view wx:else>
-                    <text>学号：{{schoNum}}</text>
+                    <text>学号：{{schoolNumb}}</text>
                 </view>
             </view>
         </view>

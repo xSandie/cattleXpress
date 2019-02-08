@@ -1,0 +1,32 @@
+/* components/mainBtn/mainBtn.wxss */
+
+button::after {
+    border: none;
+}
+
+button {
+    font-size: 32rpx;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    height: 100rpx;
+    padding: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 0rpx;
+}
+
+.btn-hover {
+    background: linear-gradient(90deg, #af782c, #b39340);
+}
+
+.iconImg {
+    height: 40rpx;
+    width: 40rpx;
+    margin-right: 10rpx;
+}

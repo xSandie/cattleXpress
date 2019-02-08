@@ -17,7 +17,7 @@
                       <text>被举报人</text>
                   </view>
                   <view class="name">
-                      <text>{{item.LName}}同学</text>
+                      <text>{{item.pubLastName}}同学</text>
                   </view>
                   <view class="reason">
                       <text>举报原因:{{item.reason}}</text>
@@ -48,7 +48,7 @@
                       <text>举报人</text>
                   </view>
                   <view class="name">
-                      <text>{{item.LName}}同学</text>
+                      <text>{{item.pubLastName}}同学</text>
                   </view>
                   <view class="reason">
                       <text>举报原因:{{item.reason}}</text>

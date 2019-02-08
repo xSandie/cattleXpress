@@ -7,12 +7,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        PayCode: null,
-        // receiverSchoolId:null,
-        // receiverAvatar:null,
-        // receiverNickname:'专业黄牛',
-        // receiverLname:'黄'
-        orderID: null
+        payCodeUrl: null,
+        orderId: null
 
     },
 
@@ -23,7 +19,7 @@ Page({
         var that = this
         if (options.orderId) {
             that.setData({
-                orderID: options.orderId
+                orderId: options.orderId
             })
         }
     },
@@ -45,13 +41,13 @@ Page({
             url: urlModel.url.toPayGet,
             method: 'POST',
             data: {
-                'orderID': that.data.orderID,
-                'payerID': app.globalData.user_ID
+                'orderId': that.data.orderId,
+                'payerID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
                     that.setData({
-                        PayCode: res.data.PayCode
+                        payCodeUrl: res.data.payCodeUrl
                             // receiverSchoolId:'',
                             // receiverAvatar:'',
                             // receiverNickname:'',
@@ -89,13 +85,13 @@ Page({
             url: urlModel.url.toPayGet,
             method: 'POST',
             data: {
-                'orderID': that.data.orderID,
-                'payerID': app.globalData.user_ID
+                'orderId': that.data.orderId,
+                'payerID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
                     that.setData({
-                        PayCode: res.data.PayCode
+                        payCodeUrl: res.data.payCodeUrl
                             // receiverSchoolId:'',
                             // receiverAvatar:'',
                             // receiverNickname:'',
@@ -130,7 +126,7 @@ Page({
     showLarge: function() {
         var that = this
         wx.previewImage({
-            urls: [that.data.PayCode],
+            urls: [that.data.payCodeUrl],
         })
     },
     saveCode: function() {
@@ -142,7 +138,7 @@ Page({
                 // console.log("2-授权《保存图片》权限成功");
                 // util.downloadImage(downloadUrl);
                 wx.downloadFile({
-                    url: that.data.PayCode,
+                    url: that.data.payCodeUrl,
                     success: function(res) {
                         // console.log(res)
                         wx.saveImageToPhotosAlbum({

@@ -1,61 +1,57 @@
 {
-  "pages": [
-    "pages/home/home",
-    "pages/welcome/welcome",
-    
-    "pages/certifPage/certifPage",
-    
-    "pages/publish1/publish1",
-    "pages/publish2/publish2",
-    "pages/orders/orders",
-    "pages/my/my",
-    "pages/orderDetailsVeiwer/orderDetailsVeiwer",
-    "pages/orderDetailsRec/orderDetailsRec",
-    "pages/orderDetailsPub/orderDetailsPub",
-    "pages/finPub/finPub",
-    "pages/policeList/policeList",
-    "pages/policeDetailProposal/policeDetailProposal",
-    "pages/policeDetailRec/policeDetailRec",
-    "pages/reportExError/reportExError",
-    "pages/defAddrEdit/defAddrEdit",
-    
-    "pages/changeSchool/changeSchool",
-    "pages/daike/daike",
-    "pages/daikeFabu/daikeFabu",
-    "pages/daikeDetail/daikeDetail",
-    "pages/pay/pay",
-    "pages/myCode/myCode"
-  ],
-  "window": {
-    "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#f5f8fd",
-    "navigationBarTitleText": "",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#f5f8fd",
-    "enablePullDownRefresh": true,
-    "onReachBottomDistance": 50
-  },
-  "tabBar": {
-    "color": "#999ba1",
-    "selectedColor": "#faaf42",
-    "borderStyle": "white",
-    "list": [
-      {
-        "pagePath": "pages/home/home",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/publish1/publish1",
-        "text": "发布"
-      },
-      {
-        "pagePath": "pages/orders/orders",
-        "text": "订单"
-      },
-      {
-        "pagePath": "pages/my/my",
-        "text": "我的"
-      }
-    ]
-  }
+    "pages": [
+        "pages/home/home",
+        "pages/welcome/welcome",
+
+        "pages/certifPage/certifPage",
+
+        "pages/publish1/publish1",
+        "pages/publish2/publish2",
+        "pages/orders/orders",
+        "pages/my/my",
+        "pages/orderDetailsVeiwer/orderDetailsVeiwer",
+        "pages/orderDetailsRec/orderDetailsRec",
+        "pages/orderDetailsPub/orderDetailsPub",
+        "pages/finPub/finPub",
+        "pages/policeList/policeList",
+        "pages/policeDetailProposal/policeDetailProposal",
+        "pages/policeDetailRec/policeDetailRec",
+        "pages/reportExError/reportExError",
+        "pages/defAddrEdit/defAddrEdit",
+
+        "pages/changeSchool/changeSchool",
+        "pages/pay/pay",
+        "pages/myCode/myCode"
+    ],
+    "window": {
+        "backgroundTextStyle": "dark",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationBarTitleText": "",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#ffffff",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50
+    },
+    "tabBar": {
+        "color": "#999ba1",
+        "selectedColor": "#faaf42",
+        "borderStyle": "white",
+        "list": [{
+                "pagePath": "pages/home/home",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/publish1/publish1",
+                "text": "发布"
+            },
+            {
+                "pagePath": "pages/orders/orders",
+                "text": "订单"
+            },
+            {
+                "pagePath": "pages/my/my",
+                "text": "我的"
+            }
+        ]
+    }
 }

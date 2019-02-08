@@ -1,7 +1,7 @@
 <!--pages/pay/pay.wxml-->
 <view class='container'>
   <view class='payCode'>
-    <image class='codeImg' bindtap='showLarge' src='{{PayCode}}' mode='widthFix'></image>
+    <image class='codeImg' bindtap='showLarge' src='{{payCodeUrl}}' mode='widthFix'></image>
   </view>
   <view class='helpArea' bindtap='showHelp'>
     <view class='help'><text>①保存后 ②回到微信 ③微信扫一扫支付 (最好备注是 代领支付 噢)</text></view>

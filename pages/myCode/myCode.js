@@ -7,8 +7,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        can_change: false,
-        myPayCode: ''
+        canChange: false,
+        myPayCodeUrl: ''
     },
 
     /**
@@ -33,14 +33,14 @@ Page({
         wx.request({
             url: urlModel.url.getMyPayCode,
             data: {
-                gId: app.globalData.user_ID
+                gId: app.globalData.sessionID
             },
             success: function(res) {
                 // console.log(res)
                 if (res.statusCode == 200) {
                     that.setData({
-                        myPayCode: res.data.myPayCode + '?v=' + Math.random(),
-                        can_change: res.data.canChange
+                        myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
+                        canChange: res.data.canChange
                     })
                 }
             }
@@ -97,7 +97,7 @@ Page({
     showLarge: function() {
         var that = this
         wx.previewImage({
-            urls: [that.data.myPayCode],
+            urls: [that.data.myPayCodeUrl],
         })
     },
     changeCode: function() {
@@ -119,7 +119,7 @@ Page({
                         //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
                     },
                     formData: {
-                        gId: app.globalData.user_ID //其他额外的formdata，userId
+                        gId: app.globalData.sessionID //其他额外的formdata，userId
                     },
                     success: function(res) {
                         // console.log(res)
@@ -127,7 +127,7 @@ Page({
                             wx.showToast({
                                 title: '上传成功',
                             })
-                            app.globalData.havesetPayCode = res.data.havePayCode
+                            app.globalData.havePayCode = res.data.havePayCode
                                 // that.onShow()
                             wx.switchTab({
                                 url: '../my/my',
@@ -145,12 +145,12 @@ Page({
     upCode: function() {
         this.changeCode()
         this.setData({
-                can_change: true
+                canChange: true
             })
             //然后服务器端也设置成true
     },
     upOrChangeCode: function() {
-        if (this.data.can_change == true) {
+        if (this.data.canChange == true) {
             this.changeCode()
         } else {
             this.upCode()

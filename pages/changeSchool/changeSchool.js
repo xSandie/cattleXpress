@@ -59,7 +59,7 @@ Page({
     onShow: function() {
         var that = this
         var send_data = {
-            'userID': app.globalData.user_ID
+            'userID': app.globalData.sessionID
         }
 
         // var that = this
@@ -151,7 +151,7 @@ Page({
             url: urlModel.url.changeSchool, //填充更改学校url
             method: 'POST',
             data: {
-                userID: app.globalData.user_ID,
+                userID: app.globalData.sessionID,
                 schoolID: schoolid,
             },
             success: function(res) {
@@ -161,23 +161,23 @@ Page({
                     // app.globalData.schoolID = res.data.school_id
                     // app.globalData.schoolName = res.data.school_name
                     // // app.globalData.sex = res.data.sex
-                    // app.globalData.exlocArray = res.data.kuaidi
-                    // app.globalData.column2_0 = res.data.sushequ
-                    // app.globalData.column2_1 = res.data.jiaoxuequ
-                    // app.globalData.column2_2 = res.data.othersarea
-                    // app.globalData.column2_3 = res.data.kuaxiaoqu
+                    // app.globalData.expressLocArray = res.data.kuaidi
+                    // app.globalData.dormArea = res.data.sushequ
+                    // app.globalData.teachArea = res.data.jiaoxuequ
+                    // app.globalData.otherArea = res.data.othersarea
+                    // app.globalData.transCampus = res.data.kuaxiaoqu
                     // app.globalData.balance = res.data.balance
                     // // app.globalData.dateRange = res.data.dateRange
-                    // app.globalData.havesetPayCode = res.data.havePayCode
+                    // app.globalData.havePayCode = res.data.havePayCode
 
                     // app.globalData.msg_con = res.data.msg_con
                     // app.globalData.msg_title = res.data.msg_title
                     // app.globalData.sys_status = res.data.sys_status
 
                     // if (res.data.default) { app.globalData.default = res.data.default }
-                    // app.globalData.user_ID = res.data.gId
+                    // app.globalData.sessionID = res.data.gId
                     // app.globalData.ourUserStatus = res.data.user_status
-                    // if (res.data.user_status == 4) { app.globalData.certif = false } else { app.globalData.certif = true }
+                    // if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
                     app.getUser().then(function(res) {
                         wx.hideLoading()
                         wx.showToast({
@@ -190,7 +190,7 @@ Page({
                             console.log(pages[index])
                             if (pages[index].route == 'pages/home/home') {
                                 pages[index].setData({
-                                    listCount: null
+                                    orderList: null
                                 })
                                 pages[index].onPullDownRefresh()
                                     // console.log(pages[index])

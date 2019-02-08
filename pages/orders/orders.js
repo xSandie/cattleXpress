@@ -6,139 +6,25 @@ Page({
      * 页面的初始数据
      */
     data: {
-        navbar: ['未完成', '已完成'],
+        navBar: ['未完成', '已完成'],
         currentTab: 0,
         blankIcon: '../../images/blank1.png',
         blank: false, //未完成是否为空
-        ongoRecListCount: [],
-        ongoPubListCount: [],
-        finRecListCount: [],
-        finPubListCount: [],
-        // ongoRecListCount: [{
-        //     exState: '4',
-        //     reward: '6',
-        //     exInstance: '圆通·硕士楼',
-        //     sdInstance: '宿舍区 周园',
-        //     exWorry: true,
-        //     fetchCode: 'A1-400121',
-        //     fatchPhone: '9021',
-        //     fetchName: '张筠瑶',
-        //     exWeight: '<1KG',
-        //     exSize: '小件',
-        //     exExTime: '05-07 18:00',
-        //     orderID: '12345'
-        // }], 
-        //     exState: '0',
-        //     reward: '6',
-        //     exInstance: '中通·新勇',
-        //     sdInstance: '宿舍区 硕士楼',
-        //     exWorry: false,
-        //     fetchCode: 'A1-401541',
-        //     fatchPhone: '9021',
-        //     fetchName: '向书晗',
-        //     exWeight: '<1KG',
-        //     exSize: '小件',
-        //     exExTime: '05-07 18:00',
-        //     orderID: '12345'
-        // }],
-        // ongoPubListCount: [{
-        //         exState: '1',
-        //         reward: '5',
-        //         exInstance: '京东·新勇',
-        //         sdInstance: '宿舍区 硕士楼',
-        //         exWorry: true,
-        //         recName: '刘同学 41612058',
-        //         exWeight: '<1KG',
-        //         exSize: '小件',
-        //         exExTime: '05-07 18:00',
-        //         orderID: '12345'
-        //     }],
-        //     {
-        //         exState: '2',
-        //         reward: '16',
-        //         exInstance: '黄马甲·新东门',
-        //         sdInstance: '宿舍区 硕士楼',
-        //         exWorry: true,
-        //         recName: '刘同学 41612058',
-        //         exWeight: '<1KG',
-        //         exSize: '小件',
-        //         exExTime: '05-07 18:00',
-        //         orderID: '12345'
-        //     }
-        // ],
+        ongoRecList: [],
+        ongoPubList: [],
+        finRecList: [],
+        finPubList: [],
 
-        // finRecListCount: [{
-        //     exState: '3',
-        //     reward: '6',
-        //     exInstance: '圆通·硕士楼',
-        //     sdInstance: '宿舍区 周园',
-        //     exWorry: true,
-        //     exWeight: '<1KG',
-        //     exSize: '小件',
-        //     exExTime: '05-07 18:00',
-        //     pubName: '向',
-        //     orderID: '12345'
-        // }], {
-        //     exState: '3',
-        //     reward: '6',
-        //     exInstance: '中通·新勇',
-        //     sdInstance: '宿舍区 硕士楼',
-        //     exWorry: false,
-        //     exWeight: '<1KG',
-        //     exSize: '小件',
-        //     exExTime: '05-07 18:00',
-        //     pubName: '向',
-        //     orderID: '12345'
-
-        // }],
-        // finPubListCount: [{
-        //         exState: '4',
-        //         reward: '5',
-        //         exInstance: '京东·新勇',
-        //         sdInstance: '宿舍区 硕士楼',
-        //         exWorry: true,
-        //         recName: '无',
-        //         exWeight: '<1KG',
-        //         exSize: '小件',
-        //         exExTime: '05-07 18:00',
-        //         orderID: '12345'
-        //     }],
-        //     {
-        //         exState: '3',
-        //         reward: '16',
-        //         exInstance: '黄马甲·新东门',
-        //         sdInstance: '宿舍区 硕士楼',
-        //         exWorry: true,
-        //         recName: '刘同学',
-        //         exWeight: '<1KG',
-        //         exSize: '小件',
-        //         exExTime: '05-07 18:00',
-        //         orderID: '12345'
-        //     },
-        //     {
-        //         exState: '5',
-        //         reward: '16',
-        //         exInstance: '黄马甲·新东门',
-        //         sdInstance: '宿舍区 硕士楼',
-        //         exWorry: true,
-        //         recName: '刘同学',
-        //         exWeight: '<1KG',
-        //         exSize: '小件',
-        //         exExTime: '05-07 18:00',
-        //         orderID: '12345'
-        //     }
-        // ],
-
-        pubIcon: '../../images/publisher.png',
-        atEnd: false,
-        nextPage: 1
+        pubPersonIcon: '../../images/publisher.png',
+        atEndFlag: false,
+        requestTime: 1
     },
     //0代表已接单待支付，1代表等待接单，2代表对方已接单未完成，3代表已完成,4代表已过期,5代表异常。
     navbarTap: function(e) {
         var that = this
         this.setData({
                 currentTab: e.currentTarget.dataset.idx,
-                nextPage: 1
+                requestTime: 1
             })
             // console.log(e.currentTarget.dataset.idx)
         if (e.currentTarget.dataset.idx == 0) {
@@ -146,7 +32,7 @@ Page({
                 url: urlModel.url.notHaveList, //未完成完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.user_ID,
+                    'userID': app.globalData.sessionID,
                     // 'Sex': app.globalData.sex
                 },
                 // header: {
@@ -156,13 +42,13 @@ Page({
                     // console.log(res)
                     that.setData({
                         //修改参数
-                        ongoRecListCount: res.data.ongoRecListCount,
-                        ongoPubListCount: res.data.ongoPubListCount
+                        ongoRecList: res.data.ongoRecList,
+                        ongoPubList: res.data.ongoPubList
                     })
                 },
                 fail: function() {},
                 complete: function() {
-                    if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
+                    if (that.data.ongoPubList.length == 0 && that.data.ongoRecList.length == 0) {
                         that.setData({
                             blank: true
                         })
@@ -178,19 +64,19 @@ Page({
                 url: urlModel.url.haveList, //已完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.user_ID,
-                    'nextPage': 1
+                    'userID': app.globalData.sessionID,
+                    'requestTime': 1
                 },
                 success: function(res) {
                     // console.log('已完成订单请求', res)
-                    if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
+                    if (res.data.finRecList.length == 0 && res.data.finPubList == 0) {
                         that.setData({
-                            atEnd: true
+                            atEndFlag: true
                         })
                     } else {
                         that.setData({
-                            finRecListCount: res.data.finRecListCount,
-                            finPubListCount: res.data.finPubListCount //修改参数
+                            finRecList: res.data.finRecList,
+                            finPubList: res.data.finPubList //修改参数
                         })
                     }
 
@@ -247,7 +133,7 @@ Page({
             url: urlModel.url.notHaveList, //未完成完成订单请求地址
             method: 'POST',
             data: {
-                'userID': app.globalData.user_ID,
+                'userID': app.globalData.sessionID,
                 // 'Sex': app.globalData.sex
             },
             // header: {
@@ -256,11 +142,11 @@ Page({
             success: function(res) {
                 // console.log(res)
                 that.setData({
-                        ongoRecListCount: res.data.ongoRecListCount,
-                        ongoPubListCount: res.data.ongoPubListCount
+                        ongoRecList: res.data.ongoRecList,
+                        ongoPubList: res.data.ongoPubList
                             //修改参数
                     })
-                    // if (that.data.ongoPubListCount == false && that.data.ongoRecListCount == false) {
+                    // if (that.data.ongoPubList == false && that.data.ongoRecList == false) {
                     //     that.setData({
                     //         blank: true
                     //     })
@@ -272,7 +158,7 @@ Page({
             },
             fail: function() {},
             complete: function() {
-                if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
+                if (that.data.ongoPubList.length == 0 && that.data.ongoRecList.length == 0) {
                     that.setData({
                         blank: true
                     })
@@ -306,7 +192,7 @@ Page({
     onPullDownRefresh: function() {
         var that = this
         that.setData({
-            nextPage: 1
+            requestTime: 1
         })
         wx.showLoading({
             title: '加载中',
@@ -316,13 +202,13 @@ Page({
                 url: urlModel.url.notHaveList, //未完成完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.user_ID,
+                    'userID': app.globalData.sessionID,
                 },
                 success: function(res) {
                     that.setData({
                         //修改参数,两边同时刷新
-                        ongoRecListCount: res.data.ongoRecListCount,
-                        ongoPubListCount: res.data.ongoPubListCount
+                        ongoRecList: res.data.ongoRecList,
+                        ongoPubList: res.data.ongoPubList
                     })
                     wx.hideLoading()
                     wx.showToast({
@@ -338,7 +224,7 @@ Page({
                     })
                 },
                 complete: function() {
-                    if (that.data.ongoPubListCount.length == 0 && that.data.ongoRecListCount.length == 0) {
+                    if (that.data.ongoPubList.length == 0 && that.data.ongoRecList.length == 0) {
                         that.setData({
                             blank: true
                         })
@@ -370,26 +256,26 @@ Page({
                 mask: true
             })
             that.setData({
-                nextPage: that.data.nextPage + 1
+                requestTime: that.data.requestTime + 1
             })
             wx.request({
                 url: urlModel.url.haveList, //已完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.user_ID,
-                    'nextPage': that.data.nextPage
+                    'userID': app.globalData.sessionID,
+                    'requestTime': that.data.requestTime
                 },
                 success: function(res) {
 
                     // console.log('已完成订单请求', res)
-                    if (res.data.finRecListCount.length == 0 && res.data.finPubListCount == 0) {
+                    if (res.data.finRecList.length == 0 && res.data.finPubList == 0) {
                         that.setData({
-                            atEnd: true
+                            atEndFlag: true
                         })
                     } else {
                         that.setData({
-                            finRecListCount: that.data.finRecListCount.concat(res.data.finRecListCount),
-                            finPubListCount: that.data.finPubListCount.concat(res.data.finPubListCount) //修改参数
+                            finRecList: that.data.finRecList.concat(res.data.finRecList),
+                            finPubList: that.data.finPubList.concat(res.data.finPubList) //修改参数
                         })
                     } //修改参数
                 },
