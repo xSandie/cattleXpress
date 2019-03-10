@@ -27,7 +27,14 @@
         </view>
         <view class="inputA">
             <view class="inA">
-                <input type="number" name="schoolNumb" class="inputMy" placeholder="账号" bindtap="change1"/>
+                <view class='account_area'>
+                    <input type="number" name="schoolNumb" class="inputMyAccount" placeholder="账号" bindtap="change1"/>
+                    <view class='hint' bindtap="accountHint" hover-class='answerHover1'>
+                    <!--提示账号信息-->
+                        <text class='my-grey s-font'>输入什么？</text>
+                        <image class='icon-20' src="{{questionIcon}}" />
+                    </view>
+                </view>
                 <view class="row" style='background:{{row1Flag?"linear-gradient(90deg, #f9a93e, #fed25c)":"#EEF1FD"}}'></view>
             </view>
             <view class="inA1">

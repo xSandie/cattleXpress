@@ -41,7 +41,6 @@ App({
                                     app.globalData.havePayCode = res.data.have_paycode
                                     app.globalData.sessionID = res.data.sessionID
                                     app.globalData.ourUserStatus = res.data.user_status
-
                                     if (res.data.default) { app.globalData.default = res.data.default }
                                     if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
 
@@ -49,10 +48,10 @@ App({
                                 } else {
                                     wx.hideLoading()
                                     wx.showToast({
-                                        title: '网络不太畅通，请检查网络，再关闭微信重试',
+                                        title: '网络不太畅通，请检查网络后点击重新登陆',
                                         icon: 'none',
-                                        duration: 5000,
-                                        mask: true,
+                                        duration: 2000,
+                                        mask: false,
                                         success: function() {}
                                     })
                                 }
@@ -104,5 +103,6 @@ App({
         },
         dateRange: [],
         havePayCode: false,
+        accountHint: '就是登陆 教务系统 的账号', //认证账号提示
     }
 })

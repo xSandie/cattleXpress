@@ -248,3 +248,22 @@ button::after {
 .backHomeHover {
     color: #af782c;
 }
+
+.account_area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hint {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50rpx;
+}
+
+.inputMyAccount {
+    width: 440rpx;
+}

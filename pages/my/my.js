@@ -109,9 +109,6 @@ Page({
             data: {
                 'userID': app.globalData.sessionID,
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
                 console.log(res)
                 wx.hideLoading()
@@ -170,13 +167,23 @@ Page({
                 url: '../policeList/policeList',
             })
         } else {
-            wx.showToast({
-                title: '请先通过校园认证',
-                icon: 'none',
-                success: function() {}
-            })
-            wx.redirectTo({
-                url: '../certifPage/certifPage',
+            wx.showModal({
+                title: '提示',
+                content: '请先通过教务系统认证',
+                cancelText: '返回主页',
+                confirmText: '前往认证',
+                confirmColor: '#faaf42',
+                success: function(res) {
+                    if (res.confirm) {
+                        wx.redirectTo({
+                            url: '../certifPage/certifPage',
+                        })
+                    } else {
+                        wx.reLaunch({
+                            url: '../home/home',
+                        })
+                    }
+                }
             })
         }
 
@@ -205,13 +212,22 @@ Page({
                 url: '../myCode/myCode',
             })
         } else {
-            wx.showToast({
-                title: '请先通过校园认证',
-                icon: 'none',
-                complete: function() {
-                    wx.redirectTo({
-                        url: '../certifPage/certifPage',
-                    })
+            wx.showModal({
+                title: '提示',
+                content: '请先通过教务系统认证',
+                cancelText: '返回主页',
+                confirmText: '前往认证',
+                confirmColor: '#faaf42',
+                success: function(res) {
+                    if (res.confirm) {
+                        wx.redirectTo({
+                            url: '../certifPage/certifPage',
+                        })
+                    } else {
+                        wx.reLaunch({
+                            url: '../home/home',
+                        })
+                    }
                 }
             })
         }

@@ -105,15 +105,19 @@ Page({
         var that = this
         if (app.globalData.ourUserStatus == 4) {
             wx.showModal({
-                title: '请认证',
-                content: '点击确定前往教务系统认证！',
+                title: '提示',
+                content: '请先通过教务系统认证',
+                cancelText: '返回主页',
+                confirmText: '前往认证',
                 confirmColor: '#faaf42',
-                showCancel: false,
                 success: function(res) {
                     if (res.confirm) {
-                        // console.log('用户点击确定')
                         wx.redirectTo({
-                            url: '../certifPage/certifPage'
+                            url: '../certifPage/certifPage',
+                        })
+                    } else {
+                        wx.reLaunch({
+                            url: '../home/home',
                         })
                     }
                 }
@@ -133,28 +137,13 @@ Page({
             url: urlModel.url.notHaveList, //未完成完成订单请求地址
             method: 'POST',
             data: {
-                'userID': app.globalData.sessionID,
-                // 'Sex': app.globalData.sex
+                'sessionID': app.globalData.sessionID,
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
-                // console.log(res)
                 that.setData({
-                        ongoRecList: res.data.ongoRecList,
-                        ongoPubList: res.data.ongoPubList
-                            //修改参数
-                    })
-                    // if (that.data.ongoPubList == false && that.data.ongoRecList == false) {
-                    //     that.setData({
-                    //         blank: true
-                    //     })
-                    // } else {
-                    //     that.setData({
-                    //         blank: false
-                    //     })
-                    // }
+                    ongoRecList: res.data.ongoRecList,
+                    ongoPubList: res.data.ongoPubList
+                })
             },
             fail: function() {},
             complete: function() {

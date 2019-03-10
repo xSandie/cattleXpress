@@ -41,12 +41,10 @@ Page({
     onLoad: function(options) {
         if (options.path == 'haveCertif') {
             // 从认证界面过来
-            wx.showModal({
-                title: '注意',
-                content: '请确保 联系电话 正确',
-                showCancel: false,
-                confirmText: '好的',
-                confirmColor: '#faaf42',
+            wx.showToast({
+                title: '请确保 联系电话 正确',
+                icon: 'none',
+                duration: 5000
             })
             this.setData({
                 btnText: '确认设置'
@@ -66,7 +64,7 @@ Page({
      */
     onShow: function() {
         var send_data = {
-            'gId': app.globalData.sessionID
+            'sessionID': app.globalData.sessionID
         }
         var that = this
         wx.request({

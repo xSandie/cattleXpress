@@ -37,6 +37,7 @@ Page({
         // transCampus: [],
         requestTime: 1,
         atEndFlag: false,
+        loginFailed:true
     },
 
     setAvatar: function() {
@@ -89,19 +90,8 @@ Page({
             })
             that.setData({
                     schoolName: app.globalData.schoolName,
+                    loginFailed:false
                 })
-                // console.log('onload', app.globalData.schoolName)
-                // console.log('onload', app.globalData.sex)
-                // console.log('onloadmy', that.data.schoolName)
-                //TODO:即将废弃
-                // var send_sendLoc = ''
-                // var send_expressLoc = ''
-                // if (that.data.expressLoc == '选择取快递的站点') {
-                //     send_expressLoc = ''
-                // }
-                // if (that.data.sendLocSelect == '选择快递送达地点') {
-                //     send_sendLoc = ''
-                // }
 
             var send_data = {
                 'school_id': app.globalData.schoolID,
@@ -124,6 +114,10 @@ Page({
                 complete: function() { wx.hideLoading() }
             })
 
+        }).catch(function () {
+            that.setData({
+                loginFailed:true
+            })
         })
         setTimeout(that.setAvatar, 6000)
 
@@ -179,10 +173,9 @@ Page({
      */
     onPullDownRefresh: function() {
         wx.showLoading({
-                title: '刷新中',
-                mask: true
-            })
-            // console.log("refresh")
+            title: '刷新中',
+            mask: true
+        })
         this.setData({
             pubOrTop: true,
             schoolName: app.globalData.schoolName,
@@ -227,15 +220,13 @@ Page({
      */
     onReachBottom: function() { //这里list都是append逻辑
         wx.showLoading({
-                title: '加载中',
-                mask: true
-            })
-            // console.log("到底了")
+            title: '加载中',
+            mask: true
+        })
         var that = this
         this.setData({
-                requestTime: that.data.requestTime + 1
-            })
-            // console.log(this.data.requestTime)
+            requestTime: that.data.requestTime + 1
+        })
         this.setData({
             pubOrTop: false
         })
@@ -291,7 +282,6 @@ Page({
                 pubOrTop: true
             })
         } else {
-            // if (e.scrollTop == 1500){
             this.setData({
                 pubOrTop: false
             })

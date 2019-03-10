@@ -14,8 +14,9 @@ Page({
         row1Flag: false,
         row2Flag: false,
         row3Flag: false,
-        loginHint: '账号为 4开头 的8位数噢',
-        identity: 1 //1为本科生，2为研究生
+        accountHint: '', //账号提示
+        identity: 1, //1为本科生，2为研究生
+        questionIcon: '../../images/question.png'
     },
 
     /**
@@ -36,7 +37,8 @@ Page({
     onShow: function() {
         var that = this
         this.setData({
-            schoolName: app.globalData.schoolName
+            schoolName: app.globalData.schoolName,
+            accountHint: app.globalData.accountHint
         })
         if (app.globalData.schoolName == '点击选择学校') {
             wx.showToast({
@@ -54,26 +56,20 @@ Page({
                 })
             }
             var send_data = {
-                'gId': app.globalData.sessionID,
-                'identity': this.data.identity
+                'sessionID': app.globalData.sessionID,
+                'identity': this.data.identity,
+                'school_id': app.globalData.schoolID
             }
             wx.request({
-                url: urlModel.url.getCertifCode,
-                method: 'POST',
+                url: urlModel.url.getCertifInfo,
+                method: 'GET',
                 data: send_data,
                 success: function(res) {
                     console.log(res)
                     if (res.data.img_url) {
                         that.setData({
-                                verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
-                            })
-                            //todo 后期完善动态更改提示的功能
-                        wx.showToast({
-                            title: that.data.loginHint,
-                            icon: 'none',
-                            duration: 4000,
-                            // mask: true,
-                            success: function() {}
+                            verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
+                            accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
                         })
                     }
                 }
@@ -131,7 +127,7 @@ Page({
                 loginHint: '账号为 4开头 的8位数噢'
             })
             var send_data = {
-                'gId': app.globalData.sessionID,
+                'sessionID': app.globalData.sessionID,
                 'identity': 1
             }
             wx.request({
@@ -149,7 +145,6 @@ Page({
                             title: that.data.loginHint,
                             icon: 'none',
                             duration: 4000,
-                            // mask: true,
                             success: function() {}
                         })
                     }
@@ -167,7 +162,7 @@ Page({
             loginHint: '帐号为 1（入学年份）开头的帐号噢'
         })
         var send_data = {
-            'gId': app.globalData.sessionID,
+            'sessionID': app.globalData.sessionID,
             'identity': this.data.identity
         }
         wx.request({
@@ -234,10 +229,10 @@ Page({
                 url: urlModel.url.postCertifMes, //填充认证url
                 method: 'POST',
                 data: {
-                    'zjh': e.detail.value.schoolNumb,
-                    'mm': e.detail.value.password,
-                    'yzm': e.detail.value.verifiedCode,
-                    'gId': app.globalData.sessionID,
+                    'account': e.detail.value.schoolNumb,
+                    'password': e.detail.value.password,
+                    'verification_code': e.detail.value.verifiedCode,
+                    'sessionID': app.globalData.sessionID,
                     'identity': that.data.identity
                 },
                 header: {
@@ -247,47 +242,56 @@ Page({
                     console.log(res)
                     wx.hideLoading()
                     if (res.statusCode == 200) {
-
                         if (res.data.status == 1) {
                             console.log(res)
                                 //设置姓名、学号、statusName
                             app.globalData.userName = res.data.name
-                            app.globalData.schoolNumb = res.data.schoolNum
+                            app.globalData.schoolNumb = res.data.school_numb
                             app.globalData.ourUserStatus = res.data.user_status
                             wx.showToast({
                                 title: '认证成功',
                                 icon: 'success',
-                                // duration: 1500,
+                                duration: 1500,
                                 success: function() {}
                             })
-                            setTimeout(function() {}, 1000)
-                            wx.showToast({
-                                title: '最后，请设置默认联系方式',
-                                icon: 'none',
-                                duration: 3000,
-                                success: function() {}
+                            setTimeout(function() {}, 500)
+                            wx.showModal({
+                                title: '建议',
+                                content: '先去设置默认收货地址，这样别人才能联系到你噢',
+                                cancelText: '再说吧',
+                                confirmText: '现在就去',
+                                confirmColor: '#faaf42',
+                                success: function(res) {
+                                    if (res.confirm) {
+                                        wx.redirectTo({
+                                            url: '../defAddrEdit/defAddrEdit?path=haveCertif',
+                                        })
+                                    } else {
+                                        wx.reLaunch({
+                                            url: '../home/home',
+                                        })
+                                    }
+                                }
                             })
-                            setTimeout(function() {
-                                wx.redirectTo({
-                                    url: '../defAddrEdit/defAddrEdit?path=haveCertif'
-                                })
-                            }, 3000)
-
                         } else {
                             wx.showModal({
                                     title: '认证失败',
                                     content: '请认真核对信息',
                                     showCancel: false,
-                                    confirmText: '返回',
+                                    confirmText: '好的',
                                     confirmColor: '#faaf42',
                                 })
                                 //设置新的验证码地址
                             that.setData({
-                                verifyCodeUrl: res.data.imgUrl + '?v=' + Math.random()
+                                verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                             })
                         }
                     } else {
-
+                        wx.showToast({
+                            title: '失败，请重试',
+                            icon: 'none',
+                            duration: 5000
+                        })
                     }
                     // setTimeout(function() {
                     //     wx.navigateBack({})
@@ -302,12 +306,13 @@ Page({
     changeCode: function() {
         var that = this
         var send_data = {
-            'gId': app.globalData.sessionID,
-            'identity': this.data.identity
+            'sessionID': app.globalData.sessionID,
+            'identity': this.data.identity,
+            'school_id': app.globalData.schoolID
         }
         wx.request({
-            url: urlModel.url.getCertifCode,
-            method: 'POST',
+            url: urlModel.url.getCertifInfo,
+            method: 'GET',
             data: send_data,
             success: function(res) {
                 console.log(res)
@@ -322,6 +327,22 @@ Page({
     backHome: function() {
         wx.switchTab({
             url: '../home/home',
+        })
+    },
+    accountHint: function() {
+        var that = this
+        wx.showModal({
+            title: '账号？',
+            content: that.data.accountHint,
+            confirmColor: '#faaf42',
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    wx.redirectTo({
+                        url: '../certifPage/certifPage'
+                    })
+                }
+            }
         })
     }
 })
