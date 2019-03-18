@@ -149,6 +149,9 @@
             <text class='hBtnText'>智能发布</text>
             <image class='hBtnIcon' src='{{toTopIcon}}'></image>
         </view>
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{loginFailed}}" bindtap="relogin">
+            <text class='hBtnText'>重新登陆</text>
+        </view>
         <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
     </view>
     <view wx:if="{{atEndFlag}}" class='prompt'>

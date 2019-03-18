@@ -45,6 +45,7 @@ App({
                                     if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
 
                                     wx.hideLoading()
+                                    resolve('ok');
                                 } else {
                                     wx.hideLoading()
                                     wx.showToast({
@@ -54,8 +55,9 @@ App({
                                         mask: false,
                                         success: function() {}
                                     })
+                                    reject('error');
                                 }
-                                resolve(res);
+
                             },
                             fail: function() {
                                 wx.hideLoading()
