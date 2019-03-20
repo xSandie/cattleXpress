@@ -26,6 +26,28 @@ Page({
         atEndFlag: false,
         loginFailed:true
     },
+    getBanner:function(){
+        //获取并设置广告
+        var send_data = {
+            'school_id': app.globalData.schoolID,
+            'sessionID': app.globalData.sessionID,
+        }
+        wx.request({
+            url: urlModel.url.getBanner, //请求首页订单列表
+            method: 'GET',
+            data: send_data,
+            success: function(res) {
+                if (res.statusCode == 200){
+                    that.setData({
+                        ads:res.data.ads
+                    })
+                }
+                console.log(res)
+            },
+            fail: function() {},
+            complete: function() {}
+        })
+    },
 
     setAvatar: function() {
         wx.getSetting({
@@ -64,6 +86,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+        if (options.reload){
+            this.onPullDownRefresh()
+        }
         var that = this
         app.getUser().then(function(res) {
             that.setData({
@@ -88,11 +113,13 @@ Page({
                 method: 'GET',
                 data: send_data,
                 success: function(res) {
+                    if(res.statusCode == 200){
+                        that.setData({
+                            orderList: res.data.waiting_orders,
+                            finishedOrderList: res.data.finish_orders
+                        })
+                    }
                     console.log(res)
-                    that.setData({
-                        orderList: res.data.waiting_orders,
-                        finishedOrderList: res.data.finish_orders
-                    })
                 },
                 fail: function() {},
                 complete: function() { wx.hideLoading() }
@@ -109,7 +136,6 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function() {
-
     },
 
     /**

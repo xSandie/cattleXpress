@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        expLogoUrl: '',
+        expLogoUrl: '../../images/logo.jpg',
         expOpenTime: '',
         expStationName: '',
         fixIcon: '../../images/fixBtnIcon.png',

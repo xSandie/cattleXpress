@@ -6,82 +6,77 @@ Page({
      * 页面的初始数据
      */
     data: {
-        expLogoUrl: '',
-        expOpenTime: '',
-        expStationName: '',
+        expLogoUrl: '../../images/logo.jpg',//填充黄牛小logo
+        expOpenTime: '都说别急嘛，急啥急~',
+        expStationName: '别急，正在赶来',
         fixIcon: '../../images/fixBtnIcon.png',
 
         contactIcon: '../../images/checkLight.png',
-        sdInstance: '',
+        sdInstance: '订单马上呈现',
 
-        urgent: null,
-        expWeight: '',
-        expSize: '',
-        endTime: '',
+        limit: null,
+        expWeight: '<1kg',
+        expSize: '小件',
+        endTime: '00-00 00:00',
 
-        expDescript: '',
+        expDescript: '别着急，订单马上呈现',
 
-        reward: '',
+        reward: '6',
         // schNum: ''暂时没有用上学号,
-        pubLastName: '',
-        pubTime: '',
+        pubLastName: '黄',
+        pubTime: '0000-00-00',
         orderId: '',
-        receiverPhone: '',
-
-        expressId: ''
-
+        receiverPhone: '有问题及时反馈噢',
     },
-
+    backhome:function(){
+        wx.switchTab({
+            url: '../home/home?reload=yes',
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
         // console.log(options)
         // console.log(options.id);
-
         var that = this
+        let send_data = {
+            'order_id': options.id,
+            'sessionID': app.globalData.sessionID, //为以后埋点做准备
+            'school_id': app.globalData.schoolID
+        }
         wx.request({
             url: urlModel.url.toOrderSum, //填充请求浏览者订单详情url
             method: 'GET',
-            data: {
-                'orderId': options.id,
-                'userID': app.globalData.sessionID, //为以后埋点做准备
-                'schoolID': app.globalData.schoolID
-            },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
+            data: send_data,
             success: function(res) {
-                // console.log(res)
+                console.log(res)
                 if (res.data.can_get == true) {
                     that.setData({
                         //设置页面参数
-                        expLogoUrl: res.data.expLogoUrl,
-                        expOpenTime: res.data.expOpenTime,
-                        expStationName: res.data.expStationName,
-                        expressId: res.data.expressId,
+                        expLogoUrl: res.data.exp_logo,
+                        expOpenTime: res.data.exp_opentime,
+                        expStationName: res.data.exp_station,
                         //以上是快递站点信息
-                        orderId: res.data.orderId,
-                        sdInstance: res.data.sdInstance,
-                        urgent: res.data.urgent,
-                        expWeight: res.data.expWeight,
-                        expSize: res.data.expSize,
-                        endTime: res.data.endTime,
+                        orderId: res.data.order_id,
+                        sdInstance: res.data.send_loc,
+                        expWeight: res.data.exp_weight,
+                        expSize: res.data.exp_size,
+                        endTime: res.data.expire_time,
                         reward: res.data.reward,
-                        // schNum: res.data.schNum,
-                        pubLastName: res.data.pubLastName,
-                        pubTime: res.data.pubTime,
-                        receiverPhone: res.data.receiverPhone,
-                        expDescript: res.data.expDescript
+                        pubLastName: res.data.pub_lastname,
+                        pubTime: res.data.pub_time,
+                        receiverPhone: res.data.receiver_phone,
+                        expDescript: res.data.description,
+                        limit:res.data.limit
                     })
                 } else {
                     wx.showToast({
                         title: '抱歉，订单已经被抢啦~',
                         icon: 'none',
                         success: function() {
-                            wx.switchTab({
-                                url: '../home/home',
-                            })
+                            setTimeout(that.backhome(),1500)
+
                         }
                     })
                 }
@@ -175,18 +170,17 @@ Page({
                     if (res.confirm) {
                         // console.log('用户点击确定')
                         //接单动作
+                        let send_data = {
+                            'order_id': orderId,
+                            'sessionID': app.globalData.sessionID,
+                        }
                         wx.request({
                             url: urlModel.url.recOrder, //订单动作接口
                             method: 'GET',
-                            data: {
-                                'orderId': orderId,
-                                'userID': app.globalData.sessionID,
-                                'nextStat': 2
-                            },
+                            data: send_data,
                             success: function(res) {
                                 // console.log(event)
                                 // console.log(orderId)
-
                                 if (res.data.can_get == true) {
                                     wx.redirectTo({
                                         url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
@@ -206,16 +200,22 @@ Page({
                                             }
                                         }
                                     })
-                                } else {
+                                } else if(res.data.not_allow){
+                                    wx.showToast({
+                                      title: '不符合订单条件噢~',
+                                        icon:'none'
+                                    })
+                                }else
+                                    {
                                     wx.showModal({
                                         title: '来晚一步',
                                         content: '抱歉，订单已经被抢啦~',
                                         showCancel: false,
                                         confirmColor: '#f9a93e',
-                                        confirmText: '返回',
+                                        confirmText: '返回主页',
                                         success: function() {
                                             wx.switchTab({
-                                                url: '../home/home',
+                                                url: '../home/home?reload=yes',
                                             })
                                         }
                                     })
@@ -268,10 +268,10 @@ Page({
         } else {
             wx.showModal({
                 title: '发短信还是拨打电话？',
-                content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
+                content: '发送短信 将复制对方号码。',
                 confirmColor: '#faaf42',
                 confirmText: '发送短信',
-                cancelColor: '#faaf42',
+                cancelColor: '#999ba1',
                 cancelText: '拨打号码',
                 success: function(res) {
                     if (res.confirm) {
@@ -279,11 +279,6 @@ Page({
                         wx.setClipboardData({
                                 data: that.data.receiverPhone,
                             })
-                            //   wx.showToast({
-                            //     title: '号码已复制',
-                            //     icon:'success'
-                            //   })
-
                     } else if (res.cancel) {
                         // console.log('用户点击取消')
                         wx.makePhoneCall({
@@ -296,20 +291,9 @@ Page({
         }
     },
     toFix: function(event) {
-        // var expressId = event.currentTarget.dataset.expressId
-        // console.log(expressId)
-        // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressId,
-        // })
-        wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
-            confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
-            success: function(res) {
-                if (res.confirm) {}
-            }
+        let that = this
+        wx.navigateTo({
+            url: '../reportExError/reportExError?title=' + that.data.expStationName,
         })
     }
 })

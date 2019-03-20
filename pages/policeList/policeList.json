@@ -2,6 +2,6 @@
     "navigationBarBackgroundColor": "#f5f8fd",
     "navigationBarTitleText": "举报/申诉进度",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f5f8fd",
+    "navigationBarBackgroundColor": "#f5f8fd",
     "enablePullDownRefresh": true
 }

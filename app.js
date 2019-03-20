@@ -62,7 +62,7 @@ App({
                             fail: function() {
                                 wx.hideLoading()
                                 wx.showToast({
-                                    title: '网络不太畅通，请检查网络，再关闭微信重试',
+                                    title: '网络不太畅通，请检查网络后点击重新登陆',
                                     icon: 'none',
                                     duration: 5000,
                                     mask: true,

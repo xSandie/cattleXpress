@@ -1,4 +1,5 @@
 {
     "navigationBarTitleText": "保存&支付",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f8fd"
 }

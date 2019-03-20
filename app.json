@@ -26,7 +26,7 @@
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#f5f8fd",
     "enablePullDownRefresh": true,
     "onReachBottomDistance": 50
   },

@@ -33,8 +33,8 @@
                     <text>{{expSize}}物品</text>
                 </view>
             </view>
-            <view class='worTag' wx:if="{{urgent}}">
-                <text>加急</text>
+            <view class='worTag' wx:if="{{limit}}">
+                <text>{{limit}}</text>
             </view>
         </view>
         <view class='rline'>

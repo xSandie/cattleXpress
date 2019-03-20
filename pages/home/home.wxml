@@ -6,38 +6,6 @@
             </view>
             <image class='pullIcon' src='{{pullIcon}}'></image>
         </view>
-        <!--<view bindtap="ifCertif" class='mainSelect'>
-            <picker mode="multiSelector" bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}">
-               <view hover-class="answerHover1" class='expressLoc'>
-                    <view class='elIcon'>
-                    <image class='elIconImg' src="{{elIconImg}}"></image>
-                    </view>
-                    <view class='lText'>
-                        <view class='lTextLarge'>
-                            <text>快递站点</text>
-                        </view>
-                        <view class='lTextSmall'>
-                            <text>{{expressLoc}}</text>
-                        </view>
-                    </view>
-               </view>
-            </picker>
-            <picker mode="multiSelector"  bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}">
-                <view  hover-class="answerHover1" class='sendLoc'>
-                    <view class='slIcon'>
-                    <image class='slIconImg' src="{{slIconImg}}"></image>
-                    </view>
-                    <view class='lText'>
-                        <view class='lTextLarge'>
-                        <text>送达地点</text>
-                        </view>
-                        <view class='lTextSmall'>
-                        <text>{{sendLocSelect}}</text>
-                        </view>
-                    </view>
-                </view>
-            </picker>
-        </view>-->
         <view class='swiper-outer'><swiper
         indicator-dots="true" autoplay="true" circular="true" 
         interval="5000" duration="500">
@@ -145,13 +113,11 @@
             <text class='hBtnText'>回到顶部</text>
             <image class='hBtnIcon' src='{{topIcon}}'></image>
         </view>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{pubOrTop}}" bindtap="toPub">
+        <view hover-class="answerHover1" class='floatBtn' wx:if="{{pubOrTop && !loginFailed}}" bindtap="toPub">
             <text class='hBtnText'>智能发布</text>
             <image class='hBtnIcon' src='{{toTopIcon}}'></image>
         </view>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{loginFailed}}" bindtap="relogin">
-            <text class='hBtnText'>重新登陆</text>
-        </view>
+        <view hover-class="answerHover1" class='jieri' wx:if="{{loginFailed}}" bindtap="relogin">重新登陆</view>
         <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
     </view>
     <view wx:if="{{atEndFlag}}" class='prompt'>
