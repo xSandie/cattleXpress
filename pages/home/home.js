@@ -86,8 +86,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        if (options.reload){
-            this.onPullDownRefresh()
+        try {
+            if (options.reload){
+                this.onPullDownRefresh()
+            }
+        }catch (e) {
+
         }
         var that = this
         app.getUser().then(function(res) {

@@ -75,7 +75,7 @@ Page({
                         title: '抱歉，订单已经被抢啦~',
                         icon: 'none',
                         success: function() {
-                            setTimeout(that.backhome(),1500)
+                            setTimeout(that.backhome,1500)
 
                         }
                     })

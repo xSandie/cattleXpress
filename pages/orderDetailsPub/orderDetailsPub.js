@@ -6,12 +6,11 @@ Page({
      * 页面的初始数据
      */
     data: {
-        expLogoUrl: '',
-        expOpenTime: '',
-        expStationName: '',
+        expLogoUrl: '../../images/logo.jpg',
+        expOpenTime: '都说了别着急嘛~',
+        expStationName: '马上就来',
         fixIcon: '../../images/fixBtnIcon.png',
-        reward: '',
-        expressId: '',
+        reward: '6',
         orderId: '',
         finIcon: '../../images/checkLight.png',
         policeIconDim: '../../images/policeDim.png',
@@ -20,21 +19,21 @@ Page({
         policeIcon: '../../images/policeLight.png',
         cancelIcon: "../../images/cancelIcon.png",
 
-        fetchCode: '',
+        fetchCode: '666',
         phoneRearIcon: '../../images/numRear.png',
         nameIcon: '../../images/deName.png',
         sizeIcon: '../../images/sizeIcon.png',
         timeIcon: '../../images/timeIcon.png',
 
-        endTime: '',
-        recName: '',
-        expSize: '',
-        phoneRear: '',
+        endTime: '00-00 00:00',
+        fetchName: '老黄牛',
+        expSize: '小件',
+        phoneRear: '6666',
 
-        sendLocAll: '',
-        weightInfo: '',
+        sendLocAll: '666号 黄牛之家',
+        weightInfo: '<1kg',
         otherInfo: '',
-        urgent: '',
+        limit: null,
 
         receiverName: null,
         receiveTime: null,
@@ -51,6 +50,64 @@ Page({
         hideStatusBar: false //取消订单后hide
     },
 
+    changeStatusBar:function(){
+        //更改状态栏颜色等信息
+        var that = this
+        if (that.data.statusCode == 0 || that.data.statusCode == 1) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#fed25c, #f9a93e)",
+            })
+        } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#4ED662, #37BD76)"
+            })
+        } else if (that.data.statusCode == 4) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+        } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+            //异常也不让用户太糟心
+        }
+
+
+        if (that.data.statusCode == 0) {
+            that.setData({
+                statusName: "待收货"
+            })
+        } else if (that.data.statusCode == 1) {
+            that.setData({
+                statusName: "待接单"
+            })
+        } else if (that.data.statusCode == 2) {
+            that.setData({
+                statusName: "待送达"
+            })
+        } else if (that.data.statusCode == 3) {
+            that.setData({
+                statusName: "已完成"
+            })
+        } else if (that.data.statusCode == 4) {
+            that.setData({
+                statusName: "已过期"
+            })
+        } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+                statusName: "异常"
+            })
+            //异常也不让用户太糟心
+        }
+    },
+
+    copyQQ:function(){
+        //复制QQ号
+        var that = this
+        wx.setClipboardData({
+            data: that.data.receiverQQ,
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -61,12 +118,9 @@ Page({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
             method: 'POST',
             data: {
-                // 'ordNum': options.id,
-                'orderId': options.id,
-                'userID': app.globalData.sessionID,
-                'schoolID': app.globalData.schoolID
-
-                // 'sessionID': app.globalData.sessionID,
+                'order_id': options.id,
+                'sessionID': app.globalData.sessionID,
+                'school_id': app.globalData.schoolID
             },
             // header: {
             //     "Content-Type": "applciation/json"
@@ -77,26 +131,24 @@ Page({
                 that.setData({
                     //设置页面参数，设置orderID
                     statusCode: tdata.state,
-                    urgent: tdata.urgent,
-                    expressId: tdata.expressId,
-                    expLogoUrl: tdata.expLogoUrl,
-                    expOpenTime: '营业时间：' + tdata.expOpenTime,
+                    limit: tdata.limit,
+                    expLogoUrl: tdata.exp_logo,
+                    expOpenTime: '营业时间：' + tdata.exp_opentime,
                     reward: tdata.reward,
-                    endTime: tdata.endTime,
-                    fetchCode: tdata.fetchCode,
-                    expStationName: tdata.expStationName,
-                    orderId: options.id,
-                    phoneRear: tdata.phoneRear,
-                    expSize: tdata.expSize,
-                    recName: tdata.recName,
-                    otherInfo: tdata.otherInfo,
-                    sendLocAll: tdata.sendLocAll,
-                    weightInfo: tdata.weightInfo,
+                    endTime: tdata.expire_time,
+                    fetchCode: tdata.exp_code,
+                    expStationName: tdata.exp_station,
+                    phoneRear: tdata.phone_rear,
+                    expSize: tdata.exp_size,
+                    recName: tdata.exp_name,
+                    otherInfo: tdata.description,
+                    sendLocAll: tdata.send_loc,
+                    weightInfo: tdata.weight,
                 })
                 if (tdata.rtime != '') {
                     that.setData({
-                        receiveTime: '接单时间：' + tdata.rtime,
-                        receiverName: tdata.Uname + '同学 ' + tdata.Uid,
+                        receiveTime: '接单时间：' + tdata.rec_time,
+                        receiverName: tdata.username + '同学 ' + tdata.school_numb,
                         receiverPhone: tdata.phone
                     })
                 } else {
@@ -108,52 +160,7 @@ Page({
             },
             fail: function() {},
             complete: function() {
-                if (that.data.statusCode == 0 || that.data.statusCode == 1) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#fed25c, #f9a93e)",
-                    })
-                } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#4ED662, #37BD76)"
-                    })
-                } else if (that.data.statusCode == 4) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-                    })
-                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
-                    that.setData({
-                            statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-                        })
-                        //异常也不让用户太糟心
-                }
-
-
-                if (that.data.statusCode == 0) {
-                    that.setData({
-                        statusName: "待收货"
-                    })
-                } else if (that.data.statusCode == 1) {
-                    that.setData({
-                        statusName: "待接单"
-                    })
-                } else if (that.data.statusCode == 2) {
-                    that.setData({
-                        statusName: "待送达"
-                    })
-                } else if (that.data.statusCode == 3) {
-                    that.setData({
-                        statusName: "已完成"
-                    })
-                } else if (that.data.statusCode == 4) {
-                    that.setData({
-                        statusName: "已过期"
-                    })
-                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
-                    that.setData({
-                            statusName: "异常"
-                        })
-                        //异常也不让用户太糟心
-                }
+                that.changeStatusBar()
             }
         })
     },
@@ -204,9 +211,9 @@ Page({
             method: 'POST',
             data: {
                 // 'ordNum': options.id,
-                'orderId': that.data.orderId,
-                'userID': app.globalData.sessionID,
-                'schoolID': app.globalData.schoolID
+                'order_id': that.data.orderId,
+                'sessionID': app.globalData.sessionID,
+                'school_id': app.globalData.schoolID
 
                 // 'sessionID': app.globalData.sessionID,
             },
@@ -214,12 +221,13 @@ Page({
             //     "Content-Type": "applciation/json"
             // },
             success: function(res) {
+                wx.stopPullDownRefresh()
                 // console.log("onPullDownRefresh", res)
                 if (res.statusCode == 200) {
                     var tdata = res.data
                     that.setData({
                         //设置页面参数，设置orderID
-                        statusCode: tdata.state,
+                        statusCode: tdata.status,
                         urgent: tdata.urgent,
                         expressId: tdata.expressId,
                         expLogoUrl: tdata.expLogoUrl,
@@ -236,7 +244,7 @@ Page({
                         sendLocAll: tdata.sendLocAll,
                         weightInfo: tdata.weightInfo,
                     })
-                    if (tdata.rtime != '') {
+                    if (tdata.rtime) {
                         that.setData({
                             receiveTime: '接单时间：' + tdata.rtime,
                             receiverName: tdata.Uname + '同学 ' + tdata.Uid,
@@ -270,52 +278,7 @@ Page({
                 })
             },
             complete: function() {
-                if (that.data.statusCode == 0 || that.data.statusCode == 1) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#fed25c, #f9a93e)",
-                    })
-                } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#4ED662, #37BD76)"
-                    })
-                } else if (that.data.statusCode == 4) {
-                    that.setData({
-                        statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-                    })
-                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
-                    that.setData({
-                            statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
-                        })
-                        //异常也不让用户太糟心
-                }
-
-
-                if (that.data.statusCode == 0) {
-                    that.setData({
-                        statusName: "待收货"
-                    })
-                } else if (that.data.statusCode == 1) {
-                    that.setData({
-                        statusName: "待接单"
-                    })
-                } else if (that.data.statusCode == 2) {
-                    that.setData({
-                        statusName: "待送达"
-                    })
-                } else if (that.data.statusCode == 3) {
-                    that.setData({
-                        statusName: "已完成"
-                    })
-                } else if (that.data.statusCode == 4) {
-                    that.setData({
-                        statusName: "已过期"
-                    })
-                } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
-                    that.setData({
-                            statusName: "异常"
-                        })
-                        //异常也不让用户太糟心
-                }
+                that.changeStatusBar()
             }
         })
     },

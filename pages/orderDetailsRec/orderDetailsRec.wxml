@@ -12,6 +12,17 @@
             <text class='fxText'>报错</text>
         </view>
     </view>
+
+    <view wx:if="{{!hideStatusBar}}" class="statusBar">
+        <view class="status" style="background: {{statusBgColor}}">
+            <text>{{statusName}}</text>
+        </view>
+        <view class="receive" bindlongpress="copyQQ" hover-class="white-card-hover">
+            <text class="reName">发布人QQ：{{pubQQ}}</text>
+            <text class="reTime">可长按复制，返回QQ添加好友</text>
+        </view>
+    </view>
+
     <view class="mainDetail">
         <view class="fetchCodeA">
           <view class="fetchTi"><text>取件码</text></view>
@@ -45,7 +56,7 @@
                          <image class="deIcon" src='{{nameIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>取货姓名：<text class="impText">{{recName}}</text></text>
+                         <text>取货姓名：<text class="impText">{{fetchName}}</text></text>
                      </view>
                  </view>
                  <view class="item">

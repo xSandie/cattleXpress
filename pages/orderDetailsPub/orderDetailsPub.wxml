@@ -14,12 +14,12 @@
     </view>
 
     <view wx:if="{{!hideStatusBar}}" class="statusBar">
-        <view class="status" style="background: {{statusBack}}">
+        <view class="status" style="background: {{statusBgColor}}">
             <text>{{statusName}}</text>
         </view>
-        <view class="receive">
-            <text class="reName">接单人：{{receiverName}}</text>
-            <text class="reTime">{{receiveTime}}</text>
+        <view class="receive" bindlongpress="copyQQ" hover-class="white-card-hover">
+            <text class="reName">接单人QQ：{{receiverQQ}} 长按复制</text>
+            <text class="reTime">{{receiverName}}·{{receiveTime}}</text>
         </view>
         <view class='cline1'wx:if="{{statusCode==1||statusCode==2}}">   
         </view>
@@ -86,7 +86,7 @@
                 <text>{{sendLocAll}}</text>
             </view>
         </view>
-        <view class='worTag' wx:if="{{urgent=== 'true'}}"><text>加急</text></view>
+        <view class='worTag' wx:if="{{limit}}"><text>{{limit}}</text></view>
     </view>
     <view class='mainSum'>
         <view class='reward'>

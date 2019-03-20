@@ -190,36 +190,6 @@ button::after {
     background: linear-gradient(90deg, #b39340, #af782c);
 }
 
-
-/* .finishOrd {
-    z-index: 15;
-    background: linear-gradient(90deg, #fed25c, #f9a93e);
-    border-radius: 10rpx;
-    height: 100rpx;
-    width: 265rpx;
-    padding-left: 40rpx;
-    padding-right: 40rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    right: 40rpx;
-    bottom: 40rpx;
-    text-align: center;
-    font-size: 32rpx;
-    font-weight: bold;
-    color: white;
-} */
-
-
-/* .finText {
-    text-align: center;
-    font-size: 32rpx;
-    font-weight: bold;
-    color: white;
-} */
-
 .finIcon {
     height: 40rpx;
     width: 40rpx;
@@ -489,4 +459,77 @@ button::after {
 .answerHover1 {
     background: rgba(238, 241, 253, 0.76);
     border-radius: 10rpx;
+}
+
+.statusBar {
+    box-sizing: border-box;
+    height: 138rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 16rpx;
+    margin-bottom: 30rpx;
+}
+.status {
+    border-top-left-radius: 16rpx;
+    border-bottom-left-radius: 16rpx;
+    padding: 0rpx 6rpx;
+    width: 114rpx;
+    height: 100%;
+    display: flex;
+    font-size: 28rpx;
+    color: white;
+    font-weight: bold;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.cancel {
+    height: 100%;
+    width: 80rpx;
+    margin-left: 26rpx;
+    margin-right: 26rpx;
+    font-size: 18rpx;
+    color: #999ba1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.reTime {
+    font-size: 20rpx;
+    color: #999ba1;
+}
+.reName {
+    color: #373c46;
+    font-size: 28rpx;
+    margin-bottom: 11rpx;
+}
+
+.receive {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-left: 21rpx;
+    width: 100%;
+}
+
+.cline1 {
+    width: 1rpx;
+    height: 90rpx;
+    background-color: #999ba1;
+}
+
+.cancelIcon {
+    height: 40rpx;
+    width: 40rpx;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 9rpx;
 }

@@ -7,12 +7,10 @@ Page({
      */
     data: {
         expLogoUrl: '../../images/logo.jpg',
-        expOpenTime: '',
-        expStationName: '',
+        expOpenTime: '都说了别着急嘛~',
+        expStationName: '马上赶来',
         fixIcon: '../../images/fixBtnIcon.png',
-        pubLastName: '',
-        pubTime: '',
-        reward: '',
+        reward: '6',
         //图标类
         finIcon: '../../images/checkLight.png',
         policeIconDim: '../../images/policeDim.png',
@@ -20,29 +18,93 @@ Page({
         contactIcon: '../../images/contactIcon.png',
         policeIcon: '../../images/policeLight.png',
 
-        fetchCode: '',
+        fetchCode: '666666',
         phoneRearIcon: '../../images/numRear.png',
         nameIcon: '../../images/deName.png',
         sizeIcon: '../../images/sizeIcon.png',
         timeIcon: '../../images/timeIcon.png',
 
-        endTime: '',
-        recName: '',
-        expSize: '',
-        phoneRear: '',
+        endTime: '00-00 00:00',
+        fetchName: '黄牛本牛',
+        expSize: '小件',
+        phoneRear: '6666',
 
-        sendLocAll: '',
-        weightInfo: '',
+        sendLocAll: '666号 黄牛之家',
+        weightInfo: '<1kg',
         otherInfo: '',
-        urgent: null,
-        receiverPhone: '',
+        limit: null,
 
+        pubPhone: '66666666',
+        pubQQ:null,
+        pubLastName: '黄牛同学',
+        pubTime: '00-00 00:00',
+
+        hideStatusBar:false,
         statusCode: null,
-        expressId: '',
+        statusName: "",
+        statusBgColor: "",
+        statusBackWaitMe: "linear-gradient(90deg,#fed25c, #f9a93e)",
+        statusBackFinOrRec: "linear-gradient(90deg,#4ED662, #37BD76)",
+        statusBackOutofTime: "linear-gradient(90deg,#D6D6D6, #BABABA)",
         orderId: ''
-
     },
+    changeStatusBar:function(){
+        //更改状态栏颜色等信息
+        var that = this
+        if (that.data.statusCode == 0 || that.data.statusCode == 1) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#fed25c, #f9a93e)",
+            })
+        } else if (that.data.statusCode == 2 || that.data.statusCode == 3) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#4ED662, #37BD76)"
+            })
+        } else if (that.data.statusCode == 4) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+        } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+                statusBgColor: "linear-gradient(90deg,#D6D6D6, #BABABA)"
+            })
+            //异常也不让用户太糟心
+        }
 
+
+        if (that.data.statusCode == 0) {
+            that.setData({
+                statusName: "待收货"
+            })
+        } else if (that.data.statusCode == 1) {
+            that.setData({
+                statusName: "待接单"
+            })
+        } else if (that.data.statusCode == 2) {
+            that.setData({
+                statusName: "待送达"
+            })
+        } else if (that.data.statusCode == 3) {
+            that.setData({
+                statusName: "已完成"
+            })
+        } else if (that.data.statusCode == 4) {
+            that.setData({
+                statusName: "已过期"
+            })
+        } else if (that.data.statusCode == 5 || that.data.statusCode == 6) {
+            that.setData({
+                statusName: "异常"
+            })
+            //异常也不让用户太糟心
+        }
+    },
+    copyQQ:function(){
+        //复制QQ号
+        var that = this
+        wx.setClipboardData({
+            data: that.data.receiverQQ,
+        })
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -50,137 +112,12 @@ Page({
         // console.log(options)
         var that = this
         if (options.key == null) {
-            wx.request({
-                url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
-                method: 'POST',
-                data: {
-                    'orderId': options.id,
-                    'userID': app.globalData.sessionID,
-                    'schoolID': app.globalData.schoolID
-                },
-                success: function(res) {
-                    // console.log(res)
-                    if (!res.data.orderId) {
-                        wx.showToast({
-                            title: '订单被别人抢啦',
-                            icon: 'none',
-                            duration: 1000,
-                            success: function() {
-                                setTimeout(function() {
-                                    wx.switchTab({
-                                        url: '../home/home',
-                                    })
-                                }, 1000);
-                            }
-                        })
-                    } else {
-                        that.setData({
-                            //设置页面参数
-                            expLogoUrl: res.data.expLogoUrl,
-                            expOpenTime: res.data.expOpenTime,
-                            expStationName: res.data.expStationName,
-                            expressId: res.data.expressId,
-                            //以上是快递站点信息
-                            orderId: res.data.orderId,
-                            sdInstance: res.data.expStationName,
-                            urgent: res.data.urgent,
-                            weightInfo: res.data.weightInfo,
-                            reward: res.data.reward,
-                            pubLastName: res.data.pubLastName,
-                            pubTime: res.data.pubTime,
-                            receiverPhone: res.data.receiverPhone,
-                            endTime: res.data.endTime,
-                            recName: res.data.recName,
-                            expSize: res.data.expSize,
-                            phoneRear: res.data.phoneRear,
-                            fetchCode: res.data.fetchCode,
-                            otherInfo: res.data.otherInfo,
-                            statusCode: res.data.State,
-                            sendLocAll: res.data.sendLocAll
-                        })
-                    }
-                },
-                fail: function() {},
-                complete: function() {}
-            })
+            that.getOrderInfo(options.id)
         } else {
-
             //从订单页面来的接口
-            wx.request({
-                url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
-                method: 'POST',
-                data: {
-                    'orderId': options.id,
-                    'userID': app.globalData.sessionID,
-                    'schoolID': app.globalData.schoolID
-                },
-                // header: {
-                //     "Content-Type": "applciation/json"
-                // },
-                success: function(res) {
-                    // console.log("从订单页面进入发送请求", res)
-                    if (res.statusCode == 200) {
-                        that.setData({
-                            //设置页面参数
-                            expLogoUrl: res.data.expLogoUrl,
-                            expOpenTime: res.data.expOpenTime,
-                            expStationName: res.data.expStationName,
-                            expressId: res.data.expressId,
-                            //以上是快递站点信息
-                            orderId: res.data.orderId,
-                            sdInstance: res.data.expStationName,
-                            urgent: res.data.urgent,
-                            weightInfo: res.data.weightInfo,
-                            reward: res.data.reward,
-                            pubLastName: res.data.pubLastName,
-                            pubTime: res.data.pubTime,
-                            receiverPhone: res.data.receiverPhone,
-                            endTime: res.data.endTime,
-                            recName: res.data.recName,
-                            expSize: res.data.expSize,
-                            phoneRear: res.data.phoneRear,
-                            fetchCode: res.data.fetchCode,
-                            otherInfo: res.data.otherInfo,
-                            statusCode: res.data.State,
-                            sendLocAll: res.data.sendLocAll
-                        })
-                    }
-
-                },
-                fail: function() {},
-                complete: function() {}
-            })
+            that.getOrderInfo(options.id)
         }
     },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -196,44 +133,51 @@ Page({
             url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
             method: 'POST',
             data: {
-                'orderId': that.data.orderId,
-                'userID': app.globalData.sessionID,
-                'schoolID': app.globalData.schoolID
+                'order_id': that.data.orderId,
+                'sessionID': app.globalData.sessionID,
+                'school_id': app.globalData.schoolID
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
                 // console.log('下拉刷新')
                 if (res.statusCode == 200) {
                     that.setData({
                         //设置页面参数
-                        expLogoUrl: res.data.expLogoUrl,
-                        expOpenTime: res.data.expOpenTime,
-                        expStationName: res.data.expStationName,
-                        expressId: res.data.expressId,
+                        expLogoUrl: res.data.exp_logo,
+                        expOpenTime: res.data.exp_opentime,
+                        expStationName: res.data.exp_station,
                         //以上是快递站点信息
-                        orderId: res.data.orderId,
-                        sdInstance: res.data.expStationName,
-                        urgent: res.data.urgent,
-                        weightInfo: res.data.weightInfo,
+                        orderId: res.data.order_id,
+                        weightInfo: res.data.exp_weight,
                         reward: res.data.reward,
-                        pubLastName: res.data.pubLastName,
-                        pubTime: res.data.pubTime,
-                        receiverPhone: res.data.receiverPhone,
-                        endTime: res.data.endTime,
-                        recName: res.data.recName,
-                        expSize: res.data.expSize,
-                        phoneRear: res.data.phoneRear,
-                        fetchCode: res.data.fetchCode,
-                        otherInfo: res.data.otherInfo,
-                        statusCode: res.data.State,
-                        sendLocAll: res.data.sendLocAll
+                        pubLastName: res.data.pub_lname+'同学',
+                        pubTime: res.data.pub_time,
+                        endTime: res.data.expire_time,
+                        fetchName: res.data.exp_name,
+                        expSize: res.data.exp_size,
+                        phoneRear: res.data.phone_rear,
+                        fetchCode: res.data.exp_code,
+                        otherInfo: res.data.description,
+                        statusCode: res.data.status,
+                        sendLocAll: res.data.send_loc,
+
+                        limit:res.data.limit,
                     })
+                    if (res.data.pub_phone){
+                        that.setData({
+                            pubPhone: res.data.pub_phone,
+                            pubQQ:res.data.pub_QQ?res.data.pub_QQ:'暂无'
+                        })
+                        //设置完改变状态条状态
+                        that.changeStatusBar()
+                    } else {
+                        //没有返回隐私信息，隐藏状态栏
+                        that.setData({
+                            hideStatusBar:true
+                        })
+                    }
                     wx.hideLoading()
                     wx.showToast({
-                        title: '刷新完成',
-                        duration: 2000
+                        title: '刷新成功',
                     })
                 } else {
                     wx.hideLoading()
@@ -250,15 +194,10 @@ Page({
                     icon: 'none'
                 })
             },
-            complete: function() {}
+            complete: function() {
+                wx.stopPullDownRefresh()
+            }
         })
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
     },
 
     /**
@@ -278,23 +217,16 @@ Page({
             content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
             confirmColor: '#faaf42',
             confirmText: '发送短信',
-            cancelColor: '#faaf42',
+            cancelColor: '#999BA1',
             cancelText: '拨打号码',
             success: function(res) {
                 if (res.confirm) {
-                    // console.log('用户点击确定')
                     wx.setClipboardData({
-                            data: that.data.receiverPhone,
+                            data: that.data.pubPhone,
                         })
-                        // wx.showToast({
-                        //     title: '号码已复制',
-                        //     icon: 'success'
-                        // })
-
                 } else if (res.cancel) {
-                    // console.log('用户点击取消')
                     wx.makePhoneCall({
-                        phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
+                        phoneNumber: that.data.pubPhone
                     })
                 }
             }
@@ -323,33 +255,18 @@ Page({
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
-                    // console.log('用户点击确定')
                     wx.redirectTo({
                         url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.pubLastName
                     })
                 } else if (res.cancel) {
-                    // console.log('用户点击取消')
                 }
             }
         })
     },
     toFix: function(event) {
-        // var expressId = event.currentTarget.dataset.expressId
-        // console.log(expressId)
-        // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressId,
-        // })
-        wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
-            confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
-            success: function(res) {
-                if (res.confirm) {}
-            }
+        wx.navigateTo({
+            url: '../reportExError/reportExError?title=' + that.data.expStationName,
         })
-
     },
     finOrder: function() {
         var that = this
@@ -363,35 +280,20 @@ Page({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
                         data: {
-                            'orderId': that.data.orderId,
-                            'userID': app.globalData.sessionID,
-                            'nextState': 0
+                            'order_id': that.data.orderId,
+                            'sessionID': app.globalData.sessionID,
+                            'next_state': 0
                         },
-                        // header: {
-                        //     "Content-Type": "applciation/json"
-                        // },
                         success: function(res) {
-                            // console.log("确认送达", res)
-                            if (res.data.msg == 'ok') {
-                                that.setData({
-                                    //设置页面参数
-                                    statusCode: res.data.State,
-                                    //考虑返回发布人昵称，
-                                })
+                            if (res.statusCode==200) {
+                                that.onPullDownRefresh()
                                 wx.showToast({
                                     title: '等待对方确认',
                                     icon: 'success',
                                     duration: 1500
                                 })
                             } else {
-                                wx.showToast({
-                                    title: '出错，请重试',
-                                    icon: 'none',
-                                    duration: 1500,
-                                    success: function() {
-                                        that.onPullDownRefresh()
-                                    }
-                                })
+                                that.onPullDownRefresh()
                             }
                         },
                         fail: function() {},
@@ -400,7 +302,61 @@ Page({
                 }
             }
         })
+    },
+    getOrderInfo:function (orderId) {
+        var that = this
+        wx.request({
+            url: urlModel.url.receiverOrderDetail, //填充请求订单具体信息url
+            method: 'POST',
+            data: {
+                'order_id': orderId,
+                'sessionID': app.globalData.sessionID,
+                'school_id': app.globalData.schoolID
+            },
+            success: function(res) {
+                // console.log(res)
+                if (res.statusCode == 200) {
+                    that.setData({
+                        //设置页面参数
+                        expLogoUrl: res.data.exp_logo,
+                        expOpenTime: res.data.exp_opentime,
+                        expStationName: res.data.exp_station,
+                        //以上是快递站点信息
+                        orderId: res.data.order_id,
+                        weightInfo: res.data.exp_weight,
+                        reward: res.data.reward,
+                        pubLastName: res.data.pub_lname+'同学',
+                        pubTime: res.data.pub_time,
 
+                        endTime: res.data.expire_time,
+                        fetchName: res.data.exp_name,
+                        expSize: res.data.exp_size,
+                        phoneRear: res.data.phone_rear,
+                        fetchCode: res.data.exp_code,
+                        otherInfo: res.data.description,
+                        statusCode: res.data.status,
+                        sendLocAll: res.data.send_loc,
+                        limit:res.data.limit,
+                    })
+                    if(res.data.pub_phone){
+                        that.setData({
+                            pubQQ:res.data.pub_QQ?res.data.pub_QQ:'暂无',
+                            pubPhone: res.data.pub_phone,
+                        })
+                        //设置完改变状态条状态
+                        that.changeStatusBar()
+                    }else {
+                        //没有返回隐私信息，隐藏状态栏
+                        that.setData({
+                            hideStatusBar:true
+                        })
+                    }
+
+                }
+            },
+            fail: function() {},
+            complete: function() {
+            }
+        })
     }
-
 })
