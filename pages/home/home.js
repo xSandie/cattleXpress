@@ -86,13 +86,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        try {
-            if (options.reload){
-                this.onPullDownRefresh()
-            }
-        }catch (e) {
-
-        }
         var that = this
         app.getUser().then(function(res) {
             that.setData({
@@ -128,6 +121,23 @@ Page({
                 fail: function() {},
                 complete: function() { wx.hideLoading() }
             })
+            var send_data = {
+                'sessionID': app.globalData.sessionID
+            }
+            wx.request({
+                url: urlModel.url.getAddr,
+                data: send_data,
+                success: function(res) {
+                    if (res.data.default) {
+                        app.globalData.default.conPhone = res.data.phone
+                        app.globalData.default.phoneRear = res.data.phone_rear
+                        app.globalData.default.recName = res.data.rec_name
+                        app.globalData.default.sendLocInput = res.data.send_loc_detail
+                        app.globalData.default.sendLocSelect = res.data.send_loc_sum
+                        app.globalData.default.QQ = res.data.QQ || '可不填写'
+                    }
+                }
+            })
             that.setAvatar();
         }).catch(function () {
             that.setData({
@@ -151,6 +161,14 @@ Page({
         that.setData({
                 schoolName: app.globalData.schoolName
             })
+        setTimeout(that.timeOutRefresh,1000)
+
+    },
+    timeOutRefresh:function(){
+        if(app.globalData.reloadHomePage){
+            app.globalData.reloadHomePage = false
+            this.onPullDownRefresh()
+        }
     },
 
     /**
@@ -374,7 +392,7 @@ Page({
     },
     toPub: function() {
         wx.switchTab({
-            url: '../publish1/publish1',
+            url: '../smartPub/smartPub',
         })
     }
 })

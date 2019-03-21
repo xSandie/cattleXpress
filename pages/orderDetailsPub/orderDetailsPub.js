@@ -111,29 +111,25 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) { //要复制到下拉刷新中去
-        // console.log(options)
+    onLoad: function(options) {
         var that = this
+        send_data = {
+            'order_id': options.id,
+            'sessionID': app.globalData.sessionID,
+            'school_id': app.globalData.schoolID
+        }
         wx.request({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
             method: 'POST',
-            data: {
-                'order_id': options.id,
-                'sessionID': app.globalData.sessionID,
-                'school_id': app.globalData.schoolID
-            },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
+            data: send_data,
             success: function(res) {
-                // console.log("onload", res)
                 var tdata = res.data
                 that.setData({
                     //设置页面参数，设置orderID
                     statusCode: tdata.state,
                     limit: tdata.limit,
                     expLogoUrl: tdata.exp_logo,
-                    expOpenTime: '营业时间：' + tdata.exp_opentime,
+                    expOpenTime: tdata.exp_opentime,
                     reward: tdata.reward,
                     endTime: tdata.expire_time,
                     fetchCode: tdata.exp_code,
@@ -145,15 +141,16 @@ Page({
                     sendLocAll: tdata.send_loc,
                     weightInfo: tdata.weight,
                 })
-                if (tdata.rtime != '') {
+                if (tdata.rec_time != '') {
                     that.setData({
                         receiveTime: '接单时间：' + tdata.rec_time,
                         receiverName: tdata.username + '同学 ' + tdata.school_numb,
-                        receiverPhone: tdata.phone
+                        receiverPhone: tdata.phone || '6666',
+                        receiverQQ: tdata.rec_QQ || '暂无'
                     })
                 } else {
                     that.setData({
-                        receiveTime: '若是自己取快递，记得帮别人领噢',
+                        receiveTime: '马上就有人帮取啦~',
                         receiverName: '暂无'
                     })
                 }
@@ -166,42 +163,12 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
         var that = this
-            //刷新当前状态，可直接使用获取订单信息接口
-            //todo 防止恶意刷新，设置loading蒙层
-            // var that = this
+        //刷新当前状态，可直接使用获取订单信息接口
+        //防止恶意刷新，设置loading蒙层
         wx.showLoading({
             title: '刷新中',
             mask: true
@@ -210,49 +177,40 @@ Page({
             url: urlModel.url.publisherOrderDetail, //填充请求订单具体信息url
             method: 'POST',
             data: {
-                // 'ordNum': options.id,
                 'order_id': that.data.orderId,
                 'sessionID': app.globalData.sessionID,
                 'school_id': app.globalData.schoolID
-
-                // 'sessionID': app.globalData.sessionID,
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
-                wx.stopPullDownRefresh()
-                // console.log("onPullDownRefresh", res)
                 if (res.statusCode == 200) {
                     var tdata = res.data
                     that.setData({
                         //设置页面参数，设置orderID
-                        statusCode: tdata.status,
-                        urgent: tdata.urgent,
-                        expressId: tdata.expressId,
-                        expLogoUrl: tdata.expLogoUrl,
-                        expOpenTime: '营业时间：' + tdata.expOpenTime,
+                        statusCode: tdata.state,
+                        limit: tdata.limit,
+                        expLogoUrl: tdata.exp_logo,
+                        expOpenTime: tdata.exp_opentime,
                         reward: tdata.reward,
-                        endTime: tdata.endTime,
-                        fetchCode: tdata.fetchCode,
-                        expStationName: tdata.expStationName,
-                        orderId: tdata.orderId,
-                        phoneRear: tdata.phoneRear,
-                        expSize: tdata.expSize,
-                        recName: tdata.recName,
-                        otherInfo: tdata.otherInfo,
-                        sendLocAll: tdata.sendLocAll,
-                        weightInfo: tdata.weightInfo,
+                        endTime: tdata.expire_time,
+                        fetchCode: tdata.exp_code,
+                        expStationName: tdata.exp_station,
+                        phoneRear: tdata.phone_rear,
+                        expSize: tdata.exp_size,
+                        recName: tdata.exp_name,
+                        otherInfo: tdata.description,
+                        sendLocAll: tdata.send_loc,
+                        weightInfo: tdata.weight,
                     })
-                    if (tdata.rtime) {
+                    if (tdata.rec_time) {
                         that.setData({
-                            receiveTime: '接单时间：' + tdata.rtime,
-                            receiverName: tdata.Uname + '同学 ' + tdata.Uid,
-                            receiverPhone: tdata.phone
+                            receiveTime: '接单时间：' + tdata.rec_time,
+                            receiverName: tdata.username + '同学 ' + tdata.school_numb,
+                            receiverPhone: tdata.phone || '6666',
+                            receiverQQ: tdata.rec_QQ || '暂无'
                         })
                     } else {
                         that.setData({
-                            receiveTime: '若是自己取快递，记得帮别人领噢',
+                            receiverQQ: '马上就有人帮取啦~',
                             receiverName: '暂无'
                         })
                     }
@@ -268,7 +226,6 @@ Page({
                         icon: 'none'
                     })
                 }
-
             },
             fail: function() {
                 wx.hideLoading()
@@ -278,21 +235,11 @@ Page({
                 })
             },
             complete: function() {
+                wx.stopPullDownRefresh()
                 that.changeStatusBar()
             }
         })
     },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
     onShareAppMessage: function() {
         return {
             title: '校园快递互助代取平台',
@@ -301,20 +248,9 @@ Page({
         }
     },
     toFix: function(event) {
-        // var expressId = event.currentTarget.dataset.expressId
-        // console.log(expressId)
-        // wx.navigateTo({
-        //     url: '../reportExError/reportExError?id=' + expressId,
-        // })
-        wx.showModal({
-            title: '敬请期待',
-            content: '攻城狮加紧完善中',
-            confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '期待噢',
-            success: function(res) {
-                if (res.confirm) {}
-            }
+        var that = this
+        wx.navigateTo({
+            url: '../reportExError/reportExError?title=' + that.data.expStationName,
         })
     },
     conTA: function() {
@@ -324,21 +260,14 @@ Page({
             content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
             confirmColor: '#faaf42',
             confirmText: '发送短信',
-            cancelColor: '#faaf42',
+            cancelColor: '#999BA1',
             cancelText: '拨打号码',
             success: function(res) {
                 if (res.confirm) {
-                    // console.log('用户点击确定')
                     wx.setClipboardData({
                             data: that.data.receiverPhone,
-                        })
-                        // wx.showToast({
-                        //     title: '号码已复制',
-                        //     icon: 'success'
-                        // })
-
+                    })
                 } else if (res.cancel) {
-                    // console.log('用户点击取消')
                     wx.makePhoneCall({
                         phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
                     })
@@ -355,11 +284,6 @@ Page({
             showCancel: false,
             confirmText: '知道了',
             success: function(res) {
-                // if (res.confirm) {
-                //     console.log('用户点击确定')
-                // } else if (res.cancel) {
-                // console.log('用户点击')
-                // }
             }
         })
     },
@@ -372,64 +296,49 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        // console.log('用户点击确定')
                         wx.redirectTo({
                             url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.receiverName
                         })
                     } else if (res.cancel) {
-                        // console.log('用户点击取消')
                     }
                 }
             })
-            // wx.showModal({
-            //     title: '敬请期待',
-            //     content: '攻城狮加紧完善中',
-            //     confirmColor: '#faaf42',
-            //     showCancel: false,
-            //     confirmText: '期待噢',
-            //     success: function(res) {
-            //         if (res.confirm) {}
-            //     }
-            // })
-
     },
-    finOrder: function() {
+    finOrder: function(event) {
         var that = this
+        var formId = event.detail.formId;
+        let send_data = {
+            'order_id': that.data.orderId,
+            'sessionID': app.globalData.sessionID,
+            'next_state': 3,
+            'form_id': formId
+            //4为过期或取消状态
+        }
         wx.showModal({
             title: '确认',
             content: '确认收货后,请自觉支付赏金噢！',
             confirmText: '好的',
             confirmColor: '#faaf42',
+            cancelText: '返回',
             success: function(res) {
                 if (res.confirm) {
-                    // console.log('用户点击确定')
                     wx.request({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
-                        data: {
-                            'orderId': that.data.orderId,
-                            'userID': app.globalData.sessionID,
-                            'nextState': 3
-                        },
-                        // h
-                        // header: {
-                        //     "Content-Type": "applciation/json"
-                        // },
+                        data: send_data,
                         success: function(res) {
                             // console.log(res)
-                            if (res.data.msg == 'ok') {
+                            if (res.statusCode == 200) {
                                 that.setData({
                                     //设置页面参数
-                                    statusCode: res.data.State,
+                                    statusCode: 3,
                                 })
                                 wx.showToast({
                                     title: '请支付',
                                     icon: 'success',
-                                    duration: 1000,
+                                    duration: 1500,
                                     success: function() {
-                                        wx.navigateTo({
-                                            url: '../pay/pay?orderId=' + that.data.orderId,
-                                        })
+                                        setTimeout(that.toPay, 1500)
                                     }
                                 })
                             } else {
@@ -437,11 +346,10 @@ Page({
                                     title: '请重试',
                                     icon: 'none',
                                     success: function() {
-                                        that.onPullDownRefresh()
+                                        setTimeout(that.onPullDownRefresh, 1500)
                                     }
                                 })
                             }
-
                         },
                         fail: function() {},
                         complete: function() {}
@@ -449,11 +357,22 @@ Page({
                 }
             }
         })
-
-
     },
-    cancelOrder: function() {
+    toPay:function(orderId){
+        wx.navigateTo({
+            url: '../pay/pay?orderId=' + orderId,
+        })
+    },
+    cancelOrder: function(event) {
         var that = this
+        var formId = event.detail.formId;
+        let send_data = {
+            'order_id': that.data.orderId,
+            'sessionID': app.globalData.sessionID,
+            'next_state': 4,
+            'form_id': formId
+            //4为过期或取消状态
+        }
         wx.showModal({
             title: '确定取消？',
             content: '建议取消前先联系对方',
@@ -463,25 +382,16 @@ Page({
             confirmColor: '#999ba1',
             success: function(res) {
                 if (res.confirm) {
-                    // console.log('用户点击确定')
                     wx.request({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
-                        data: {
-                            'orderId': that.data.orderId,
-                            'userID': app.globalData.sessionID,
-                            'nextState': 4
-                                //4为过期或取消状态
-                        },
-                        // header: {
-                        //     "Content-Type": "application/x-www-form-urlencoded"
-                        // },
+                        data: send_data,
                         success: function(res) {
                             // console.log('取消', res)
-                            if (res.statusCode == 200 && res.data.msg == 'ok') {
+                            if (res.statusCode == 200) {
                                 that.setData({
                                     //设置页面参数，设置orderID
-                                    statusCode: res.data.State,
+                                    statusCode: 4,
                                     hideStatusBar: true,
                                 })
                                 wx.showToast({
@@ -489,17 +399,13 @@ Page({
                                     icon: 'success',
                                     duration: 1000
                                 })
-                                that.onPullDownRefresh()
-                                    // setTimeout(function() {}, 500);
-                                    // wx.switchTab({
-                                    //     url: '../orders/orders'
-                                    // })
+                                setTimeout(that.onPullDownRefresh,1000)
                             } else {
                                 wx.showToast({
                                     title: '取消失败，请重试',
                                     icon: 'none',
                                     success: function() {
-                                        that.onPullDownRefresh()
+                                        setTimeout(that.onPullDownRefresh,1000)
                                     }
                                 })
                             }
@@ -519,14 +425,5 @@ Page({
             }
         })
 
-
-
-
-    },
-    toPay: function() {
-        var that = this
-        wx.navigateTo({
-            url: '../pay/pay?orderId=' + that.data.orderId,
-        })
     }
 })

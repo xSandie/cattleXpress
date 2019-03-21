@@ -18,6 +18,9 @@ button {
     font-weight: bold;
     color: white;
 }
+button:after {
+    border: none;
+}
 
 .trifle {
     margin-top: 26rpx;

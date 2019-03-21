@@ -15,7 +15,8 @@ Page({
             sendLocInput: '填写地点',
             recName: '填写姓名',
             phoneRear: '四位数字',
-            //date: '点击选择日期', //往后加一天
+
+            //点击按钮都会覆盖这个
         },
         phoneRear: '', //提交时,用于 补全信息 的 临时存储变量
         sendLocSelect: '',

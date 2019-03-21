@@ -30,7 +30,10 @@ Page({
     },
     backhome:function(){
         wx.switchTab({
-            url: '../home/home?reload=yes',
+            url: '../home/home',
+            success:function () {
+                app.globalData.reloadHomePage=true
+            }
         })
     },
     /**
@@ -89,47 +92,6 @@ Page({
         // console.log("ok")//会先执行ok再等到收到数据执行success
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
-    },
 
     /**
      * 用户点击右上角分享
@@ -145,6 +107,8 @@ Page({
      * 接单按钮按下
      */
     recOrder: function(event) {
+        var that = this
+        var formId = event.detail.formId;
         if (!app.globalData.havePayCode) {
             //未设置paycode
             wx.showModal({
@@ -168,9 +132,8 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
-                        // console.log('用户点击确定')
-                        //接单动作
                         let send_data = {
+                            'form_id': formId,
                             'order_id': orderId,
                             'sessionID': app.globalData.sessionID,
                         }
@@ -179,8 +142,6 @@ Page({
                             method: 'GET',
                             data: send_data,
                             success: function(res) {
-                                // console.log(event)
-                                // console.log(orderId)
                                 if (res.data.can_get == true) {
                                     wx.redirectTo({
                                         url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
@@ -203,20 +164,18 @@ Page({
                                 } else if(res.data.not_allow){
                                     wx.showToast({
                                       title: '不符合订单条件噢~',
-                                        icon:'none'
+                                        icon:'none',
+                                        success: function() {
+                                            setTimeout(that.backhome,1500)
+                                        }
                                     })
                                 }else
                                     {
-                                    wx.showModal({
-                                        title: '来晚一步',
-                                        content: '抱歉，订单已经被抢啦~',
-                                        showCancel: false,
-                                        confirmColor: '#f9a93e',
-                                        confirmText: '返回主页',
+                                    wx.showToast({
+                                        title: '来晚一步，订单被抢啦~',
+                                        icon:'none',
                                         success: function() {
-                                            wx.switchTab({
-                                                url: '../home/home?reload=yes',
-                                            })
+                                            setTimeout(that.backhome,1500)
                                         }
                                     })
                                 }

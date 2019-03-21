@@ -1,1 +1,225 @@
-/* pages/smartPub/smartPub.wxss */
+button{
+    padding: 0;
+    height: auto;
+    width: auto;
+    display: flex;
+    line-height: unset;
+}
+.header{
+    width: 100%;
+    background: #faaf42;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 230rpx;
+}
+.cardPos{
+    z-index: 15;
+    width: 100%;
+    position: relative;
+    top: -26rpx;
+    padding: 24rpx;
+    box-sizing: border-box;
+    border-radius: 16rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+}
+.container{
+    position: relative;
+}
+.publishIMG2{
+    width: 413rpx;
+    height: 206rpx;
+}
+.addrEditCard{
+    animation: blowupEdit 1s 1;
+    height: 432rpx;
+}
+@keyframes blowupEdit {
+    from{
+        height: 132rpx;
+    }
+    to{
+        height: 432rpx;
+    }
+}
+.cline {
+    height: 36rpx;
+    width: 1rpx;
+    background: #373c46;
+    margin-right: 16rpx;
+    margin-left: 16rpx;
+}
+.cline1 {
+    height: 60rpx;
+    width: 1rpx;
+    background: #373c46;
+    margin-right: 16rpx;
+    margin-left: 16rpx;
+}
+.addrEdit{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.normalRow{
+    width: 100%;
+    height: 96rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.placeHolder{
+    font-size: 36rpx;
+    color: #373c46;
+}
+.contactNumCon{
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+}
+.orangeLine{
+    width: 100%;
+    height: 1rpx;
+    background: #faaf42;
+    margin-bottom: 10rpx;
+}
+.bias2{
+    position: relative;
+    left: 4rpx;
+}
+.twoInput{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4rpx;
+    font-size: 36rpx;
+    color: #373c46;
+}
+.twoInput1{
+    display: flex;
+    margin-bottom: 4rpx;
+    font-size: 36rpx;
+    color: #373c46;
+}
+.inputSendLoc{
+    width: 340rpx;
+    height: 40rpx;
+}
+.pullIcon {
+    height: 24rpx;
+    width: 24rpx;
+}
+.DeRecLocSel{
+    margin-bottom: 2rpx;
+}
+.hidenBtn{
+    z-index: 16;
+    background: none;
+    color: #faaf42;
+    position: absolute;
+    bottom: 26rpx;
+    right: 24rpx;
+}
+.normalRow1{
+    width: 190rpx;
+    height: 90rpx;
+    display: flex;
+    flex-direction: column;
+}
+.lastRow{
+    display: flex;
+    align-items: center;
+    font-size: 36rpx;
+    color: #373C46;
+    width: 500rpx;
+    margin-bottom: 2rpx;
+}
+.cline2{
+    width: 1rpx;
+    background: #373C46;
+    height: 36rpx;
+    margin-left: 16rpx;
+    margin-right: 16rpx;
+}
+.differLink {
+    font-size: 20rpx;
+    color: #999ba1;
+    position: absolute;
+    right: 24rpx;
+    top: 64rpx;
+    z-index: 20;
+}
+
+
+.sumCard{
+    animation: scrollUpEdit 1s 1;
+    height: 132rpx;
+}
+@keyframes scrollUpEdit{
+    from{
+        height: 432rpx;
+    }
+    to{
+        height: 132rpx;
+    }
+}
+
+.setDef {
+    z-index: 20;
+    font-size: 26rpx;
+    color: #faaf42;
+    position: absolute;
+    bottom: 114rpx;
+    right: 24rpx;
+}
+.mainForm{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+}
+.midForm{
+}
+.highForm{
+}
+.exTimeCon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.DatePi {
+    color: #373c46;
+    font-size: 36rpx;
+}
+
+.TimePi {
+    color: #373c46;
+    font-size: 36rpx;
+}
+.button-hover {
+    color: white;
+    background: linear-gradient(90deg, #af782c, #b39340);
+}
+.nbtnIcon {
+    height: 40rpx;
+    width: 40rpx;
+}
+.others {
+    box-sizing: border-box;
+    height: 124rpx;
+    width: 100%;
+    border-radius: 10rpx;
+    border: 1rpx solid #faaf42;
+    padding-right: 16rpx;
+    padding-left: 16rpx;
+    padding-top: 10rpx;
+    padding-bottom: 16rpx;
+    white-space: normal;
+    font-size: 28rpx;
+}

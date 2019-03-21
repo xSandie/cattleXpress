@@ -110,9 +110,9 @@
     </view>
 </view>
 <view>
-    <view wx:if="{{statusCode==2}}" class='fxdBtnArea'>
+    <form wx:if="{{statusCode==2}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button hover-class="button-hover" bindtap="finOrder">
+        <button form-type='submit' hover-class="button-hover" bindtap="finOrder">
           <text class='finText'>确认送达</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
@@ -126,7 +126,7 @@
                 <text class='dimText'>举报</text>
             </view>
         </view>
-    </view>
+    </form>
     <view wx:if="{{statusCode==0}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
         <button hover-class="button-hover" bindtap="conTA">

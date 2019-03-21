@@ -85,7 +85,7 @@ App({
         schoolNumb: '', //用户学号
         schoolID: 1, //学校id
         schoolName: "点击选择学校",
-        ourUserStatus: 4, //用户状态码，默认先为4未认证
+        ourUserStatus: 3, //用户状态码，默认先为4未认证
         sex: '',
         expressLocArray: [], //两列快递站点数组
         phoneNumber: null,
@@ -102,9 +102,11 @@ App({
             sendLocInput: '填写地点',
             recName: '填写姓名',
             phoneRear: '四位数字',
+            QQ: '可不填写'
         },
         dateRange: [],
         havePayCode: false,
         accountHint: '就是登陆 教务系统 的账号', //认证账号提示
+        reloadHomePage:false
     }
 })

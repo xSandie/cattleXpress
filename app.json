@@ -20,13 +20,14 @@
     "pages/pay/pay",
     "pages/myCode/myCode",
     "pages/smartPub/smartPub"
+
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f5f8fd",
+    "backgroundColor": "#ffffff",
     "enablePullDownRefresh": true,
     "onReachBottomDistance": 50
   },
@@ -40,7 +41,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/publish1/publish1",
+        "pagePath": "pages/smartPub/smartPub",
         "text": "发布"
       },
       {

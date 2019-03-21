@@ -23,9 +23,9 @@
             <view class='recLoc'>
                 <text class='recLocTi'>送达地址</text>
                     <view class='recLocDetail'>
-                        <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLocSelect}}</picker>
-                        <view class='cline'>
-                        </view>
+                        <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
+                            {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
+                        <view class='cline'></view>
                         <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocInput}}" class='DeRecLocIn'/>
                     </view>
             </view>

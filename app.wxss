@@ -98,6 +98,7 @@ page {
     font-weight: bold;
     font-size: 32rpx;
     height: 100rpx;
+    margin: 0;
 }
 
 .btn-hover {

@@ -150,9 +150,10 @@
             </view>
        </view>
             <button hover-class="button-hover" class='fakeBtn' formType="submit"><view class='nbtnT'>
-                    <text>发布</text>
+                <text>发布</text>
                 </view>    
-                <image class='nbtnIcon' src="{{nextIcon}}"></image></button>
+                <image class='nbtnIcon' src="{{nextIcon}}"></image>
+            </button>
         </view>
         
     </form>

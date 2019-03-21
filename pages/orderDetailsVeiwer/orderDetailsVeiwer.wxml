@@ -73,11 +73,11 @@
 <view>
     <view class='fxdBtnBac'>    
     </view>
-    <view class='fxdBtnArea'>
-        <view class='contact' hover-class="button-hover" data-order-id="{{orderId}}" bindtap="recOrder">
+    <form class='fxdBtnArea'>
+        <button form-type='submit'  class='contact' hover-class="button-hover" data-order-id="{{orderId}}" bindtap="recOrder">
           <text>点此接单</text>
           <image src='{{contactIcon}}' class='conIcon'></image>
-        </view>
+        </button>
         <view class='dirGet' bindtap="conTA">
             <view hover-class="defaultHover" class='lDGT'>
                <text>联系TA</text>
@@ -86,5 +86,5 @@
                <text>建议接单前先联系本人</text>
             </view>
         </view>
-    </view>
+    </form>
 </view>

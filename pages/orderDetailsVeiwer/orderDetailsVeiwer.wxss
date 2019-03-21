@@ -1,3 +1,6 @@
+button:after {
+    border: none;
+}
 .container {
     padding-top: 12rpx;
     height: 100%;

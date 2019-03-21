@@ -15,7 +15,7 @@ Page({
         finIcon: '../../images/checkLight.png',
         policeIconDim: '../../images/policeDim.png',
         contactIconDim: '../../images/conDim.png',
-        contactIcon: '../../images/contactIcon.png',
+        contactIcon: '../../images/conIcon.png',
         policeIcon: '../../images/policeLight.png',
 
         fetchCode: '666666',
@@ -264,34 +264,38 @@ Page({
         })
     },
     toFix: function(event) {
+        var that = this
         wx.navigateTo({
             url: '../reportExError/reportExError?title=' + that.data.expStationName,
         })
     },
-    finOrder: function() {
+    finOrder: function(event) {
         var that = this
+        var formId = event.detail.formId;
         wx.showModal({
             title: '确认送达？',
             content: '确认后，请关注到账通知',
             confirmColor: '#faaf42',
             success: function(res) {
                 if (res.confirm) {
+                    let send_data = {
+                        'order_id': that.data.orderId,
+                        'sessionID': app.globalData.sessionID,
+                        'next_state': 0,
+                        'form_id':formId
+                    }
                     wx.request({
                         url: urlModel.url.changeOrderStatus, //填充完成订单url
                         method: 'POST',
-                        data: {
-                            'order_id': that.data.orderId,
-                            'sessionID': app.globalData.sessionID,
-                            'next_state': 0
-                        },
+                        data: send_data,
                         success: function(res) {
                             if (res.statusCode==200) {
-                                that.onPullDownRefresh()
                                 wx.showToast({
                                     title: '等待对方确认',
                                     icon: 'success',
                                     duration: 1500
                                 })
+                                setTimeout(that.onPullDownRefresh,1500)
                             } else {
                                 that.onPullDownRefresh()
                             }

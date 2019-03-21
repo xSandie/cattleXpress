@@ -1,2 +1,73 @@
-<!--pages/smartPub/smartPub.wxml-->
-<text>pages/smartPub/smartPub.wxml</text>
+<view class="header">
+    <image class="publishIMG2" src="{{pubImg}}"></image>
+</view>
+<form bindsubmit="finOrdSubmit" class="container">
+    <view class="cardPos {{cardStyle}}">
+        <view bindtap="scrollDown" wx:if="{{!showEdit}}" class="summary">
+            <view>点击编辑</view>
+        </view>
+        <view wx:if="{{showEdit}}" class="addrEdit">
+            <view class="normalRow">
+                <text class="my-grey xxs-font bias2">联系电话</text>
+                <input type="number" bindblur='extractPhoneRear' name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhone}}" class='contactNumCon' />
+                <view class="orangeLine"></view>
+            </view>
+            <view class="normalRow">
+                <text class="my-grey xxs-font bias2">送达地址</text>
+                <view class="twoInput">
+                    <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
+                        {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
+                    <view class='cline'></view>
+                    <input type="text" name="DeRecLocIn" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.sendLocInput}}" class='inputSendLoc' />
+                </view>
+                <view class="orangeLine"></view>
+            </view>
+            <view style="display: flex;flex-direction: column;">
+            <view class="twoInput1">
+                <view class="normalRow1">
+                    <text class="my-grey xxs-font bias2">收货姓名</text>
+                        <input type="text" name="recName" confirm-type="next" placeholder-class="placeHolder" maxlength='8' placeholder="{{default.recName}}" class='inputSendLoc' />
+                </view>
+                <view class='cline1'></view>
+                <view class="normalRow1">
+                    <text class="my-grey xxs-font bias2">手机尾号</text>
+                    <input type="number" name="phoneRear" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.phoneRear }}" class='inputSendLoc' />
+                </view>
+            </view>
+            <view class="orangeLine"></view>
+            </view>
+            <view class="lastRow">
+                <text class="">QQ</text>
+                <view class='cline2'></view>
+                <input type="number" name="QQ" placeholder-class="placeHolder" maxlength='15' placeholder="{{default.QQ}}" class='inputSendLoc' />
+            </view>
+            <button form-type='submit' class="hidenBtn m-font" hover-class="button-hover" bindtap="scrollUp">收起</button>
+            <view class='differLink' catchtap="differLink">
+                <text>· 联系电话与收货手机号的区别</text>
+            </view>
+            <view class='setDef' catchtap="setDefFlag">
+                <text wx:if="{{setDefFlag}}">取消设为默认</text>
+                <text wx:else>设为默认</text>
+            </view>
+        </view>
+    </view>
+    <view class="mainForm {{mainFormClass}}">
+        <view class="normalRow">
+            <text class="my-grey xxs-font">最晚送达时间</text>
+            <view class='exTimeCon'>
+                <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{dateRange}}" mode="selector">{{dateRange[dateIndex]}}</picker>
+                <view class='cline'>
+                </view>
+                <picker name="exTimeConTime" class='TimePi' value="{{endTime}}" bindchange="bindTimeChange" mode="endTime" start="00:00" end="24:00">{{endTime}}</picker>
+            </view>
+            <view class="orangeLine"></view>
+        </view>
+        <view style="display: flex;margin: 36rpx 0rpx;"><button hover-class="button-hover" class='main-btn' formType="submit">
+            <view style="margin-left:8rpx;">发布</view>
+            <image class='nbtnIcon' src="{{nextIcon}}"></image>
+        </button></view>
+        <view class='others'>
+            <textarea name="otherInfo" maxlength='50' type="text" class='othersCon' placeholder="{{expDescript}}" />
+        </view>
+    </view>
+</form>
