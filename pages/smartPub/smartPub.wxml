@@ -3,8 +3,17 @@
 </view>
 <form bindsubmit="finOrdSubmit" class="container">
     <view class="cardPos {{cardStyle}}">
-        <view bindtap="scrollDown" wx:if="{{!showEdit}}" class="summary">
-            <view>点击编辑</view>
+        <view bindtap="scrollDown" wx:if="{{!showEdit}}" class="m-font" style="display: flex;flex-direction: column;">
+            <view style="display: flex;margin-bottom: 14rpx;" class="main-yellow">
+                <view>{{default.sendLocSelect}} {{default.sendLocInput}}</view>
+                <view style="margin-left: 20rpx">{{default.recName}}</view>
+            </view>
+            <view style="display: flex;font-size: 26rpx;" class="my-grey">
+                <view>{{default.recName}}</view>
+                <view style="margin-left: 20rpx">{{default.phoneRear}}</view>
+                <view style="margin-left: 20rpx">QQ:{{default.QQ}}</view>
+            </view>
+            <view style="position: absolute;top:24rpx;right: 24rpx;" class="m-font main-yellow">点击编辑</view>
         </view>
         <view wx:if="{{showEdit}}" class="addrEdit">
             <view class="normalRow">
@@ -15,14 +24,15 @@
             <view class="normalRow">
                 <text class="my-grey xxs-font bias2">送达地址</text>
                 <view class="twoInput">
-                    <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
+                    <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" value="{{sendLocSelect}}"
+                            range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
                         {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
                     <view class='cline'></view>
                     <input type="text" name="DeRecLocIn" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.sendLocInput}}" class='inputSendLoc' />
                 </view>
                 <view class="orangeLine"></view>
             </view>
-            <view style="display: flex;flex-direction: column;">
+            <view style="display: flex;flex-direction: column;height: 96rpx;">
             <view class="twoInput1">
                 <view class="normalRow1">
                     <text class="my-grey xxs-font bias2">收货姓名</text>
@@ -37,7 +47,7 @@
             <view class="orangeLine"></view>
             </view>
             <view class="lastRow">
-                <text class="">QQ</text>
+                <text>QQ</text>
                 <view class='cline2'></view>
                 <input type="number" name="QQ" placeholder-class="placeHolder" maxlength='15' placeholder="{{default.QQ}}" class='inputSendLoc' />
             </view>
@@ -51,14 +61,60 @@
             </view>
         </view>
     </view>
-    <view class="mainForm {{mainFormClass}}">
+    <view class="mainForm">
+        <view class="recognArea">
+            <text class="my-grey xxs-font bias2">智能识别快递信息</text>
+            <view style="display: flex;justify-content: space-between;">
+                <view class="fakeRecogn" hover-class="button-hover">
+                    <text>点击</text>
+                    <view style="margin: 2rpx;"></view>
+                    <text>识别</text>
+                </view>
+                <view class="recogn">
+                    <textarea bindblur="recognMsg" name="message" maxlength='100' type="text" class='msgCon' placeholder-class="my-black" placeholder="{{recognHint}}" />
+                </view>
+            </view>
+        </view>
+        <view style="display: flex;justify-content: space-between;align-items:center;width: 100%;height: 72rpx;margin-bottom: 10rpx;">
+            <view class="left-cell" style="width: 220rpx;">
+                <text class="my-grey xxs-font">取件码</text>
+                <input maxlength='15' type="text" name="fetchCode" placeholder-class="xl-font my-grey" placeholder="{{expCode}}"
+                style="line-height: unset;" class="xl-font my-grey"/>
+            </view>
+            <view class="right-cell" style="width: 380rpx;">
+                <text class="my-grey xxs-font">快递站点</text>
+                <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}" mode="multiSelector" name="selExCon" value="{{expressLoc}}" class='xl-font my-grey'
+                        style="display: flex;justify-content: flex-end;align-items: center;">{{expressLoc}}</picker>
+            </view>
+        </view>
+        <view class="orangeLine" style="margin-bottom: 20rpx;"></view>
+        <view style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
+            <view class="cell">
+                <text class="my-grey xxs-font">支付赏金</text>
+                <view class="rewardCap"><input type="number" name="reward" confirm-type="next" placeholder-class="my-white l-font my-bold"
+                                               style="width: 40rpx;" maxlength='2' placeholder="{{defaultReward}}" />元</view>
+            </view>
+            <view class="cell">
+                <text class="my-grey xxs-font">快递重量</text>
+                <picker value="{{expWeight[weightIndex]}}" bindchange="weInfoChange" range="{{expWeight}}" name="weightInfo" mode="selector" class='cellPicker l-font my-grey' >{{expWeight[weightIndex]}}</picker>
+            </view>
+            <view class="cell">
+                <text class="my-grey xxs-font">大小估计</text>
+                <picker value="{{expSize[sizeIndex]}}" bindchange="sizeInfoChange" range="{{expSize}}" name="sizeInfo" mode="selector" class='cellPicker l-font my-grey' >{{expSize[sizeIndex]}}</picker>
+            </view>
+            <view class="cell">
+                <text class="my-grey xxs-font">取件人限制</text>
+                <picker name="limit" class='cellPicker l-font my-grey' value="{{limitList[limitIndex]}}" bindchange="bindLimitChange" range="{{limitList}}" mode="selector">{{limitList[limitIndex]}}</picker>
+            </view>
+        </view>
+        <view class="orangeLine" style="margin-bottom: 20rpx;margin-top: 10rpx;"></view>
         <view class="normalRow">
             <text class="my-grey xxs-font">最晚送达时间</text>
             <view class='exTimeCon'>
-                <picker name="exTimeConDate" bindchange="dateChange" class='DatePi' value="{{dateIndex}}" range="{{dateRange}}" mode="selector">{{dateRange[dateIndex]}}</picker>
-                <view class='cline'>
+                <picker name="exTimeConDate" bindchange="dateChange" class='xl-font my-grey' value="{{dateRange[dateIndex]}}" range="{{dateRange}}" mode="selector">{{dateRange[dateIndex]}}</picker>
+                <view class='cline' style="margin: 0 16rpx;">
                 </view>
-                <picker name="exTimeConTime" class='TimePi' value="{{endTime}}" bindchange="bindTimeChange" mode="endTime" start="00:00" end="24:00">{{endTime}}</picker>
+                <picker name="exTimeConTime" class='xl-font my-grey' value="{{endTime}}" bindchange="bindTimeChange" mode="time" start="00:00" end="24:00">{{endTime}}</picker>
             </view>
             <view class="orangeLine"></view>
         </view>
@@ -66,8 +122,8 @@
             <view style="margin-left:8rpx;">发布</view>
             <image class='nbtnIcon' src="{{nextIcon}}"></image>
         </button></view>
-        <view class='others'>
-            <textarea name="otherInfo" maxlength='50' type="text" class='othersCon' placeholder="{{expDescript}}" />
-        </view>
+        <block>
+        <textarea class='others' name="otherInfo" maxlength='50' type="text" placeholder="{{expDescript}}" />
+        </block>
     </view>
 </form>

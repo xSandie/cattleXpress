@@ -9,9 +9,9 @@ Page({
     pubImg: "../../images/publishIMG2.png",
     pullIcon:'../../images/pull.png',
     nextIcon: "../../images/next.png",
-    showEdit:true,//是否展示详情编辑
+    showEdit:false,//是否展示详情编辑
     submitFlag:true,//点击提交表单时是否发布，true直接发布
-    cardStyle:'addrEditCard',//卡片的class
+    cardStyle:'sumCard',//卡片的class
     mainFormClass:'highForm',//主要表单的class
     default: {
       conPhone: '点击输入电话号码',
@@ -22,13 +22,12 @@ Page({
       QQ: '可不填写'
       //TODO 每次点击都会覆盖这个
     },
-    dateRange: [],
 
     expressLocArray: [
       [],
       []
     ],
-    expressLoc: '新东门' + '·' + '百世汇通', //这就是默认
+    expressLoc: '点击' + '·' + '选择', //这就是默认
     expFirstIndex: 0,
     expSecondIndex: 0,
     sendLocSelect: '', //'宿舍区' + '·' + '周园', //默认
@@ -47,15 +46,25 @@ Page({
 
 
     endTime: '22:00',
-    dateSelect: '', //页面加载时将会获取并设置
+    dateRange:[],
     dateIndex: 0,
-
+    limitIndex:0,
+    limitList:['无限制','限男生','限女生','官方团队'],
+    expWeight: ['<0.5KG', '<1KG', '<5KG', '其他'],
+    weightIndex: 0,
+    expSize: ['小件', '中件', '大件'],
+    sizeIndex: 0,
 
     nextBtnIcon: "../../images/next.png",
     setDefFlag: false,
-    expDescript:'可在此简单描述下您的快递（不超过50个字）'
+    expDescript:'可在此简单描述下您的快递（不超过50个字）',
+    recognHint:'快递短信 粘贴处，点击识别即可自动为您填写 取件码 和 快递站点 信息。',
+    tempExpDescript:'可在此简单描述下您的快递（不超过50个字）',
+    tempRecognHint:'快递短信 粘贴处，点击识别即可自动为您填写 取件码 和 快递站点 信息。',
+    defaultReward:'2',
+    expCode:'可输入取件码'
   },
-
+  //todo 发布时才触发是否设置默认地址逻辑，发布完成后才进行默认地址请求
   /**
    * 生命周期函数--监听页面加载
    */
@@ -82,6 +91,15 @@ Page({
           default: app.globalData.default,
           sendLocSelect: app.globalData.default.sendLocSelect
         })
+        if (that.data.default.phoneRear == '四位数字') {
+          that.setData({
+            expDescript:'',
+            recognHint:'',
+            cardStyle:'addrEditCard',
+            showEdit:true
+          })
+          setTimeout(that.recover,2000)
+        }
       }
     })
 
@@ -97,7 +115,6 @@ Page({
       sendLocArray: [
         ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
       ],
-
     })
   },
 
@@ -120,7 +137,6 @@ Page({
         showCancel: false,
         success: function(res) {
           if (res.confirm) {
-            // console.log('用户点击确定')
             wx.redirectTo({
               url: '../certifPage/certifPage'
             })
@@ -136,7 +152,6 @@ Page({
         showCancel: false,
         success: function(res) {
           if (res.confirm) {
-            // console.log('用户点击确定')
             wx.switchTab({
               url: '../my/my'
             })
@@ -144,14 +159,13 @@ Page({
         }
       })
     }
-
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  //TODO 下拉刷新重填
+  //TODO 下拉刷新重填,同时获取默认地址
   },
   onShareAppMessage: function () {
     return {
@@ -163,17 +177,31 @@ Page({
   scrollDown:function(){
     var that = this
     this.setData({
+      expDescript:'',
+      recognHint:'',
       cardStyle:'addrEditCard',
       showEdit:!that.data.showEdit
     })//放下卡片的类
+    setTimeout(that.recover,1000)
+  },
+  recover:function(){
+    //动画播放完成后将文字设置成原来的
+    var that = this
+    this.setData({
+      expDescript:that.data.tempExpDescript,
+      recognHint:that.data.tempRecognHint,
+    })
   },
   scrollUp:function () {
     var that = this
     this.setData({
+      expDescript:'',
+      recognHint:'',
       cardStyle:'sumCard',
       showEdit:!that.data.showEdit,
       submitFlag:false
     })//收起卡片的类
+    setTimeout(that.recover,1000)
   },
   differLink:function () {
     wx.showModal({
@@ -203,6 +231,9 @@ Page({
       })
     }
     console.log(this.data.default)
+    if (app.globalData.default.phoneRear == '四位数字'){
+      app.globalData.default.phoneRear = that.data.default.phoneRear
+    }
   },
   setDefFlag:function () {
     //是否设置成默认值
@@ -212,19 +243,241 @@ Page({
     })
   },
   finOrdSubmit:function (e) {
-    //提交表单
+    //TODO 提交表单
     setTimeout(this.pubOrder,1000,e)
   },
   pubOrder:function (e) {
     //提交发布
+    console.log(e)
     if(this.data.submitFlag){
       //TODO 执行发布逻辑
+      console.log('发布逻辑')
     }else {
-      //TODO 设置展示信息
-
+      console.log('收起面板')
+      this.setData({
+        submitFlag:true
+      })//收起之后就可以发布了
+      //设置展示信息
+      var detail = e.detail.value
+      detail = this.fillAddrToDefault(detail)//地址信息已经补全，可以进行设置成本页的default
+      var set2Default = {
+        'conPhone':detail.conPhoneNum,
+        'sendLocSelect':detail.DeRecLocSel,
+        'sendLocInput':detail.DeRecLocIn,
+        'recName':detail.recName,
+        'phoneRear':detail.phoneRear,
+        'QQ':detail.QQ
+      }
+      //todo 将已填信息记录到globalData中
+      app.globalData.default = set2Default
       if (this.data.setDefFlag) {
-        //TODO 设置默认信息，发请求
+        //TODO 设置默认信息，发请求，要修改一下QQ字段
+        console.log('发送设置默认地址请求')
+      }else{
+        this.setData({
+          default:set2Default
+        })
       }
     }
+  },
+  recognMsg:function (event) {
+    console.log(event)
+    var that = this
+    var msg = event.detail.value
+    if (msg.length <= 10){
+      //长度不完全
+      wx.showToast({
+        title: '请贴入正确的信息~',
+        icon: 'none'
+      })
+      return
+    } else {
+      wx.showLoading({
+        title: '识别中',
+      })
+      //todo 发起识别请求
+      var send_data = {
+        'msg':msg,
+        'school_id':app.globalData.schoolID,
+        'sessionID':app.globalData.sessionID
+      }
+      wx.request({
+        url: urlModel.url.intelliRecogn,
+        data: send_data,
+        method:'POST',
+        success: function(res) {
+          wx.hideLoading()
+          if (res.statusCode == 200) {
+
+            that.setData({
+              expCode:res.data.expcode,
+              expressLoc:res.data.place + '·' + res.data.company
+            })
+            wx.showToast({
+              title: '识别成功'
+            })
+          }else {
+            wx.showToast({
+              title: '识别失败，可重试',
+              icon: 'none'
+            })
+          }
+        },
+        fail: function() {
+          wx.hideLoading()
+          wx.showToast({
+            title: '识别失败，可重试',
+            icon: 'none'
+          })
+        }
+      })
+    }
+  },
+  weInfoChange: function(e) {
+    //重量选择改变
+    console.log(e)
+    this.setData({
+      weightIndex: e.detail.value
+    })
+  },
+  sizeInfoChange:function(e){
+    //快递大小改变
+    console.log(e)
+    this.setData({
+      sizeIndex: e.detail.value
+    })
+  },
+  bindLimitChange:function(e){
+    //限制取件人改变
+    console.log(e)
+    this.setData({
+      limitIndex: e.detail.value
+    })
+  },
+  bindTimeChange: function(e) {
+    //时间改变
+    console.log(e)
+    this.setData({
+      endTime: e.detail.value
+    })
+  },
+  dateChange: function(e) {
+    // 日期改变
+    console.log(e)
+    this.setData({
+      dateIndex: e.detail.value
+    })
+  },
+  exlocChange: function(e) {
+    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
+    this.setData({
+      expressLoc: selected
+    })
+  },
+  exlocColumnChange: function(e) {
+    if (e.detail.column == 0) {
+      this.setData({
+        expFirstIndex: e.detail.value
+      })
+    } else {
+      this.setData({
+        expSecondIndex: e.detail.value
+      })
+    }
+  },
+  exlocChange: function(e) {
+    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
+    this.setData({
+      expressLoc: selected
+    })
+
+  },
+  exlocColumnChange: function(e) {
+    if (e.detail.column == 0) {
+      this.setData({
+        expFirstIndex: e.detail.value
+      })
+    } else {
+      this.setData({
+        expSecondIndex: e.detail.value
+      })
+    }
+  },
+  sdlocChange: function(e) {
+    var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
+    this.setData({
+      sendLocSelect: selected
+    })
+  },
+  sdlocColumnChange: function(e) {
+    var data = {
+      sendLocArray: this.data.sendLocArray,
+      sendLocIndex: this.data.sendLocIndex
+    }
+    data.sendLocIndex[e.detail.column] = e.detail.value;
+    switch (e.detail.column) {
+      case 0:
+        switch (data.sendLocIndex[0]) {
+          case 0:
+            data.sendLocArray[1] = this.data.dormArea;
+            break;
+
+          case 1:
+            data.sendLocArray[1] = this.data.teachArea;
+            break;
+          case 2:
+            data.sendLocArray[1] = this.data.otherArea;
+            break;
+          case 3:
+            data.sendLocArray[1] = this.data.transCampus;
+            break;
+        }
+        data.sendLocIndex[1] = 0;
+        break;
+
+      case 1:
+        break;
+    }
+    this.setData(data);
+  },
+
+  checkNone: function(data_tocheck) {
+    console.log('检查必要信息',data_tocheck)
+    //检查是否有必要信息未填写，有空的返回true
+    for (var Key in data_tocheck) {
+      if (data_tocheck[Key] == '') {
+        if (Key != 'QQ' && Key != 'otherInfo'
+            && Key != 'worInfo') {
+          return true
+        }
+      }
+    }
+    return false
+  },
+  fillAddrToDefault: function(detail_to_fill) {
+    //如果信息中有 未填写的默认信息，进行补全
+    console.log('修改前',detail_to_fill)
+    for (var Key in detail_to_fill) {
+      if (detail_to_fill[Key] == '') {
+        if (Key == 'conPhoneNum') {
+          detail_to_fill[Key] = app.globalData.default.conPhone
+        } else if (Key == 'DeRecLocIn') {
+          detail_to_fill[Key] = app.globalData.default.sendLocInput
+        } else if (Key == 'recName') {
+          detail_to_fill[Key] = app.globalData.default.recName
+        } else if (Key == 'phoneRear') {
+          detail_to_fill[Key] = app.globalData.default.phoneRear
+        }else if (Key == 'DeRecLocSel') {
+          detail_to_fill[Key] = app.globalData.default.sendLocSelect
+        }else if (Key == 'QQ'){
+          detail_to_fill[Key] = app.globalData.default.QQ
+        }
+      }
+    }
+    console.log('修改后',detail_to_fill)
+    return detail_to_fill
+  },
+  fillExpCode:function (detail2Fill) {
+    //TODO 发布前，补全expcode
   }
 })

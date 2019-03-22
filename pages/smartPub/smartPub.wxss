@@ -192,20 +192,6 @@ button{
     flex-direction: row;
     align-items: center;
 }
-
-.DatePi {
-    color: #373c46;
-    font-size: 36rpx;
-}
-
-.TimePi {
-    color: #373c46;
-    font-size: 36rpx;
-}
-.button-hover {
-    color: white;
-    background: linear-gradient(90deg, #af782c, #b39340);
-}
 .nbtnIcon {
     height: 40rpx;
     width: 40rpx;
@@ -216,10 +202,98 @@ button{
     width: 100%;
     border-radius: 10rpx;
     border: 1rpx solid #faaf42;
-    padding-right: 16rpx;
-    padding-left: 16rpx;
-    padding-top: 10rpx;
-    padding-bottom: 16rpx;
+    padding-right: 8rpx;
+    padding-left: 8rpx;
+    padding-top: 6rpx;
+    padding-bottom: 8rpx;
     white-space: normal;
-    font-size: 28rpx;
+    font-size: 26rpx;
+    margin-bottom: 50rpx;
+}
+.msgCon{
+    box-sizing: border-box;
+    height: 130rpx;
+    width: 100%;
+    border-radius: 10rpx;
+    border: 1rpx solid #faaf42;
+    padding-right: 8rpx;
+    padding-left: 8rpx;
+    padding-top: 6rpx;
+    padding-bottom: 8rpx;
+    white-space: normal;
+    font-size: 26rpx;
+}
+.recognArea{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20rpx;
+    height: 174rpx;
+    justify-content: space-between;
+}
+.fakeRecogn{
+    border-radius: 14rpx;
+    color: #FFFFFF;
+    font-size: 32rpx;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    margin-right: 20rpx ;
+    height:  130rpx;
+    padding: 0 18rpx;
+}
+.recogn{
+    width: 500rpx;
+    height:  130rpx;
+}
+.button-hover {
+    color: white;
+    background: linear-gradient(90deg, #af782c, #b39340);
+}
+.left-cell{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 100%;
+}
+.right-cell{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-grow: 1s;
+    height: 100%;
+}
+.cell{
+    height: 102rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.rewardCap{
+    height: 66rpx;
+    width: 110rpx;
+    border-radius: 14rpx;
+    background: linear-gradient(90deg, #f9a93e, #fed25c);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32rpx;
+    font-weight: bold;
+}
+.cellPicker{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 62rpx;
+    font-size: 32rpx;
+    text-align: center;
+    border-radius: 14rpx;
+    border: #faaf42 solid 1rpx;
+    padding: 0 26rpx;
 }

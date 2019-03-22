@@ -23,6 +23,7 @@ swiper {
 }
 
 .select {
+    box-sizing: border-box;
     background: #ffffff;
     padding-left: 40rpx;
     padding-right: 40rpx;

@@ -265,6 +265,22 @@ Page({
                     detail_to_fill[Key] = app.globalData.default.phoneRear
                 }
             }
+            //todo 修改大改变量名
+            if (detail_to_fill[Key] == '') {
+                if (Key == 'conPhone') {
+                    detail_to_fill[Key] = app.globalData.default.conPhone
+                } else if (Key == 'DeRecLocIn') {
+                    detail_to_fill[Key] = app.globalData.default.sendLocInput
+                } else if (Key == 'recName') {
+                    detail_to_fill[Key] = app.globalData.default.recName
+                } else if (Key == 'phoneRear') {
+                    detail_to_fill[Key] = app.globalData.default.phoneRear
+                }else if (Key == 'DeRecLocSel') {
+                    detail_to_fill[Key] = app.globalData.default.sendLocSelect
+                }else if (Key == 'QQ'){
+                    detail_to_fill[Key] = app.globalData.default.QQ
+                }
+            }
         }
         return detail_to_fill
     },
