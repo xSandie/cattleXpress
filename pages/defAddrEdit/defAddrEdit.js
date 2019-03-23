@@ -240,7 +240,7 @@ Page({
     },
     checkNone: function(detail) {
         //设置了默认地址，空不空无所谓；未设置默认地址为空就提示补全
-        if ((detail.recLocInput == '' || detail.conPhone == '' || detail.phoneRear == '' || detail.recName == '' || detail.DeRecLocSel == '选择地点') &&
+        if ((detail.recLocInput == '' || detail.conPhone == '' || detail.phoneRear == '' || detail.recName == '' || detail.DeRecLocSel == '选择区域') &&
             app.globalData.default.phoneRear == '四位数字') { //'四位数字'存在即说明没有设置过默认地址
             wx.showToast({
                     title: '请补全信息',

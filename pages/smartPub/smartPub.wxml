@@ -1,7 +1,7 @@
 <view class="header">
     <image class="publishIMG2" src="{{pubImg}}"></image>
 </view>
-<form bindsubmit="finOrdSubmit" class="container">
+<form bindsubmit="finOrdSubmit" report-submit="true" report-submit-timeout="100" class="container">
     <view class="cardPos {{cardStyle}}">
         <view bindtap="scrollDown" wx:if="{{!showEdit}}" class="m-font" style="display: flex;flex-direction: column;">
             <view style="display: flex;margin-bottom: 14rpx;" class="main-yellow">
@@ -118,7 +118,7 @@
             </view>
             <view class="orangeLine"></view>
         </view>
-        <view style="display: flex;margin: 36rpx 0rpx;"><button hover-class="button-hover" class='main-btn' formType="submit">
+        <view style="display: flex;margin: 36rpx 0rpx;"><button hover-class="button-hover" class='main-btn' form-type="submit">
             <view style="margin-left:8rpx;">发布</view>
             <image class='nbtnIcon' src="{{nextIcon}}"></image>
         </button></view>

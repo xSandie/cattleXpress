@@ -110,9 +110,9 @@
     </view>
 </view>
 <view>
-    <form wx:if="{{statusCode==2}}" class='fxdBtnArea'>
+    <form bindsubmit="finOrder" report-submit="true" report-submit-timeout="100" wx:if="{{statusCode==2}}" class='fxdBtnArea'>
         <view class='fxdBtnBac'></view>
-        <button form-type='submit' hover-class="button-hover" bindtap="finOrder">
+        <button form-type='submit' hover-class="button-hover">
           <text class='finText'>确认送达</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>

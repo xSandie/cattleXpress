@@ -74,6 +74,16 @@ App({
                     } else {
                         reject('error');
                     }
+                },
+                fail: function () {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '网络不太畅通，请检查网络后点击重新登陆',
+                        icon: 'none',
+                        duration: 2000,
+                        mask: false,
+                        success: function() {}
+                    })
                 }
             })
         })
@@ -96,9 +106,9 @@ App({
         balance: '0.00',
         haveCertif: false,
         doubleCertif: false,
-        default: {
+        default: {//相当于缓存，中间存储一下变量而已。
             conPhone: '点击输入电话号码',
-            sendLocSelect: '选择地点',
+            sendLocSelect: '选择区域',
             sendLocInput: '填写地点',
             recName: '填写姓名',
             phoneRear: '四位数字',

@@ -36,7 +36,7 @@
                 <text>· 联系电话与收货手机号的区别</text>
             </view>
         </view>
-        <button hover-class="answerHover" formType="submit">
+        <button hover-class="answerHover" form-type="submit">
             <text>{{btnText}}</text> 
         </button>
     </form>

@@ -73,8 +73,8 @@
 <view>
     <view class='fxdBtnBac'>    
     </view>
-    <form class='fxdBtnArea'>
-        <button form-type='submit'  class='contact' hover-class="button-hover" data-order-id="{{orderId}}" bindtap="recOrder">
+    <form report-submit="true" report-submit-timeout="100" bindsubmit="recOrder" class='fxdBtnArea'>
+        <button form-type='submit'  class='contact' hover-class="button-hover" data-order-id="{{orderId}}">
           <text>点此接单</text>
           <image src='{{contactIcon}}' class='conIcon'></image>
         </button>

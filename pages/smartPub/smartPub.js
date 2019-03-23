@@ -15,7 +15,7 @@ Page({
     mainFormClass:'highForm',//主要表单的class
     default: {
       conPhone: '点击输入电话号码',
-      sendLocSelect: '选择地点',
+      sendLocSelect: '选择区域',
       sendLocInput: '填写地点',
       recName: '填写姓名',
       phoneRear: '四位数字',
@@ -231,9 +231,8 @@ Page({
       })
     }
     console.log(this.data.default)
-    if (app.globalData.default.phoneRear == '四位数字'){
-      app.globalData.default.phoneRear = that.data.default.phoneRear
-    }
+    //todo check bug
+    app.globalData.default.phoneRear = that.data.default.phoneRear
   },
   setDefFlag:function () {
     //是否设置成默认值
@@ -243,22 +242,114 @@ Page({
     })
   },
   finOrdSubmit:function (e) {
-    //TODO 提交表单
     setTimeout(this.pubOrder,1000,e)
   },
   pubOrder:function (e) {
     //提交发布
+    let that = this
     console.log(e)
+    var formId = e.detail.formId;
+    var detail = e.detail.value
+    detail['form_id'] = formId
+    console.log('查看form_id:',formId)
     if(this.data.submitFlag){
-      //TODO 执行发布逻辑
-      console.log('发布逻辑')
+      detail = this.fillAddrToDefault(detail)
+      detail = this.fill2Pub(detail)
+      detail = this.add2Pub(detail)
+      console.log('发布填充后',detail)
+      if (this.canPub(detail)){
+        console.log('发布逻辑')
+        wx.showLoading({
+          title:'发布中'
+        })
+        if (this.data.setDefFlag){
+          //todo 设置默认地址+发布
+          detail['set_default'] = true
+          detail = this.set2Standard(detail)
+          console.log('发送要设置默认地址的发布请求',detail)
+          wx.request({
+            url: urlModel.url.pubOrder,
+            data: detail,
+            method:'POST',
+            success: function(res) {
+              if (res.statusCode == 200) {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '发布成功'
+                })
+                that.onLoad()
+                wx.switchTab({
+                  url: '../home/home',
+                  success:function () {
+                    app.globalData.reloadHomePage=true
+                  }
+                })
+              }else {
+                wx.hideLoading()
+                wx.showToast({
+                  title:'发布失败，请重试',
+                  icon:'none'
+                })
+              }
+            },
+            fail: function() { //无论成功还是失败都会执行
+              wx.hideLoading()
+              wx.showToast({
+                title:'发布失败，请重试',
+                icon:'none'
+              })
+            }
+          })
+        }else{
+          detail['set_default'] = false
+          detail['sessionID'] = app.globalData.sessionID
+          detail = this.set2Standard(detail)
+          console.log('直接发布请求',detail)
+          wx.request({
+            url: urlModel.url.pubOrder,
+            data: detail,
+            method:'POST',
+            success: function(res) {
+              if (res.statusCode == 200) {
+                wx.hideLoading()
+                wx.showToast({
+                  title: '发布成功'
+                })
+                wx.switchTab({
+                  url: '../home/home',
+                  success:function () {
+                    app.globalData.reloadHomePage=true
+                  }
+                })
+              }else {
+                wx.hideLoading()
+                wx.showToast({
+                  title:'发布失败，请重试',
+                  icon:'none'
+                })
+              }
+            },
+            fail: function() { //无论成功还是失败都会执行
+              wx.hideLoading()
+              wx.showToast({
+                title:'发布失败，请重试',
+                icon:'none'
+              })
+            }
+          })
+        }
+      } else {
+        wx.showToast({
+          title: '未填写完整，请检查~',
+          icon:'none'
+        })
+      }
     }else {
       console.log('收起面板')
       this.setData({
         submitFlag:true
       })//收起之后就可以发布了
       //设置展示信息
-      var detail = e.detail.value
       detail = this.fillAddrToDefault(detail)//地址信息已经补全，可以进行设置成本页的default
       var set2Default = {
         'conPhone':detail.conPhoneNum,
@@ -268,16 +359,11 @@ Page({
         'phoneRear':detail.phoneRear,
         'QQ':detail.QQ
       }
-      //todo 将已填信息记录到globalData中
+      //将已填信息暂存到globalData中
       app.globalData.default = set2Default
-      if (this.data.setDefFlag) {
-        //TODO 设置默认信息，发请求，要修改一下QQ字段
-        console.log('发送设置默认地址请求')
-      }else{
-        this.setData({
-          default:set2Default
-        })
-      }
+      this.setData({
+        default:set2Default
+      })
     }
   },
   recognMsg:function (event) {
@@ -440,20 +526,7 @@ Page({
     }
     this.setData(data);
   },
-
-  checkNone: function(data_tocheck) {
-    console.log('检查必要信息',data_tocheck)
-    //检查是否有必要信息未填写，有空的返回true
-    for (var Key in data_tocheck) {
-      if (data_tocheck[Key] == '') {
-        if (Key != 'QQ' && Key != 'otherInfo'
-            && Key != 'worInfo') {
-          return true
-        }
-      }
-    }
-    return false
-  },
+  
   fillAddrToDefault: function(detail_to_fill) {
     //如果信息中有 未填写的默认信息，进行补全
     console.log('修改前',detail_to_fill)
@@ -477,7 +550,70 @@ Page({
     console.log('修改后',detail_to_fill)
     return detail_to_fill
   },
-  fillExpCode:function (detail2Fill) {
+  fill2Pub:function (detail2Fill) {
     //TODO 发布前，补全expcode
+    for (var Key in detail2Fill) {
+      if (Key == 'fetchCode'){
+        if (this.data.expCode != '可输入取件码'){
+          detail2Fill[Key] = this.data.expCode
+        }
+      } else if (Key == 'reward') {
+        if (detail2Fill[Key] == ''){
+          detail2Fill[Key] = this.data.defaultReward
+        }
+      }
+    }
+    return detail2Fill
+  },
+  add2Pub:function (detail2Fill) {
+    //将缺少收货地址信息的发布填充完
+    if (detail2Fill['DeRecLocSel'] == undefined){
+      detail2Fill['DeRecLocSel'] = this.data.default.sendLocSelect
+      detail2Fill['DeRecLocIn'] = this.data.default.sendLocInput
+      detail2Fill['conPhoneNum'] = this.data.default.conPhone
+      detail2Fill['phoneRear'] = this.data.default.phoneRear
+      detail2Fill['recName'] = this.data.default.recName
+      detail2Fill['QQ'] = this.data.default.QQ == '可不填写'?null:this.data.default.QQ
+    }
+    return detail2Fill
+  },
+  canPub:function (filledDetail) {
+    //todo 确认是否填写完成可以发布
+   if (filledDetail.DeRecLocSel == '选择区域'|| filledDetail.DeRecLocIn == '填写地点' ||
+   filledDetail.conPhoneNum == '点击输入电话号码' || filledDetail.phoneRear == '四位数字' ||
+   filledDetail.recName == '填写姓名'){//确认收货地址填写是否完成
+     return false
+   }
+   if (filledDetail.fetchCode == '' || filledDetail.selExCon == '点击·选择'){//确认必要信息未填写完成
+     return false
+   }
+   return true
+  },
+  set2Standard:function (detail2Set) {
+    //todo 将变量名设置成符合规范的
+    detail2Set['con_phone'] = detail2Set.conPhoneNum
+    detail2Set['send_loc_sum'] = detail2Set.DeRecLocSel
+    detail2Set['send_loc_input'] = detail2Set.DeRecLocIn
+    detail2Set['phone_rear'] = detail2Set.phoneRear
+    detail2Set['rec_name'] = detail2Set.recName
+    detail2Set['QQ'] = detail2Set.QQ
+        // ['无限制','限男生','限女生','官方团队'],
+    if (detail2Set.limit == '限男生'){
+      detail2Set['limit'] = 1
+    }else if (detail2Set.limit == '限女生'){
+      detail2Set['limit'] = 2
+    } else if (detail2Set.limit == '官方团队') {
+      detail2Set['limit'] = 3
+    }else {
+      detail2Set['limit'] = 0
+    }
+    detail2Set['exp_code'] = detail2Set.fetchCode
+    detail2Set['exp_station'] = detail2Set.selExCon
+    detail2Set['expire_time'] = detail2Set.exTimeConDate + ' ' + detail2Set.exTimeConTime
+    detail2Set['msg'] = detail2Set.message
+    detail2Set['exp_size'] = detail2Set.sizeInfo
+    detail2Set['exp_weight'] = detail2Set.weightInfo
+    detail2Set['description'] = detail2Set.otherInfo
+    return detail2Set
   }
 })

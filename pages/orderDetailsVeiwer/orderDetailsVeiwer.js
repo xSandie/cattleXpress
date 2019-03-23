@@ -109,6 +109,7 @@ Page({
     recOrder: function(event) {
         var that = this
         var formId = event.detail.formId;
+        console.log('formid：',formId)
         if (!app.globalData.havePayCode) {
             //未设置paycode
             wx.showModal({
@@ -125,7 +126,7 @@ Page({
                 }
             })
         } else if (app.globalData.haveCertif == true) {
-            var orderId = event.currentTarget.dataset.orderId;
+            var orderId = that.data.orderId;
             wx.showModal({
                 title: '确认接单',
                 content: '接单后要准时送达噢',

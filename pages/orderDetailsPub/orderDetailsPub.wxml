@@ -122,8 +122,8 @@
 <view wx:if="{{statusCode==0||statusCode==2||statusCode==3}}">
     <view class='fxdBtnBac'>    
     </view>
-    <form wx:if="{{statusCode==2}}" class='fxdBtnArea'>
-        <button form-type='submit' hover-class="button-hover" bindtap="finOrder">
+    <form bindsubmit="finOrder" report-submit="true" report-submit-timeout="100" wx:if="{{statusCode==2}}" class='fxdBtnArea'>
+        <button form-type='submit' hover-class="button-hover">
           <text>完成订单</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>
@@ -138,7 +138,7 @@
             </view>
         </view>
     </form>
-    <form wx:if="{{statusCode==0}}" class='fxdBtnArea'>
+    <form bindsubmit="finOrder" report-submit="true" report-submit-timeout="100" wx:if="{{statusCode==0}}" class='fxdBtnArea'>
         <button form-type='submit' hover-class="button-hover" class='finishOrd' bindtap="finOrder">
           <text>确认收货</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
