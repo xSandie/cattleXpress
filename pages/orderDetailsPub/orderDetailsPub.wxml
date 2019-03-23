@@ -18,7 +18,7 @@
             <text>{{statusName}}</text>
         </view>
         <view class="receive" bindlongpress="copyQQ" hover-class="white-card-hover">
-            <text class="reName">接单人QQ：{{receiverQQ}} 长按复制</text>
+            <text class="reName">对方QQ：{{receiverQQ}}</text>
             <text class="reTime">{{receiverName}}·{{receiveTime}}</text>
         </view>
         <view class='cline1'wx:if="{{statusCode==1||statusCode==2}}">   
@@ -112,7 +112,7 @@
     </view>
     <view class='trifle'>
         <view class='pubSum'>
-           <view wx:if="{{receiveTime!='若是自己取快递，记得帮别人领噢'&&(statusCode!=3&&statusCode!=5&&statusCode!=6)}}">取消订单请先<view bindtap="conTA" style='display:inline' class="nav">联系对方</view></view>
+           <view wx:if="{{receiveTime!='马上就有人帮取啦~'&&(statusCode!=3&&statusCode!=5&&statusCode!=6)}}">取消订单请先<view bindtap="conTA" style='display:inline' class="nav">联系对方</view></view>
            <view wx:if="{{statusCode==5||statusCode==6}}">
                请至 我的 > 举报/申诉进度 查看详情
            </view>

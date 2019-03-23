@@ -113,7 +113,7 @@ Page({
      */
     onLoad: function(options) {
         var that = this
-        send_data = {
+        var send_data = {
             'order_id': options.id,
             'sessionID': app.globalData.sessionID,
             'school_id': app.globalData.schoolID
@@ -124,9 +124,10 @@ Page({
             data: send_data,
             success: function(res) {
                 var tdata = res.data
+                console.log(tdata)
                 that.setData({
                     //设置页面参数，设置orderID
-                    statusCode: tdata.state,
+                    statusCode: tdata.status,
                     limit: tdata.limit,
                     expLogoUrl: tdata.exp_logo,
                     expOpenTime: tdata.exp_opentime,
@@ -139,19 +140,20 @@ Page({
                     recName: tdata.exp_name,
                     otherInfo: tdata.description,
                     sendLocAll: tdata.send_loc,
-                    weightInfo: tdata.weight,
+                    weightInfo: tdata.exp_weight,
                 })
-                if (tdata.rec_time != '') {
+                if (tdata.rec_time != null) {
                     that.setData({
                         receiveTime: '接单时间：' + tdata.rec_time,
                         receiverName: tdata.username + '同学 ' + tdata.school_numb,
                         receiverPhone: tdata.phone || '6666',
-                        receiverQQ: tdata.rec_QQ || '暂无'
+                        receiverQQ: tdata.rec_QQ == null?'暂无' : tdata.rec_QQ
                     })
                 } else {
                     that.setData({
                         receiveTime: '马上就有人帮取啦~',
-                        receiverName: '暂无'
+                        receiverName: '暂无',
+                        receiverQQ: '暂无'
                     })
                 }
             },

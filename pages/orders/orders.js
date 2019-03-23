@@ -32,12 +32,8 @@ Page({
                 url: urlModel.url.notHaveList, //未完成完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.sessionID,
-                    // 'Sex': app.globalData.sex
+                    'sessionID': app.globalData.sessionID,
                 },
-                // header: {
-                //     "Content-Type": "applciation/json"
-                // },
                 success: function(res) {
                     // console.log(res)
                     that.setData({
@@ -64,8 +60,8 @@ Page({
                 url: urlModel.url.haveList, //已完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.sessionID,
-                    'requestTime': 1
+                    'sessionID': app.globalData.sessionID,
+                    'request_time': 1
                 },
                 success: function(res) {
                     // console.log('已完成订单请求', res)
@@ -86,21 +82,6 @@ Page({
             })
         }
     },
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function(options) {},
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
     onShow: function() {
         var that = this
         if (app.globalData.ourUserStatus == 4) {
@@ -160,21 +141,6 @@ Page({
         })
 
     },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -191,7 +157,7 @@ Page({
                 url: urlModel.url.notHaveList, //未完成完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.sessionID,
+                    'sessionID': app.globalData.sessionID,
                 },
                 success: function(res) {
                     that.setData({
@@ -236,7 +202,6 @@ Page({
      */
     onReachBottom: function() {
         var that = this
-
         //请求已完成订单。判断currentTab在哪边
         if (that.data.currentTab == 1) {
             //请求已完成订单
@@ -251,12 +216,10 @@ Page({
                 url: urlModel.url.haveList, //已完成订单请求地址
                 method: 'POST',
                 data: {
-                    'userID': app.globalData.sessionID,
-                    'requestTime': that.data.requestTime
+                    'sessionID': app.globalData.sessionID,
+                    'request_time': that.data.requestTime
                 },
                 success: function(res) {
-
-                    // console.log('已完成订单请求', res)
                     if (res.data.finRecList.length == 0 && res.data.finPubList == 0) {
                         that.setData({
                             atEndFlag: true
@@ -266,7 +229,7 @@ Page({
                             finRecList: that.data.finRecList.concat(res.data.finRecList),
                             finPubList: that.data.finPubList.concat(res.data.finPubList) //修改参数
                         })
-                    } //修改参数
+                    }
                 },
                 fail: function() {},
                 complete: function() { wx.hideLoading() }

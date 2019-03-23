@@ -29,8 +29,14 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.urgent}}">
-                                    <view class='tagText'><text>加急</text></view> 
+                                <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                                    <view class='tagText'><text>限团队</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                                    <view class='tagText'><text>限女生</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.manOnly}}">
+                                    <view class='tagText'><text>限男生</text></view>
                                 </view>
                             </view>
                             <view class='fetchDe'>
@@ -80,8 +86,14 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.urgent}}">
-                                    <view class='tagText'><text>加急</text></view> 
+                                <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                                    <view class='tagText'><text>限团队</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                                    <view class='tagText'><text>限女生</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.manOnly}}">
+                                    <view class='tagText'><text>限男生</text></view>
                                 </view>
                             </view>
                             <view class='exTag'>
