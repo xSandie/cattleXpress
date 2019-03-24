@@ -26,10 +26,11 @@ button {
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #faaf42;
+    color: #FFFFFF;
     font-weight: bold;
     border-radius: 40rpx;
-    border: 2rpx solid #faaf42;
+    border: 2rpx solid #ffffff;
+    background: linear-gradient(270deg, #fed25c, #f9a93e);
 }
 
 button::after {

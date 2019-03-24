@@ -528,7 +528,7 @@ button::after {
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    margin-left: 21rpx;
+    padding-left: 21rpx;
     width: 402rpx;
 }
 
@@ -568,9 +568,17 @@ button::after {
 }
 
 .toPayText {
+    animation: highlight 1s infinite;
     text-align: center;
     font-size: 28rpx;
     font-weight: bold;
-    color: rgb(255, 79, 79);
     margin-bottom: 6rpx;
+}
+@keyframes highlight {
+    from{
+        color: rgb(255, 155, 158);
+    }
+    to{
+    color: #d8320b;
+    }
 }

@@ -1,39 +1,45 @@
 <view class='container'>
-    <form class='mainForm' bindsubmit="replaceAddr">
+    <form report-submit="true" report-submit-timeout="100" class='mainForm' bindsubmit="replaceAddr">
         <view class='floatCard'>
-            <view class='contactNum'>
-                <text class='contactNumTi'>联系电话</text>
-                <view>
-                <input bindblur='extractPhoneRear' type="number" name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhone}}" class='contactNumCon' />
+            <view class="addrEdit">
+                <view class="normalRow">
+                    <text class="my-grey xxs-font bias2">联系电话</text>
+                    <input type="number" bindblur='extractPhoneRear' name="conPhoneNum" confirm-type="next" placeholder-class="placeHolder" maxlength='11' placeholder="{{default.conPhone}}" class='contactNumCon' />
+                    <view class="orangeLine"></view>
                 </view>
-            </view>
-            <view class='tline'>   
-            </view>
-            <view class='recLoc'>
-                <text class='recLocTi'>送达地址</text>
-                    <view class='recLocDetail'>
-                        <picker value="{{sendLocSelect}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>{{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
-                        <view class='cline'>
-                        </view>
-                        <input type="text" placeholder-class="placeHolder" maxlength='10' name="DeRecLocIn" placeholder="{{default.sendLocInput}}" class='DeRecLocIn'/>
+                <view class="normalRow">
+                    <text class="my-grey xxs-font bias2">送达地址</text>
+                    <view class="twoInput">
+                        <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" value="{{sendLocSelect}}"
+                                range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
+                            {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
+                        <view class='cline'></view>
+                        <input type="text" name="DeRecLocIn" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.sendLocInput}}" class='inputSendLoc' />
                     </view>
-            </view>
-            <view class='tline'>   
-            </view>
-            <view class="secA">
-                <view class="exName">
-                    <view class="Ti">收货姓名</view>
-                    <input type="text" placeholder="{{default.recName}}" placeholder-class="placeHolder" name="recName" class="recName"/>
+                    <view class="orangeLine"></view>
                 </view>
-                <view class="cline1">
+                <view style="display: flex;flex-direction: column;height: 96rpx;">
+                    <view class="twoInput1">
+                        <view class="normalRow1">
+                            <text class="my-grey xxs-font bias2">收货姓名</text>
+                            <input type="text" name="recName" confirm-type="next" placeholder-class="placeHolder" maxlength='8' placeholder="{{default.recName}}" class='inputSendLoc' />
+                        </view>
+                        <view class='cline1'></view>
+                        <view class="normalRow1">
+                            <text class="my-grey xxs-font bias2">手机尾号</text>
+                            <input type="number" name="phoneRear" confirm-type="next" placeholder-class="placeHolder" maxlength='4' placeholder="{{default.phoneRear }}" class='inputSendLoc' />
+                        </view>
+                    </view>
+                    <view class="orangeLine"></view>
                 </view>
-                <view class="numRear">
-                    <view class="Ti">手机尾号</view>
-                    <input type="number" placeholder="{{default.phoneRear}}" placeholder-class="placeHolder" class="phoneRear" name="phoneRear" />
+                <view class="lastRow">
+                    <text>QQ</text>
+                    <view class='cline2'></view>
+                    <input type="number" name="QQ" placeholder-class="placeHolder" maxlength='15' placeholder="{{default.QQ}}" class='inputSendLoc' />
                 </view>
-            </view>
-            <view class='differLink' catchtap="differLink">
-                <text>· 联系电话与收货手机号的区别</text>
+                <view class='differLink' catchtap="differLink">
+                    <text>· 联系电话与收货手机号的区别</text>
+                </view>
             </view>
         </view>
         <button hover-class="answerHover" form-type="submit">

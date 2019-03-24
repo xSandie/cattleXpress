@@ -1,16 +1,14 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/doubleCertif/doubleCertif",
     "pages/welcome/welcome",
     "pages/certifPage/certifPage",
-    "pages/publish1/publish1",
-    "pages/publish2/publish2",
     "pages/orders/orders",
     "pages/my/my",
     "pages/orderDetailsVeiwer/orderDetailsVeiwer",
     "pages/orderDetailsRec/orderDetailsRec",
     "pages/orderDetailsPub/orderDetailsPub",
-    "pages/finPub/finPub",
     "pages/policeList/policeList",
     "pages/policeDetailProposal/policeDetailProposal",
     "pages/policeDetailRec/policeDetailRec",
@@ -20,7 +18,6 @@
     "pages/pay/pay",
     "pages/myCode/myCode",
     "pages/smartPub/smartPub"
-
   ],
   "window": {
     "backgroundTextStyle": "dark",

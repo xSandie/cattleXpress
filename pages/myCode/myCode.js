@@ -15,57 +15,46 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() { //每次显示重置myPayCode
         var that = this
         wx.request({
             url: urlModel.url.getMyPayCode,
             data: {
-                gId: app.globalData.sessionID
+                'sessionID': app.globalData.sessionID
             },
             success: function(res) {
-                // console.log(res)
                 if (res.statusCode == 200) {
-                    that.setData({
-                        myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
-                        canChange: res.data.canChange
-                    })
+                    if (res.data.canChange) {
+                        that.setData({
+                            myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
+                            canChange: res.data.canChange
+                        })
+                    }
                 }
             }
         })
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        var that = this
+        wx.request({
+            url: urlModel.url.getMyPayCode,
+            data: {
+                'sessionID': app.globalData.sessionID
+            },
+            success: function(res) {
+                if (res.statusCode == 200) {
+                    if (res.data.canChange) {
+                        that.setData({
+                            myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
+                            canChange: res.data.canChange
+                        })
+                    }
+                }
+            }
+        })
     },
 
     /**
@@ -116,10 +105,9 @@ Page({
                     header: {
                         "Content-Type": "multipart/form-data",
                         'accept': 'application/json',
-                        //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
                     },
                     formData: {
-                        gId: app.globalData.sessionID //其他额外的formdata，userId
+                        'sessionID': app.globalData.sessionID //其他额外的formdata，userId
                     },
                     success: function(res) {
                         // console.log(res)
@@ -128,10 +116,7 @@ Page({
                                 title: '上传成功',
                             })
                             app.globalData.havePayCode = res.data.havePayCode
-                                // that.onShow()
-                            wx.switchTab({
-                                url: '../my/my',
-                            })
+                            that.onPullDownRefresh()
                         } else {
                             wx.showToast({
                                 title: '上传失败请重试',

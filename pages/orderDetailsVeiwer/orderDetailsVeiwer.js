@@ -170,8 +170,22 @@ Page({
                                             setTimeout(that.backhome,1500)
                                         }
                                     })
-                                }else
-                                    {
+                                }else if (res.data.exceed) {
+                                    wx.showModal({
+                                        title: '订单过多',
+                                        content: '只有完成 双重认证 才能同时接3个以上订单的订单噢~',
+                                        cancelText: '下次再说',
+                                        confirmText: '双重认证',
+                                        confirmColor: '#f9a93e',
+                                        success: function(res) {
+                                            if (res.confirm) {
+                                                wx.navigateTo({
+                                                    url: '../doubleCertif/doubleCertif?path=haveCertif'
+                                                })
+                                            }
+                                        }
+                                    })
+                                }else {
                                     wx.showToast({
                                         title: '来晚一步，订单被抢啦~',
                                         icon:'none',

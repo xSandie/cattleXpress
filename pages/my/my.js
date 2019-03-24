@@ -21,17 +21,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {},
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {},
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
+    onLoad: function(options) {
         this.setData({
             balance: app.globalData.balance
         })
@@ -47,53 +37,40 @@ Page({
             url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
-                'userID': app.globalData.sessionID,
+                'sessionID': app.globalData.sessionID,
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
                 // console.log(res)
                 if (res.statusCode == 200) {
                     that.setData({
                         balance: res.data.balance, //修改参数
                         creditScore: res.data.credit,
-                        level: res.data.level
+                        level: res.data.level,
                     })
-                    app.globalData.havePayCode = res.data.havePayCode
-                    app.globalData.ourUserStatus = res.data.userStatus
-                    if (res.data.userStatus != 4) { app.globalData.haveCertif = true }
+                    app.globalData.userName = res.data.username
+                    app.globalData.schoolNumb = res.data.school_numb
+                    app.globalData.havePayCode = res.data.have_pay_code
+                    app.globalData.ourUserStatus = res.data.user_status
+                    if (res.data.user_status != 4) { app.globalData.haveCertif = true }
                     app.globalData.balance = res.data.balance
                 }
 
             },
             fail: function() {},
-            complete: function() {}
+            complete: function() {
+                if (app.globalData.ourUserStatus != 4) {
+                    that.setData({
+                        haveCertif: true
+                    })
+                }
+                that.setData({
+                    realName: app.globalData.userName,
+                    schoolNumb: app.globalData.schoolNumb,
+                })
+            }
         })
-        this.setData({
-            realName: app.globalData.userName,
-            schoolNumb: app.globalData.schoolNumb,
-        })
-        if (app.globalData.ourUserStatus != 4) {
-            this.setData({
-                haveCertif: true
-            })
-        }
     },
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
@@ -107,21 +84,30 @@ Page({
             url: urlModel.url.usrinfo, //用户余额信用获取
             method: 'GET',
             data: {
-                'userID': app.globalData.sessionID,
+                'sessionID': app.globalData.sessionID,
             },
             success: function(res) {
                 console.log(res)
                 wx.hideLoading()
                 if (res.statusCode == 200) {
-                    app.globalData.havePayCode = res.data.havePayCode
+                    app.globalData.havePayCode = res.data.have_pay_code
                     that.setData({
                         balance: res.data.balance, //修改参数
                         creditScore: res.data.credit,
                         level: res.data.level
                     })
+                    app.globalData.userName = res.data.username
+                    app.globalData.schoolNumb = res.data.school_numb
                     app.globalData.balance = res.data.balance
+                    wx.hideLoading()
                     wx.showToast({
                         title: '刷新成功',
+                    })
+                }else {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '刷新失败，请重试',
+                        icon: 'none'
                     })
                 }
 
@@ -133,7 +119,13 @@ Page({
                     icon: 'none'
                 })
             },
-            complete: function() {}
+            complete: function() {
+                that.setData({
+                    realName: app.globalData.userName,
+                    schoolNumb: app.globalData.schoolNumb,
+                })
+                wx.stopPullDownRefresh()
+            }
         })
     },
 

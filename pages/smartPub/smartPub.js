@@ -165,7 +165,52 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  //TODO 下拉刷新重填,同时获取默认地址
+  // 下拉刷新重填,同时获取默认地址
+    var that = this
+    var send_data = {
+      'sessionID': app.globalData.sessionID
+    }
+    wx.showLoading({
+      title:'重置中'
+    })
+    wx.request({
+      url: urlModel.url.getAddr,
+      data: send_data,
+      success: function(res) {
+        if (res.data.default) {
+          app.globalData.default.conPhone = res.data.phone
+          app.globalData.default.phoneRear = res.data.phone_rear
+          app.globalData.default.recName = res.data.rec_name
+          app.globalData.default.sendLocInput = res.data.send_loc_detail
+          app.globalData.default.sendLocSelect = res.data.send_loc_sum
+          app.globalData.default.QQ = res.data.QQ || '可不填写'
+          wx.hideLoading()
+          wx.showToast({
+            title: '重置成功'
+          })
+        }else {
+          wx.hideLoading()
+          wx.showToast({
+            title: '重置失败',
+            icon:'none'
+          })
+        }
+      },
+      fail:function(){
+        wx.hideLoading()
+        wx.showToast({
+          title: '重置失败',
+          icon:'none'
+        })
+      },
+      complete: function() { //无论成功还是失败都会执行
+        that.setData({
+          default: app.globalData.default,
+          sendLocSelect: app.globalData.default.sendLocSelect
+        })
+        wx.stopPullDownRefresh()
+      }
+    })
   },
   onShareAppMessage: function () {
     return {

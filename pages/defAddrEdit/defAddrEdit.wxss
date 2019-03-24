@@ -11,59 +11,12 @@
     padding: 24rpx;
     width: 670rpx;
     position: relative;
-    height: 330rpx;
     z-index: 15;
     display: flex;
     top: 200rpx;
     flex-direction: column;
     background: white;
     border-radius: 16rpx;
-}
-
-.contactNum {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 80rpx;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.contactNumTi {
-    color: #999ba1;
-    font-size: 20rpx;
-    font-weight: bold;
-}
-
-.contactNumCon {
-    font-size: 36rpx;
-    color: #373c46;
-    width: 100%;
-    height: 40rpx;
-}
-
-.tline {
-    height: 1rpx;
-    width: 100%;
-    background: linear-gradient(90deg, #f9a93e, #fed25c);
-    margin-bottom: 10rpx;
-    margin-top: 10rpx;
-}
-
-.recLoc {
-    width: 100%;
-    height: 80rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.secA {
-    height: 80rpx;
-    display: flex;
-    flex-direction: row;
-    color: #999ba1;
-    align-items: center;
 }
 
 .differLink {
@@ -112,86 +65,6 @@ button {
     font-weight: bold;
 }
 
-.recLocTi {
-    color: #999ba1;
-    font-size: 20rpx;
-    font-weight: bold;
-}
-
-.recLocDetail {
-    font-size: 36rpx;
-    color: #373c46;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.DeRecLocSel {
-    width: auto;
-}
-
-.cline {
-    height: 36rpx;
-    width: 1rpx;
-    background: #373c46;
-    margin-right: 16rpx;
-    margin-left: 16rpx;
-}
-
-.DeRecLocIn {
-    font-size: 36rpx;
-    color: #373c46;
-    width: 218rpx;
-    height: 40rpx;
-}
-
-.exName {
-    height: 80rpx;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.Ti {
-    color: #999ba1;
-    font-size: 20rpx;
-    font-weight: bold;
-}
-
-.recName {
-    font-size: 36rpx;
-    color: #373c46;
-    width: 190rpx;
-    height: 40rpx;
-}
-
-.numRear {
-    height: 80rpx;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.cline1 {
-    width: 1rpx;
-    height: 60rpx;
-    background: #373c46;
-    margin-right: 30rpx;
-    margin-left: 16rpx;
-}
-
-.phoneRear {
-    font-size: 36rpx;
-    color: #373c46;
-    width: 100%;
-    height: 40rpx;
-    width: 150rpx;
-}
-
 form {
     z-index: 15;
 }
@@ -204,4 +77,78 @@ form {
 .pullIcon {
     height: 24rpx;
     width: 24rpx;
+}
+.addrEditCard{
+    height: 432rpx;
+}
+.normalRow{
+    width: 100%;
+    height: 96rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.bias2{
+    position: relative;
+    left: 4rpx;
+}
+.orangeLine{
+    width: 100%;
+    height: 1rpx;
+    background: #faaf42;
+    margin-bottom: 10rpx;
+}
+.contactNumCon{
+    font-size: 36rpx;
+    color: #373c46;
+    width: 100%;
+    height: 40rpx;
+}
+.twoInput{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4rpx;
+    font-size: 36rpx;
+    color: #373c46;
+}
+.twoInput1{
+    display: flex;
+    margin-bottom: 4rpx;
+    font-size: 36rpx;
+    color: #373c46;
+}
+.DeRecLocSel{
+    margin-bottom: 2rpx;
+}
+.cline {
+    height: 36rpx;
+    width: 1rpx;
+    background: #373c46;
+    margin-right: 16rpx;
+    margin-left: 16rpx;
+}
+.inputSendLoc{
+    width: 340rpx;
+    height: 40rpx;
+}
+.normalRow1{
+    width: 190rpx;
+    height: 90rpx;
+    display: flex;
+    flex-direction: column;
+}
+.lastRow{
+    display: flex;
+    align-items: center;
+    font-size: 36rpx;
+    color: #373C46;
+    width: 500rpx;
+    margin-bottom: 2rpx;
+}
+.cline2{
+    width: 1rpx;
+    background: #373C46;
+    height: 36rpx;
+    margin-left: 16rpx;
+    margin-right: 16rpx;
 }

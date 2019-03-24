@@ -360,6 +360,7 @@ page {
 }
 
 .tagText {
+    padding: 2rpx 8rpx;
     text-align: center;
 }
 
@@ -377,7 +378,6 @@ page {
 
 .finexTagWei {
     color: #999ba1;
-    background-color: #E1E3E9;
     padding-left: 6rpx;
 }
 
@@ -458,4 +458,11 @@ page {
     margin-left: auto;
     display: flex;
     justify-content: center;
+}
+.my-silver-bg {
+    background: #f2f2f2;
+}
+
+.my-grey {
+    color: #999BA1;
 }

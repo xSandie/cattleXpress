@@ -113,6 +113,9 @@ Page({
      */
     onLoad: function(options) {
         var that = this
+        this.setData({
+            orderId:options.id
+        })
         var send_data = {
             'order_id': options.id,
             'sessionID': app.globalData.sessionID,
@@ -188,7 +191,7 @@ Page({
                     var tdata = res.data
                     that.setData({
                         //设置页面参数，设置orderID
-                        statusCode: tdata.state,
+                        statusCode: tdata.status,
                         limit: tdata.limit,
                         expLogoUrl: tdata.exp_logo,
                         expOpenTime: tdata.exp_opentime,
@@ -201,7 +204,7 @@ Page({
                         recName: tdata.exp_name,
                         otherInfo: tdata.description,
                         sendLocAll: tdata.send_loc,
-                        weightInfo: tdata.weight,
+                        weightInfo: tdata.exp_weight,
                     })
                     if (tdata.rec_time) {
                         that.setData({
@@ -292,19 +295,28 @@ Page({
     policeTA: function() {
         var that = this
         wx.showModal({
-                title: '确定举报？',
-                content: '请谨慎举报',
-                confirmText: '确认举报',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        wx.redirectTo({
-                            url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.receiverName
-                        })
-                    } else if (res.cancel) {
-                    }
-                }
-            })
+            title: '暂未开放',
+            content: '程序猿抓紧完善中~~',
+            confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '加油吧',
+            success: function(res) {
+            }
+        })
+        // wx.showModal({
+        //         title: '确定举报？',
+        //         content: '请谨慎举报',
+        //         confirmText: '确认举报',
+        //         confirmColor: '#faaf42',
+        //         success: function(res) {
+        //             if (res.confirm) {
+        //                 wx.redirectTo({
+        //                     url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.receiverName
+        //                 })
+        //             } else if (res.cancel) {
+        //             }
+        //         }
+        //     })
     },
     finOrder: function(event) {
         var that = this

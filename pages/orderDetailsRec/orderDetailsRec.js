@@ -123,7 +123,6 @@ Page({
      */
     onPullDownRefresh: function() {
         //刷新信息，同onload函数
-        //todo 防止恶意刷新，设置loading蒙层
         var that = this
         wx.showLoading({
             title: '刷新中',
@@ -138,7 +137,6 @@ Page({
                 'school_id': app.globalData.schoolID
             },
             success: function(res) {
-                // console.log('下拉刷新')
                 if (res.statusCode == 200) {
                     that.setData({
                         //设置页面参数
@@ -159,7 +157,6 @@ Page({
                         otherInfo: res.data.description,
                         statusCode: res.data.status,
                         sendLocAll: res.data.send_loc,
-
                         limit:res.data.limit,
                     })
                     if (res.data.pub_phone){
@@ -196,6 +193,7 @@ Page({
             },
             complete: function() {
                 wx.stopPullDownRefresh()
+                that.changeStatusBar()
             }
         })
     },
@@ -249,19 +247,28 @@ Page({
     policeTA: function() {
         var that = this
         wx.showModal({
-            title: '确定举报？',
-            content: '请谨慎举报',
-            confirmText: '确认举报',
+            title: '暂未开放',
+            content: '程序猿抓紧完善中~~',
             confirmColor: '#faaf42',
+            showCancel: false,
+            confirmText: '加油吧',
             success: function(res) {
-                if (res.confirm) {
-                    wx.redirectTo({
-                        url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.pubLastName
-                    })
-                } else if (res.cancel) {
-                }
             }
         })
+        // wx.showModal({
+        //     title: '确定举报？',
+        //     content: '请谨慎举报',
+        //     confirmText: '确认举报',
+        //     confirmColor: '#faaf42',
+        //     success: function(res) {
+        //         if (res.confirm) {
+        //             wx.redirectTo({
+        //                 url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.pubLastName
+        //             })
+        //         } else if (res.cancel) {
+        //         }
+        //     }
+        // })
     },
     toFix: function(event) {
         var that = this
@@ -318,7 +325,7 @@ Page({
                 'school_id': app.globalData.schoolID
             },
             success: function(res) {
-                // console.log(res)
+                console.log('详情',res)
                 if (res.statusCode == 200) {
                     that.setData({
                         //设置页面参数
@@ -331,7 +338,6 @@ Page({
                         reward: res.data.reward,
                         pubLastName: res.data.pub_lname+'同学',
                         pubTime: res.data.pub_time,
-
                         endTime: res.data.expire_time,
                         fetchName: res.data.exp_name,
                         expSize: res.data.exp_size,

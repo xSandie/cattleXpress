@@ -1,7 +1,7 @@
 {
-  "navigationBarTitleText": "我的收款二维码",
   "backgroundTextStyle": "dark",
   "navigationBarBackgroundColor": "#F5F8FD",
+  "navigationBarTitleText": "双重认证",
   "navigationBarTextStyle": "black",
   "backgroundColor": "#F5F8FD",
   "enablePullDownRefresh": true

@@ -56,7 +56,7 @@
                          <image class="deIcon" src='{{nameIcon}}'></image>
                      </view>
                      <view class="norText">
-                         <text>取货姓名：<text class="impText">{{fetchName}}</text></text>
+                         <text>姓名：<text class="impText">{{fetchName}}</text></text>
                      </view>
                  </view>
                  <view class="item">

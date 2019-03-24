@@ -11,12 +11,11 @@ Page({
 
         default: {
             conPhone: '点击输入电话号码',
-            sendLocSelect: '选择地点',
+            sendLocSelect: '选择区域',
             sendLocInput: '填写地点',
             recName: '填写姓名',
             phoneRear: '四位数字',
-
-            //点击按钮都会覆盖这个
+            QQ:'可不填写'
         },
         phoneRear: '', //提交时,用于 补全信息 的 临时存储变量
         sendLocSelect: '',
@@ -51,19 +50,6 @@ Page({
                 btnText: '确认设置'
             })
         }
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
         var send_data = {
             'sessionID': app.globalData.sessionID
         }
@@ -73,9 +59,18 @@ Page({
             data: send_data,
             success: function(res) {
                 //与发布界面 一致
+                console.log('onload:',res)
                 if (res.statusCode == 200) {
                     if (res.data.default) {
-                        app.globalData.default = res.data.default
+                        let temp = {
+                            conPhone: res.data.phone,
+                            sendLocSelect: res.data.send_loc_sum,
+                            sendLocInput: res.data.send_loc_detail,
+                            recName: res.data.rec_name,
+                            phoneRear: res.data.phone_rear,
+                            QQ:res.data.QQ==null?'可不填写':res.data.QQ
+                        }
+                        app.globalData.default = temp
                     }
                 }
 
@@ -83,8 +78,7 @@ Page({
             complete: function() { //无论成功还是失败都会执行
                 that.setData({
                     default: app.globalData.default,
-                    sendLocSelect: app.globalData.default.sendLocSelect, //这里逻辑注意一下
-                    phoneRear: app.globalData.default.phoneRear
+                    sendLocSelect:app.globalData.default.sendLocSelect
                 })
             }
         })
@@ -102,31 +96,55 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function() {
-
-    },
-
-    /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+        wx.showLoading({
+            title:'重置中'
+        })
+        var send_data = {
+            'sessionID': app.globalData.sessionID
+        }
+        var that = this
+        wx.request({
+            url: urlModel.url.getAddr,
+            data: send_data,
+            success: function(res) {
+                //与发布界面 一致
+                if (res.statusCode == 200) {
+                    if (res.data.default) {
+                        let temp = {
+                            conPhone: res.data.phone,
+                            sendLocSelect: res.data.send_loc_sum,
+                            sendLocInput: res.data.send_loc_detail,
+                            recName: res.data.rec_name,
+                            phoneRear: res.data.phone_rear,
+                            QQ:res.data.QQ==null?'可不填写':res.data.QQ
+                        }
+                        app.globalData.default = temp
+                    }
+                }
 
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
+            },
+            complete: function() { //无论成功还是失败都会执行
+                that.setData({
+                    default: app.globalData.default,
+                    sendLocSelect:app.globalData.default.sendLocSelect
+                })
+            }
+        })
+        this.setData({
+            dormArea: app.globalData.dormArea,
+            teachArea: app.globalData.teachArea,
+            otherArea: app.globalData.otherArea,
+            transCampus: app.globalData.transCampus,
+            dateRange: app.globalData.dateRange,
+            sendLocArray: [
+                ['宿舍区', '教学区', '其他区', '跨校区'], app.globalData.dormArea
+            ]
+        })
+        wx.hideLoading()
+        wx.stopPullDownRefresh()
     },
 
     /**
@@ -144,7 +162,7 @@ Page({
         // console.log('picker发送选择改变，携带值为', e.detail.value)
         var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
         this.setData({
-            sendLoc: selected
+            sendLocSelect: selected
         })
     },
     sdlocColumnChange: function(e) {
@@ -191,48 +209,57 @@ Page({
         })
     },
     replaceAddr: function(e) {
-        // console.log('submit')
         var detail = e.detail.value
         if (detail.phoneRear == '' && this.data.phoneRear != '') { //说明自动 生成了手机尾号 且 未自行填写尾号
             detail.phoneRear = this.data.phoneRear
         }
-        console.log(e)
         var that = this
         if (!that.checkNone(detail)) {
             //check none 一定要在上，存在没有写的去补全
             //默认情况 要 补全逻辑 返回detail
+            wx.showLoading({
+              title: '修改中'
+            })
             detail = that.fillDetailToDefault(detail)
-                // console.log('信息完整')
 
             var send_data = {
-                    'userID': app.globalData.sessionID,
-                    'sdLocSum': detail.DeRecLocSel,
-                    'sdLocDetail': detail.recLocInput,
-                    'contactNum': detail.conPhone,
-                    'fetchName': detail.recName,
-                    'phoneRare': detail.phoneRear
-                }
+                'sessionID': app.globalData.sessionID,
+                'sendLocSum': detail.DeRecLocSel,
+                'sendLocDetail': detail.DeRecLocIn,
+                'contactNum': detail.conPhoneNum,
+                'fetchName': detail.recName,
+                'phoneRear': detail.phoneRear,
+                'QQ':detail.QQ=='可不填写'?null:detail.QQ
+            }
+            console.log('ready:',send_data)
                 //发起post请求
             wx.request({
                 url: urlModel.url.postAddr,
                 method: 'POST',
                 data: send_data,
                 success: function(res) {
-                    if (res.data.msg == 'ok') {
+                    if (res.statusCode==200) {
+                        wx.hideLoading()
                         wx.showToast({
                             title: '修改成功',
-                            complete: function() {
-                                wx.switchTab({
-                                    url: '../my/my',
-                                })
-                            }
                         })
+                        setTimeout(()=>{wx.switchTab({
+                            url: '../my/my',
+                        })},2000)
+
                     } else {
+                        wx.hideLoading()
                         wx.showToast({
                             title: '出错，请重试',
                             icon: 'none'
                         })
                     }
+                },fail:function () {
+                    wx.hideLoading()
+                    wx.showToast({
+                        title: '出错，请重试',
+                        icon: 'none'
+                    })
                 }
             })
         }
@@ -254,20 +281,9 @@ Page({
     fillDetailToDefault: function(detail_to_fill) {
         //如果信息中有 未填写的默认信息，进行补全
         for (var Key in detail_to_fill) {
-            if (detail_to_fill[Key] == '') {
-                if (Key == 'conPhone') {
-                    detail_to_fill[Key] = app.globalData.default.conPhone
-                } else if (Key == 'recLocInput') {
-                    detail_to_fill[Key] = app.globalData.default.sendLocInput
-                } else if (Key == 'recName') {
-                    detail_to_fill[Key] = app.globalData.default.recName
-                } else if (Key == 'phoneRear') {
-                    detail_to_fill[Key] = app.globalData.default.phoneRear
-                }
-            }
             //todo 修改大改变量名
             if (detail_to_fill[Key] == '') {
-                if (Key == 'conPhone') {
+                if (Key == 'conPhoneNum') {
                     detail_to_fill[Key] = app.globalData.default.conPhone
                 } else if (Key == 'DeRecLocIn') {
                     detail_to_fill[Key] = app.globalData.default.sendLocInput
@@ -287,10 +303,10 @@ Page({
     check_notset_all: function(data_tocheck) {
         //检查 默认地址 是否 没有填写完整，没有返回true，设置过返回false
         for (var Key in data_tocheck) {
-            if (Key == 'conPhone') {
+            if (Key == 'conPhoneNum') {
                 // console.log(Key)
                 if (data_tocheck[Key] == '点击输入电话号码') { return true }
-            } else if (Key == 'sendLocInput') {
+            } else if (Key == 'DeRecLocIn') {
                 // console.log(Key)
                 if (data_tocheck[Key] == '填写地点') { return true }
             } else if (Key == 'recName') {
@@ -299,9 +315,9 @@ Page({
             } else if (Key == 'phoneRear') {
                 // console.log(Key)
                 if (data_tocheck[Key] == '四位数字') { return true }
-            } else if (Key == 'sendLocSelect') {
+            } else if (Key == 'DeRecLocSel') {
                 // console.log(Key)
-                if (data_tocheck[Key] == '选择地点') { return true }
+                if (data_tocheck[Key] == '选择区域') { return true }
             }
         }
         return false

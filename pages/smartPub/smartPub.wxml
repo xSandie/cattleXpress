@@ -41,7 +41,7 @@
                 <view class='cline1'></view>
                 <view class="normalRow1">
                     <text class="my-grey xxs-font bias2">手机尾号</text>
-                    <input type="number" name="phoneRear" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.phoneRear }}" class='inputSendLoc' />
+                    <input type="number" name="phoneRear" confirm-type="next" placeholder-class="placeHolder" maxlength='4' placeholder="{{default.phoneRear }}" class='inputSendLoc' />
                 </view>
             </view>
             <view class="orangeLine"></view>

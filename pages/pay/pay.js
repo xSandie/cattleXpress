@@ -9,7 +9,6 @@ Page({
     data: {
         payCodeUrl: null,
         orderId: null
-
     },
 
     /**
@@ -22,6 +21,23 @@ Page({
                 orderId: options.orderId
             })
         }
+        var that = this
+        wx.request({
+            //获取对方支付二维码接口
+            url: urlModel.url.toPayGet,
+            method: 'POST',
+            data: {
+                'order_id': options.orderId,
+                'sessionID': app.globalData.sessionID
+            },
+            success: function(res) {
+                if (res.statusCode == 200) {
+                    that.setData({
+                        payCodeUrl: res.data.payCodeUrl
+                    })
+                }
+            }
+        })
     },
 
     /**
@@ -35,27 +51,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
-        var that = this
-        wx.request({
-            //获取对方支付二维码接口
-            url: urlModel.url.toPayGet,
-            method: 'POST',
-            data: {
-                'orderId': that.data.orderId,
-                'payerID': app.globalData.sessionID
-            },
-            success: function(res) {
-                if (res.statusCode == 200) {
-                    that.setData({
-                        payCodeUrl: res.data.payCodeUrl
-                            // receiverSchoolId:'',
-                            // receiverAvatar:'',
-                            // receiverNickname:'',
-                            // receiverLname:''
-                    })
-                }
-            }
-        })
+
     },
 
     /**
@@ -85,17 +81,14 @@ Page({
             url: urlModel.url.toPayGet,
             method: 'POST',
             data: {
-                'orderId': that.data.orderId,
-                'payerID': app.globalData.sessionID
+                'order_id': options.orderId,
+                'sessionID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
+                    //todo 加入确认对方昵称对不对的返回值
                     that.setData({
                         payCodeUrl: res.data.payCodeUrl
-                            // receiverSchoolId:'',
-                            // receiverAvatar:'',
-                            // receiverNickname:'',
-                            // receiverLname:''
                     })
                     wx.hideLoading()
                     wx.showToast({

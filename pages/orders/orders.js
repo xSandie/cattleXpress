@@ -16,6 +16,7 @@ Page({
         finPubList: [],
 
         pubPersonIcon: '../../images/publisher.png',
+        pubPersonIconGrey: '../../images/publisherGrey.png',
         atEndFlag: false,
         requestTime: 1
     },
@@ -64,7 +65,7 @@ Page({
                     'request_time': 1
                 },
                 success: function(res) {
-                    // console.log('已完成订单请求', res)
+                    console.log('已完成订单请求', res)
                     if (res.data.finRecList.length == 0 && res.data.finPubList == 0) {
                         that.setData({
                             atEndFlag: true
@@ -160,16 +161,25 @@ Page({
                     'sessionID': app.globalData.sessionID,
                 },
                 success: function(res) {
-                    that.setData({
-                        //修改参数,两边同时刷新
-                        ongoRecList: res.data.ongoRecList,
-                        ongoPubList: res.data.ongoPubList
-                    })
-                    wx.hideLoading()
-                    wx.showToast({
-                        title: '刷新成功',
-                        duration: 2000
-                    })
+                    if (res.statusCode==200){
+                        that.setData({
+                            //修改参数,两边同时刷新
+                            ongoRecList: res.data.ongoRecList,
+                            ongoPubList: res.data.ongoPubList
+                        })
+                        wx.hideLoading()
+                        wx.showToast({
+                            title: '刷新成功',
+                            duration: 2000
+                        })
+                    } else {
+                        wx.hideLoading()
+                        wx.showToast({
+                            title: '刷新失败，请稍后重试',
+                            icon: 'none'
+                        })
+                    }
+
                 },
                 fail: function() {
                     wx.hideLoading()
@@ -188,7 +198,7 @@ Page({
                             blank: false
                         })
                     }
-
+                    wx.stopPullDownRefresh()
                 }
             })
             //考虑加入刷新已完成订单请求,没必要本来变动就不大
@@ -205,12 +215,12 @@ Page({
         //请求已完成订单。判断currentTab在哪边
         if (that.data.currentTab == 1) {
             //请求已完成订单
+            that.setData({
+                requestTime: that.data.requestTime + 1
+            })
             wx.showLoading({
                 title: '加载中',
                 mask: true
-            })
-            that.setData({
-                requestTime: that.data.requestTime + 1
             })
             wx.request({
                 url: urlModel.url.haveList, //已完成订单请求地址
@@ -220,6 +230,7 @@ Page({
                     'request_time': that.data.requestTime
                 },
                 success: function(res) {
+                    console.log('触底',res)
                     if (res.data.finRecList.length == 0 && res.data.finPubList == 0) {
                         that.setData({
                             atEndFlag: true

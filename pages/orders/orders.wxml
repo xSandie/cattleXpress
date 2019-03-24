@@ -141,7 +141,7 @@
         <view class='orderCard'>
             <view hover-class="answerHover1" class='ongoRecList' wx:for="{{finRecList}}" wx:key="{{item.orderId}}">
                     <view class='rowFlex' data-order-id="{{item.orderId}}" bindtap="toRecDetails">
-                        <view class='reward'>
+                        <view class='my-silver-bg reward'>
                             <view class='rcText'>
                                     <text>赏金</text>
                             </view>
@@ -158,16 +158,22 @@
                             </view>
                             <view class='sdInstance'>
                                 <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                <view class='exTagWor' wx:if="{{item.urgent}}">
-                                    <view class='tagText'><text>加急</text></view> 
+                                <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                                    <view class='tagText'><text>限团队</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                                    <view class='tagText'><text>限女生</text></view>
+                                </view>
+                                <view class='exTagWor' wx:if="{{item.manOnly}}">
+                                    <view class='tagText'><text>限男生</text></view>
                                 </view>
                             </view>
                             <view class='finExSum'>
-                                    <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}前送达</text></view>
+                                    <view class='tagText my-silver-bg'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}前</text></view>
                             </view>
                             <view class='finPubisher'>
-                                <image class='pubIcon' src="{{pubPersonIcon}}"></image>
-                                <view class='pubName'>
+                                <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
+                                <view class='pubName my-grey'>
                                 <text>发布人：{{item.pubName}}同学</text>
                                 </view>
                             </view>
@@ -188,7 +194,7 @@
             <view class='orderCard'>
                 <view hover-class="answerHover1" class='ongoPubList' wx:for="{{finPubList}}" wx:key="{{item.orderId}}">
                     <view class='rowFlex' data-order-id="{{item.orderId}}"  bindtap="toPubDetails">
-                            <view class='reward'>
+                            <view class='my-silver-bg reward'>
                                 <view class='rcText'>
                                         <text>赏金</text>
                                 </view>
@@ -205,21 +211,22 @@
                                 </view>
                                 <view class='sdInstance'>
                                     <view class='sdIText'><text>{{item.sdInstance}}</text></view>
-                                    <view class='exTagWor' wx:if="{{item.urgent}}">
-                                        <view class='tagText'><text>加急</text></view> 
+                                    <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                                        <view class='tagText'><text>限团队</text></view>
+                                    </view>
+                                    <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                                        <view class='tagText'><text>限女生</text></view>
+                                    </view>
+                                    <view class='exTagWor' wx:if="{{item.manOnly}}">
+                                        <view class='tagText'><text>限男生</text></view>
                                     </view>
                                 </view>
-                                <view class='exTag'>
-                                    <view class='exTag finexTagWei'>
-                                        <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
-                                    </view>
-                                    <view class='exTag finexTagTime'>
-                                        <view class='tagText'><text>{{item.endTime}}前送达</text></view>
-                                    </view>
+                                <view class='finExSum'>
+                                    <view class='tagText my-silver-bg'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}</text></view>
                                 </view>
                                 <view class='finPubisher'>
-                                    <image class='pubIcon' src="{{pubPersonIcon}}"></image>
-                                    <view class='pubName'>
+                                    <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
+                                    <view class='pubName my-grey'>
                                     <text>接单人：{{item.recName}}</text>
                                     </view>
                                 </view>  
