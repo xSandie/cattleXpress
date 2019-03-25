@@ -25,7 +25,7 @@ Page({
                 if (res.statusCode == 200) {
                     if (res.data.canChange) {
                         that.setData({
-                            myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
+                            myPayCodeUrl: res.data.my_paycode + '?v=' + Math.random(),
                             canChange: res.data.canChange
                         })
                     }
@@ -46,9 +46,10 @@ Page({
             },
             success: function(res) {
                 if (res.statusCode == 200) {
+                    console.log(res)
                     if (res.data.canChange) {
                         that.setData({
-                            myPayCodeUrl: res.data.myPayCodeUrl + '?v=' + Math.random(),
+                            myPayCodeUrl: res.data.my_paycode + '?v=' + Math.random(),
                             canChange: res.data.canChange
                         })
                     }

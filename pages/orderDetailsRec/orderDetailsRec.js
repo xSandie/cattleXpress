@@ -102,7 +102,7 @@ Page({
         //复制QQ号
         var that = this
         wx.setClipboardData({
-            data: that.data.receiverQQ,
+            data: that.data.pubQQ,
         })
     },
     /**

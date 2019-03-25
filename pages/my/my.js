@@ -103,7 +103,7 @@ Page({
                     wx.showToast({
                         title: '刷新成功',
                     })
-                }else {
+                } else {
                     wx.hideLoading()
                     wx.showToast({
                         title: '刷新失败，请重试',
@@ -129,13 +129,21 @@ Page({
         })
     },
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-
+    doubleCertif: function() {
+        wx.navigateTo({
+            url: '../doubleCertif/doubleCertif',
+        })
     },
-
+    feedback: function() {
+        wx.showToast({
+            title: '暂未开放，敬请期待~',
+            icon: 'none'
+        })
+        return
+        wx.navigateTo({
+            url: '../feedback/feedback',
+        })
+    },
     /**
      * 用户点击右上角分享
      */
@@ -153,6 +161,11 @@ Page({
         })
     },
     toPoList: function() {
+        wx.showToast({
+            title: '暂未开放，敬请期待~',
+            icon: 'none'
+        })
+        return
         // console.log("toPoList被点击了");
         if (app.globalData.ourUserStatus != 4) {
             wx.navigateTo({
@@ -178,25 +191,6 @@ Page({
                 }
             })
         }
-
-    },
-    supportUs: function(e) {
-        wx.showModal({
-            title: '感谢',
-            content: '开发团队暂时不需要支持噢！',
-            showCancel: false,
-            confirmText: '知道啦',
-            confirmColor: '#faaf42'
-        })
-    },
-    joinUs: function() {
-        wx.showModal({
-            title: '邮箱',
-            content: '联系我们请发送邮件至：\r\nmornstudio@163.com',
-            showCancel: false,
-            confirmText: '好的',
-            confirmColor: '#faaf42'
-        })
     },
     myCode: function() {
         if (app.globalData.ourUserStatus != 4) {

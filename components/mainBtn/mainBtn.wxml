@@ -1,5 +1,0 @@
-<!--components/mainBtn/mainBtn.wxml-->
-<button style='width:{{width}}rpx;' hover-class='btn-hover'>
-        <text>{{text}}</text>  
-        <image class='iconImg' hidden="{{!haveIcon}}" src="{{icon}}"></image>
-</button>

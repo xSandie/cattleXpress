@@ -1,27 +1,29 @@
-<view class='container'>
-        <view class='cardA'>
-            <view class='numA'>
-                <view class='money'>
-                    <text>{{balance}}元</text>
-                    <text class='small'>代领总收入</text>
-                </view>
-                <view class='achie'>
-                    <text>{{creditScore}}</text>
-                    <text class='small'>LV.{{level}} 信用分</text>
-                </view> 
+<view class="cardArea">
+    <view class='cardA'>
+        <view class='numA'>
+            <view class='money'>
+                <text>{{balance}}元</text>
+                <text class='small'>代领总收入</text>
             </view>
-            <!-- <view class='finanBtn'>
-                <view hover-class="answerHover1" class='addCre'>
-                    <text>充值</text>
-                </view>
-                <view class='tline'>
-                </view>
-                <view hover-class="answerHover1" class='drawCash'>
-                    <text>提现</text>
-                </view>
-            </view> -->
+            <view class='achie'>
+                <text>{{creditScore}}</text>
+                <text class='small'>LV.{{level}} 信用币</text>
+            </view> 
         </view>
-        <image class='cardBack' src='{{cardBg}}'></image>
+    <!-- <view class='finanBtn'>
+        <view hover-class="answerHover1" class='addCre'>
+            <text>充值</text>
+        </view>
+        <view class='tline'>
+        </view>
+        <view hover-class="answerHover1" class='drawCash'>
+            <text>提现</text>
+        </view>
+    </view> -->
+    </view>
+    <image class='cardBack' src='{{cardBg}}'></image>
+</view>
+        
     <view class='proA'>
         <view class='prof'>
             <open-data type="userAvatarUrl" class='profImg'></open-data>
@@ -49,7 +51,6 @@
         </view>
 
     </view>
-    <view class='btnA'>
         <view class='bigBtn'>
             <view hover-class="answerHover1" class='address' bindtap="toAddrEdit">
                 <view class='addressIcon'>
@@ -67,7 +68,7 @@
             </view>
         </view>
         <view class='smallBtn'>
-            <view hover-class="answerHover1" class='joinUs' bindtap="myCode">
+            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="myCode">
                 <view class='joinUsText'>
                     <text>收款二维码</text>
                 </view>
@@ -75,9 +76,9 @@
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
             </view>
-            <view hover-class="answerHover1" class='support' bindtap="supportUs">
+            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">
                 <view class='supportText'>
-                    <text>支持我们</text>
+                    <text>学生证认证</text>
                 </view>
                 <view class='next'>
                     <image class='nextIcon' src='{{nextIcon}}'></image>
@@ -85,14 +86,12 @@
             </view>
             <view class='rline'>
             </view>
-            <view hover-class="answerHover1" class='joinUs' bindtap="joinUs">
+            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
                 <view class='joinUsText'>
-                    <text>联系/加入我们</text>
+                    <text>意见反馈</text>
                 </view>
                 <view class='next'>
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
             </view>
         </view>
-    </view>
-</view>

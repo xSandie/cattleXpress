@@ -372,9 +372,10 @@ Page({
             }
         })
     },
-    toPay:function(orderId){
+    toPay:function(){
+        var that = this
         wx.navigateTo({
-            url: '../pay/pay?orderId=' + orderId,
+            url: '../pay/pay?orderId=' + that.data.orderId,
         })
     },
     cancelOrder: function(event) {

@@ -32,8 +32,9 @@ Page({
             },
             success: function(res) {
                 if (res.statusCode == 200) {
+                    console.log(res)
                     that.setData({
-                        payCodeUrl: res.data.payCodeUrl
+                        payCodeUrl: res.data.pay_code
                     })
                 }
             }
@@ -81,14 +82,14 @@ Page({
             url: urlModel.url.toPayGet,
             method: 'POST',
             data: {
-                'order_id': options.orderId,
+                'order_id': that.data.orderId,
                 'sessionID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
                     //todo 加入确认对方昵称对不对的返回值
                     that.setData({
-                        payCodeUrl: res.data.payCodeUrl
+                        payCodeUrl: res.data.pay_code
                     })
                     wx.hideLoading()
                     wx.showToast({

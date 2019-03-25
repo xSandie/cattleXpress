@@ -17,7 +17,8 @@
     "pages/changeSchool/changeSchool",
     "pages/pay/pay",
     "pages/myCode/myCode",
-    "pages/smartPub/smartPub"
+    "pages/smartPub/smartPub",
+    "pages/feedback/feedback"
   ],
   "window": {
     "backgroundTextStyle": "dark",
