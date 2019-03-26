@@ -124,28 +124,21 @@ Page({
             this.setData({
                 studentOrMaster: true, //true为本科生
                 identity: 1,
-                loginHint: '账号为 4开头 的8位数噢'
             })
             var send_data = {
                 'sessionID': app.globalData.sessionID,
-                'identity': 1
+                'identity': 1,
+                'school_id': app.globalData.schoolID
             }
             wx.request({
-                url: urlModel.url.getCertifCode,
-                method: 'POST',
+                url: urlModel.url.getCertifInfo,
                 data: send_data,
                 success: function(res) {
                     console.log(res)
                     if (res.data.img_url) {
                         that.setData({
-                                verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
-                            })
-                            //todo 后期完善动态更改提示的功能
-                        wx.showToast({
-                            title: that.data.loginHint,
-                            icon: 'none',
-                            duration: 4000,
-                            success: function() {}
+                            verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
+                            accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
                         })
                     }
                 }
@@ -156,32 +149,27 @@ Page({
     },
     selMaster: function() {
         var that = this
+        if (this.data.identity == 2) {
+            return
+        }
         this.setData({
             studentOrMaster: false,
             identity: 2,
-            loginHint: '帐号为 1（入学年份）开头的帐号噢'
         })
         var send_data = {
             'sessionID': app.globalData.sessionID,
-            'identity': this.data.identity
+            'identity': 2,
+            'school_id': app.globalData.schoolID
         }
         wx.request({
-            url: urlModel.url.getCertifCode,
-            method: 'POST',
+            url: urlModel.url.getCertifInfo,
             data: send_data,
             success: function(res) {
                 console.log(res)
                 if (res.data.img_url) {
                     that.setData({
-                            verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
-                        })
-                        //todo 后期完善动态更改提示的功能
-                    wx.showToast({
-                        title: that.data.loginHint,
-                        icon: 'none',
-                        duration: 4000,
-                        // mask: true,
-                        success: function() {}
+                        verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
+                        accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
                     })
                 }
             }
@@ -233,10 +221,8 @@ Page({
                     'password': e.detail.value.password,
                     'verification_code': e.detail.value.verifiedCode,
                     'sessionID': app.globalData.sessionID,
-                    'identity': that.data.identity
-                },
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    'identity': that.data.identity,
+                    'school_id': app.globalData.schoolID
                 },
                 success: function(res) {
                     console.log(res)
@@ -318,7 +304,7 @@ Page({
                 console.log(res)
                 if (res.data.img_url) {
                     that.setData({
-                        verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
+                        verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
                     })
                 }
             }
@@ -338,9 +324,6 @@ Page({
             showCancel: false,
             success: function(res) {
                 if (res.confirm) {
-                    wx.redirectTo({
-                        url: '../certifPage/certifPage'
-                    })
                 }
             }
         })

@@ -18,7 +18,8 @@
     "pages/pay/pay",
     "pages/myCode/myCode",
     "pages/smartPub/smartPub",
-    "pages/feedback/feedback"
+    "pages/feedback/feedback",
+    "pages/ads/ads"
   ],
   "window": {
     "backgroundTextStyle": "dark",
