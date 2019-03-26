@@ -1,7 +1,7 @@
 <view class="header">
     <image class="publishIMG2" src="{{pubImg}}"></image>
 </view>
-<form bindsubmit="finOrdSubmit" report-submit="true" report-submit-timeout="100" class="container">
+<form bindsubmit="finOrdSubmit" report-submit="true" report-submit-timeout="1000" class="container">
     <view class="cardPos {{cardStyle}}">
         <view bindtap="scrollDown" wx:if="{{!showEdit}}" class="m-font" style="display: flex;flex-direction: column;">
             <view style="display: flex;margin-bottom: 14rpx;" class="main-yellow">

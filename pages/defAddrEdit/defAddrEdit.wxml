@@ -1,5 +1,5 @@
 <view class='container'>
-    <form report-submit="true" report-submit-timeout="100" class='mainForm' bindsubmit="replaceAddr">
+    <form report-submit="true" report-submit-timeout="1000" class='mainForm' bindsubmit="replaceAddr">
         <view class='floatCard'>
             <view class="addrEdit">
                 <view class="normalRow">

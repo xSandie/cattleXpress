@@ -125,4 +125,10 @@
         <text>黄牛是有底线的</text>
         <view class='lineCss'></view>
     </view>
+    <image wx:if="{{blank}}" class="blankIcon" src="{{blankIcon}}"></image>
+    <view wx:if="{{blank}}" class='prompt'>
+        <view class='lineCss'></view>
+        <text>快去发布第一个订单吧！</text>
+        <view class='lineCss'></view>
+    </view>
 </view>

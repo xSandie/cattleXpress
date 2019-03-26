@@ -265,6 +265,11 @@ Page({
         }
     },
     toFix: function(event) {
+        wx.showToast({
+            title: '近期开放，敬请期待~',
+            icon: 'none'
+        })
+        return
         let that = this
         wx.navigateTo({
             url: '../reportExError/reportExError?title=' + that.data.expStationName,

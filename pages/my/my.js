@@ -130,13 +130,18 @@ Page({
     },
 
     doubleCertif: function() {
+        wx.showToast({
+            title: '近期开放，敬请期待~',
+            icon: 'none'
+        })
+        return
         wx.navigateTo({
-            url: '../doubleCertif/doubleCertif',
+            url: '../certifPage/certifPage',
         })
     },
     feedback: function() {
         wx.showToast({
-            title: '暂未开放，敬请期待~',
+            title: '近期开放，敬请期待~',
             icon: 'none'
         })
         return
@@ -160,13 +165,17 @@ Page({
             url: '../defAddrEdit/defAddrEdit',
         })
     },
+    toCertif:function(){
+        wx.navigateTo({
+            url: '../defAddrEdit/defAddrEdit',
+        })
+    },
     toPoList: function() {
         wx.showToast({
-            title: '暂未开放，敬请期待~',
+            title: '近期开放，敬请期待~',
             icon: 'none'
         })
         return
-        // console.log("toPoList被点击了");
         if (app.globalData.ourUserStatus != 4) {
             wx.navigateTo({
                 url: '../policeList/policeList',

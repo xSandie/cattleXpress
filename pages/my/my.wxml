@@ -76,6 +76,14 @@
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
             </view>
+            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="toCertif">
+                <view class='joinUsText'>
+                    <text>教务系统认证</text>
+                </view>
+                <view class='next'>
+                    <image class='nextIcon' src='{{nextIcon}}'></image>
+                </view>
+            </view>
             <view hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">
                 <view class='supportText'>
                     <text>学生证认证</text>

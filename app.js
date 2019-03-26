@@ -95,7 +95,7 @@ App({
         schoolNumb: '', //用户学号
         schoolID: 1, //学校id
         schoolName: "点击选择学校",
-        ourUserStatus: 3, //用户状态码，默认先为4未认证
+        ourUserStatus: 4, //用户状态码，默认先为4未认证
         sex: '',
         expressLocArray: [], //两列快递站点数组
         phoneNumber: null,

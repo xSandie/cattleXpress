@@ -6,7 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        ads: ['../../images/banner.png', '../../images/banner.png'], //广告banner图片地址
+        ads: ['../../images/banner1.png', '../../images/banner2.png'], //广告banner图片地址
 
         schoolName: '',
         locIcon: "../../images/location.png",
@@ -24,7 +24,8 @@ Page({
         finishedOrderList: null,
         requestTime: 1,
         atEndFlag: false,
-        loginFailed:true
+        loginFailed:true,
+        blank:false
     },
     getBanner:function(){
         //获取并设置广告
@@ -93,8 +94,8 @@ Page({
                 atEndFlag: false
             })
             that.setData({
-                    schoolName: app.globalData.schoolName,
-                    loginFailed:false
+                schoolName: app.globalData.schoolName,
+                loginFailed:false
             })
             var send_data = {
                 'school_id': app.globalData.schoolID,
@@ -119,11 +120,22 @@ Page({
                     console.log(res)
                 },
                 fail: function() {},
-                complete: function() { wx.hideLoading() }
+                complete: function() { wx.hideLoading()
+                if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
+                    that.setData({
+                        blank:true
+                    })
+                } else {
+                    that.setData({
+                        blank:false
+                    })
+                }
+                }
             })
             var send_data = {
                 'sessionID': app.globalData.sessionID
             }
+            //获取默认地址
             wx.request({
                 url: urlModel.url.getAddr,
                 data: send_data,
@@ -145,11 +157,6 @@ Page({
             })
         })
 
-    },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
     },
 
     /**
@@ -224,7 +231,17 @@ Page({
                     confirmColor: '#faaf42',
                 })
             },
-            complete: function() { wx.stopPullDownRefresh() }
+            complete: function() {
+                if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
+                    that.setData({
+                        blank:true
+                    })
+                } else {
+                    that.setData({
+                        blank:false
+                    })
+                }
+                wx.stopPullDownRefresh() }
         })
 
     },
