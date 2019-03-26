@@ -301,7 +301,8 @@ Page({
       detail = this.fillAddrToDefault(detail)
       detail = this.fill2Pub(detail)
       detail = this.add2Pub(detail)
-      console.log('发布填充后',detail)
+      // console.log('发布填充后',detail)
+      detail['sessionID'] = app.globalData.sessionID
       if (this.canPub(detail)){
         console.log('发布逻辑')
         wx.showLoading({
@@ -347,7 +348,6 @@ Page({
           })
         }else{
           detail['set_default'] = false
-          detail['sessionID'] = app.globalData.sessionID
           detail = this.set2Standard(detail)
           console.log('直接发布请求',detail)
           wx.request({
