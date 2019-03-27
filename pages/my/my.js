@@ -167,7 +167,7 @@ Page({
     },
     toCertif:function(){
         wx.navigateTo({
-            url: '../defAddrEdit/defAddrEdit',
+            url: '../certifPage/certifPage',
         })
     },
     toPoList: function() {

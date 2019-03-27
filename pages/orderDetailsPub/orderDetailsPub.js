@@ -268,16 +268,16 @@ Page({
         wx.showModal({
             title: '发短信还是拨打电话？',
             content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
-            confirmColor: '#faaf42',
-            confirmText: '发送短信',
-            cancelColor: '#999BA1',
-            cancelText: '拨打号码',
+            confirmColor: '#999BA1',
+            confirmText: '拨打号码',
+            cancelColor: '#faaf42',
+            cancelText: '发送短信',
             success: function(res) {
-                if (res.confirm) {
+                if (res.cancel) {
                     wx.setClipboardData({
                             data: that.data.receiverPhone,
                     })
-                } else if (res.cancel) {
+                } else if (res.confirm) {
                     wx.makePhoneCall({
                         phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
                     })

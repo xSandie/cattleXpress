@@ -123,6 +123,7 @@ Page({
                 complete: function() { wx.hideLoading()
                 if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
                     that.setData({
+                        atEndFlag:false,
                         blank:true
                     })
                 } else {
@@ -234,6 +235,7 @@ Page({
             complete: function() {
                 if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
                     that.setData({
+                        atEndFlag:false,
                         blank:true
                     })
                 } else {

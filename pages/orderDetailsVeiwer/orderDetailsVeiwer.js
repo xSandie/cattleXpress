@@ -26,7 +26,7 @@ Page({
         pubLastName: '黄',
         pubTime: '0000-00-00',
         orderId: '',
-        receiverPhone: '有问题及时反馈噢',
+        receiverPhone: '有问题及时反馈噢',//写反了
     },
     backhome:function(){
         wx.switchTab({
@@ -242,26 +242,23 @@ Page({
         } else {
             wx.showModal({
                 title: '发短信还是拨打电话？',
-                content: '发送短信 将复制对方号码。',
-                confirmColor: '#faaf42',
-                confirmText: '发送短信',
-                cancelColor: '#999ba1',
-                cancelText: '拨打号码',
+                content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
+                confirmColor: '#999BA1',
+                confirmText: '拨打号码',
+                cancelColor: '#faaf42',
+                cancelText: '发送短信',
                 success: function(res) {
-                    if (res.confirm) {
-                        // console.log('用户点击确定')
+                    if (res.cancel) {
                         wx.setClipboardData({
-                                data: that.data.receiverPhone,
-                            })
-                    } else if (res.cancel) {
-                        // console.log('用户点击取消')
+                            data: that.data.receiverPhone,
+                        })
+                    } else if (res.confirm) {
                         wx.makePhoneCall({
                             phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
                         })
                     }
                 }
             })
-
         }
     },
     toFix: function(event) {
