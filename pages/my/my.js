@@ -166,8 +166,20 @@ Page({
         })
     },
     toCertif:function(){
-        wx.navigateTo({
-            url: '../certifPage/certifPage',
+        wx.showModal({
+            title: '再次认证',
+            content: '更改信息即再次进行教务系统认证，要继续吗？',
+            confirmColor: '#999BA1',
+            confirmText: '继续',
+            cancelColor:'#faaf42',
+            cancelText:'下次再说',
+            success: function(res) {
+                if (res.confirm){
+                    wx.navigateTo({
+                        url: '../certifPage/certifPage',
+                    })
+                }
+            }
         })
     },
     toPoList: function() {

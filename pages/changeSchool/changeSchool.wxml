@@ -8,8 +8,8 @@
     </view>
     </form>-->
     <view class="answerArea">
-        <view wx:for="{{answer}}">
-            <view hover-class="answerHover1" class="answer" data-schoolID="{{item.schoolid}}" data-schoolName="{{item.schoolname}}"bindtap="selectAnswer">
+        <view wx:for="{{answer}}" wx:key="{{item.schoolid}}">
+            <view  hover-class="answerHover1" class="answer" data-schoolID="{{item.schoolid}}" data-schoolName="{{item.schoolname}}"bindtap="selectAnswer">
                 <text class="Ti">点击选择</text>
                 <text class="con">{{item.schoolname}}</text>
             </view>

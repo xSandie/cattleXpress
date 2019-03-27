@@ -75,6 +75,7 @@ form {
     border-radius: 16rpx;
 }
 .pullIcon {
+    margin-left: 4rpx;
     height: 24rpx;
     width: 24rpx;
 }
@@ -110,6 +111,8 @@ form {
     margin-bottom: 4rpx;
     font-size: 36rpx;
     color: #373c46;
+    width: 100%;
+    box-sizing: border-box;
 }
 .twoInput1{
     display: flex;
@@ -118,7 +121,13 @@ form {
     color: #373c46;
 }
 .DeRecLocSel{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 2rpx;
+    width: auto;
+    height: 60rpx;
 }
 .cline {
     height: 36rpx;
@@ -128,8 +137,8 @@ form {
     margin-left: 16rpx;
 }
 .inputSendLoc{
-    width: 340rpx;
-    height: 40rpx;
+    flex:1;
+    height: 60rpx;
 }
 .normalRow1{
     width: 190rpx;

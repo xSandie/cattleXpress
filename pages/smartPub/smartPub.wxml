@@ -25,7 +25,7 @@
                 <text class="my-grey xxs-font bias2">送达地址</text>
                 <view class="twoInput">
                     <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" value="{{sendLocSelect}}"
-                            range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
+                            range="{{sendLocArray}}" style="white-space: nowrap;" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
                         {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
                     <view class='cline'></view>
                     <input type="text" name="DeRecLocIn" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.sendLocInput}}" class='inputSendLoc' />

@@ -146,6 +146,7 @@ page {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 4rpx;
 }
 
 .cerTag {
@@ -175,7 +176,8 @@ page {
 
 .info {
     height: 72rpx;
-    width: 100%;
+    flex-grow: 1;
+    margin-left: 10rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

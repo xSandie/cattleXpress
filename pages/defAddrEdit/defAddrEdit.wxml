@@ -12,7 +12,7 @@
                     <view class="twoInput">
                         <picker value="{{sendLocIndex}}" bindchange="sdlocChange" bindcolumnchange="sdlocColumnChange" value="{{sendLocSelect}}"
                                 range="{{sendLocArray}}" mode="multiSelector" name="DeRecLocSel" class='DeRecLocSel'>
-                            {{sendLocSelect}}<image class='pullIcon' src='{{pullIcon}}'></image></picker>
+                            <text style="overflow: hidden;white-space: nowrap;text-overflow:ellipsis;">{{sendLocSelect}}</text><image class='pullIcon' src='{{pullIcon}}'></image></picker>
                         <view class='cline'></view>
                         <input type="text" name="DeRecLocIn" confirm-type="next" placeholder-class="placeHolder" maxlength='20' placeholder="{{default.sendLocInput}}" class='inputSendLoc' />
                     </view>
