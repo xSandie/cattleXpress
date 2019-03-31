@@ -1,5 +1,6 @@
 var app = getApp();
-const urlModel = require('../../utils/urlSet.js')
+const urlModel = require('../../utils/urlSet.js');
+const ui = require('../../utils/helper.js');
 Page({
 
     /**
@@ -331,61 +332,14 @@ Page({
             imageUrl: '/images/sharePic.jpg'
         }
     },
-    ifCertif: function() {
-        if (app.globalData.ourUserStatus == 4) {
-            wx.showModal({
-                title: '提示',
-                content: '请先通过教务系统认证',
-                cancelText: '返回',
-                confirmText: '前往认证',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        wx.redirectTo({
-                            url: '../certifPage/certifPage',
-                        })
-                    } else {}
-                }
-            })
-        }
-    },
     toSumDetail: function(event) {
         if (app.globalData.ourUserStatus == 1) {
-            wx.showModal({
-                title: '状态异常',
-                content: '请前往我的>举报\申诉进度查看',
-                confirmColor: '#faaf42',
-                showCancel: false,
-                success: function(res) {
-                    if (res.confirm) {
-                        // console.log('用户点击确定')
-                        wx.switchTab({
-                            url: '../my/my'
-                        })
-                    }
-                }
-            })
+            ui.UIManager.checkAbnormal(false)
         } else
         if (app.globalData.ourUserStatus == 4) {
-            wx.showModal({
-                title: '提示',
-                content: '请先通过教务系统认证',
-                showCancel: false,
-                confirmText: '前往认证',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        //console.log('用户点击确定')
-                        wx.navigateTo({
-                            url: '../certifPage/certifPage',
-                        })
-                    }
-                }
-            })
+            ui.UIManager.toCertif(true)
         } else {
-            //console.log(event)
             var orderId = event.currentTarget.dataset.orderId;
-            //console.log(orderId)
             wx.navigateTo({
                 url: "../orderDetailsVeiwer/orderDetailsVeiwer?id=" + orderId
             })

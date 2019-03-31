@@ -1,5 +1,6 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
+const ui = require('../../utils/helper.js');
 Page({
 
     /**
@@ -210,25 +211,7 @@ Page({
     },
     conTA: function() {
         var that = this
-        wx.showModal({
-            title: '发短信还是拨打电话？',
-            content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
-            confirmColor: '#999BA1',
-            confirmText: '拨打号码',
-            cancelColor: '#faaf42',
-            cancelText: '发送短信',
-            success: function(res) {
-                if (res.cancel) {
-                    wx.setClipboardData({
-                        data: that.data.pubPhone,
-                    })
-                } else if (res.confirm) {
-                    wx.makePhoneCall({
-                        phoneNumber: that.data.pubPhone
-                    })
-                }
-            }
-        })
+        ui.UIManager.contactTA(that.data.pubPhone)
     },
     toLaw: function() {
         wx.showModal({
@@ -246,15 +229,8 @@ Page({
     },
     policeTA: function() {
         var that = this
-        wx.showModal({
-            title: '暂未开放',
-            content: '程序猿抓紧完善中~~',
-            confirmColor: '#faaf42',
-            showCancel: false,
-            confirmText: '加油吧',
-            success: function(res) {
-            }
-        })
+        ui.UIManager.todo()
+        return
         // wx.showModal({
         //     title: '确定举报？',
         //     content: '请谨慎举报',
@@ -271,10 +247,7 @@ Page({
         // })
     },
     toFix: function(event) {
-        wx.showToast({
-            title: '近期开放，敬请期待~',
-            icon: 'none'
-        })
+        ui.UIManager.todo()
         return
         var that = this
         wx.navigateTo({

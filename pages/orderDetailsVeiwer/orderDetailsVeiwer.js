@@ -1,5 +1,6 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
+const ui = require('../../utils/helper.js');
 Page({
 
     /**
@@ -26,7 +27,7 @@ Page({
         pubLastName: '黄',
         pubTime: '0000-00-00',
         orderId: '',
-        receiverPhone: '有问题及时反馈噢',//写反了
+        publisherPhone: '有问题及时反馈噢',//写反了
     },
     backhome:function(){
         wx.switchTab({
@@ -69,7 +70,7 @@ Page({
                         reward: res.data.reward,
                         pubLastName: res.data.pub_lastname,
                         pubTime: res.data.pub_time,
-                        receiverPhone: res.data.receiver_phone,
+                        publisherPhone: res.data.pub_phone,
                         expDescript: res.data.description,
                         limit:res.data.limit
                     })
@@ -109,18 +110,17 @@ Page({
     recOrder: function(event) {
         var that = this
         var formId = event.detail.formId;
-        console.log('formid：',formId)
         if (!app.globalData.havePayCode) {
             //未设置paycode
             wx.showModal({
-                title: '设置收款二维码',
-                content: '暂不可接单，请前往设置收款二维码',
+                title: '无收款码',
+                content: '设置收款码，对方才能给你支付噢~',
                 confirmColor: '#faaf42',
-                confirmText: '去设置',
+                confirmText:'去设置',
                 success: function(res) {
                     if (res.confirm) {
                         wx.navigateTo({
-                            url: '../myCode/myCode',
+                            url: '../myCode/myCode'
                         })
                     }
                 }
@@ -133,6 +133,9 @@ Page({
                 confirmColor: '#faaf42',
                 success: function(res) {
                     if (res.confirm) {
+                        wx.showLoading({
+                            title:'接单中'
+                        })
                         let send_data = {
                             'form_id': formId,
                             'order_id': orderId,
@@ -143,6 +146,7 @@ Page({
                             method: 'GET',
                             data: send_data,
                             success: function(res) {
+                                wx.hideLoading()
                                 if (res.data.can_get == true) {
                                     wx.redirectTo({
                                         url: "../orderDetailsRec/orderDetailsRec?id=" + orderId
@@ -162,7 +166,22 @@ Page({
                                             }
                                         }
                                     })
-                                } else if(res.data.not_allow){
+                                }else if (res.data.without_paycode){
+                                    wx.showModal({
+                                        title: '无收款码',
+                                        content: '设置收款码，对方才能给你支付噢~',
+                                        confirmColor: '#faaf42',
+                                        confirmText:'去设置',
+                                        success: function(res) {
+                                            if (res.confirm) {
+                                                wx.navigateTo({
+                                                  url: '../myCode/myCode'
+                                                })
+                                            }
+                                        }
+                                    })
+                                }
+                                else if(res.data.not_allow){
                                     wx.showToast({
                                       title: '不符合订单条件噢~',
                                         icon:'none',
@@ -200,76 +219,29 @@ Page({
                     } else if (res.cancel) {
                         // console.log('用户点击取消')
                     }
+                },fail:function () {
+                    wx.hideLoading()
                 }
             })
         } else {
-            wx.showModal({
-                title: '请认证',
-                content: '点击确定前往教务系统认证！',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        // console.log('用户点击确定')
-                        wx.redirectTo({
-                            url: '../certifPage/certifPage'
-                        })
-                    } else if (res.cancel) {
-                        // console.log('用户点击取消')
-                    }
-                }
-            })
+            ui.UIManager.toCertif()
         }
 
     },
     conTA: function() {
         var that = this
         if (app.globalData.haveCertif == false) {
-            wx.showModal({
-                title: '请认证',
-                content: '点击确定前往教务系统认证！',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        // console.log('用户点击确定')
-                        wx.redirectTo({
-                            url: '../certifPage/certifPage'
-                        })
-                    } else if (res.cancel) {
-                        // console.log('用户点击取消')
-                    }
-                }
-            })
+            ui.UIManager.toCertif(true)
         } else {
-            wx.showModal({
-                title: '发短信还是拨打电话？',
-                content: '选择 发送短信 将复制号码，请自行粘贴并发送短信。',
-                confirmColor: '#999BA1',
-                confirmText: '拨打号码',
-                cancelColor: '#faaf42',
-                cancelText: '发送短信',
-                success: function(res) {
-                    if (res.cancel) {
-                        wx.setClipboardData({
-                            data: that.data.receiverPhone,
-                        })
-                    } else if (res.confirm) {
-                        wx.makePhoneCall({
-                            phoneNumber: that.data.receiverPhone //仅为示例，并非真实的电话号码
-                        })
-                    }
-                }
-            })
+            ui.UIManager.contactTA(that.data.publisherPhone)
         }
     },
     toFix: function(event) {
-        wx.showToast({
-            title: '近期开放，敬请期待~',
-            icon: 'none'
-        })
-        return
+        // ui.UIManager.todo()
+        // return
         let that = this
         wx.navigateTo({
-            url: '../reportExError/reportExError?title=' + that.data.expStationName,
+            url: '../reportExError/reportExError?title=' + that.data.expStationName + '&time=' + that.data.expOpenTime + '&logo=' + that.data.expLogoUrl,
         })
     }
 })

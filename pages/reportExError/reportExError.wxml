@@ -6,11 +6,11 @@
             <text class='exLocTime'>营业时间：{{expOpenTime}}</text>
         </view>
     </view>
-    <form class='mainForm' bindsubmit="fixReport">
+    <form class='mainForm' report-submit="true" report-submit-timeout="1000" bindsubmit="fixReport">
         <view class='floatCard'>
-            <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" range="{{expressLocArray}}" mode="multiSelector" name="selExCon" class='selExCon'>{{expressLoc}}</picker>
+            <picker bindchange="exlocChange" bindcolumnchange="exlocColumnChange" value="{{expressLoc}}" range="{{expressLocArray}}" mode="multiSelector" name="expCompany" class='selExCon'>{{expressLoc}}</picker>
             <view class="tline"></view>
-            <input class="inputCorrect" type="text" name="reportIn" placeholder="输入更正的营业时间"/>
+            <input class="inputCorrect" type="text" name="expOpentime" placeholder="{{hint}}"/>
         </view>
         <button hover-class="answerHover" class='fakeBtn' formType="submit">
             <text>报错</text> 

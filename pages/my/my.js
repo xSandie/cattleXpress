@@ -1,5 +1,6 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
+const ui = require('../../utils/helper.js');
 Page({
 
     /**
@@ -130,20 +131,14 @@ Page({
     },
 
     doubleCertif: function() {
-        wx.showToast({
-            title: '近期开放，敬请期待~',
-            icon: 'none'
-        })
+        ui.UIManager.todo()
         return
         wx.navigateTo({
             url: '../certifPage/certifPage',
         })
     },
     feedback: function() {
-        wx.showToast({
-            title: '近期开放，敬请期待~',
-            icon: 'none'
-        })
+        ui.UIManager.todo()
         return
         wx.navigateTo({
             url: '../feedback/feedback',
@@ -160,7 +155,6 @@ Page({
         }
     },
     toAddrEdit: function() {
-        // console.log("addr被点击了");
         wx.navigateTo({
             url: '../defAddrEdit/defAddrEdit',
         })
@@ -183,10 +177,7 @@ Page({
         })
     },
     toPoList: function() {
-        wx.showToast({
-            title: '近期开放，敬请期待~',
-            icon: 'none'
-        })
+        ui.UIManager.todo()
         return
         if (app.globalData.ourUserStatus != 4) {
             wx.navigateTo({
@@ -219,24 +210,7 @@ Page({
                 url: '../myCode/myCode',
             })
         } else {
-            wx.showModal({
-                title: '提示',
-                content: '请先通过教务系统认证',
-                cancelText: '返回主页',
-                confirmText: '前往认证',
-                confirmColor: '#faaf42',
-                success: function(res) {
-                    if (res.confirm) {
-                        wx.redirectTo({
-                            url: '../certifPage/certifPage',
-                        })
-                    } else {
-                        wx.reLaunch({
-                            url: '../home/home',
-                        })
-                    }
-                }
-            })
+            ui.UIManager.toCertif()
         }
     }
 })

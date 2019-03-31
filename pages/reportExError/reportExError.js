@@ -6,10 +6,11 @@ Page({
      * 页面的初始数据
      */
     data: {
-        expLogoUrl: '../../images/STOLOGO.png',
+        expLogoUrl: '../../images/logo.jpg',
         expOpenTime: '周一至周日08：00至19：00',
         expStationName: '申通快递·阳光苑',
         //原实例时间地点
+        hint:'填写时间，例如：周一至周日 9:00-19:00',//提示正确的格式
 
         expressLocArray: [
             ['新东门', '老东门', '硕士楼', '新勇西', '阳光苑二楼'],
@@ -27,43 +28,40 @@ Page({
     onLoad: function(options) { //获取快递站点基本信息
         var that = this
         var expStationName = options.title
+        let expOpentime = options.time
+        let logoUrl = options.logo
         this.setData({
-            expStationName:expStationName
+            expStationName:expStationName,
+            expOpenTime:expOpentime,
+            expressLoc:expStationName,
+            expLogoUrl:logoUrl
         })
-        let send_data = {
-            'exp_company':expCom,
-            'exp_station':expStation
-        }
-        wx.request({
-            url: urlModel.url.reportExError, //填充单独报错URL
-            method: 'GET',
-            data: send_data,
-            success: function(res) {
-                that.setData({
-                    //设置页面参数
-                    expLogoUrl: res.data,
-                    expOpenTime: res.data,
-                    expStationName: res.data,
-                    expressLoc: res.data, //与上面相同
-                    expressId: res.data,
-
-                })
-            },
-            fail: function() {},
-            complete: function() {}
-        })
+        // let send_data = {
+        //     'exp_company':expCom,
+        //     'exp_station':expStation
+        // }
+        // wx.request({
+        //     url: urlModel.url.reportExError, //填充单独报错URL
+        //     method: 'GET',
+        //     data: send_data,
+        //     success: function(res) {
+        //         that.setData({
+        //             //设置页面参数
+        //             expLogoUrl: res.data,
+        //             expOpenTime: res.data,
+        //             expStationName: res.data,
+        //             expressLoc: res.data, //与上面相同
+        //             expressId: res.data,
+        //
+        //         })
+        //     },
+        //     fail: function() {},
+        //     complete: function() {}
+        // })
         this.setData({
             expressLocArray: app.globalData.expressLocArray
         })
     },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function() {
-
-    },
-
 
     /**
      * 用户点击右上角分享
@@ -77,27 +75,48 @@ Page({
     },
     fixReport: function(e) {
         var that = this
-        console.log(e)
+        console.log('提交表单',e)
+        if(e.detail.value.expOpentime.length<6){
+            wx.showToast({
+              title: '请填写正确的营业时间~',
+                icon:'none'
+            })
+            return
+        }
+        wx.showLoading({
+            title:'提交中'
+        })
         wx.request({
-            url: '', //填充报错URL
+            url: urlModel.url.reportExError, //填充报错URL
             method: 'POST',
             data: {
-                'expOpenTime': e.detail.value.reportIn,
-                'expStationName': e.detail.value.selExCon,
-                'expressId': that.data.expressId,
-                'userID': app.globalData.sessionID
-            },
-            header: {
-                "Content-Type": "applciation/json"
+                'exp_opentime': e.detail.value.expOpentime,
+                'exp_company': e.detail.value.expCompany,
+                'school_id': app.globalData.schoolID,
+                'sessionID': app.globalData.sessionID
             },
             success: function(res) {
-                wx.showToast({
-                    title: '提交成功',
-                    icon: 'success',
-                    duration: 1000
-                })
+                wx.hideLoading()
+                if (res.statusCode==200){
+                    wx.showToast({
+                        title: '感谢',
+                        icon: 'success',
+                        duration: 1000
+                    })
+                }else {
+                    wx.showToast({
+                        title:'提交失败，请重试',
+                        icon:'none'
+                    })
+                }
+
             },
-            fail: function() {},
+            fail: function() {
+                wx.hideLoading()
+                wx.showToast({
+                title:'提交失败，请重试',
+                icon:'none'
+            })},
             complete: function() {}
         })
     },
