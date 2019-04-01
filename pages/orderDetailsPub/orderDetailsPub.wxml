@@ -138,7 +138,7 @@
         </view>
     </form>
     <form bindsubmit="finOrder" report-submit="true" report-submit-timeout="1000" wx:if="{{statusCode==0}}" class='fxdBtnArea'>
-        <button form-type='submit' hover-class="button-hover" class='finishOrd' bindtap="finOrder">
+        <button form-type='submit' hover-class="button-hover" class='finishOrd'>
           <text>确认收货</text>
           <image src='{{finIcon}}' class='finIcon'></image>     
         </button>

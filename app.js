@@ -20,6 +20,7 @@ App({
                                 code: res.code
                             },
                             success: function(res) {
+                                console.log(res)
                                 if (res.statusCode == 200) {
                                     if (res.data.username) {
                                         //有姓名，已认证
@@ -41,6 +42,7 @@ App({
                                     app.globalData.havePayCode = res.data.have_paycode
                                     app.globalData.sessionID = res.data.sessionID
                                     app.globalData.ourUserStatus = res.data.user_status
+                                    app.globalData.smartPub = res.data.smart_pub
                                     if (res.data.default) { app.globalData.default = res.data.default }
                                     if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
 
@@ -117,6 +119,7 @@ App({
         dateRange: [],
         havePayCode: false,
         accountHint: '就是登陆 教务系统 的账号', //认证账号提示
-        reloadHomePage:false
+        reloadHomePage:false,
+        smartPub:true
     }
 })

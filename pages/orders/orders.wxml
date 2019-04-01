@@ -169,7 +169,7 @@
                                 </view>
                             </view>
                             <view class='finExSum'>
-                                    <view class='tagText my-silver-bg'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}前</text></view>
+                                    <view class='tagText my-silver-bg'><text>取件码：{{item.fetchCode}} | {{item.endTime}}前</text></view>
                             </view>
                             <view class='finPubisher'>
                                 <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
@@ -222,7 +222,7 @@
                                     </view>
                                 </view>
                                 <view class='finExSum'>
-                                    <view class='tagText my-silver-bg'><text>重量{{item.expWeight}} | {{item.expSize}} | {{item.endTime}}</text></view>
+                                    <view class='tagText my-silver-bg'><text>取件码：{{item.fetchCode}} | {{item.endTime}}</text></view>
                                 </view>
                                 <view class='finPubisher'>
                                     <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>

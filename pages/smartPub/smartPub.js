@@ -11,6 +11,8 @@ Page({
     nextIcon: "../../images/next.png",
     showEdit:false,//是否展示详情编辑
     submitFlag:true,//点击提交表单时是否发布，true直接发布
+    smartPub:true,
+    haveShowCantPub:false,//已经弹窗过不能使用智能发布
     cardStyle:'sumCard',//卡片的class
     mainFormClass:'highForm',//主要表单的class
     default: {
@@ -158,6 +160,20 @@ Page({
           }
         }
       })
+    }
+    this.setData({
+      smartPub:app.globalData.smartPub
+    })
+    if (this.data.smartPub==false){
+      if (!this.data.haveShowCantPub){
+        wx.showToast({
+          title: '该校区暂无智能发布',
+          icon:'none'
+        })
+        this.setData({
+          haveShowCantPub:true
+        })
+      }
     }
   },
 

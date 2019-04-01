@@ -62,7 +62,7 @@
         </view>
     </view>
     <view class="mainForm">
-        <view class="recognArea">
+        <view hidden="{{!smartPub}}" class="recognArea">
             <text class="my-grey xxs-font bias2">智能识别快递信息</text>
             <view style="display: flex;justify-content: space-between;">
                 <view class="fakeRecogn" hover-class="button-hover">
