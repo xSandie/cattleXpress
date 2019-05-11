@@ -59,7 +59,11 @@
             </view>
         </view>
     </form>
-    <view class='backHome' bindtap='backHome' hover-class='backHomeHover'>
-        返回首页
+    <view class='bar' hover-class='backHomeHover'>
+        <button open-type='contact' class='contactOurs' style="border-radius: 16rpx 0rpx 0rpx 16rpx" hover-class="answerHover1">
+            <text>联系客服</text><image src="{{kefuIcon}}" class="contactIcon"></image>
+        </button>
+        <view style="height: 60rpx;width: 2rpx;background: #999ba1"></view>
+        <view bindtap='backHome' class="contactOurs" style="border-radius:0rpx 16rpx 16rpx 0rpx" hover-class="answerHover1"><text>返回首页</text><image src="{{homeIcon}}" class="contactIcon"></image></view>
     </view>
 </view>

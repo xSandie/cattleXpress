@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/certifPage/certifPage",
     "pages/doubleCertif/doubleCertif",
     "pages/welcome/welcome",
-    "pages/certifPage/certifPage",
     "pages/orders/orders",
     "pages/my/my",
     "pages/orderDetailsVeiwer/orderDetailsVeiwer",

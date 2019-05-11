@@ -88,9 +88,11 @@ Page({
         var that = this
         if (app.globalData.ourUserStatus == 4) {
             ui.UIManager.toCertif(false)
+            return
         }
         if (app.globalData.ourUserStatus == 1) {
             ui.UIManager.checkAbnormal(false)
+            return
         }
         //判定是否为空的函数
         wx.request({

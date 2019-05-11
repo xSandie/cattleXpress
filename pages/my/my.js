@@ -138,11 +138,11 @@ Page({
         })
     },
     feedback: function() {
-        ui.UIManager.todo()
-        return
-        wx.navigateTo({
-            url: '../feedback/feedback',
-        })
+        // ui.UIManager.todo()
+        // return
+        // wx.navigateTo({
+        //     url: '../feedback/feedback',
+        // })
     },
     /**
      * 用户点击右上角分享
@@ -212,5 +212,12 @@ Page({
         } else {
             ui.UIManager.toCertif()
         }
+    },
+    agreement:function () {
+        //用户协议页面
+    },
+    collect:function (e) {
+        var formId = e.detail.formId
+        ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)
     }
 })

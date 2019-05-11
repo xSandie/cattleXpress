@@ -1,5 +1,6 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
+const ui = require('../../utils/helper.js');
 Page({
 
   /**
@@ -71,6 +72,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      recognHint:''
+    })
     var that = this
     var send_data = {
       'sessionID': app.globalData.sessionID
@@ -96,11 +100,9 @@ Page({
         if (that.data.default.phoneRear == '四位数字') {
           that.setData({
             expDescript:'',
-            recognHint:'',
             cardStyle:'addrEditCard',
             showEdit:true
           })
-          setTimeout(that.recover,2000)
         }
       }
     })
@@ -118,6 +120,7 @@ Page({
         ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
       ],
     })
+    setTimeout(that.recover,2000)
   },
 
   /**
@@ -132,47 +135,36 @@ Page({
    */
   onShow: function () {
     if (app.globalData.ourUserStatus == 4) {
-      wx.showModal({
-        title: '请认证',
-        content: '点击确定前往教务系统认证！',
-        confirmColor: '#faaf42',
-        showCancel: false,
-        success: function(res) {
-          if (res.confirm) {
-            wx.redirectTo({
-              url: '../certifPage/certifPage'
-            })
-          }
-        }
+      // wx.showModal({
+      //   title: '请认证',
+      //   content: '点击确定前往教务系统认证！',
+      //   confirmColor: '#faaf42',
+      //   showCancel: false,
+      //   success: function(res) {
+      //     if (res.confirm) {
+      //       wx.redirectTo({
+      //         url: '../certifPage/certifPage'
+      //       })
+      //     }
+      //   }
+      // })
+      ui.UIManager.toCertif(false)
+    }else if (app.globalData.ourUserStatus == 1) {
+      ui.UIManager.checkAbnormal()
+    }else{
+      this.setData({
+        smartPub:app.globalData.smartPub
       })
-    }
-    if (app.globalData.ourUserStatus == 1) {
-      wx.showModal({
-        title: '状态异常',
-        content: '请前往我的>举报/申诉进度查看',
-        confirmColor: '#faaf42',
-        showCancel: false,
-        success: function(res) {
-          if (res.confirm) {
-            wx.switchTab({
-              url: '../my/my'
-            })
-          }
+      if (app.globalData.smartPub==false){
+        if (!this.data.haveShowCantPub){
+          wx.showToast({
+            title: '该校区暂无智能发布',
+            icon:'none'
+          })
+          this.setData({
+            haveShowCantPub:true
+          })
         }
-      })
-    }
-    this.setData({
-      smartPub:app.globalData.smartPub
-    })
-    if (this.data.smartPub==false){
-      if (!this.data.haveShowCantPub){
-        wx.showToast({
-          title: '该校区暂无智能发布',
-          icon:'none'
-        })
-        this.setData({
-          haveShowCantPub:true
-        })
       }
     }
   },

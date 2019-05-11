@@ -67,37 +67,45 @@
                 <text>举报/申诉进度</text>
             </view>
         </view>
-        <view class='smallBtn'>
-            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="myCode">
+        <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" class='smallBtn'>
+            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="myCode">
                 <view class='joinUsText'>
                     <text>收款二维码</text>
                 </view>
                 <view class='next'>
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
-            </view>
-            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="toCertif">
+            </button>
+            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="toCertif">
                 <view class='joinUsText'>
                     <text>更改认证信息</text>
                 </view>
                 <view class='next'>
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
-            </view>
-            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">
+            </button>
+            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">
                 <view class='supportText'>
                     <text>学生证认证</text>
                 </view>
                 <view class='next'>
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
-            </view>
-            <view hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
+            </button>
+            <button form-type="submit" open-type='contact' hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
                 <view class='joinUsText'>
                     <text>意见反馈</text>
                 </view>
                 <view class='next'>
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
-            </view>
-        </view>
+            </button>
+            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="agreement">
+                <view class='joinUsText'>
+                    <text>用户协议&隐私政策</text>
+                </view>
+                <view class='next'>
+                   <image class='nextIcon' src='{{nextIcon}}'></image>
+                </view>
+            </button>
+        </form>

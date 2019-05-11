@@ -1,3 +1,13 @@
+button{
+    background: none;
+    display: flex;
+    text-align: unset;
+    line-height: unset;
+}
+button::after{
+    border: none;
+}
+
 swiper {
     border-radius: 16rpx;
     overflow: hidden;
@@ -328,6 +338,7 @@ swiper {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    z-index: 20;
 }
 
 .jieri {

@@ -22,7 +22,7 @@ App({
                             success: function(res) {
                                 console.log(res)
                                 if (res.statusCode == 200) {
-                                    if (res.data.username) {
+                                    if (res.data.user_name) {
                                         //有姓名，已认证
                                         app.globalData.userName = res.data.user_name
                                         app.globalData.schoolNumb = res.data.school_numb //学号

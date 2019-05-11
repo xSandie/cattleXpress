@@ -9,6 +9,8 @@ Page({
         studentOrMaster: true, //true为本科生
         schoolIcon: "../../images/schoolIcon.png",
         nextIcon: "../../images/next.png",
+        kefuIcon:'../../images/kefu.png',
+        homeIcon:'../../images/zhuye.png',
         verifyCodeUrl: '', //验证码路径
         schoolName: "点击选择学校",
         row1Flag: false,
@@ -260,23 +262,21 @@ Page({
                                 }
                             })
                         } else {
-                            wx.showModal({
-                                    title: '认证失败',
-                                    content: '请认真核对信息',
-                                    showCancel: false,
-                                    confirmText: '好的',
-                                    confirmColor: '#faaf42',
-                                })
-                                //设置新的验证码地址
+                            wx.showToast({
+                                title: '输入有误，请重试或联系客服',
+                                icon: 'none',
+                                duration: 2000
+                            })
+                            //设置新的验证码地址
                             that.setData({
                                 verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
                             })
                         }
                     } else {
                         wx.showToast({
-                            title: '失败，请重试',
+                            title: '输入有误，请重试或联系客服',
                             icon: 'none',
-                            duration: 5000
+                            duration: 2000
                         })
                     }
                     // setTimeout(function() {

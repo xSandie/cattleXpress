@@ -18,11 +18,12 @@
     </view>
 <view class='container'>
     <view class='list'>
-        <view class='listItem' hover-class="answerHover1" wx:key="{{item.id}}" wx:for="{{orderList}}">
-            <view class='rowFlex'  data-order-id="{{item.id}}" bindtap="toSumDetail">
-                <view class='reward'>
+        <form style="display: flex;flex-direction: column;" report-submit="true" report-submit-timeout="1000" bindsubmit="collect">
+            <button form-type="submit" class='listItem' hover-class="answerHover1" wx:key="{{item.id}}" wx:for="{{orderList}}">
+                <view class='rowFlex'  data-order-id="{{item.id}}" bindtap="toSumDetail">
+                    <view class='reward'>
                         <view class='rcText'>
-                           <text>赏金</text>
+                            <text>赏金</text>
                         </view>
                         <view class='rnText'>
                             <text>{{item.reward}}</text>
@@ -30,45 +31,46 @@
                         <view class='reText'>
                             <text>RMB</text>
                         </view>
+                    </view>
+                    <view class='body'>
+                        <view class='exInstance'>
+                            <text>{{item.expStationName}} 送至</text>
+                        </view>
+                        <view class='sdInstance'>
+                            <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
+                            <view class='exTagWor' wx:if="{{item.teamOnly}}">
+                                <view class='tagText'><text>限团队</text></view>
+                            </view>
+                            <view class='exTagWor' wx:if="{{item.womanOnly}}">
+                                <view class='tagText'><text>限女生</text></view>
+                            </view>
+                            <view class='exTagWor' wx:if="{{item.manOnly}}">
+                                <view class='tagText'><text>限男生</text></view>
+                            </view>
+                        </view>
+                        <view class='exTag'>
+                            <view class='exTag exTagWei'>
+                                <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
+                            </view>
+                            <view class='exTag exTagTime'>
+                                <view class='tagText'><text>{{item.endTime}}前送达</text></view>
+                            </view>
+                        </view>
+                        <view class='pubisher'>
+                            <image class='pubIcon' src="{{pubPersonIcon}}"></image>
+                            <view class='pubName'>
+                                <text>发布人：{{item.pubName}}</text>
+                            </view>
+                            <image src="{{viewEye}}" class='view_eye' /><text class='pubName'>{{item.pv ||1}}人查看</text>
+                        </view>
+                    </view>
                 </view>
-                <view class='body'>
-                    <view class='exInstance'>
-                       <text>{{item.expStationName}} 送至</text>
-                    </view>
-                    <view class='sdInstance'>
-                        <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
-                        <view class='exTagWor' wx:if="{{item.teamOnly}}">
-                            <view class='tagText'><text>限团队</text></view>
-                        </view>
-                        <view class='exTagWor' wx:if="{{item.womanOnly}}">
-                            <view class='tagText'><text>限女生</text></view>
-                        </view>
-                        <view class='exTagWor' wx:if="{{item.manOnly}}">
-                            <view class='tagText'><text>限男生</text></view>
-                        </view>
-                    </view>
-                    <view class='exTag'>
-                        <view class='exTag exTagWei'>
-                            <view class='tagText'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
-                        </view>
-                        <view class='exTag exTagTime'>
-                            <view class='tagText'><text>{{item.endTime}}前送达</text></view>
-                        </view>
-                    </view>
-                    <view class='pubisher'>
-                        <image class='pubIcon' src="{{pubPersonIcon}}"></image>
-                        <view class='pubName'>
-                        <text>发布人：{{item.pubName}}</text>
-                        </view>
-                        <image src="{{viewEye}}" class='view_eye' /><text class='pubName'>{{item.pv ||1}}人查看</text>
-                    </view>
+                <view data-order-id="{{item.id}}" bindtap="toSumDetail" class='rbutton'>
+                    <view class='rbText'><text>详情</text></view>
+                    <!-- 可能需要先相对定位一下然后使用button-->
                 </view>
-            </view>
-            <view data-order-id="{{item.id}}" bindtap="toSumDetail" class='rbutton'>
-                <view class='rbText'><text>详情</text></view>
-                <!-- 可能需要先相对定位一下然后使用button-->
-            </view>
-        </view>
+            </button>
+        </form>
         <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
             <view class='rowFlex'  data-order-id="{{item.id}}">
                 <view class='my-silver-bg reward'>

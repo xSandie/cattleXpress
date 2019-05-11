@@ -1,3 +1,13 @@
+button{
+    background: none;
+    display: flex;
+    text-align: unset;
+    line-height: unset;
+}
+button::after{
+    border: none;
+}
+
 .container {
     height: 100%;
     width: 100%;
@@ -233,16 +243,19 @@ button::after {
     align-items: flex-end;
 }
 
-.backHome {
+.bar {
+    margin-top: 16rpx;
     text-align: center;
-    font-size: 28rpx;
     font-weight: bold;
-    color: #f9a93e;
     width: 670rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100rpx;
+    font-size: 24rpx;
+    background: #FFFFFF;
+    box-shadow: 0rpx 6rpx 10rpx #eef1fd;
+    border-radius: 16rpx;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .backHomeHover {
@@ -266,4 +279,25 @@ button::after {
 
 .inputMyAccount {
     width: 440rpx;
+}
+.contactOurs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 334rpx;
+    color: #999ba1;
+    margin: 0rpx;
+    font-size: 24rpx;
+    background: white;
+}
+.contactIcon{
+    height: 34rpx;
+    width: 34rpx;
+    margin-left: 28rpx;
+}
+.answerHover1 {
+    color: #999ba1;
+    background: rgb(240, 240, 245);
 }

@@ -1,4 +1,4 @@
-var app = getApp();
+var app = getApp();//获取app对象
 const urlModel = require('../../utils/urlSet.js');
 const ui = require('../../utils/helper.js');
 Page({
@@ -367,5 +367,9 @@ Page({
         wx.switchTab({
             url: '../smartPub/smartPub',
         })
+    },
+    collect:function (e) {
+        var formId = e.detail.formId
+        ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)
     }
 })

@@ -1,3 +1,12 @@
+button::after {
+    border: none;
+}
+button{
+    background: none;
+    line-height: unset;
+    padding: unset;
+}
+
 page {
     background-color: #f5f8fd;
 }
