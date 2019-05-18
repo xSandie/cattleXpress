@@ -4,6 +4,7 @@ button{
     width: auto;
     display: flex;
     line-height: unset;
+    color:white;
 }
 .header{
     width: 100%;

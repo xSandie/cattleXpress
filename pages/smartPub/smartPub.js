@@ -65,7 +65,12 @@ Page({
     tempExpDescript:'可在此简单描述下您的快递（不超过50个字）',
     tempRecognHint:'快递短信 粘贴处，点击识别即可自动为您填写 取件码 和 快递站点 信息。',
     defaultReward:'2',
-    expCode:'可输入取件码'
+    expCode:'可输入取件码',
+    confirmShape: "right",
+    checkedCorlor: "#faaf42",
+    leftValue: "同意",
+    rightValue: "免责声明",
+    beChecked:true
   },
   //todo 发布时才触发是否设置默认地址逻辑，发布完成后才进行默认地址请求
   /**
@@ -135,19 +140,6 @@ Page({
    */
   onShow: function () {
     if (app.globalData.ourUserStatus == 4) {
-      // wx.showModal({
-      //   title: '请认证',
-      //   content: '点击确定前往教务系统认证！',
-      //   confirmColor: '#faaf42',
-      //   showCancel: false,
-      //   success: function(res) {
-      //     if (res.confirm) {
-      //       wx.redirectTo({
-      //         url: '../certifPage/certifPage'
-      //       })
-      //     }
-      //   }
-      // })
       ui.UIManager.toCertif(false)
     }else if (app.globalData.ourUserStatus == 1) {
       ui.UIManager.checkAbnormal()
@@ -331,7 +323,7 @@ Page({
                 wx.showToast({
                   title: '发布成功'
                 })
-                that.onLoad()
+                that.onLoad()//主要是为了获取默认地址
                 wx.switchTab({
                   url: '../home/home',
                   success:function () {
@@ -423,6 +415,9 @@ Page({
     console.log(event)
     var that = this
     var msg = event.detail.value
+    if (msg.length <=1){
+      return
+    }
     if (msg.length <= 10){
       //长度不完全
       wx.showToast({
@@ -447,7 +442,6 @@ Page({
         success: function(res) {
           wx.hideLoading()
           if (res.statusCode == 200) {
-
             that.setData({
               expCode:res.data.expcode,
               expressLoc:res.data.place + '·' + res.data.company

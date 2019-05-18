@@ -1,26 +1,28 @@
 <view class="header"></view>
-<form bindsubmit="report" class="container">
+<form report-submit="true" bindsubmit="nextSubmit" report-submit-timeout="1000"class="container">
     <view hover-class="answerHover1" class="floatCard">
         <view class="people">
             <text class="topTi">被举报人</text>
             <text class="LName">{{recLastName}}</text>
             <text  class="reportTime">{{reportTime}}</text>
         </view>
-        <!-- <button  class="detailBtn" bindtap="toDetail" hover-class="defaultTap">订单详情</button> -->
     </view>
     <view class="reasonA">
         <view class="reportIn" wx:if="{{reportProcess==0}}">
             <text class="TiMe">举报原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
-
+            <textarea name="reason" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
-                    <image src="{{camIcon}}" class="camIcon"></image>
-                    <text>允许上传一张图片</text>
-                    </view>
+                <k-uploader style="width: 100%;"
+                        imgList="{{ imgList }}"
+                        imgWidth="{{ imgWidth }}"
+                        total="{{ imgTotal }}"
+                        preview="{{ preview }}"
+                        showClose="{{ showClose }}"
+                        imgCount="{{ imgCount }}"
+                            uploadIcon="{{uploadIcon}}"
+                            fontColor="{{fontColor}}"
+                        bind:remove="removeImg"
+                        bind:add="addImg"/>
             </view>
             
 
@@ -51,15 +53,19 @@
         <view class="reportIn" wx:if="{{reportProcess==2}}">
             <view class="rline"></view>
             <text class="TiMe">再次举报原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
+            <textarea name="reason" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
-                    <image src="{{camIcon}}" class="camIcon"></image>
-                    <text>允许上传一张图片</text>
-                    </view>
+                <k-uploader style="width: 100%;"
+                        imgList="{{ imgList }}"
+                        imgWidth="{{ imgWidth }}"
+                        total="{{ imgTotal }}"
+                        preview="{{ preview }}"
+                        showClose="{{ showClose }}"
+                        imgCount="{{ imgCount }}"
+                            uploadIcon="{{uploadIcon}}"
+                            fontColor="{{fontColor}}"
+                        bind:remove="removeImg"
+                        bind:add="addImg"/>
             </view>
         </view>
         <view class="display" wx:if="{{reportProcess==3||reportProcess==4}}">
@@ -86,25 +92,25 @@
     </view>
     <view class="btnA">
         <view class='BtnArea' wx:if="{{reportProcess==0}}">
-            <button  hover-class="defaultHover" class='contact' formType="submit">
+            <button data-src-btn="report" form-type="submit"  hover-class="button-hover" class='contact' formType="submit">
             <text>举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess==2}}">
-            <button  hover-class="defaultHover" class='contact' bindtap="uploadIMG" formType="submit">
+            <button data-src-btn="report" form-type="submit" hover-class="button-hover" class='contact' bindtap="uploadIMG" formType="submit">
             <text>继续举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>
-            <view class='dirGet' bindtap="retrieve">
-                <view hover-class="defaultHover" class='lDGT'>撤销举报</view>
-                <text class='sDGT'>请谨慎撤销</text>
-            </view>
+            <button hover-class="defaultHover"  style="background: none;line-height: unset;" data-src-btn="retrieve" form-type="submit" class='dirGet'>
+                <text>撤销举报</text>
+                <text class='sDGT'>撤销将不可逆</text>
+            </button>
         </view>
 
         <view class='BtnArea' wx:if="{{reportProcess!=2&&reportProcess!=0}}">
-            <button  hover-class="defaultHover" class='contact' bindtap="retrieve">
+            <button data-src-btn="retrieve" form-type="submit" hover-class="button-hover" class='contact'>
             <text>撤销举报</text>
             <image mode='aspectFill' src='{{policeIcon}}' class='conIcon'></image>     
             </button>

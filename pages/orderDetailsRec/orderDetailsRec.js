@@ -229,22 +229,22 @@ Page({
     },
     policeTA: function() {
         var that = this
-        ui.UIManager.todo()
-        return
-        // wx.showModal({
-        //     title: '确定举报？',
-        //     content: '请谨慎举报',
-        //     confirmText: '确认举报',
-        //     confirmColor: '#faaf42',
-        //     success: function(res) {
-        //         if (res.confirm) {
-        //             wx.redirectTo({
-        //                 url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.pubLastName
-        //             })
-        //         } else if (res.cancel) {
-        //         }
-        //     }
-        // })
+        // ui.UIManager.todo()
+        // return
+        wx.showModal({
+            title: '确定举报？',
+            content: '请谨慎举报',
+            confirmText: '确认举报',
+            confirmColor: '#faaf42',
+            success: function(res) {
+                if (res.confirm) {
+                    wx.navigateTo({
+                        url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.receiverName
+                    })
+                } else if (res.cancel) {
+                }
+            }
+        })
     },
     toFix: function(event) {
         ui.UIManager.todo()

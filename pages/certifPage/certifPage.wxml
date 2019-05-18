@@ -66,4 +66,7 @@
         <view style="height: 60rpx;width: 2rpx;background: #999ba1"></view>
         <view bindtap='backHome' class="contactOurs" style="border-radius:0rpx 16rpx 16rpx 0rpx" hover-class="answerHover1"><text>返回首页</text><image src="{{homeIcon}}" class="contactIcon"></image></view>
     </view>
-</view>
+    <view style='margin: 20rpx auto;'>
+    <k-radio color="{{checkedCorlor}}" shape="{{confirmShape}}"  leftValue="{{leftValue}}" rightValue="{{rightValue}}" checked='beChecked'></k-radio>
+    </view>
+</view> 

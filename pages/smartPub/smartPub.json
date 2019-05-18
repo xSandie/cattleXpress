@@ -3,5 +3,8 @@
   "backgroundColor": "#faaf42",
   "backgroundTextStyle": "light",
   "navigationBarTextStyle": "white",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+    "usingComponents": {
+      "k-radio": "/components/lin-ui-master/radio/index"
+    }
 }

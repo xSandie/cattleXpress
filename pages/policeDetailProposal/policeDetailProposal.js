@@ -1,16 +1,17 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
+const helper = require('../../utils/helper.js');
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        reportProcess: null, //卡住显示的内容
+        reportProcess: 0, //卡住显示的内容
 
         policeIcon: "../../images/policeLight.png",
-        camIcon: "../../images/photo.png",
-        recLastName: "",//被举报人姓
+        camIcon: "../../images/upload.png",
+        recLastName: "黄牛同学",//被举报人姓
         reportTime: "暂未生成",
         description: '乱举报也会被封号，请谨慎举报',
 
@@ -23,13 +24,23 @@ Page({
         complainRe2: '',
         complain2: [],
         //图片上传相关
-        img1: null,
-        img2: null,
-        img3: null,
-        imgUpList: [],
 
         orderId: null,
-        policeId: null //本条举报记录的id
+        policeId: null, //本条举报记录的id
+        uploadIcon:'/images/photo.png',
+        fontColor:'#373c46',
+        imgTotal: 3,
+        imgList: [
+            // 'http://a0.att.hudong.com/23/02/300000876508129592021450066_950.jpg',
+            // 'https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1534301532&di=24ef71de1aa5a0cfd332302edaedd9d4&src=http://img4.duitang.com/uploads/item/201303/26/20130326111750_8mEnj.jpeg',
+            // 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534312674356&di=302fedd307b810868a2c472d75cf5a60&imgtype=0&src=http%3A%2F%2Fs6.sinaimg.cn%2Fmw690%2F001oPD81zy7eKtwl69n95%26690',
+        ],
+        imgWidth:'180rpx',
+        preview: true,
+        showClose: true,
+        imgCount: 3
+
+
     },
 
     /**
@@ -123,6 +134,10 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+        if(this.data.reportProcess==0){//为发起请求不允许刷新
+            wx.stopPullDownRefresh()
+            return
+        }
         var that = this
         wx.showLoading({
             title: '刷新中',
@@ -131,25 +146,25 @@ Page({
             url: urlModel.url.reportDetail,
             method: 'GET',
             data: {
-                'policeId': that.data.policeId,
-                'getterID': app.globalData.sessionID
+                'complain_id': that.data.policeId,
+                'sessionID': app.globalData.sessionID
             },
             success: function(res) {
                 if (res.statusCode == 200) {
                     //reportProcess 卡住显示的内容 设置全部内容 
                     that.setData({
-                        reportProcess: res.data.Status,
+                        reportProcess: res.data.report_status,
                         reportRe1: res.data.reason1 ? res.data.reason1 : null,
                         report1: res.data.img1 ? res.data.img1 : null,
                         complainRe1: res.data.complain1 ? res.data.complain1 : null,
-                        complain1: res.data.img2 ? res.data.img2 : null,
+                        complain1: res.data.complain_img1 ? res.data.complain_img1 : null,
                         reportRe2: res.data.reason2 ? res.data.reason2 : null,
-                        report2: res.data.img3 ? res.data.img3 : null,
+                        report2: res.data.img2 ? res.data.img2 : null,
                         complainRe2: res.data.complain2 ? res.data.complain2 : null,
-                        complain2: res.data.img4 ? res.data.img4 : null,
-                        orderId: res.data.orderId,
-                        recLastName: res.data.pubLastName,
-                        reportTime: res.data.pubTime
+                        complain2: res.data.complain_img2 ? res.data.complain_img2 : null,
+                        orderId: res.data.order_id,
+                        recLastName: res.data.lastname,
+                        reportTime: res.data.pub_time
                     })
                     wx.hideLoading()
                     wx.showToast({
@@ -171,6 +186,7 @@ Page({
                 })
             }
         })
+        wx.stopPullDownRefresh()
     },
 
     /**
@@ -194,93 +210,100 @@ Page({
      * 表单提交
      */
     report: function(e) {
-        // console.log("发起举报")
-        // console.log(e)
         var that = this
-        if (e.detail.value.reportRe1 == '' || that.data.imgUpList.length == 0) {
+        if (e.detail.value.reason == '') {
             wx.showModal({
                 title: '提示',
-                content: '请上传一张照片，并说明举报原因',
+                content: '请说明举报原因',
                 showCancel: false,
                 confirmText: '好的',
                 confirmColor: '#faaf42'
             })
             return
-
         }
+        helper.UIManager.loading('发布中');
         if (that.data.reportProcess) {
             //再次举报
-            wx.uploadFile({
+            wx.request({
                 url: urlModel.url.policePub,
-                filePath: that.data.imgUpList[0],
-                name: 'police_img',
-                header: {
-                    "Content-Type": "multipart/form-data",
-                    'accept': 'application/json',
-                    //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+                data: {
+                    'reason':e.detail.value.reason,
+                    'order_id':that.data.orderId,
+                    'sessionID':app.globalData.sessionID,
+                    'complain_id':that.data.policeId
                 },
-                formData: {
-                    gId: app.globalData.sessionID, //其他额外的formdata，userId
-                    reason: e.detail.value.reportRe1,
-                    policeId: that.data.policeId,
-                    orderId: that.data.orderId
-                        // pubTime: that.data.reportTime
-                },
+                method:'POST',
                 success: function(res) {
-                    // console.log(res)
                     if (res.statusCode == 200) {
-                        wx.showToast({
-                                title: '再次举报成功',
+                        upRes = this.uploadPic(res.data.complain_id)
+                        wx.hideLoading()
+                        if (upRes==0){
+                            wx.showToast({
+                                title:'发布失败，请重试',
+                                icon:'none'
                             })
-                            //调用刷新
-                        that.onPullDownRefresh()
-                    } else {
+                        } else{
+                            wx.showToast({
+                                title:'发布成功'
+                            })
+                            that.onPullDownRefresh()
+                        }
+                    }else {
+                        wx.hideLoading()
                         wx.showToast({
-                            title: '举报失败请重试',
-                            icon: 'none'
+                            title:'发布失败，请重试',
+                            icon:'none'
                         })
                     }
+                },
+                fail: function() { //无论成功还是失败都会执行
+                    wx.hideLoading()
+                    wx.showToast({
+                        title:'发布失败，请重试',
+                        icon:'none'
+                    })
                 }
             })
         } else {
             //初次举报
-            wx.uploadFile({
+            wx.request({
                 url: urlModel.url.policePub,
-                filePath: that.data.imgUpList[0] ? that.data.imgUpList[0] : '',
-                name: 'police_img',
-                header: {
-                    "Content-Type": "multipart/form-data",
-                    'accept': 'application/json',
-                    //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+                data: {
+                    'reason':e.detail.value.reason,
+                    'order_id':that.data.orderId,
+                    'sessionID':app.globalData.sessionID,
+                    'report_time':that.data.reportTime
                 },
-                formData: {
-                    gId: app.globalData.sessionID, //其他额外的formdata，userId
-                    reason: e.detail.value.reportRe1,
-                    orderId: that.data.orderId,
-                    pubTime: that.data.reportTime
-                },
+                method:'POST',
                 success: function(res) {
-                    // console.log(res)
                     if (res.statusCode == 200) {
-                        wx.showToast({
-                                title: '举报成功',
+                        upRes = this.uploadPic(res.data.complain_id)
+                        wx.hideLoading()
+                        if (upRes==0){
+                            wx.showToast({
+                                title:'发布失败，请重试',
+                                icon:'none'
                             })
-                            //调用刷新
-                        setTimeout(function() {}, 1000)
-                        wx.showToast({
-                            title: '请至 我的>举报/申诉进度 查看',
-                            icon: 'none'
-                        })
-                        wx.switchTab({
-                                url: '../my/my',
+                        } else{
+                            wx.showToast({
+                                title:'发布成功'
                             })
-                            // that.onPullDownRefresh()
-                    } else {
+                            that.onPullDownRefresh()
+                        }
+                    }else {
+                        wx.hideLoading()
                         wx.showToast({
-                            title: '举报失败请重试',
-                            icon: 'none'
+                            title:'发布失败，请重试',
+                            icon:'none'
                         })
                     }
+                },
+                fail: function() { //无论成功还是失败都会执行
+                    wx.hideLoading()
+                    wx.showToast({
+                        title:'发布失败，请重试',
+                        icon:'none'
+                    })
                 }
             })
         }
@@ -290,7 +313,7 @@ Page({
         var that = this
         wx.showModal({
                 title: '确定撤销？',
-                content: '撤销后仍可重新发起新的举报',
+                content: '撤销后不可重新发起新的举报，且举报将不再可见',
                 confirmText: '我想好了',
                 confirmColor: '#faaf42',
                 success: function(res) {
@@ -299,8 +322,8 @@ Page({
                             url: urlModel.url.cancelPolice,
                             method: 'POST',
                             data: {
-                                'gId': app.globalData.sessionID,
-                                'policeId': that.data.policeId
+                                'sessionID': app.globalData.sessionID,
+                                'complain_id': that.data.policeId
                             },
                             success: function(res) {
                                 if (res.statusCode == 200 && res.data.msg == 'ok') {
@@ -320,41 +343,85 @@ Page({
 
 
     },
-    previewIMG: function(e) {
-        var src = e.currentTarget.dataset.src
-        var list = e.currentTarget.dataset.list
-        wx.previewImage({
-            current: src, // 当前显示图片的http链接
-            urls: list // 需要预览的图片http链接列表
+
+    removeImg:function (e) {
+        var index = e.detail
+        var imgList = this.data.imgList
+        imgList.splice(index, 1);
+        var count = this.data.imgCount + 1
+        this.setData({
+            imgList:imgList,
+            imgCount:count
         })
     },
-    chooseIMG: function(e) {
-        var tempFilePaths
+    addImg:function (e) {
+        console.log(e)
+        var imgSeq = e.detail
+        if (imgSeq.length == 1){
+            this.setData({
+                imgCount:2
+            })
+        }else if (imgSeq.length == 2){
+            this.setData({
+                imgCount:1
+            })
+        } else if (imgSeq.length == 3){
+            this.setData({
+                imgCount:0
+            })
+        }
+        this.setData({
+          imgList:imgSeq,
+        })
+    },
+
+    nextSubmit:function (e) {
+        console.log(e)
+        helper.funcManager.formIdCollecter(e.detail.formId,
+            app.globalData.sessionID,urlModel.url.collectFormId);
+        if(e.detail.target.dataset.srcBtn=='report'){
+            console.log(e.detail.target.dataset.srcBtn)//进入举报
+            this.report(e)
+        }else if(e.detail.target.dataset.srcBtn=='retrieve'){
+            console.log(e.detail.target.dataset.srcBtn)//进入撤销
+            this.cancel(e)
+        }
+    },
+
+    uploadPic:function(complainId){
+        var ok=0;
         var that = this
-        wx.chooseImage({
-            count: 1, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function(res) {
-                // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-                var tempFilePaths = res.tempFilePaths
-                    // console.log(tempFilePaths);
-                that.setData({
-                    imgUpList: tempFilePaths,
-                    img1: tempFilePaths,
-                    // img2: tempFilePaths[1],
-                    // img3: tempFilePaths[2]
-                })
-            }
-        })
-    },
-    // toDetail:function(){
-    //   wx.navigateTo({
-    //     url: '../',
-    //   })
-    // }
-    //todo 最后来写，目测要加一个查看页面
-    // uploadIMG: function() {
-    //     //上传选择的图片
-    // }
+        for (let item in this.data.imgList) {
+            wx.uploadFile({
+                url: urlModel.url.policePub,
+                filePath: item,
+                name: 'police_img',
+                header: {
+                    "Content-Type": "multipart/form-data",
+                    'accept': 'application/json',
+                    //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+                },
+                formData: {
+                    sessionID: app.globalData.sessionID, //其他额外的formdata，userId
+                    complain_id: complainId,
+                    report_status:that.data.reportProcess
+                },
+                success: function(res) {
+                    if (res.statusCode == 200) {
+                        ok += 1;
+                    } else {
+                        ok -= 1;
+                    }
+                },
+                fail:function () {
+                    ok -= 1;
+                }
+            })
+        }
+        if(ok == this.data.imgList.length){
+            return 1;
+        }else {
+            return 0;//有图片上传失败
+        }
+    }
 })

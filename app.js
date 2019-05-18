@@ -1,8 +1,10 @@
 //app.js
 const Promise = require('units/promise.js');
-const urlModel = require('utils/urlSet.js')
+const urlModel = require('utils/urlSet.js');
+const Towxml = require('/towxml/main');  
 App({
     onLaunch: function() {},
+  towxml: new Towxml(),
     //获取基本信息方法
     getUser: function() {
         var app = this;

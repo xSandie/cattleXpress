@@ -8,7 +8,7 @@
     <view class='receive'>
         <view wx:if="{{!blank}}" class='recCardTag'>
             <text>我接到的</text>
-        </view>
+        </view> 
         <view class='orderCard'>
             <view hover-class="answerHover1" class='ongoRecList' wx:key="{{item.orderId}}" wx:for="{{ongoRecList}}" >
                     <view class='rowFlex' data-orderstate="{{item.exState}}" data-order-id="{{item.orderId}}" bindtap="toRecDetails">

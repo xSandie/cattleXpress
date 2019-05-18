@@ -58,6 +58,12 @@ var UIManager = {
             })
         }
     },
+    loading:function(text,mask=true){
+        wx.showLoading({
+            title:text,
+            mask:mask
+        })
+    },
     //联系对方
     contactTA:function (phone_number) {
         wx.showModal({
@@ -106,5 +112,5 @@ var funcManager = {
         })
     }
 }
-exports.funcManager = funcManager
+exports.funcManager = funcManager;
 exports.UIManager = UIManager;

@@ -1,0 +1,10 @@
+<view class="panel-upload custom-class">
+  <view wx:for="{{ imgList }}" wx:for-item="item" wx:for-index="index" wx:key="index" class="img-list flex-list common-bg" style="width:{{imgWidth}};height:{{imgWidth}};background-image:url({{ item }});background-size:100% 100%;"
+    catchtap="previewImg" data-index="{{ index }}">
+    <k-icon name="close"  custom-class="delete-file" wx:if="{{ showClose }}" catchtap="removeImg" data-index="{{ index }}"/>
+  </view>
+  <view class="add-file flex-list" style="min-width:{{imgWidth}};height:{{imgWidth}};" wx:if="{{count<total}}" catchtap="upLoad">
+    <image src="{{uploadIcon}}" style="margin:0 auto;z-index:10;width: 40rpx;height: 40rpx;"/>
+    <text style="color:{{fontColor}};margin-top: 4rpx;">添加图片 {{count}}/{{total}}</text>
+  </view>
+</view>

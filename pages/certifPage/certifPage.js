@@ -18,7 +18,12 @@ Page({
         row3Flag: false,
         accountHint: '', //账号提示
         identity: 1, //1为本科生，2为研究生
-        questionIcon: '../../images/question.png'
+        questionIcon: '../../images/question.png',
+      confirmShape: "right",
+      checkedCorlor: "#faaf42",
+      leftValue: "同意",
+    rightValue:"用户隐私协议",
+    beChecked: true
     },
 
     /**
