@@ -61,7 +61,7 @@ Page({
             that.setData({
                 reportTime: generateTime,
                 orderId: options.orderId,
-                recLastName: options.pubLastName,
+                recLastName: options.lastname,
                 reportProcess: 0
             })
         }
@@ -74,25 +74,26 @@ Page({
                 url: urlModel.url.reportDetail,
                 method: 'GET',
                 data: {
-                    'policeId': options.detailID,
-                    'getterID': app.globalData.sessionID
+                    'complain_id': options.detailID,
+                    'sessionID': app.globalData.sessionID
                 },
                 success: function(res) {
+                    console.log(res)
                     if (res.statusCode == 200) {
                         //reportProcess 卡住显示的内容 设置全部内容 
                         that.setData({
-                            reportProcess: res.data.Status,
+                            reportProcess: res.data.report_status,
                             reportRe1: res.data.reason1 ? res.data.reason1 : null,
                             report1: res.data.img1 ? res.data.img1 : null,
                             complainRe1: res.data.complain1 ? res.data.complain1 : null,
-                            complain1: res.data.img2 ? res.data.img2 : null,
+                            complain1: res.data.complain_img1 ? res.data.complain_img1 : null,
                             reportRe2: res.data.reason2 ? res.data.reason2 : null,
                             report2: res.data.img3 ? res.data.img3 : null,
                             complainRe2: res.data.complain2 ? res.data.complain2 : null,
-                            complain2: res.data.img4 ? res.data.img4 : null,
-                            orderId: res.data.orderId,
-                            recLastName: res.data.pubLastName,
-                            reportTime: res.data.pubTime
+                            complain2: res.data.complain_img2 ? res.data.complain_img2 : null,
+                            orderId: res.data.order_id,
+                            recLastName: res.data.lastname,
+                            reportTime: res.data.pub_time
                         })
                     }
                 }
@@ -150,6 +151,7 @@ Page({
                 'sessionID': app.globalData.sessionID
             },
             success: function(res) {
+                console.log(res)
                 if (res.statusCode == 200) {
                     //reportProcess 卡住显示的内容 设置全部内容 
                     that.setData({
@@ -211,6 +213,7 @@ Page({
      */
     report: function(e) {
         var that = this
+        var upRes = 0
         if (e.detail.value.reason == '') {
             wx.showModal({
                 title: '提示',
@@ -235,7 +238,7 @@ Page({
                 method:'POST',
                 success: function(res) {
                     if (res.statusCode == 200) {
-                        upRes = this.uploadPic(res.data.complain_id)
+                        upRes = that.uploadPic(res.data.complain_id)
                         wx.hideLoading()
                         if (upRes==0){
                             wx.showToast({
@@ -277,7 +280,7 @@ Page({
                 method:'POST',
                 success: function(res) {
                     if (res.statusCode == 200) {
-                        upRes = this.uploadPic(res.data.complain_id)
+                        upRes = that.uploadPic(res.data.complain_id)
                         wx.hideLoading()
                         if (upRes==0){
                             wx.showToast({
@@ -326,13 +329,18 @@ Page({
                                 'complain_id': that.data.policeId
                             },
                             success: function(res) {
-                                if (res.statusCode == 200 && res.data.msg == 'ok') {
+                                if (res.statusCode == 200) {
                                     wx.showToast({
-                                        title: '撤销成功',
-                                        icon: 'none',
+                                        title: '撤销成功'
                                     })
-                                    that.onPullDownRefresh()
+                                    setTimeout(()=>{wx.navigateBack()},1000)
+
                                 }
+                            },fail:function () {
+                                wx.showToast({
+                                    title: '撤销失败，请重试',
+                                    icon: 'none',
+                                })
                             }
 
                         })
@@ -384,17 +392,17 @@ Page({
             this.report(e)
         }else if(e.detail.target.dataset.srcBtn=='retrieve'){
             console.log(e.detail.target.dataset.srcBtn)//进入撤销
-            this.cancel(e)
+            this.retrieve(e)
         }
     },
 
     uploadPic:function(complainId){
         var ok=0;
         var that = this
-        for (let item in this.data.imgList) {
+        for (let i in this.data.imgList) {
             wx.uploadFile({
-                url: urlModel.url.policePub,
-                filePath: item,
+                url: urlModel.url.policePic,
+                filePath: that.data.imgList[i],
                 name: 'police_img',
                 header: {
                     "Content-Type": "multipart/form-data",
@@ -418,10 +426,19 @@ Page({
                 }
             })
         }
+        // return 1
         if(ok == this.data.imgList.length){
             return 1;
         }else {
             return 0;//有图片上传失败
         }
+    },
+    previewIMG: function(e) {
+        var src = e.currentTarget.dataset.src
+        var list = e.currentTarget.dataset.list
+        wx.previewImage({
+            current: src, // 当前显示图片的http链接
+            urls: list // 需要预览的图片http链接列表
+        })
     }
 })

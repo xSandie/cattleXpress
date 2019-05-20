@@ -7,6 +7,7 @@ var UIManager = {
                 content: '教务系统认证之后，黄牛才能更好的为您服务噢~',
                 confirmColor: '#faaf42',
                 confirmText:'去认证',
+                cancelText:'返回主页',
                 success: function(res) {
                     if (res.confirm) {
                         // console.log('用户点击确定')
@@ -14,7 +15,9 @@ var UIManager = {
                             url: '/pages/certifPage/certifPage'
                         })
                     } else if (res.cancel) {
-                        // console.log('用户点击取消')
+                        wx.reLaunch({
+                            url: '/pages/home/home',
+                        })
                     }
                 }
             })
@@ -31,8 +34,6 @@ var UIManager = {
                         wx.redirectTo({
                             url: '/pages/certifPage/certifPage'
                         })
-                    } else if (res.cancel) {
-                        // console.log('用户点击取消')
                     }
                 }
             })

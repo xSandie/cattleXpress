@@ -57,13 +57,9 @@ Page({
             url: urlModel.url.policelist, //查询举报条目列表
             method: 'GET',
             data: {
-                'userID': app.globalData.sessionID,
+                'sessionID': app.globalData.sessionID,
             },
-            // header: {
-            //     "Content-Type": "applciation/json"
-            // },
             success: function(res) {
-                // console.log(res)
                 that.setData({
                     myPoliceList: res.data.myPoliceList,
                     policeMeList: res.data.policeMeList

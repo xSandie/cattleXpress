@@ -289,7 +289,7 @@ Page({
                 success: function(res) {
                     if (res.confirm) {
                         wx.navigateTo({
-                            url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&pubLastName=' + that.data.receiverName
+                            url: '../policeDetailProposal/policeDetailProposal?orderId=' + that.data.orderId + '&lastname=' + that.data.receiverName
                         })
                     } else if (res.cancel) {
                     }

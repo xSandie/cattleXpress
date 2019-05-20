@@ -30,7 +30,7 @@
         <view class="display" wx:if="{{reportProcess==1||reportProcess==2||reportProcess==3||reportProcess==4}}">
             <text class="TiMe">举报原因</text>
             <text class="displayReason">{{reportRe1}}</text>
-            <view class="reImageA" wx:if="{{report1}}">
+            <view class="reImageA" wx:if="{{report1.length>0}}">
                 <view wx:for="{{report1}}">
                     <image mode='aspectFill' data-src="{{item}}" data-list="{{report1}}" bindtap="previewIMG" src="{{item}}"  class="reImage"></image>
                 </view>
@@ -43,7 +43,7 @@
             <view class="displayReason">
                 {{complainRe1}}
             </view>
-            <view class="reImageA" wx:if="{{complain1}}">
+            <view class="reImageA" wx:if="{{complain1.length>0}}">
                 <view wx:for="{{complain1}}">
                     <image  data-src="{{item}}" data-list="{{complain1}}" bindtap="previewIMG" mode='aspectFill' src="{{item}}" class="reImage"></image>
                 </view>
@@ -71,7 +71,7 @@
         <view class="display" wx:if="{{reportProcess==3||reportProcess==4}}">
             <text class="TiMe">再次举报原因</text>
             <text class="displayReason">{{reportRe2}}</text>
-            <view class="reImageA" wx:if="{{report2}}">
+            <view class="reImageA" wx:if="{{report2.length>0}}">
                 <view wx:for="{{report2}}">
                     <image  data-src="{{item}}" data-list="{{report2}}" bindtap="previewIMG" mode='aspectFill' src="{{item}}" class="reImage"></image>
                 </view>
@@ -82,7 +82,7 @@
             <view class="rline"></view>
             <text class="TiMe">申诉原因</text>
             <text class="displayReason">{{complainRe2}}</text>
-            <view class="reImageA" wx:if="{{complain2}}">
+            <view class="reImageA" wx:if="{{complain2.length>0}}">
                 <view wx:for="{{complain2}}">
                     <image  data-src="{{item}}" data-list="{{complain2}}" bindtap="previewIMG" mode='aspectFill' src="{{item}}" class="reImage"></image>
                 </view>
