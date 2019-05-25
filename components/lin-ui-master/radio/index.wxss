@@ -66,6 +66,4 @@
 }
 .rightText{
   color: #faaf42;
-  display: inline-block;
-
 }

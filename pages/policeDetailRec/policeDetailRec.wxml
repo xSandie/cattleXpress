@@ -1,8 +1,8 @@
 <view class="header"></view>
-<form bindsubmit="report" class="container">
+<form report-submit="true" bindsubmit="nextSubmit" report-submit-timeout="1000" class="container">
     <view hover-class="answerHover1" class="floatCard">
         <view class="people">
-            <text class="topTi">被举报人</text>
+            <text class="topTi">举报人</text>
             <text class="LName">{{pubLastName}}</text>
             <text class="reportTime">{{reportTime}}</text>
         </view>
@@ -23,19 +23,24 @@
 
         <view class="reportIn" wx:if="{{reportProcess==1}}">
             <text class="TiMe">申诉原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
-
+            <textarea name="reason" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
-                    <image src="{{camIcon}}" class="camIcon"></image>
-                    <text>允许上传一张图片</text>
-                    </view>
+                <k-uploader style="width: 100%;"
+                            imgList="{{ imgList }}"
+                            imgWidth="{{ imgWidth }}"
+                            total="{{ imgTotal }}"
+                            preview="{{ preview }}"
+                            showClose="{{ showClose }}"
+                            imgCount="{{ imgCount }}"
+                            uploadIcon="{{uploadIcon}}"
+                            fontColor="{{fontColor}}"
+                            bind:remove="removeImg"
+                            bind:add="addImg"/>
+            </view>
             </view>
 
         </view>
+    <view class="reasonA">
         <view class="display" wx:if="{{reportProcess==2||reportProcess==3||reportProcess==4}}" class="complain">
             <view class="rline"></view>
             <text class="Ti">申诉原因</text>
@@ -48,8 +53,8 @@
                 </view>
             </view>
         </view>
-
-        
+    </view>
+    <view class="reasonA">
         <view class="display" wx:if="{{reportProcess==3||reportProcess==4}}">
             <text class="TiMe">再次举报原因</text>
             <text class="displayReason">{{reportRe2}}</text>
@@ -61,26 +66,30 @@
             </view>
 
         </view>
+    </view>
+
+    <view class="reasonA">
         <view class="reportIn" wx:if="{{reportProcess==3}}">
-            <view class="rline"></view>
             <text class="TiMe">再次申诉原因</text>
-            <textarea name="reportRe1" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
-
+            <textarea name="reason" maxlength='150' type="text" class='reportCon' placeholder="{{expDescript}}" />
             <view class="imgArea">
-                <image data-src="{{img1}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img1}}" src="{{img1}}" class="reImage"></image>
-                <!-- <image data-src="{{img2}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img2}}" src="{{img2}}" class="reImage"></image>
-                <image data-src="{{img3}}" data-list="{{imgUpList}}" bindtap="previewIMG" wx:if="{{img3}}" src="{{img3}}" class="reImage"></image> -->
-                    <view wx:if="{{imgUpList.length!=3}}" class="uploadIMG1" bindtap="chooseIMG">
-                    <image src="{{camIcon}}" class="camIcon"></image>
-                    <text>允许上传一张图片</text>
-                    </view>
+                <k-uploader style="width: 100%;"
+                            imgList="{{ imgList }}"
+                            imgWidth="{{ imgWidth }}"
+                            total="{{ imgTotal }}"
+                            preview="{{ preview }}"
+                            showClose="{{ showClose }}"
+                            imgCount="{{ imgCount }}"
+                            uploadIcon="{{uploadIcon}}"
+                            fontColor="{{fontColor}}"
+                            bind:remove="removeImg"
+                            bind:add="addImg"/>
             </view>
-
         </view>
 
         <view wx:if="{{reportProcess==4}}">
             <view class="rline"></view>
-            <text class="TiMe">申诉原因</text>
+            <text class="TiMe">再次申诉原因</text>
             <text class="displayReason">{{complainRe2}}</text>
 
             <view class="reImageA" wx:if="{{complain2}}">

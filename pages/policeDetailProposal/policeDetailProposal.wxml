@@ -24,7 +24,7 @@
                         bind:remove="removeImg"
                         bind:add="addImg"/>
             </view>
-            
+
 
         </view>
         <view class="display" wx:if="{{reportProcess==1||reportProcess==2||reportProcess==3||reportProcess==4}}">

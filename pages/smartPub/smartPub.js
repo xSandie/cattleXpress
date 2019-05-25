@@ -70,16 +70,43 @@ Page({
     checkedCorlor: "#faaf42",
     leftValue: "同意",
     rightValue: "免责声明",
-    beChecked:true
+    beChecked:true,
+    bePublic:true
   },
   //todo 发布时才触发是否设置默认地址逻辑，发布完成后才进行默认地址请求
   /**
    * 生命周期函数--监听页面加载
    */
+  myBePublic(e){
+    console.log(e.detail.checked)
+    if(e.detail.checked==false){
+        this.setData({
+          bePublic:false
+        })
+    }
+    else{
+      this.setData({
+        bePublic:true
+      })
+    }
+  },
   onLoad: function (options) {
     this.setData({
-      recognHint:''
+      recognHint:'',
+      smartPub:app.globalData.smartPub,
+      defaultReward:app.globalData.defaultReward
     })
+    if (app.globalData.smartPub==false){
+        if (!this.data.haveShowCantPub){
+          wx.showToast({
+            title: '该校区暂无智能发布',
+            icon:'none'
+          })
+          this.setData({
+            haveShowCantPub:true
+          })
+        }
+    }
     var that = this
     var send_data = {
       'sessionID': app.globalData.sessionID
@@ -143,21 +170,6 @@ Page({
       ui.UIManager.toCertif(false)
     }else if (app.globalData.ourUserStatus == 1) {
       ui.UIManager.checkAbnormal()
-    }else{
-      this.setData({
-        smartPub:app.globalData.smartPub
-      })
-      if (app.globalData.smartPub==false){
-        if (!this.data.haveShowCantPub){
-          wx.showToast({
-            title: '该校区暂无智能发布',
-            icon:'none'
-          })
-          this.setData({
-            haveShowCantPub:true
-          })
-        }
-      }
     }
   },
 
@@ -211,6 +223,23 @@ Page({
         wx.stopPullDownRefresh()
       }
     })
+
+
+    this.setData({
+      smartPub:app.globalData.smartPub,
+      defaultReward:app.globalData.defaultReward
+    })
+    if (app.globalData.smartPub==false){
+      if (!this.data.haveShowCantPub){
+        wx.showToast({
+          title: '该校区暂无智能发布',
+          icon:'none'
+        })
+        this.setData({
+          haveShowCantPub:true
+        })
+      }
+    }
   },
   onShareAppMessage: function () {
     return {
@@ -228,6 +257,9 @@ Page({
       showEdit:!that.data.showEdit
     })//放下卡片的类
     setTimeout(that.recover,1000)
+
+
+
   },
   recover:function(){
     //动画播放完成后将文字设置成原来的
@@ -304,6 +336,7 @@ Page({
       // console.log('发布填充后',detail)
       detail['sessionID'] = app.globalData.sessionID
       if (this.canPub(detail)){
+        if(that.data.bePublic==true){
         console.log('发布逻辑')
         wx.showLoading({
           title:'发布中'
@@ -383,9 +416,20 @@ Page({
             }
           })
         }
-      } else {
+      }else{
+        wx.showToast({
+          title: '未同意免责声明',
+          icon:'none'
+        })
+      }
+      } else if(that.data.bePublic==true) {
         wx.showToast({
           title: '未填写完整，请检查~',
+          icon:'none'
+        })
+      }else{
+        wx.showToast({
+          title: '未同意免责声明并且未填写完整，请检查',
           icon:'none'
         })
       }

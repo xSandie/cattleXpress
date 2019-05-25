@@ -92,7 +92,7 @@
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
             </button>
-            <button form-type="submit" open-type='contact' hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
+            <button form-type="submit" open-type='feedback' hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
                 <view class='joinUsText'>
                     <text>意见反馈</text>
                 </view>

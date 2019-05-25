@@ -103,6 +103,23 @@ page {
     border-radius: 14rpx;
 }
 
+.main-btn1 {
+    border: 0rpx;
+    width: 246rpx;
+    background: linear-gradient(90deg, #C0C0C0, #C0C0C0);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 32rpx;
+    height: 100rpx;
+    margin: 0;
+    border-radius: 14rpx;
+}
+
+
 .btn-hover {
     background: linear-gradient(90deg, #af782c, #b39340);
 }

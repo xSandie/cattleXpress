@@ -56,6 +56,14 @@ Component({
     circle: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAAXNSR0IArs4c6QAAAjlJREFUeAHtmjFOw0AQRWOUApGSBqhNR8MZcgEKehcUXCMnAlHmFBTQQU1ooAtCAsn8j9aS5SRaR56xlc0f6cuOdz2z87wbe9cejWQiIAIiIAIiIAIiIAIiIAIiIAIiIAIiIAIiIAIiIAIi0A+BrJ8wm6OUZXmI0nPoFDoLNd+wXUAvWZZ9h2P7swGUCVRAd9AS2mQsY50CmiRPCEmOoVtoAW1rPIfnjpMEhcRy6AnqavSRJwUJCU2hz65kaufT1zQJSEwE+qklZ7VLn7sNCQlwWFn2nCZc+nYdbm63eTScf6aP0IXzUHiG/0s8Dvx6xDnwcBp83mDrDYehGIOxXMylB6H38JnlFTpxafWq03ccytGLlqtF3Y549aBrNKsvOCTAWIxpbl6ArsxbGnfoEtN8iGF4cW71AR3FczKt8QVvx9ZzN48exIln33BImjEZ29Q8AFUzctOGtnRmHtsDEJcthjLz2B6AhoLjEtcDEBe6hjIutJmaByDzRm6RsfnF0W0+Qt+8B4XnkHkkrkfx3PoZiI00BxQyf/AgEPHpEtN8iDEJTVYjlzLMqmeRapbFsxDT0ue/L5ceRM+pLJiZE687BKSdX3Kt5+OyD0hatI+RDZAsF+/Tee1TwQvDTS8OKyDrtoCkV8/rwDSPAVT18cI99mMfL7BOwXOafvr47Xabb9t4JF59/sLFrmo9h5NOTnr38/OXtvBUTwREQAREQAREQAREQAREQAREQAREQAREQAREQAREICkCf2RxAMVsHYMpAAAAAElFTkSuQmCC'
   },
   methods: {
+    clauseDetail(){
+        wx.navigateTo({
+          url: '../../pages/adsDetail/adsDetail?appId="zhang"',
+        })
+    },
+    onJudgePub(){
+     
+    },
     onChangeHandle(current) {
       this.setData({
         checked: current
@@ -64,16 +72,12 @@ Component({
     // 点击radio
     onRadioChangeTap() {
       if (this.data.disabled) return;
-      if(this.properties.checked===true) {
       this.setData({
           checked:!this.properties.checked
       })
+      var that = this
+      const myEventDetail={"checked":that.data.checked}
+      this.triggerEvent("bepublic", myEventDetail)
       }
-      else{
-        this.setData({
-          checked: !this.properties.checked
-        })
-      }
-    }
   }
 });

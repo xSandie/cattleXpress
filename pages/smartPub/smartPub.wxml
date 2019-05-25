@@ -119,11 +119,12 @@
             <view class="orangeLine"></view>
         </view>
         <view style="display: flex;margin: 36rpx 0rpx;justify-content: space-between">
-        <button hover-class="button-hover" class='main-btn' form-type="submit">
-            <view style="margin-left:8rpx;">发布</view>
+        <!--<button hover-class="button-hover" disabled="{{ !bePublic}}" class= "{{bePublic ? 'main-btn' : 'main-btn1'}}"  form-type="submit">-->
+        <button hover-class="button-hover" disabled="{{ !bePublic}}" class= "main-btn"  form-type="submit">
+            <view style="margin-left:8rpx;" >发布</view>
             <image class='nbtnIcon' src="{{nextIcon}}"></image>
         </button>
-    <k-radio color="{{checkedCorlor}}" shape="{{confirmShape}}"  leftValue="{{leftValue}}" rightValue="{{rightValue}}" style='margin:auto 50rpx;font-size:22rpx' checked='beChecked'></k-radio>
+    <k-radio color="{{checkedCorlor}}" shape="{{confirmShape}}"  leftValue="{{leftValue}}" rightValue="{{rightValue}}" style='margin:auto 0;font-size:22rpx' checked='beChecked' bindbepublic="myBePublic"></k-radio>
         </view>
         <block>
         <textarea class='others' name="otherInfo" maxlength='50' type="text" placeholder="{{expDescript}}" />

@@ -3,5 +3,9 @@
     "backgroundColor": "#faaf42",
     "backgroundTextStyle": "light",
     "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": true,
+    "navigationBarTitleText": "举报",
+    "usingComponents": {
+        "k-uploader": "/components/lin-ui-master/uploader/index"
+    }
 }

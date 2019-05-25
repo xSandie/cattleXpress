@@ -9,9 +9,9 @@
         <view class='swiper-outer'><swiper
         indicator-dots="true" autoplay="true" circular="true" 
         interval="5000" duration="500">
-        <block wx:for="{{ads}}" wx:key="*this">
-          <swiper-item>
-            <image class="swiper-item" src="{{item}}"/>
+        <block wx:for="{{ads}}" wx:key="*this" >
+          <swiper-item data-ad-id="{{item.id}}" bindtap="toAdDetail">
+            <image class="swiper-item" src="{{item.url}}"/>
           </swiper-item>
         </block>
       </swiper></view>

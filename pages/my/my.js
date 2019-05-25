@@ -100,6 +100,9 @@ Page({
                     app.globalData.userName = res.data.username
                     app.globalData.schoolNumb = res.data.school_numb
                     app.globalData.balance = res.data.balance
+                    app.globalData.ourUserStatus = res.data.user_status
+                    if (res.data.user_status != 4) { app.globalData.haveCertif = true }
+
                     wx.hideLoading()
                     wx.showToast({
                         title: '刷新成功',
@@ -137,13 +140,7 @@ Page({
             url: '../certifPage/certifPage',
         })
     },
-    feedback: function() {
-        // ui.UIManager.todo()
-        // return
-        // wx.navigateTo({
-        //     url: '../feedback/feedback',
-        // })
-    },
+    feedback: function() {},
     /**
      * 用户点击右上角分享
      */

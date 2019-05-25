@@ -11,15 +11,14 @@
     "pages/orderDetailsRec/orderDetailsRec",
     "pages/orderDetailsPub/orderDetailsPub",
     "pages/policeList/policeList",
-    "pages/policeDetailRec/policeDetailRec",
     "pages/policeDetailProposal/policeDetailProposal",
+    "pages/policeDetailRec/policeDetailRec",
     "pages/reportExError/reportExError",
     "pages/defAddrEdit/defAddrEdit",
     "pages/changeSchool/changeSchool",
     "pages/pay/pay",
     "pages/myCode/myCode",
     "pages/feedback/feedback",
-    "pages/ads/ads",
     "pages/adsDetail/adsDetail"
   ],
   "window": {

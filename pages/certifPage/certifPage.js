@@ -23,7 +23,8 @@ Page({
       checkedCorlor: "#faaf42",
       leftValue: "同意",
     rightValue:"用户隐私协议",
-    beChecked: true
+    beChecked: true,
+    bePublic:true
     },
 
     /**
@@ -37,10 +38,24 @@ Page({
     onReady: function() {
 
     },
+      myBePublic(e) { 
+        console.log(e.detail.checked)
+        if (e.detail.checked == false) {
+          this.setData({
+            bePublic: false
+          })
+        }
+        else {
+          this.setData({
+            bePublic: true
+          })
+        }
+      },
 
     /**
      * 生命周期函数--监听页面显示
      */
+
     onShow: function() {
         var that = this
         this.setData({
@@ -205,16 +220,27 @@ Page({
     },
     haveCertif: function(e) {
         var that = this
+        var content = ''
         console.log(e)
         if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
-            wx.showModal({
-                title: '信息不全',
-                content: '请填写完整信息',
-                showCancel: false,
-                confirmText: '返回',
-                confirmColor: '#faaf42',
-            })
-        } else {
+          if(that.data.bePublic==false){
+            content="填写完整信息以及同意用户隐私协议才能进行操作哦！"
+          }else{
+            content = '请填写完整信息'
+          }
+          wx.showModal({
+            title: '信息不全',
+            content: content,
+            showCancel: false,
+            confirmText: '返回',
+            confirmColor: '#faaf42',
+          })
+        } else if(that.data.bePublic==false) {
+          wx.showModal({
+            title: "未同意用户隐私协议",
+            content: '为了您与其他用户的安全，未同意用户隐私协议无法进行操作哦！',
+          })
+        }else{
             wx.showLoading({
                 title: '认证中',
                 mask: true

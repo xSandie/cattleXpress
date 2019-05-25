@@ -1,6 +1,7 @@
 var app = getApp();
 const urlModel = require('../../utils/urlSet.js');
 const helper = require('../../utils/helper.js');
+const Promise = require('../../units/promise.js');
 Page({
 
     /**
@@ -284,7 +285,7 @@ Page({
                         wx.hideLoading()
                         if (upRes==0){
                             wx.showToast({
-                                title:'发布失败，请重试',
+                                title:'发布失败，请联系客服',
                                 icon:'none'
                             })
                         } else{
@@ -399,39 +400,48 @@ Page({
     uploadPic:function(complainId){
         var ok=0;
         var that = this
-        for (let i in this.data.imgList) {
-            wx.uploadFile({
-                url: urlModel.url.policePic,
-                filePath: that.data.imgList[i],
-                name: 'police_img',
-                header: {
-                    "Content-Type": "multipart/form-data",
-                    'accept': 'application/json',
-                    //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
-                },
-                formData: {
-                    sessionID: app.globalData.sessionID, //其他额外的formdata，userId
-                    complain_id: complainId,
-                    report_status:that.data.reportProcess
-                },
-                success: function(res) {
-                    if (res.statusCode == 200) {
-                        ok += 1;
-                    } else {
-                        ok -= 1;
+        var temp = new Promise(function(resolve, reject) {
+            for (let i in that.data.imgList) {
+                wx.uploadFile({
+                    url: urlModel.url.policePic,
+                    filePath: that.data.imgList[i],
+                    name: 'police_img',
+                    header: {
+                        "Content-Type": "multipart/form-data",
+                        'accept': 'application/json',
+                        //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+                    },
+                    formData: {
+                        sessionID: app.globalData.sessionID, //其他额外的formdata，userId
+                        complain_id: complainId,
+                        report_status:that.data.reportProcess
+                    },
+                    success: function(res) {
+                        if (res.statusCode == 200) {
+                            ok = ok + 1;
+                            if (ok==that.data.imgList.length){
+                                resolve('ok');
+                            }
+                        } else {
+                            ok = ok - 1;
+                            reject('error')
+                        }
+                    },
+                    fail:function () {
+                        ok = ok - 1;
+                        reject('error')
                     }
-                },
-                fail:function () {
-                    ok -= 1;
-                }
-            })
+                })
         }
-        // return 1
-        if(ok == this.data.imgList.length){
+        }).then(()=>{
+            if(ok == that.data.imgList.length){
             return 1;
         }else {
             return 0;//有图片上传失败
-        }
+        }}).catch(function () {
+            return 0
+        })
+        // return 1是异步的
     },
     previewIMG: function(e) {
         var src = e.currentTarget.dataset.src

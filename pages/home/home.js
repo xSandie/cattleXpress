@@ -7,7 +7,15 @@ Page({
      * 页面的初始数据
      */
     data: {
-        ads: ['../../images/banner1.png', '../../images/banner2.png'], //广告banner图片地址
+        ads: [
+            {
+                url:'../../images/banner1.png',
+                id:null
+            },
+            {
+                url:'../../images/banner2.png',
+                id : null
+            }], //广告banner图片地址
 
         schoolName: '',
         locIcon: "../../images/location.png",
@@ -30,9 +38,9 @@ Page({
     },
     getBanner:function(){
         //获取并设置广告
+        var that = this;
         var send_data = {
             'school_id': app.globalData.schoolID,
-            'sessionID': app.globalData.sessionID,
         }
         wx.request({
             url: urlModel.url.getBanner, //请求首页订单列表
@@ -41,7 +49,7 @@ Page({
             success: function(res) {
                 if (res.statusCode == 200){
                     that.setData({
-                        ads:res.data.ads
+                        ads: that.data.ads.concat(res.data.banners)
                     })
                 }
                 console.log(res)
@@ -84,6 +92,20 @@ Page({
             }
         })
     },
+    //查看广告详情
+    toAdDetail:function(e){
+        console.log(e);
+        var adId = e.currentTarget.dataset.adId;
+        if (adId == null){
+            return
+        }
+        wx.navigateTo({
+          url: '/pages/adsDetail/adsDetail?id='+adId.toString()
+        })
+    },
+    checkUnPay:function(){//TODO:检查是否有未支付订单
+        
+    },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -103,6 +125,7 @@ Page({
                 'sessionID': app.globalData.sessionID,
                 'request_time': 1
             }
+            that.getBanner()
             wx.showLoading({
                 title: '装填订单',
                 mask: true

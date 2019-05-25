@@ -4,7 +4,7 @@ const urlModel = require('utils/urlSet.js');
 const Towxml = require('/towxml/main');  
 App({
     onLaunch: function() {},
-  towxml: new Towxml(),
+    towxml: new Towxml(),
     //获取基本信息方法
     getUser: function() {
         var app = this;
@@ -45,6 +45,7 @@ App({
                                     app.globalData.sessionID = res.data.sessionID
                                     app.globalData.ourUserStatus = res.data.user_status
                                     app.globalData.smartPub = res.data.smart_pub
+                                    app.globalData.defaultReward = res.data.default_reward
                                     if (res.data.default) { app.globalData.default = res.data.default }
                                     if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
 
@@ -122,6 +123,7 @@ App({
         havePayCode: false,
         accountHint: '就是登陆 教务系统 的账号', //认证账号提示
         reloadHomePage:false,
-        smartPub:true
+        smartPub:true,
+        defaultReward: 2
     }
 })
