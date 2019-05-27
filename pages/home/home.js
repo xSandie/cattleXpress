@@ -8,13 +8,15 @@ Page({
      */
     data: {
         ads: [
-            {
-                url:'../../images/banner1.png',
-                id:null
-            },
+            // {
+            //     url:'../../images/banner1.png',
+            //     id:null,
+            //     fixId:1
+            // },
             {
                 url:'../../images/banner2.png',
-                id : null
+                id : null,
+                fixId:2
             }], //广告banner图片地址
 
         schoolName: '',
@@ -393,6 +395,7 @@ Page({
     },
     collect:function (e) {
         var formId = e.detail.formId
+        console.log(e)
         ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)
     }
 })

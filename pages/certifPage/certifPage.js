@@ -24,7 +24,8 @@ Page({
       leftValue: "同意",
     rightValue:"用户隐私协议",
     beChecked: true,
-    bePublic:true
+    bePublic:true,
+        adId:8
     },
 
     /**

@@ -177,6 +177,7 @@ swiper {
     height: 200rpx;
     bottom: 20rpx;
     right: 0rpx;
+    z-index: 9;
 }
 
 .rbText {
@@ -466,4 +467,7 @@ swiper {
 
 .my-grey {
     color: #999BA1;
+}
+.not-hover{
+    background: #FFFFFF;
 }

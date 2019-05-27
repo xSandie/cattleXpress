@@ -36,6 +36,9 @@ Page({
                     that.setData({
                         payCodeUrl: res.data.pay_code
                     })
+                    wx.setClipboardData({
+                        data: res.data.hint,
+                    })
                 }
             }
         })

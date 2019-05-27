@@ -9,7 +9,7 @@
         <view class='swiper-outer'><swiper
         indicator-dots="true" autoplay="true" circular="true" 
         interval="5000" duration="500">
-        <block wx:for="{{ads}}" wx:key="*this" >
+        <block wx:for="{{ads}}" wx:key="{{item.id || item.fixId}}" >
           <swiper-item data-ad-id="{{item.id}}" bindtap="toAdDetail">
             <image class="swiper-item" src="{{item.url}}"/>
           </swiper-item>
@@ -18,9 +18,10 @@
     </view>
 <view class='container'>
     <view class='list'>
-        <form style="display: flex;flex-direction: column;" report-submit="true" report-submit-timeout="1000" bindsubmit="collect">
-            <button form-type="submit" class='listItem' hover-class="answerHover1" wx:key="{{item.id}}" wx:for="{{orderList}}">
-                <view class='rowFlex'  data-order-id="{{item.id}}" bindtap="toSumDetail">
+        <view style="display: flex;flex-direction: column;">
+            <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" wx:key="{{item.id}}" data-order-id="{{item.id}}"  bindtap="toSumDetail" wx:for="{{orderList}}">
+            <button form-type="submit" data-order-id="{{item.id}}" class='listItem' hover-class="answerHover1" >
+                <view class='rowFlex'  data-order-id="{{item.id}}" >
                     <view class='reward'>
                         <view class='rcText'>
                             <text>赏金</text>
@@ -70,12 +71,14 @@
                     <!-- 可能需要先相对定位一下然后使用button-->
                 </view>
             </button>
-        </form>
+            </form>
+        </view>
         <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
-            <view class='rowFlex'  data-order-id="{{item.id}}">
-                <view class='my-silver-bg reward'>
+            <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" >
+                <button style="padding: unset;" hover-class="not-hover" form-type="submit" class='rowFlex'  data-order-id="{{item.id}}">
+                    <view class='my-silver-bg reward'>
                         <view class='rcText'>
-                           <text>赏金</text>
+                            <text>赏金</text>
                         </view>
                         <view class='rnText'>
                             <text>{{item.reward}}</text>
@@ -83,31 +86,32 @@
                         <view class='reText'>
                             <text>RMB</text>
                         </view>
-                </view>
-                <view class='body'>
-                    <view class='exInstance'>
-                       <text>{{item.expStationName}} 送至</text>
                     </view>
-                    <view class='sdInstance'>
-                        <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
-                    </view>
-                    <view class='exTag'>
-                        <view class='exTag exTagWei my-silver-bg'>
-                            <view class='tagText my-grey'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
+                    <view class='body'>
+                        <view class='exInstance'>
+                            <text>{{item.expStationName}} 送至</text>
                         </view>
-                        <view class='exTag exTagTime my-silver-bg'>
-                            <view class='tagText my-grey'><text>{{item.endTime}}前送达</text></view>
+                        <view class='sdInstance'>
+                            <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
+                        </view>
+                        <view class='exTag'>
+                            <view class='exTag exTagWei my-silver-bg'>
+                                <view class='tagText my-grey'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
+                            </view>
+                            <view class='exTag exTagTime my-silver-bg'>
+                                <view class='tagText my-grey'><text>{{item.endTime}}前送达</text></view>
+                            </view>
+                        </view>
+                        <view class='pubisher'>
+                            <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
+                            <view class='pubName my-grey'>
+                                <text>发布人：{{item.pubName}}</text>
+                            </view>
                         </view>
                     </view>
-                    <view class='pubisher'>
-                        <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
-                        <view class='pubName my-grey'>
-                        <text>发布人：{{item.pubName}}</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <image class='recBadge' src="{{recBadge}}" />
+                </button>
+                <image class='recBadge' src="{{recBadge}}" />
+            </form>
         </view>
     </view>
     <view class='fbtnBox'>

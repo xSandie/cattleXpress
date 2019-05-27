@@ -223,83 +223,85 @@ Page({
             },
             method:'POST',
             success: function(res) {
-                if (res.statusCode == 200) {
-                    upRes = that.uploadPic(res.data.complain_id)
-                    wx.hideLoading()
-                    if (upRes==0){
-                        wx.showToast({
-                            title:'申诉失败，请联系客服',
-                            icon:'none'
-                        })
-                    } else{
-                        wx.showToast({
-                            title:'申诉成功'
-                        })
-                        setTimeout(()=>{that.onPullDownRefresh()},1500)
-                    }
-                }else {
-                    wx.hideLoading()
-                    wx.showToast({
-                        title:'申诉失败，请重试',
-                        icon:'none'
-                    })
-                }
+                if (res.statusCode == 200) 
+                    that.uploadPic(res.data.complain_id)
             },
             fail: function() { //无论成功还是失败都会执行
                 wx.hideLoading()
                 wx.showToast({
-                    title:'发布失败，请重试',
+                    title:'申诉失败，请重试或联系客服',
                     icon:'none'
                 })
             }
         })
     },
-    uploadPic:function(complainId){
-        var ok=0;
-        var that = this
-        var temp = new Promise(function(resolve, reject) {
-            for (let i in that.data.imgList) {
-                wx.uploadFile({
-                    url: urlModel.url.policePic,
-                    filePath: that.data.imgList[i],
-                    name: 'police_img',
-                    header: {
-                        "Content-Type": "multipart/form-data",
-                        'accept': 'application/json',
-                        //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
-                    },
-                    formData: {
-                        sessionID: app.globalData.sessionID, //其他额外的formdata，userId
-                        complain_id: complainId,
-                        report_status:that.data.reportProcess
-                    },
-                    success: function(res) {
-                        if (res.statusCode == 200) {
-                            ok = ok + 1;
-                            if (ok==that.data.imgList.length){
-                                resolve('ok');
-                            }
-                        } else {
-                            ok = ok - 1;
-                            reject('error')
-                        }
-                    },
-                    fail:function () {
-                        ok = ok - 1;
-                        reject('error')
-                    }
-                })
+  uploadPic: function (complainId) {
+    var ok = 0;
+    var that = this
+      if (that.data.imgList.length==0){
+          wx.hideLoading()
+          wx.showToast({
+              title: '申诉成功'
+          })
+          setTimeout(() => { that.onPullDownRefresh() }, 1000)
+          return
+      }
+    var temp = new Promise(function (resolve, reject) {
+      for (let i in that.data.imgList) {
+        wx.uploadFile({
+          url: urlModel.url.policePic,
+          filePath: that.data.imgList[i],
+          name: 'police_img',
+          header: {
+            "Content-Type": "multipart/form-data",
+            'accept': 'application/json',
+            //'Authorization': 'Bearer ..'    //若有token，此处换上你的token，没有的话省略
+          },
+          formData: {
+            sessionID: app.globalData.sessionID, //其他额外的formdata，userId
+            complain_id: complainId,
+            report_status: that.data.reportProcess
+          },
+          success: function (res) {
+            if (res.statusCode == 200) {
+              ok = ok + 1;
+              if (ok == that.data.imgList.length) {
+                resolve('ok');
+              }
+            } else {
+              ok = ok - 1;
+              reject('error')
             }
-        }).then(()=>{
-            if(ok == that.data.imgList.length){
-                return 1;
-            }else {
-                return 0;//有图片上传失败
-            }}).catch(function () {
-            return 0
+          },
+          fail: function () {
+            ok = ok - 1;
+            reject('error')
+          }
         })
-        // return 1是异步的
-    },
+      }
+    }).then(() => {
+      if (ok == that.data.imgList.length) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '申诉成功'
+        })
+        setTimeout(() => { that.onPullDownRefresh() }, 1000)
+      } else {
+        wx.hideLoading()
+        wx.showToast({
+          title: '申诉失败，请重试',
+          icon: 'none'
+        })
+        return 0;//有图片上传失败
+      }
+    }).catch(function () {
+      wx.hideLoading()
+      wx.showToast({
+        title: '申诉失败，请重试',
+        icon: 'none'
+      })
+    })
+  },
     previewIMG: function(e) {
         var src = e.currentTarget.dataset.src
         var list = e.currentTarget.dataset.list

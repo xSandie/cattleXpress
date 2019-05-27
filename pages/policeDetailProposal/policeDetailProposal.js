@@ -240,30 +240,12 @@ Page({
                 success: function(res) {
                     if (res.statusCode == 200) {
                         upRes = that.uploadPic(res.data.complain_id)
-                        wx.hideLoading()
-                        if (upRes==0){
-                            wx.showToast({
-                                title:'发布失败，请重试',
-                                icon:'none'
-                            })
-                        } else{
-                            wx.showToast({
-                                title:'发布成功'
-                            })
-                            that.onPullDownRefresh()
-                        }
-                    }else {
-                        wx.hideLoading()
-                        wx.showToast({
-                            title:'发布失败，请重试',
-                            icon:'none'
-                        })
                     }
                 },
                 fail: function() { //无论成功还是失败都会执行
                     wx.hideLoading()
                     wx.showToast({
-                        title:'发布失败，请重试',
+                        title:'举报失败，请重试',
                         icon:'none'
                     })
                 }
@@ -281,23 +263,12 @@ Page({
                 method:'POST',
                 success: function(res) {
                     if (res.statusCode == 200) {
-                        upRes = that.uploadPic(res.data.complain_id)
+                        that.uploadPic(res.data.complain_id)
                         wx.hideLoading()
-                        if (upRes==0){
-                            wx.showToast({
-                                title:'发布失败，请联系客服',
-                                icon:'none'
-                            })
-                        } else{
-                            wx.showToast({
-                                title:'发布成功'
-                            })
-                            that.onPullDownRefresh()
-                        }
                     }else {
                         wx.hideLoading()
                         wx.showToast({
-                            title:'发布失败，请重试',
+                            title:'举报失败，请重试',
                             icon:'none'
                         })
                     }
@@ -305,7 +276,7 @@ Page({
                 fail: function() { //无论成功还是失败都会执行
                     wx.hideLoading()
                     wx.showToast({
-                        title:'发布失败，请重试',
+                        title:'举报失败，请重试',
                         icon:'none'
                     })
                 }
@@ -400,6 +371,20 @@ Page({
     uploadPic:function(complainId){
         var ok=0;
         var that = this
+        if (that.data.imgList.length==0){
+            wx.hideLoading()
+            wx.showToast({
+                title: '举报成功'
+            })
+            if (this.data.policeId == null){
+                that.setData({
+                    'reportProcess': 1,
+                    'policeId': complainId
+                })
+            }
+            setTimeout(() => { that.onPullDownRefresh() }, 1000)
+            return;
+        }
         var temp = new Promise(function(resolve, reject) {
             for (let i in that.data.imgList) {
                 wx.uploadFile({
@@ -435,11 +420,32 @@ Page({
         }
         }).then(()=>{
             if(ok == that.data.imgList.length){
-            return 1;
+                if (that.data.policeId == null){
+                    that.setData({
+                        'reportProcess': 1,
+                        'policeId': complainId
+                    })
+                }
+              wx.hideLoading()
+              wx.showToast({
+                title: '举报成功'
+              })
+              setTimeout(() => { that.onPullDownRefresh() }, 1000)
+              return;
         }else {
-            return 0;//有图片上传失败
+              wx.hideLoading()
+              wx.showToast({
+                title: '举报失败，请重试',
+                icon: 'none'
+              })
+            return;//有图片上传失败
         }}).catch(function () {
-            return 0
+          wx.hideLoading()
+          wx.showToast({
+            title: '举报失败，请重试',
+            icon: 'none'
+          })
+            return
         })
         // return 1是异步的
     },

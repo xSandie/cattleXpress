@@ -38,20 +38,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function() {
         var that = this
         wx.request({
             url: urlModel.url.policelist, //查询举报条目列表
@@ -73,8 +59,23 @@ Page({
                 }
             },
             fail: function() {},
-            complete: function() {}
+            complete: function() {
+            }
         })
+    },
+
+    /**
+     * 生命周期函数--监听页面初次渲染完成
+     */
+    onReady: function() {
+
+    },
+
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    onShow: function() {
+
     },
 
     /**
@@ -95,7 +96,34 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
-
+        var that = this
+        wx.request({
+            url: urlModel.url.policelist, //查询举报条目列表
+            method: 'GET',
+            data: {
+                'sessionID': app.globalData.sessionID,
+            },
+            success: function(res) {
+                that.setData({
+                    myPoliceList: res.data.myPoliceList,
+                    policeMeList: res.data.policeMeList
+                })
+                if (res.data.myPoliceList.length == 0 && res.data.policeMeList.length == 0) {
+                    wx.showToast({
+                        title: '太好了,什么也没有',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function() {},
+            complete: function() {
+                wx.showToast({
+                  title: '刷新完成'
+                })
+                wx.stopPullDownRefresh()
+            }
+        })
     },
 
     /**

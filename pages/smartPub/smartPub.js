@@ -69,9 +69,10 @@ Page({
     confirmShape: "right",
     checkedCorlor: "#faaf42",
     leftValue: "同意",
-    rightValue: "免责声明",
+    rightValue: "用户协议",
     beChecked:true,
-    bePublic:true
+    bePublic:true,
+      adId:7//协议id
   },
   //todo 发布时才触发是否设置默认地址逻辑，发布完成后才进行默认地址请求
   /**
@@ -171,6 +172,7 @@ Page({
     }else if (app.globalData.ourUserStatus == 1) {
       ui.UIManager.checkAbnormal()
     }
+    
   },
 
   /**
@@ -178,7 +180,21 @@ Page({
    */
   onPullDownRefresh: function () {
   // 下拉刷新重填,同时获取默认地址
+    
     var that = this
+    this.setData({
+      expressLocArray: app.globalData.expressLocArray,
+      dormArea: app.globalData.dormArea,
+      teachArea: app.globalData.teachArea,
+      otherArea: app.globalData.otherArea,
+      transCampus: app.globalData.transCampus,
+      dateRange: app.globalData.dateRange
+    }) //执行完才提交
+    this.setData({
+      sendLocArray: [
+        ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
+      ],
+    })
     var send_data = {
       'sessionID': app.globalData.sessionID
     }

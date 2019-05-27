@@ -84,15 +84,23 @@
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
             </button>
-            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">
-                <view class='supportText'>
-                    <text>学生证认证</text>
+            <!--<button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="doubleCertif">-->
+                <!--<view class='supportText'>-->
+                    <!--<text>学生证认证</text>-->
+                <!--</view>-->
+                <!--<view class='next'>-->
+                    <!--<image class='nextIcon' src='{{nextIcon}}'></image>-->
+                <!--</view>-->
+            <!--</button>-->
+            <button form-type="submit" open-type='contact' hover-class="answerHover1" class='joinUs defpadding'>
+                <view class='joinUsText'>
+                    <text>联系客服</text>
                 </view>
                 <view class='next'>
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
             </button>
-            <button form-type="submit" open-type='feedback' hover-class="answerHover1" class='joinUs defpadding' bindtap="feedback">
+            <button form-type="submit" open-type='feedback' hover-class="answerHover1" class='joinUs defpadding'>
                 <view class='joinUsText'>
                     <text>意见反馈</text>
                 </view>

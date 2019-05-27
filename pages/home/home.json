@@ -1,5 +1,6 @@
 {
     "navigationBarTitleText": "黄牛快递代领",
     "navigationBarTextStyle": "black",
-    "backgroundColor":"#ffffff"
+    "backgroundColor":"#ffffff",
+    "navigationBarBackgroundColor": "#ffffff"
 }

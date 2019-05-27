@@ -49,6 +49,10 @@ Component({
     placement: {
       type: String,
       value: 'left'
+    },
+    adId:{
+      type:String,
+      value:'0'
     }
   },
   data: {
@@ -57,8 +61,10 @@ Component({
   },
   methods: {
     clauseDetail(){
+      var that = this
+      if(that.properties.adId == '0')return
         wx.navigateTo({
-          url: '../../pages/adsDetail/adsDetail?appId="zhang"',
+          url: '../../pages/adsDetail/adsDetail?id='+that.properties.adId,
         })
     },
     onJudgePub(){
