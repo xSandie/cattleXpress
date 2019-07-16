@@ -1,5 +1,6 @@
 var app = getApp()
 const urlModel = require('../../utils/urlSet.js')
+const hintsModel = require('../../utils/hints.js')
 Page({
 
     /**
@@ -16,7 +17,7 @@ Page({
         row1Flag: false,
         row2Flag: false,
         row3Flag: false,
-        accountHint: '', //账号提示
+        accountHint: hintsModel.hintsManager.certifPage.account, //账号提示
         identity: 1, //1为本科生，2为研究生
         questionIcon: '../../images/question.png',
       confirmShape: "right",
@@ -25,13 +26,22 @@ Page({
     rightValue:"用户隐私协议",
     beChecked: true,
     bePublic:true,
-        adId:8
+        adId:8,
+        showDefaultAddr:true//是否提示去设置默认地址
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function(options) {},
+    onLoad: function(options) {
+        if(options.from){
+            if (options.from == 'my'){
+                this.setData({
+                    showDefaultAddr:false
+                })
+            }
+        }
+    },
 
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -60,8 +70,7 @@ Page({
     onShow: function() {
         var that = this
         this.setData({
-            schoolName: app.globalData.schoolName,
-            accountHint: app.globalData.accountHint
+            schoolName: app.globalData.schoolName
         })
         if (app.globalData.schoolName == '点击选择学校') {
             wx.showToast({
@@ -92,9 +101,13 @@ Page({
                     if (res.data.img_url) {
                         that.setData({
                             verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
-                            accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
+                            accountHint: res.data.account_hint || hints.hintsManager.certifPage.account
                         })
                     }
+                },fail:function () {
+                    that.setData({
+                        accountHint: hintsModel.hintsManager.certifPage.account
+                    })
                 }
             })
         }
@@ -161,7 +174,7 @@ Page({
                     if (res.data.img_url) {
                         that.setData({
                             verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
-                            accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
+                            accountHint: res.data.account_hint || hintsModel.hintsManager.certifPage.account
                         })
                     }
                 }
@@ -192,7 +205,7 @@ Page({
                 if (res.data.img_url) {
                     that.setData({
                         verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
-                        accountHint: res.data.account_hint || '就是登陆 教务系统 的账号'
+                        accountHint: res.data.account_hint || hintsModel.hintsManager.certifPage.account
                     })
                 }
             }
@@ -239,7 +252,7 @@ Page({
         } else if(that.data.bePublic==false) {
           wx.showModal({
             title: "未同意用户隐私协议",
-            content: '为了您与其他用户的安全，未同意用户隐私协议无法进行操作哦！',
+            content: hintsModel.hintsManager.certifPage.secret
           })
         }else{
             wx.showLoading({
@@ -264,7 +277,7 @@ Page({
                     if (res.statusCode == 200) {
                         if (res.data.status == 1) {
                             console.log(res)
-                                //设置姓名、学号、statusName
+                                //设置姓名、学号、user_status
                             app.globalData.userName = res.data.name
                             app.globalData.schoolNumb = res.data.school_numb
                             app.globalData.ourUserStatus = res.data.user_status
@@ -274,31 +287,38 @@ Page({
                                 duration: 1500,
                                 success: function() {}
                             })
-                            setTimeout(function() {}, 500)
-                            wx.showModal({
-                                title: '建议',
-                                content: '先去设置默认收货地址，这样别人才能联系到你噢',
-                                cancelText: '再说吧',
-                                confirmText: '现在就去',
-                                confirmColor: '#faaf42',
-                                success: function(res) {
-                                    if (res.confirm) {
-                                        wx.redirectTo({
-                                            url: '../defAddrEdit/defAddrEdit?path=haveCertif',
-                                        })
-                                    } else {
-                                        wx.reLaunch({
-                                            url: '../home/home',
-                                        })
-                                    }
+                            setTimeout(function() {
+                                if (that.data.showDefaultAddr){
+                                    wx.showModal({
+                                        title: '建议',
+                                        content: hintsModel.hintsManager.certifPage.setAddrSug,
+                                        cancelText: '再说吧',
+                                        confirmText: '现在就去',
+                                        confirmColor: '#faaf42',
+                                        success: function(res) {
+                                            if (res.confirm) {
+                                                wx.redirectTo({
+                                                    url: '../defAddrEdit/defAddrEdit?path=haveCertif',
+                                                })
+                                            } else {
+                                                wx.reLaunch({
+                                                    url: '../home/home',
+                                                })
+                                            }
+                                        }
+                                    })
+                                } else {
+                                    wx.reLaunch({
+                                        url: '../home/home',
+                                    })
                                 }
-                            })
+                            }, 500)
                         } else {
                             wx.showToast({
-                                title: '输入有误，请重试或联系客服',
+                                title: hintsModel.hintsManager.certifPage.certifError,
                                 icon: 'none',
                                 duration: 2000
-                            })
+                            });
                             //设置新的验证码地址
                             that.setData({
                                 verifyCodeUrl: res.data.img_url + '?v=' + Math.random()
@@ -306,16 +326,19 @@ Page({
                         }
                     } else {
                         wx.showToast({
-                            title: '输入有误，请重试或联系客服',
+                            title: hintsModel.hintsManager.certifPage.certifError,
                             icon: 'none',
                             duration: 2000
                         })
                     }
-                    // setTimeout(function() {
-                    //     wx.navigateBack({})
-                    // }, 1000);
                 },
-                fail: function() {},
+                fail: function() {
+                    wx.showToast({
+                        title: hintsModel.hintsManager.certifPage.certifError,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                },
                 complete: function() {}
             })
         }

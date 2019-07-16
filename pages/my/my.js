@@ -50,7 +50,7 @@ Page({
                     })
                     app.globalData.userName = res.data.username
                     app.globalData.schoolNumb = res.data.school_numb
-                    app.globalData.havePayCode = res.data.have_pay_code
+                    app.globalData.havePayCode = res.data.have_paycode
                     app.globalData.ourUserStatus = res.data.user_status
                     if (res.data.user_status != 4) { app.globalData.haveCertif = true }
                     app.globalData.balance = res.data.balance
@@ -71,8 +71,41 @@ Page({
             }
         })
     },
-
-
+    onShow:function(){
+        var that = this
+        wx.request({
+            url: urlModel.url.usrinfo, //用户余额信用获取
+            method: 'GET',
+            data: {
+                'sessionID': app.globalData.sessionID,
+            },
+            success: function(res) {
+                console.log(res)
+                if (res.statusCode == 200) {
+                    app.globalData.havePayCode = res.data.have_paycode
+                    that.setData({
+                        balance: res.data.balance, //修改参数
+                        creditScore: res.data.credit,
+                        level: res.data.level
+                    })
+                    app.globalData.userName = res.data.username
+                    app.globalData.schoolNumb = res.data.school_numb
+                    app.globalData.balance = res.data.balance
+                    app.globalData.ourUserStatus = res.data.user_status
+                    if (res.data.user_status != 4) { app.globalData.haveCertif = true }
+                } else {
+                }
+            },
+            fail: function() {
+            },
+            complete: function() {
+                that.setData({
+                    realName: app.globalData.userName,
+                    schoolNumb: app.globalData.schoolNumb,
+                })
+            }
+        })
+    },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
@@ -91,7 +124,7 @@ Page({
                 console.log(res)
                 wx.hideLoading()
                 if (res.statusCode == 200) {
-                    app.globalData.havePayCode = res.data.have_pay_code
+                    app.globalData.havePayCode = res.data.have_paycode
                     that.setData({
                         balance: res.data.balance, //修改参数
                         creditScore: res.data.credit,
@@ -167,7 +200,7 @@ Page({
             success: function(res) {
                 if (res.confirm){
                     wx.navigateTo({
-                        url: '../certifPage/certifPage',
+                        url: '../certifPage/certifPage?from=my',
                     })
                 }
             }

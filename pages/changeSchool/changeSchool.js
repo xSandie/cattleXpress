@@ -155,7 +155,7 @@ Page({
             },
             success: function(res) {
                 if (res.statusCode == 200) {
-                    app.getUser().then(function(res) {
+                    app.getUserSync().then(function(res) {
                         wx.hideLoading()
                         wx.showToast({
                             title: '修改成功',

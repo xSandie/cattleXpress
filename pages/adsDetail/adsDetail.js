@@ -40,12 +40,16 @@ Page({
         //自定义事件，格式为`event_`+`绑定类型`+`_`+`事件类型`
         //例如`bind:touchstart`则为：
         this['event_bind_tap'] = (event)=>{
-          // console.log(event.target.dataset._el);     // 打印出元素信息
+          console.log(event.target.dataset._el);     // 打印出元素信息
           var e = event.target.dataset._el
           if('src' in e.attr){
               var src = e.attr.src;
             wx.previewImage({
               urls: [src],
+            })
+          } else if (e.child[0].text) {
+            wx.setClipboardData({
+              data: e.child[0].text,
             })
           }
         };

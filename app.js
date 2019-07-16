@@ -1,20 +1,22 @@
 //app.js
 const Promise = require('units/promise.js');
 const urlModel = require('utils/urlSet.js');
-const Towxml = require('/towxml/main');  
+const hintsModel = require('utils/hints.js');
+const Towxml = require('/towxml/main');
 App({
     onLaunch: function() {},
     towxml: new Towxml(),
     //获取基本信息方法
-    getUser: function() {
+    getUserSync: function() {
         var app = this;
         return new Promise(function(resolve, reject) {
             wx.showLoading({
-                title: '全速加载',
+                title: hintsModel.hintsManager.mainApp.loadSession,
                 mask: true
-            })
+            });
             wx.login({
                 success: function(res) {
+                    //只会拿到一个code
                     if (res.code) {
                         wx.request({
                             url: urlModel.url.codeUrl,
@@ -22,57 +24,32 @@ App({
                                 code: res.code
                             },
                             success: function(res) {
-                                console.log(res)
                                 if (res.statusCode == 200) {
-                                    if (res.data.user_name) {
-                                        //有姓名，已认证
-                                        app.globalData.userName = res.data.user_name
-                                        app.globalData.schoolNumb = res.data.school_numb //学号
-                                        app.globalData.sex = res.data.sex
-                                    }
-                                    app.globalData.schoolID = res.data.school_id
-                                    app.globalData.schoolName = res.data.school_name
-                                    app.globalData.expressLocArray = res.data.express_loc_array
-
-                                    app.globalData.dormArea = res.data.dorm_area
-                                    app.globalData.teachArea = res.data.teach_area
-                                    app.globalData.otherArea = res.data.others_area
-                                    app.globalData.transCampus = res.data.cross_campus
-
-                                    app.globalData.balance = res.data.balance
-                                    app.globalData.dateRange = res.data.date_range
-                                    app.globalData.havePayCode = res.data.have_paycode
-                                    app.globalData.sessionID = res.data.sessionID
-                                    app.globalData.ourUserStatus = res.data.user_status
-                                    app.globalData.smartPub = res.data.smart_pub
-                                    app.globalData.defaultReward = res.data.default_reward
-                                    if (res.data.default) { app.globalData.default = res.data.default }
-                                    if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
-
-                                    wx.hideLoading()
+                                    app.globalData.sessionID = res.data.sessionID;
+                                    wx.hideLoading();
                                     resolve('ok');
                                 } else {
-                                    wx.hideLoading()
+                                    wx.hideLoading();
                                     wx.showToast({
-                                        title: '网络不太畅通，请检查网络后点击重新登陆',
+                                        title: hintsModel.hintsManager.mainApp.loginFailed,
                                         icon: 'none',
                                         duration: 2000,
                                         mask: false,
                                         success: function() {}
-                                    })
+                                    });
                                     reject('error');
                                 }
 
                             },
                             fail: function() {
-                                wx.hideLoading()
+                                wx.hideLoading();
                                 wx.showToast({
-                                    title: '网络不太畅通，请检查网络后点击重新登陆',
+                                    title: hintsModel.hintsManager.mainApp.loginFailed,
                                     icon: 'none',
                                     duration: 5000,
                                     mask: true,
                                     success: function() {}
-                                })
+                                });
                                 reject('error');
                             }
                         })
@@ -81,9 +58,9 @@ App({
                     }
                 },
                 fail: function () {
-                    wx.hideLoading()
+                    wx.hideLoading();
                     wx.showToast({
-                        title: '网络不太畅通，请检查网络后点击重新登陆',
+                        title: hintsModel.hintsManager.mainApp.loginFailed,
                         icon: 'none',
                         duration: 2000,
                         mask: false,
@@ -93,6 +70,97 @@ App({
             })
         })
     },
+    getBaseInfoSync:function(sessionID=null){
+        var app = this;
+        if(sessionID == null)sessionID=app.globalData.sessionID;
+        return new Promise((resolve, reject)=>{
+            wx.request({
+                url: urlModel.url.baseInfoUrl,
+                data: {
+                    "sessionID": sessionID
+                },
+                success: function(res) {
+                    console.log(res);
+                    if (res.statusCode == 200) {
+                        app.globalData.ourUserStatus = res.data.user_status;
+                        app.globalData.smartPub = res.data.smart_pub;
+                        app.globalData.defaultReward = res.data.default_reward;
+                        if (res.data.default) { app.globalData.default = res.data.default }
+                        if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
+
+                        if (res.data.user_name) {
+                            //有姓名，已认证
+                            app.globalData.userName = res.data.user_name;
+                            app.globalData.schoolNumb = res.data.school_numb; //学号
+                            app.globalData.sex = res.data.sex
+                        }
+                        app.globalData.schoolID = res.data.school_id;
+                        app.globalData.schoolName = res.data.school_name;
+                        app.globalData.expressLocArray = res.data.express_loc_array;
+
+                        app.globalData.dormArea = res.data.dorm_area;
+                        app.globalData.teachArea = res.data.teach_area;
+                        app.globalData.otherArea = res.data.others_area;
+                        app.globalData.transCampus = res.data.cross_campus;
+
+                        app.globalData.balance = res.data.balance;
+                        app.globalData.dateRange = res.data.date_range;
+                        app.globalData.havePayCode = res.data.have_paycode;
+
+                        wx.hideLoading();
+                        resolve()
+                    } else {
+                        wx.hideLoading();
+                        wx.showToast({
+                            title: '网络不太畅通，请检查网络后点击重新登陆',
+                            icon: 'none',
+                            duration: 2000,
+                            mask: false,
+                            success: function() {}
+                        });
+                        reject()
+                    }
+                },
+                fail: function() {
+                    wx.hideLoading();
+                    wx.showToast({
+                        title: '网络不太畅通，请检查网络后点击重新登陆',
+                        icon: 'none',
+                        duration: 5000,
+                        mask: true,
+                        success: function() {}
+                    });
+                    reject()
+                }
+            })
+        });
+
+
+    },
+//     app.globalData.ourUserStatus = res.data.user_status
+//     app.globalData.smartPub = res.data.smart_pub
+//     app.globalData.defaultReward = res.data.default_reward
+//     if (res.data.default) { app.globalData.default = res.data.default }
+// if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
+//     if (res.data.user_name) {
+//     //有姓名，已认证
+//     app.globalData.userName = res.data.user_name
+//     app.globalData.schoolNumb = res.data.school_numb //学号
+//     app.globalData.sex = res.data.sex
+// }
+// app.globalData.schoolID = res.data.school_id
+// app.globalData.schoolName = res.data.school_name
+// app.globalData.expressLocArray = res.data.express_loc_array
+//
+// app.globalData.dormArea = res.data.dorm_area
+// app.globalData.teachArea = res.data.teach_area
+// app.globalData.otherArea = res.data.others_area
+// app.globalData.transCampus = res.data.cross_campus
+//
+// app.globalData.balance = res.data.balance
+// app.globalData.dateRange = res.data.date_range
+// app.globalData.havePayCode = res.data.have_paycode
+
 
     globalData: {
         sessionID: '', //用户ID
@@ -121,9 +189,8 @@ App({
         },
         dateRange: [],
         havePayCode: false,
-        accountHint: '就是登陆 教务系统 的账号', //认证账号提示
         reloadHomePage:false,
         smartPub:true,
         defaultReward: 2
     }
-})
+});

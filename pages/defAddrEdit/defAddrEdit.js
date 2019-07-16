@@ -1,5 +1,5 @@
 var app = getApp();
-const urlModel = require('../../utils/urlSet.js')
+const urlModel = require('../../utils/urlSet.js');
 Page({
 
     /**
@@ -45,21 +45,21 @@ Page({
                 title: '请确保 联系电话 正确',
                 icon: 'none',
                 duration: 5000
-            })
+            });
             this.setData({
                 btnText: '确认设置'
             })
         }
         var send_data = {
             'sessionID': app.globalData.sessionID
-        }
-        var that = this
+        };
+        var that = this;
         wx.request({
             url: urlModel.url.getAddr,
             data: send_data,
             success: function(res) {
                 //与发布界面 一致
-                console.log('onload:',res)
+                console.log('onload:',res);
                 if (res.statusCode == 200) {
                     if (res.data.default) {
                         let temp = {
@@ -69,7 +69,7 @@ Page({
                             recName: res.data.rec_name,
                             phoneRear: res.data.phone_rear,
                             QQ:res.data.QQ==null?'可不填写':res.data.QQ
-                        }
+                        };
                         app.globalData.default = temp
                     }
                 }
@@ -81,7 +81,7 @@ Page({
                     sendLocSelect:app.globalData.default.sendLocSelect
                 })
             }
-        })
+        });
 
         this.setData({
             dormArea: app.globalData.dormArea,
@@ -101,11 +101,11 @@ Page({
     onPullDownRefresh: function() {
         wx.showLoading({
             title:'重置中'
-        })
+        });
         var send_data = {
             'sessionID': app.globalData.sessionID
-        }
-        var that = this
+        };
+        var that = this;
         wx.request({
             url: urlModel.url.getAddr,
             data: send_data,
@@ -120,7 +120,7 @@ Page({
                             recName: res.data.rec_name,
                             phoneRear: res.data.phone_rear,
                             QQ:res.data.QQ==null?'可不填写':res.data.QQ
-                        }
+                        };
                         app.globalData.default = temp
                     }
                 }
@@ -132,7 +132,7 @@ Page({
                     sendLocSelect:app.globalData.default.sendLocSelect
                 })
             }
-        })
+        });
         this.setData({
             dormArea: app.globalData.dormArea,
             teachArea: app.globalData.teachArea,
@@ -142,8 +142,8 @@ Page({
             sendLocArray: [
                 ['宿舍区', '教学区', '其他区', '跨校区'], app.globalData.dormArea
             ]
-        })
-        wx.hideLoading()
+        });
+        wx.hideLoading();
         wx.stopPullDownRefresh()
     },
 
@@ -160,7 +160,7 @@ Page({
     sdlocChange: function(e) {
         // console.log(e);
         // console.log('picker发送选择改变，携带值为', e.detail.value)
-        var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
+        var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]];
         this.setData({
             sendLocSelect: selected
         })
@@ -170,7 +170,7 @@ Page({
         var data = {
             sendLocArray: this.data.sendLocArray,
             sendLocIndex: this.data.sendLocIndex
-        }
+        };
         data.sendLocIndex[e.detail.column] = e.detail.value;
         switch (e.detail.column) {
             case 0:
@@ -209,18 +209,21 @@ Page({
         })
     },
     replaceAddr: function(e) {
-        var detail = e.detail.value
+        var detail = e.detail.value;
         if (detail.phoneRear == '' && this.data.phoneRear != '') { //说明自动 生成了手机尾号 且 未自行填写尾号
             detail.phoneRear = this.data.phoneRear
         }
-        var that = this
+        if (detail.conPhone == '' && this.data.default.conPhone != '点击输入电话号码'){
+            detail.conPhone = this.data.default.conPhone
+        }
+        var that = this;
         if (!that.checkNone(detail)) {
             //check none 一定要在上，存在没有写的去补全
             //默认情况 要 补全逻辑 返回detail
             wx.showLoading({
               title: '修改中'
-            })
-            detail = that.fillDetailToDefault(detail)
+            });
+            detail = that.fillDetailToDefault(detail);
 
             var send_data = {
                 'sessionID': app.globalData.sessionID,
@@ -230,8 +233,8 @@ Page({
                 'fetchName': detail.recName,
                 'phoneRear': detail.phoneRear,
                 'QQ':detail.QQ=='可不填写'?null:detail.QQ
-            }
-            console.log('ready:',send_data)
+            };
+            console.log('ready:',send_data);
                 //发起post请求
             wx.request({
                 url: urlModel.url.postAddr,
@@ -239,23 +242,23 @@ Page({
                 data: send_data,
                 success: function(res) {
                     if (res.statusCode==200) {
-                        wx.hideLoading()
+                        wx.hideLoading();
                         wx.showToast({
                             title: '修改成功',
-                        })
+                        });
                         setTimeout(()=>{wx.switchTab({
                             url: '../my/my',
                         })},2000)
 
                     } else {
-                        wx.hideLoading()
+                        wx.hideLoading();
                         wx.showToast({
                             title: '出错，请重试',
                             icon: 'none'
                         })
                     }
                 },fail:function () {
-                    wx.hideLoading()
+                    wx.hideLoading();
                     wx.showToast({
                         title: '出错，请重试',
                         icon: 'none'
@@ -272,7 +275,7 @@ Page({
             wx.showToast({
                     title: '请补全信息',
                     icon: 'none'
-                })
+                });
                 //存在未填写信息，提示补全
             return true
         }
@@ -323,9 +326,9 @@ Page({
         return false
     },
     extractPhoneRear: function(e) {
-        var that = this
-        console.log(e)
-        var inputNumb = e.detail.value
+        var that = this;
+        console.log(e);
+        var inputNumb = e.detail.value;
         if (inputNumb.length < 11 && inputNumb.length >= 1) {
             //输入手机号小于11位 且 大于1位
             wx.showToast({
@@ -333,12 +336,15 @@ Page({
                 icon: 'none'
             })
         } else if (inputNumb.length == 11) {
-            this.data.default.phoneRear = inputNumb[7] + inputNumb[8] + inputNumb[9] + inputNumb[10]
+            this.data.default.phoneRear = inputNumb[7] + inputNumb[8] + inputNumb[9] + inputNumb[10];
             this.setData({
                 default: that.data.default,
                 phoneRear: that.data.default.phoneRear
             })
         }
         console.log(this.data.default)
+    },
+    getPhoneNumber:function (e) {
+        console.log(e)
     }
-})
+});

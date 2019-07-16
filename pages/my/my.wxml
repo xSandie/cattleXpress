@@ -108,12 +108,12 @@
                    <image class='nextIcon' src='{{nextIcon}}'></image> 
                 </view>
             </button>
-            <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="agreement">
+            <!-- <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="agreement">
                 <view class='joinUsText'>
                     <text>用户协议&隐私政策</text>
                 </view>
                 <view class='next'>
                    <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
-            </button>
+            </button> -->
         </form>

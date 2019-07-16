@@ -7,13 +7,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        ads: [
-            // {
-            //     url:'../../images/banner1.png',
-            //     id:null,
-            //     fixId:1
-            // },
-            {
+        ads: [{
                 url:'../../images/banner2.png',
                 id : null,
                 fixId:2
@@ -43,15 +37,16 @@ Page({
         var that = this;
         var send_data = {
             'school_id': app.globalData.schoolID,
-        }
+        };
         wx.request({
             url: urlModel.url.getBanner, //请求首页订单列表
             method: 'GET',
             data: send_data,
             success: function(res) {
                 if (res.statusCode == 200){
+                    var banners = res.data.banners.concat(that.data.ads);
                     that.setData({
-                        ads: that.data.ads.concat(res.data.banners)
+                        ads: banners
                     })
                 }
                 console.log(res)
@@ -72,15 +67,13 @@ Page({
                                     'user_nickname': res.userInfo.nickName,
                                     'user_avatarurl': res.userInfo.avatarUrl,
                                     'sessionID': app.globalData.sessionID
-                                }
+                                };
                                 wx.request({
                                     url: urlModel.url.postAvatar,
                                     method: 'POST',
-                                    // header: { "Content-Type": "application/x-www-form-urlencoded" },
                                     data: send_data,
                                     success: function(res) {
-                                        // console.log("---上传头像--")
-                                        // console.log(res)
+                                        console.log("---上传头像--")
                                     }
                                 })
                             } //发起发送用户头像昵称请求
@@ -112,73 +105,75 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-        var that = this
-        app.getUser().then(function(res) {
-            that.setData({
-                requestTime: 1,
-                atEndFlag: false
-            })
-            that.setData({
-                schoolName: app.globalData.schoolName,
-                loginFailed:false
-            })
-            var send_data = {
-                'school_id': app.globalData.schoolID,
-                'sessionID': app.globalData.sessionID,
-                'request_time': 1
-            }
-            that.getBanner()
-            wx.showLoading({
-                title: '装填订单',
-                mask: true
-            })
-            wx.request({
-                url: urlModel.url.getOrdersList, //请求首页订单列表
-                method: 'GET',
-                data: send_data,
-                success: function(res) {
-                    if(res.statusCode == 200){
-                        that.setData({
-                            orderList: res.data.waiting_orders,
-                            finishedOrderList: res.data.finish_orders
-                        })
-                    }
-                    console.log(res)
-                },
-                fail: function() {},
-                complete: function() { wx.hideLoading()
-                if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
+        var that = this;
+        app.getUserSync().then(function(res) {
+            app.getBaseInfoSync().then(
+                ()=>{
                     that.setData({
-                        atEndFlag:false,
-                        blank:true
-                    })
-                } else {
-                    that.setData({
-                        blank:false
-                    })
+                        requestTime: 1,
+                        atEndFlag: false,
+                        schoolName: app.globalData.schoolName,
+                        loginFailed:false
+                    });
+                    var send_data = {
+                        'school_id': app.globalData.schoolID,
+                        'sessionID': app.globalData.sessionID,
+                        'request_time': 1
+                    };
+                    that.getBanner();
+                    wx.showLoading({
+                        title: '装填订单',
+                        mask: true
+                    });
+                    wx.request({
+                        url: urlModel.url.getOrdersList, //请求首页订单列表
+                        method: 'GET',
+                        data: send_data,
+                        success: function(res) {
+                            if(res.statusCode == 200){
+                                that.setData({
+                                    orderList: res.data.waiting_orders,
+                                    finishedOrderList: res.data.finish_orders
+                                })
+                            }
+                            console.log(res)
+                        },
+                        fail: function() {},
+                        complete: function() { wx.hideLoading();
+                            if (that.data.orderList.length==0 && that.data.finishedOrderList.length==0){
+                                that.setData({
+                                    atEndFlag:false,
+                                    blank:true
+                                })
+                            } else {
+                                that.setData({
+                                    blank:false
+                                })
+                            }
+                        }
+                    });
+                    var send_data = {
+                        'sessionID': app.globalData.sessionID
+                    };
+                    //获取默认地址
+                    wx.request({
+                        url: urlModel.url.getAddr,
+                        data: send_data,
+                        success: function(res) {
+                            if (res.data.default) {
+                                app.globalData.default.conPhone = res.data.phone;
+                                app.globalData.default.phoneRear = res.data.phone_rear;
+                                app.globalData.default.recName = res.data.rec_name;
+                                app.globalData.default.sendLocInput = res.data.send_loc_detail;
+                                app.globalData.default.sendLocSelect = res.data.send_loc_sum;
+                                app.globalData.default.QQ = res.data.QQ || '可不填写'
+                            }
+                        }
+                    });
+                    that.setAvatar();
                 }
-                }
-            })
-            var send_data = {
-                'sessionID': app.globalData.sessionID
-            }
-            //获取默认地址
-            wx.request({
-                url: urlModel.url.getAddr,
-                data: send_data,
-                success: function(res) {
-                    if (res.data.default) {
-                        app.globalData.default.conPhone = res.data.phone
-                        app.globalData.default.phoneRear = res.data.phone_rear
-                        app.globalData.default.recName = res.data.rec_name
-                        app.globalData.default.sendLocInput = res.data.send_loc_detail
-                        app.globalData.default.sendLocSelect = res.data.send_loc_sum
-                        app.globalData.default.QQ = res.data.QQ || '可不填写'
-                    }
-                }
-            })
-            that.setAvatar();
-        }).catch(function () {
+            ).catch();
+        }).catch(function (res) {
             that.setData({
                 loginFailed:true
             })
@@ -191,16 +186,16 @@ Page({
      */
     onShow: function() {
         //每次显示都刷新学校名称
-        var that = this
+        var that = this;
         that.setData({
                 schoolName: app.globalData.schoolName
-            })
+            });
         setTimeout(that.timeOutRefresh,1000)
 
     },
     timeOutRefresh:function(){
         if(app.globalData.reloadHomePage){
-            app.globalData.reloadHomePage = false
+            app.globalData.reloadHomePage = false;
             this.onPullDownRefresh()
         }
     },
@@ -226,13 +221,13 @@ Page({
         wx.showLoading({
             title: '刷新中',
             mask: true
-        })
+        });
         this.setData({
             pubOrTop: true,
             schoolName: app.globalData.schoolName,
             requestTime: 1
-        })
-        var that = this
+        });
+        var that = this;
         wx.request({
             url: urlModel.url.getOrdersList,
             method: 'GET',
@@ -242,14 +237,14 @@ Page({
                 'request_time': 1
             },
             success: function(res) {
-                wx.hideLoading()
+                wx.hideLoading();
                 that.setData({
                     orderList: res.data.waiting_orders,
                     finishedOrderList: res.data.finish_orders
                 })
             },
             fail: function() {
-                wx.hideLoading()
+                wx.hideLoading();
                 wx.showModal({
                     title: '提示',
                     content: '网络不太畅通，请稍后再试噢',
@@ -278,17 +273,17 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function() { //这里list都是append逻辑
-        var that = this
+        var that = this;
         this.setData({
             requestTime: that.data.requestTime + 1
-        })
+        });
         this.setData({
             pubOrTop: false
-        })
+        });
         wx.showLoading({
             title: '加载中',
             mask: true
-        })
+        });
         wx.request({
             url: urlModel.url.getOrdersList, //填充url筛选请求列表
             method: 'GET',
@@ -372,7 +367,7 @@ Page({
     },
     relogin:function(){
         //重新登陆
-        this.onLoad()
+        this.onLoad('login')
     },
     changeSchool: function() {
         wx.navigateTo({
@@ -383,7 +378,7 @@ Page({
         wx.pageScrollTo({
             scrollTop: 0,
             duration: 300
-        })
+        });
         this.setData({
             pubOrTop: true
         })
@@ -394,8 +389,8 @@ Page({
         })
     },
     collect:function (e) {
-        var formId = e.detail.formId
-        console.log(e)
+        var formId = e.detail.formId;
+        console.log(e);
         ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)
     }
-})
+});

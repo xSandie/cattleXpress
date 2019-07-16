@@ -68,8 +68,17 @@ Page({
         }
     },
     onGotUserInfo: function(e) {
-        wx.reLaunch({
-            url: '../home/home',
-        })
+        console.log(e)
+        if (e.detail.rawData){
+            wx.reLaunch({
+                url: '../home/home',
+            })
+        } else {
+            wx.showToast({
+              title: '需要授权黄牛才能更好地为您服务噢~',
+                icon:'none'
+            })
+        }
+
     },
 })

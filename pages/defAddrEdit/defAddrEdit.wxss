@@ -45,12 +45,10 @@ button::after {
 }
 
 button {
-    margin: 0rpx;
     margin-top: 30rpx;
     border-radius: 16rpx;
     box-sizing: border-box;
     padding: 30rpx;
-    width: 246rpx;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,4 +158,20 @@ form {
     height: 36rpx;
     margin-left: 16rpx;
     margin-right: 16rpx;
+}
+.getNumb{
+    height: 100rpx;
+    border-radius: 16rpx;
+    border: #FFFFFF solid 2rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 32rpx;
+    margin-top: 30rpx;
+    font-weight: bold;
+    position: relative;
+    top: 200rpx;
+    background: unset;
 }
