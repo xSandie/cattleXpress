@@ -83,11 +83,11 @@ App({
                     console.log(res);
                     if (res.statusCode == 200) {
                         app.globalData.ourUserStatus = res.data.user_status;
-                        app.globalData.smartPub = res.data.smart_pub;
-                        app.globalData.defaultReward = res.data.default_reward;
+                        // app.globalData.smartPub = res.data.smart_pub;
+                        // app.globalData.defaultReward = res.data.default_reward;
                         if (res.data.default) { app.globalData.default = res.data.default }
-                        if (res.data.user_status == 4) { app.globalData.haveCertif = false } else { app.globalData.haveCertif = true }
-
+                        if (res.data.user_status == 4) { app.globalData.haveCertif = false } else
+                            { app.globalData.haveCertif = true }
                         if (res.data.user_name) {
                             //有姓名，已认证
                             app.globalData.userName = res.data.user_name;
@@ -160,7 +160,25 @@ App({
 // app.globalData.balance = res.data.balance
 // app.globalData.dateRange = res.data.date_range
 // app.globalData.havePayCode = res.data.have_paycode
-
+    // 加载动态配置文件
+    loadConfig:function(){
+        var app = this;
+        wx.request({
+            url: urlModel.url.configUrl,
+            data: {
+                "sessionID": app.globalData.sessionID
+            },
+            success: function(res) {
+                console.log(res);
+                if (res.statusCode == 200) {
+                    app.globalData.smartPub = res.data.smart_pub;
+                    app.globalData.defaultReward = res.data.default_reward;
+                    app.globalData.defaultLimit = res.data.default_limit;
+                } else {
+                }
+            }
+        })
+    },
 
     globalData: {
         sessionID: '', //用户ID
@@ -190,7 +208,9 @@ App({
         dateRange: [],
         havePayCode: false,
         reloadHomePage:false,
-        smartPub:true,
-        defaultReward: 2
+        //动态配置文件
+        smartPub:true,  //智能发布开关
+        defaultReward: 2, //默认赏金
+        defaultLimit: true //默认取件人限制
     }
 });

@@ -90,7 +90,7 @@ Page({
             url: urlModel.url.reportExError, //填充报错URL
             method: 'POST',
             data: {
-                'exp_opentime': e.detail.value.expOpentime,
+                'exp_open_time': e.detail.value.expOpentime,
                 'exp_company': e.detail.value.expCompany,
                 'school_id': app.globalData.schoolID,
                 'sessionID': app.globalData.sessionID

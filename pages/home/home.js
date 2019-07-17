@@ -125,6 +125,7 @@ Page({
                         title: '装填订单',
                         mask: true
                     });
+                    app.loadConfig();
                     wx.request({
                         url: urlModel.url.getOrdersList, //请求首页订单列表
                         method: 'GET',

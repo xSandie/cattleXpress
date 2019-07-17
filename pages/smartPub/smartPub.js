@@ -79,7 +79,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   myBePublic(e){
-    console.log(e.detail.checked)
+    console.log(e.detail.checked);
     if(e.detail.checked==false){
         this.setData({
           bePublic:false
@@ -92,36 +92,41 @@ Page({
     }
   },
   onLoad: function (options) {
+    if(app.globalData.defaultLimit){
+      this.setData({
+        limitIndex:3
+      })
+    }
     this.setData({
       recognHint:'',
       smartPub:app.globalData.smartPub,
       defaultReward:app.globalData.defaultReward
-    })
+    });
     if (app.globalData.smartPub==false){
         if (!this.data.haveShowCantPub){
           wx.showToast({
             title: '该校区暂无智能发布',
             icon:'none'
-          })
+          });
           this.setData({
             haveShowCantPub:true
           })
         }
     }
-    var that = this
+    var that = this;
     var send_data = {
       'sessionID': app.globalData.sessionID
-    }
+    };
     wx.request({
       url: urlModel.url.getAddr,
       data: send_data,
       success: function(res) {
         if (res.data.default) {
-          app.globalData.default.conPhone = res.data.phone
-          app.globalData.default.phoneRear = res.data.phone_rear
-          app.globalData.default.recName = res.data.rec_name
-          app.globalData.default.sendLocInput = res.data.send_loc_detail
-          app.globalData.default.sendLocSelect = res.data.send_loc_sum
+          app.globalData.default.conPhone = res.data.phone;
+          app.globalData.default.phoneRear = res.data.phone_rear;
+          app.globalData.default.recName = res.data.rec_name;
+          app.globalData.default.sendLocInput = res.data.send_loc_detail;
+          app.globalData.default.sendLocSelect = res.data.send_loc_sum;
           app.globalData.default.QQ = res.data.QQ || '可不填写'
         }
       },
@@ -129,7 +134,7 @@ Page({
         that.setData({
           default: app.globalData.default,
           sendLocSelect: app.globalData.default.sendLocSelect
-        })
+        });
         if (that.data.default.phoneRear == '四位数字') {
           that.setData({
             expDescript:'',
@@ -138,7 +143,7 @@ Page({
           })
         }
       }
-    })
+    });
 
     this.setData({
       expressLocArray: app.globalData.expressLocArray,
@@ -147,12 +152,12 @@ Page({
       otherArea: app.globalData.otherArea,
       transCampus: app.globalData.transCampus,
       dateRange: app.globalData.dateRange
-    }) //执行完才提交
+    }); //执行完才提交
     this.setData({
       sendLocArray: [
         ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
       ],
-    })
+    });
     setTimeout(that.recover,2000)
   },
 
@@ -181,7 +186,7 @@ Page({
   onPullDownRefresh: function () {
   // 下拉刷新重填,同时获取默认地址
     
-    var that = this
+    var that = this;
     this.setData({
       expressLocArray: app.globalData.expressLocArray,
       dormArea: app.globalData.dormArea,
@@ -189,35 +194,35 @@ Page({
       otherArea: app.globalData.otherArea,
       transCampus: app.globalData.transCampus,
       dateRange: app.globalData.dateRange
-    }) //执行完才提交
+    }); //执行完才提交
     this.setData({
       sendLocArray: [
         ['宿舍区', '教学区', '其他区', '跨校区'], that.data.dormArea
       ],
-    })
+    });
     var send_data = {
       'sessionID': app.globalData.sessionID
-    }
+    };
     wx.showLoading({
       title:'重置中'
-    })
+    });
     wx.request({
       url: urlModel.url.getAddr,
       data: send_data,
       success: function(res) {
         if (res.data.default) {
-          app.globalData.default.conPhone = res.data.phone
-          app.globalData.default.phoneRear = res.data.phone_rear
-          app.globalData.default.recName = res.data.rec_name
-          app.globalData.default.sendLocInput = res.data.send_loc_detail
-          app.globalData.default.sendLocSelect = res.data.send_loc_sum
-          app.globalData.default.QQ = res.data.QQ || '可不填写'
-          wx.hideLoading()
+          app.globalData.default.conPhone = res.data.phone;
+          app.globalData.default.phoneRear = res.data.phone_rear;
+          app.globalData.default.recName = res.data.rec_name;
+          app.globalData.default.sendLocInput = res.data.send_loc_detail;
+          app.globalData.default.sendLocSelect = res.data.send_loc_sum;
+          app.globalData.default.QQ = res.data.QQ || '可不填写';
+          wx.hideLoading();
           wx.showToast({
             title: '重置成功'
           })
         }else {
-          wx.hideLoading()
+          wx.hideLoading();
           wx.showToast({
             title: '重置失败',
             icon:'none'
@@ -225,7 +230,7 @@ Page({
         }
       },
       fail:function(){
-        wx.hideLoading()
+        wx.hideLoading();
         wx.showToast({
           title: '重置失败',
           icon:'none'
@@ -235,22 +240,22 @@ Page({
         that.setData({
           default: app.globalData.default,
           sendLocSelect: app.globalData.default.sendLocSelect
-        })
+        });
         wx.stopPullDownRefresh()
       }
-    })
+    });
 
 
     this.setData({
       smartPub:app.globalData.smartPub,
       defaultReward:app.globalData.defaultReward
-    })
+    });
     if (app.globalData.smartPub==false){
       if (!this.data.haveShowCantPub){
         wx.showToast({
           title: '该校区暂无智能发布',
           icon:'none'
-        })
+        });
         this.setData({
           haveShowCantPub:true
         })
@@ -265,13 +270,13 @@ Page({
     }
   },
   scrollDown:function(){
-    var that = this
+    var that = this;
     this.setData({
       expDescript:'',
       recognHint:'',
       cardStyle:'addrEditCard',
       showEdit:!that.data.showEdit
-    })//放下卡片的类
+    });//放下卡片的类
     setTimeout(that.recover,1000)
 
 
@@ -279,21 +284,21 @@ Page({
   },
   recover:function(){
     //动画播放完成后将文字设置成原来的
-    var that = this
+    var that = this;
     this.setData({
       expDescript:that.data.tempExpDescript,
       recognHint:that.data.tempRecognHint,
     })
   },
   scrollUp:function () {
-    var that = this
+    var that = this;
     this.setData({
       expDescript:'',
       recognHint:'',
       cardStyle:'sumCard',
       showEdit:!that.data.showEdit,
       submitFlag:false
-    })//收起卡片的类
+    });//收起卡片的类
     setTimeout(that.recover,1000)
   },
   differLink:function () {
@@ -307,9 +312,9 @@ Page({
     })
   },
   extractPhoneRear: function(e) {
-    var that = this
-    console.log(e)
-    var inputNumb = e.detail.value
+    var that = this;
+    console.log(e);
+    var inputNumb = e.detail.value;
     if (inputNumb.length < 11 && inputNumb.length >= 1) {
       //输入手机号小于11位 且 大于1位
       wx.showToast({
@@ -317,19 +322,19 @@ Page({
         icon: 'none'
       })
     } else if (inputNumb.length == 11) {
-      this.data.default.phoneRear = inputNumb[7] + inputNumb[8] + inputNumb[9] + inputNumb[10]
+      this.data.default.phoneRear = inputNumb[7] + inputNumb[8] + inputNumb[9] + inputNumb[10];
       this.setData({
         default: that.data.default,
         phoneRear: that.data.default.phoneRear
       })
     }
-    console.log(this.data.default)
+    console.log(this.data.default);
     //todo check bug
     app.globalData.default.phoneRear = that.data.default.phoneRear
   },
   setDefFlag:function () {
     //是否设置成默认值
-    var that = this
+    var that = this;
     this.setData({
       setDefFlag:!that.data.setDefFlag
     })
@@ -339,40 +344,40 @@ Page({
   },
   pubOrder:function (e) {
     //提交发布
-    let that = this
-    console.log(e)
+    let that = this;
+    console.log(e);
     var formId = e.detail.formId;
-    var detail = e.detail.value
-    detail['form_id'] = formId
-    console.log('查看form_id:',formId)
+    var detail = e.detail.value;
+    detail['form_id'] = formId;
+    console.log('查看form_id:',formId);
     if(this.data.submitFlag){
-      detail = this.fillAddrToDefault(detail)
-      detail = this.fill2Pub(detail)
-      detail = this.add2Pub(detail)
+      detail = this.fillAddrToDefault(detail);
+      detail = this.fill2Pub(detail);
+      detail = this.add2Pub(detail);
       // console.log('发布填充后',detail)
-      detail['sessionID'] = app.globalData.sessionID
+      detail['sessionID'] = app.globalData.sessionID;
       if (this.canPub(detail)){
         if(that.data.bePublic==true){
-        console.log('发布逻辑')
+        console.log('发布逻辑');
         wx.showLoading({
           title:'发布中'
-        })
+        });
         if (this.data.setDefFlag){
           //todo 设置默认地址+发布
-          detail['set_default'] = true
-          detail = this.set2Standard(detail)
-          console.log('发送要设置默认地址的发布请求',detail)
+          detail['set_default'] = true;
+          detail = this.set2Standard(detail);
+          console.log('发送要设置默认地址的发布请求',detail);
           wx.request({
             url: urlModel.url.pubOrder,
             data: detail,
             method:'POST',
             success: function(res) {
               if (res.statusCode == 200) {
-                wx.hideLoading()
+                wx.hideLoading();
                 wx.showToast({
                   title: '发布成功'
-                })
-                that.onLoad()//主要是为了获取默认地址
+                });
+                that.onLoad();//主要是为了获取默认地址
                 wx.switchTab({
                   url: '../home/home',
                   success:function () {
@@ -380,7 +385,7 @@ Page({
                   }
                 })
               }else {
-                wx.hideLoading()
+                wx.hideLoading();
                 wx.showToast({
                   title:'发布失败，请重试',
                   icon:'none'
@@ -388,7 +393,7 @@ Page({
               }
             },
             fail: function() { //无论成功还是失败都会执行
-              wx.hideLoading()
+              wx.hideLoading();
               wx.showToast({
                 title:'发布失败，请重试',
                 icon:'none'
@@ -396,19 +401,19 @@ Page({
             }
           })
         }else{
-          detail['set_default'] = false
-          detail = this.set2Standard(detail)
-          console.log('直接发布请求',detail)
+          detail['set_default'] = false;
+          detail = this.set2Standard(detail);
+          console.log('直接发布请求',detail);
           wx.request({
             url: urlModel.url.pubOrder,
             data: detail,
             method:'POST',
             success: function(res) {
               if (res.statusCode == 200) {
-                wx.hideLoading()
+                wx.hideLoading();
                 wx.showToast({
                   title: '发布成功'
-                })
+                });
                 wx.switchTab({
                   url: '../home/home',
                   success:function () {
@@ -416,7 +421,7 @@ Page({
                   }
                 })
               }else {
-                wx.hideLoading()
+                wx.hideLoading();
                 wx.showToast({
                   title:'发布失败，请重试',
                   icon:'none'
@@ -424,7 +429,7 @@ Page({
               }
             },
             fail: function() { //无论成功还是失败都会执行
-              wx.hideLoading()
+              wx.hideLoading();
               wx.showToast({
                 title:'发布失败，请重试',
                 icon:'none'
@@ -450,12 +455,12 @@ Page({
         })
       }
     }else {
-      console.log('收起面板')
+      console.log('收起面板');
       this.setData({
         submitFlag:true
-      })//收起之后就可以发布了
+      });//收起之后就可以发布了
       //设置展示信息
-      detail = this.fillAddrToDefault(detail)//地址信息已经补全，可以进行设置成本页的default
+      detail = this.fillAddrToDefault(detail);//地址信息已经补全，可以进行设置成本页的default
       var set2Default = {
         'conPhone':detail.conPhoneNum,
         'sendLocSelect':detail.DeRecLocSel,
@@ -463,18 +468,18 @@ Page({
         'recName':detail.recName,
         'phoneRear':detail.phoneRear,
         'QQ':detail.QQ
-      }
+      };
       //将已填信息暂存到globalData中
-      app.globalData.default = set2Default
+      app.globalData.default = set2Default;
       this.setData({
         default:set2Default
       })
     }
   },
   recognMsg:function (event) {
-    console.log(event)
-    var that = this
-    var msg = event.detail.value
+    console.log(event);
+    var that = this;
+    var msg = event.detail.value;
     if (msg.length <=1){
       return
     }
@@ -483,29 +488,29 @@ Page({
       wx.showToast({
         title: '请贴入正确的信息~',
         icon: 'none'
-      })
-      return
+      });
+
     } else {
       wx.showLoading({
         title: '识别中',
-      })
+      });
       //todo 发起识别请求
       var send_data = {
         'msg':msg,
         'school_id':app.globalData.schoolID,
         'sessionID':app.globalData.sessionID
-      }
+      };
       wx.request({
         url: urlModel.url.intelliRecogn,
         data: send_data,
         method:'POST',
         success: function(res) {
-          wx.hideLoading()
+          wx.hideLoading();
           if (res.statusCode == 200) {
             that.setData({
               expCode:res.data.expcode,
               expressLoc:res.data.place + '·' + res.data.company
-            })
+            });
             wx.showToast({
               title: '识别成功'
             })
@@ -517,7 +522,7 @@ Page({
           }
         },
         fail: function() {
-          wx.hideLoading()
+          wx.hideLoading();
           wx.showToast({
             title: '识别失败，可重试',
             icon: 'none'
@@ -528,41 +533,41 @@ Page({
   },
   weInfoChange: function(e) {
     //重量选择改变
-    console.log(e)
+    console.log(e);
     this.setData({
       weightIndex: e.detail.value
     })
   },
   sizeInfoChange:function(e){
     //快递大小改变
-    console.log(e)
+    console.log(e);
     this.setData({
       sizeIndex: e.detail.value
     })
   },
   bindLimitChange:function(e){
     //限制取件人改变
-    console.log(e)
+    console.log(e);
     this.setData({
       limitIndex: e.detail.value
     })
   },
   bindTimeChange: function(e) {
     //时间改变
-    console.log(e)
+    console.log(e);
     this.setData({
       endTime: e.detail.value
     })
   },
   dateChange: function(e) {
     // 日期改变
-    console.log(e)
+    console.log(e);
     this.setData({
       dateIndex: e.detail.value
     })
   },
   exlocChange: function(e) {
-    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
+    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex];
     this.setData({
       expressLoc: selected
     })
@@ -579,7 +584,7 @@ Page({
     }
   },
   exlocChange: function(e) {
-    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex]
+    var selected = this.data.expressLocArray[0][this.data.expFirstIndex] + '·' + this.data.expressLocArray[1][this.data.expSecondIndex];
     this.setData({
       expressLoc: selected
     })
@@ -597,7 +602,7 @@ Page({
     }
   },
   sdlocChange: function(e) {
-    var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]]
+    var selected = this.data.sendLocArray[0][this.data.sendLocIndex[0]] + '·' + this.data.sendLocArray[1][this.data.sendLocIndex[1]];
     this.setData({
       sendLocSelect: selected
     })
@@ -606,7 +611,7 @@ Page({
     var data = {
       sendLocArray: this.data.sendLocArray,
       sendLocIndex: this.data.sendLocIndex
-    }
+    };
     data.sendLocIndex[e.detail.column] = e.detail.value;
     switch (e.detail.column) {
       case 0:
@@ -636,7 +641,7 @@ Page({
   
   fillAddrToDefault: function(detail_to_fill) {
     //如果信息中有 未填写的默认信息，进行补全
-    console.log('修改前',detail_to_fill)
+    console.log('修改前',detail_to_fill);
     for (var Key in detail_to_fill) {
       if (detail_to_fill[Key] == '') {
         if (Key == 'conPhoneNum') {
@@ -654,7 +659,7 @@ Page({
         }
       }
     }
-    console.log('修改后',detail_to_fill)
+    console.log('修改后',detail_to_fill);
     return detail_to_fill
   },
   fill2Pub:function (detail2Fill) {
@@ -675,11 +680,11 @@ Page({
   add2Pub:function (detail2Fill) {
     //将缺少收货地址信息的发布填充完
     if (detail2Fill['DeRecLocSel'] == undefined){
-      detail2Fill['DeRecLocSel'] = this.data.default.sendLocSelect
-      detail2Fill['DeRecLocIn'] = this.data.default.sendLocInput
-      detail2Fill['conPhoneNum'] = this.data.default.conPhone
-      detail2Fill['phoneRear'] = this.data.default.phoneRear
-      detail2Fill['recName'] = this.data.default.recName
+      detail2Fill['DeRecLocSel'] = this.data.default.sendLocSelect;
+      detail2Fill['DeRecLocIn'] = this.data.default.sendLocInput;
+      detail2Fill['conPhoneNum'] = this.data.default.conPhone;
+      detail2Fill['phoneRear'] = this.data.default.phoneRear;
+      detail2Fill['recName'] = this.data.default.recName;
       detail2Fill['QQ'] = this.data.default.QQ == '可不填写'?null:this.data.default.QQ
     }
     return detail2Fill
@@ -698,12 +703,12 @@ Page({
   },
   set2Standard:function (detail2Set) {
     //todo 将变量名设置成符合规范的
-    detail2Set['con_phone'] = detail2Set.conPhoneNum
-    detail2Set['send_loc_sum'] = detail2Set.DeRecLocSel
-    detail2Set['send_loc_input'] = detail2Set.DeRecLocIn
-    detail2Set['phone_rear'] = detail2Set.phoneRear
-    detail2Set['rec_name'] = detail2Set.recName
-    detail2Set['QQ'] = detail2Set.QQ
+    detail2Set['con_phone'] = detail2Set.conPhoneNum;
+    detail2Set['send_loc_sum'] = detail2Set.DeRecLocSel;
+    detail2Set['send_loc_input'] = detail2Set.DeRecLocIn;
+    detail2Set['phone_rear'] = detail2Set.phoneRear;
+    detail2Set['rec_name'] = detail2Set.recName;
+    detail2Set['QQ'] = detail2Set.QQ;
         // ['无限制','限男生','限女生','官方团队'],
     if (detail2Set.limit == '限男生'){
       detail2Set['limit'] = 1
@@ -714,13 +719,13 @@ Page({
     }else {
       detail2Set['limit'] = 0
     }
-    detail2Set['exp_code'] = detail2Set.fetchCode
-    detail2Set['exp_station'] = detail2Set.selExCon
-    detail2Set['expire_time'] = detail2Set.exTimeConDate + ' ' + detail2Set.exTimeConTime
-    detail2Set['msg'] = detail2Set.message
-    detail2Set['exp_size'] = detail2Set.sizeInfo
-    detail2Set['exp_weight'] = detail2Set.weightInfo
-    detail2Set['description'] = detail2Set.otherInfo
+    detail2Set['exp_code'] = detail2Set.fetchCode;
+    detail2Set['exp_station'] = detail2Set.selExCon;
+    detail2Set['expire_time'] = detail2Set.exTimeConDate + ' ' + detail2Set.exTimeConTime;
+    detail2Set['msg'] = detail2Set.message;
+    detail2Set['exp_size'] = detail2Set.sizeInfo;
+    detail2Set['exp_weight'] = detail2Set.weightInfo;
+    detail2Set['description'] = detail2Set.otherInfo;
     return detail2Set
   }
-})
+});
