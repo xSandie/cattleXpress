@@ -184,12 +184,14 @@ Page({
             imageUrl: '/images/sharePic.jpg'
         }
     },
-    toAddrEdit: function() {
+    toAddrEdit: function(e) {
+        console.log('默认地址编辑',e);
         wx.navigateTo({
             url: '../defAddrEdit/defAddrEdit',
         })
     },
-    toCertif:function(){
+    toCertif:function(e){
+        console.log('教务系统认证',e);
         wx.showModal({
             title: '再次认证',
             content: '更改信息即再次进行教务系统认证，要继续吗？',
@@ -206,7 +208,8 @@ Page({
             }
         })
     },
-    toPoList: function() {
+    toPoList: function(e) {
+        console.log('举报',e);
         if (app.globalData.ourUserStatus != 4) {
             wx.navigateTo({
                 url: '../policeList/policeList',
@@ -215,7 +218,8 @@ Page({
             ui.UIManager.toCertif()
         }
     },
-    myCode: function() {
+    myCode: function(e) {
+        console.log('收款二维码',e);
         if (app.globalData.ourUserStatus != 4) {
             wx.navigateTo({
                 url: '../myCode/myCode',
@@ -224,9 +228,9 @@ Page({
             ui.UIManager.toCertif()
         }
     },
-    agreement:function () {
-        //用户协议页面
-    },
+    // agreement:function () {
+    //     //用户协议页面
+    // },
     collect:function (e) {
         var formId = e.detail.formId
         ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)

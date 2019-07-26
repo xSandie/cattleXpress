@@ -32,6 +32,13 @@ Page({
         loginFailed:true,
         blank:false
     },
+    /*
+    * 自定义页面数据
+    * */
+    pageData:{
+
+    },
+
     getBanner:function(){
         //获取并设置广告
         var that = this;
@@ -55,7 +62,6 @@ Page({
             complete: function() {}
         })
     },
-
     setAvatar: function() {
         wx.getSetting({
             success: function(res) {
@@ -332,14 +338,18 @@ Page({
 
     },
     onPageScroll: function(e) {
-        if (e.scrollTop == 0) {
-            this.setData({
-                pubOrTop: true
-            })
+        if (e.scrollTop != 0) {
+            if (this.data.pubOrTop){
+                this.setData({
+                    pubOrTop: false
+                })
+            }
         } else {
-            this.setData({
-                pubOrTop: false
-            })
+            if (!this.data.pubOrTop) {
+                this.setData({
+                    pubOrTop: true
+                })
+            }
         }
     },
 
@@ -366,7 +376,9 @@ Page({
             })
         }
     },
-    relogin:function(){
+    relogin:function(e){
+        console.log('重新登陆',e);
+        this.collect(e);
         //重新登陆
         this.onLoad('login')
     },
@@ -375,7 +387,9 @@ Page({
             url: '../changeSchool/changeSchool',
         })
     },
-    toTop: function() {
+    toTop: function(e) {
+        console.log('回到顶部',e);
+        this.collect(e);
         wx.pageScrollTo({
             scrollTop: 0,
             duration: 300
@@ -384,14 +398,15 @@ Page({
             pubOrTop: true
         })
     },
-    toPub: function() {
+    toPub: function(e) {
+        console.log('去发布', e);
+        this.collect(e);
         wx.switchTab({
             url: '../smartPub/smartPub',
         })
     },
     collect:function (e) {
         var formId = e.detail.formId;
-        console.log(e);
         ui.funcManager.formIdCollecter(formId,app.globalData.sessionID,urlModel.url.collectFormId)
     }
 });

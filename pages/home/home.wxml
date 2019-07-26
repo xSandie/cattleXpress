@@ -19,7 +19,7 @@
 <view class='container'>
     <view class='list'>
         <view style="display: flex;flex-direction: column;">
-            <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" wx:key="{{item.id}}" data-order-id="{{item.id}}"  bindtap="toSumDetail" wx:for="{{orderList}}">
+            <form report-submit="true" report-submit-timeout="1000" bindsubmit="toSumDetail" wx:key="{{item.id}}" data-order-id="{{item.id}}"  bindtap="toSumDetail" wx:for="{{orderList}}">
             <button form-type="submit" data-order-id="{{item.id}}" class='listItem' hover-class="answerHover1" >
                 <view class='rowFlex'  data-order-id="{{item.id}}" >
                     <view class='reward'>
@@ -115,16 +115,30 @@
         </view>
     </view>
     <view class='fbtnBox'>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{!pubOrTop}}" bindtap="toTop">
-            <text class='hBtnText'>回到顶部</text>
-            <image class='hBtnIcon' src='{{topIcon}}'></image>
-        </view>
-        <view hover-class="answerHover1" class='floatBtn' wx:if="{{pubOrTop && !loginFailed}}" bindtap="toPub">
-            <text class='hBtnText'>智能发布</text>
-            <image class='hBtnIcon' src='{{toTopIcon}}'></image>
-        </view>
-        <view hover-class="answerHover1" class='jieri' wx:if="{{loginFailed}}" bindtap="relogin">重新登陆</view>
+        <form style="box-sizing: border-box;" report-submit="true" report-submit-timeout="1000" bindsubmit="toTop">
+            <button hover-class="answerHover1" class='floatBtn' wx:if="{{!pubOrTop}}" form-type="submit">
+                <text class='hBtnText'>回到顶部</text>
+                <image class='hBtnIcon' src='{{topIcon}}'></image>
+            </button>
+        </form>
+
+        <form style="box-sizing: border-box;" report-submit="true" wx:if="{{pubOrTop && !loginFailed}}" report-submit-timeout="1000" bindsubmit="toPub">
+            <button hover-class="answerHover1" class='floatBtn' form-type="submit">
+                <text class='hBtnText'>智能发布</text>
+                <image class='hBtnIcon' src='{{toTopIcon}}'></image>
+            </button>
+        </form>
+<!--        <view hover-class="answerHover1" class='floatBtn'  bindtap="toPub">-->
+<!--            <text class='hBtnText'>智能发布</text>-->
+<!--            <image class='hBtnIcon' src='{{toTopIcon}}'></image>-->
+<!--        </view>-->
+        <form style="box-sizing: border-box;" report-submit="true"  wx:if="{{loginFailed}}" report-submit-timeout="1000" bindsubmit="relogin">
+<!--        <view hover-class="answerHover1" class='jieri' bindtap="relogin">重新登陆</view>-->
+            <button hover-class="answerHover1" class='jieri' form-type="submit">
+                <text class='hBtnText'>重新登陆</text>
+            </button>
         <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
+        </form>
     </view>
     <view wx:if="{{atEndFlag}}" class='prompt'>
         <view class='lineCss'></view>

@@ -1,7 +1,7 @@
 <view class="welcome">
     <view class="welcomeText"><text>欢迎加入</text><text>黄牛快递代领</text></view>
     <view class="btn">
-        <button hover-class="answerHover1" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">点击进入</button>
+        <button hover-class="answerHover1" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">点击授权</button>
     </view>
     <image src="../../images/welcome.png" class="welcomeImg"></image>
 </view>
