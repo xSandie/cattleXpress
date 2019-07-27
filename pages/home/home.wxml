@@ -134,8 +134,8 @@
 <!--        </view>-->
         <form style="box-sizing: border-box;" report-submit="true"  wx:if="{{loginFailed}}" report-submit-timeout="1000" bindsubmit="relogin">
 <!--        <view hover-class="answerHover1" class='jieri' bindtap="relogin">重新登陆</view>-->
-            <button hover-class="answerHover1" class='jieri' form-type="submit">
-                <text class='hBtnText'>重新登陆</text>
+            <button hover-class="answerHover1" class='jieri' style="margin: 0" form-type="submit">
+                <text style="font-size:24rpx;color:#373c46;">重新登陆</text>
             </button>
         <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
         </form>

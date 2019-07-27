@@ -104,14 +104,29 @@
                     <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
             </button>
-            <button form-type="submit" open-type='feedback' hover-class="answerHover1" class='joinUs defpadding'>
+<!--            <button form-type="submit" open-type='feedback' hover-class="answerHover1" class='joinUs defpadding'>-->
+<!--                <view class='joinUsText'>-->
+<!--                    <text>意见反馈</text>-->
+<!--                </view>-->
+<!--                <view class='next'>-->
+<!--                   <image class='nextIcon' src='{{nextIcon}}'></image> -->
+<!--                </view>-->
+<!--            </button>-->
+            <navigator
+                    target="miniProgram"
+                    open-type="navigate"
+                    app-id="{{ appId }}"
+                    extra-data="{{ extraData }}"
+                    version="release"
+                    hover-class="answerHover1"
+                    class='joinUs defpadding'>
                 <view class='joinUsText'>
-                    <text>意见反馈</text>
+                    <text>反馈社区</text>
                 </view>
                 <view class='next'>
-                   <image class='nextIcon' src='{{nextIcon}}'></image> 
+                    <image class='nextIcon' src='{{nextIcon}}'></image>
                 </view>
-            </button>
+            </navigator>
             <!-- <button form-type="submit" hover-class="answerHover1" class='joinUs defpadding' bindtap="agreement">
                 <view class='joinUsText'>
                     <text>用户协议&隐私政策</text>
