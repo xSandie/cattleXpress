@@ -94,14 +94,14 @@ var UIManager = {
             icon: 'none'
         })
     }
-}
+};
 var funcManager = {
     formIdCollecter:function(formId,sessionID,url){
         //上传收集的formId
         let send_data = {
             'sessionID': sessionID,
             'form_id': formId
-        }
+        };
         wx.request({
             url: url,
             method: 'POST',
@@ -112,6 +112,6 @@ var funcManager = {
             complete: function() {}
         })
     }
-}
+};
 exports.funcManager = funcManager;
 exports.UIManager = UIManager;

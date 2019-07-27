@@ -1,6 +1,6 @@
-var app = getApp()
-const urlModel = require('../../utils/urlSet.js')
-const hintsModel = require('../../utils/hints.js')
+var app = getApp();
+const urlModel = require('../../utils/urlSet.js');
+const hintsModel = require('../../utils/hints.js');
 Page({
 
     /**
@@ -50,7 +50,7 @@ Page({
 
     },
       myBePublic(e) { 
-        console.log(e.detail.checked)
+        console.log(e.detail.checked);
         if (e.detail.checked == false) {
           this.setData({
             bePublic: false
@@ -68,10 +68,10 @@ Page({
      */
 
     onShow: function() {
-        var that = this
+        var that = this;
         this.setData({
             schoolName: app.globalData.schoolName
-        })
+        });
         if (app.globalData.schoolName == '点击选择学校') {
             wx.showToast({
                 title: '请先选择学校',
@@ -91,17 +91,23 @@ Page({
                 'sessionID': app.globalData.sessionID,
                 'identity': this.data.identity,
                 'school_id': app.globalData.schoolID
-            }
+            };
             wx.request({
                 url: urlModel.url.getCertifInfo,
                 method: 'GET',
                 data: send_data,
                 success: function(res) {
-                    console.log(res)
+                    console.log(res);
                     if (res.data.img_url) {
                         that.setData({
                             verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
                             accountHint: res.data.account_hint || hints.hintsManager.certifPage.account
+                        })
+                    }else {
+                        wx.showToast({
+                            title: res.data.error_hint,
+                            icon: 'none',
+                            duration: 1500
                         })
                     }
                 },fail:function () {
@@ -111,7 +117,7 @@ Page({
                 }
             })
         }
-        //写具体的get函数 ifschoolname=空就不发送验证，根据教职工还是学生get不同的数据
+        //写具体的get函数 if schoolname=空就不发送验证，根据教职工还是学生get不同的数据
     },
 
     /**
@@ -153,28 +159,34 @@ Page({
         }
     },
     selStudent: function() {
-        var that = this
+        var that = this;
         if (this.data.identity == 1) {
-            return
+
         } else {
             this.setData({
                 studentOrMaster: true, //true为本科生
                 identity: 1,
-            })
+            });
             var send_data = {
                 'sessionID': app.globalData.sessionID,
                 'identity': 1,
                 'school_id': app.globalData.schoolID
-            }
+            };
             wx.request({
                 url: urlModel.url.getCertifInfo,
                 data: send_data,
                 success: function(res) {
-                    console.log(res)
+                    console.log(res);
                     if (res.data.img_url) {
                         that.setData({
                             verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
                             accountHint: res.data.account_hint || hintsModel.hintsManager.certifPage.account
+                        })
+                    }else {
+                        wx.showToast({
+                            title: res.data.error_hint,
+                            icon: 'none',
+                            duration: 1500
                         })
                     }
                 }
@@ -184,28 +196,34 @@ Page({
         }
     },
     selMaster: function() {
-        var that = this
+        var that = this;
         if (this.data.identity == 2) {
             return
         }
         this.setData({
             studentOrMaster: false,
             identity: 2,
-        })
+        });
         var send_data = {
             'sessionID': app.globalData.sessionID,
             'identity': 2,
             'school_id': app.globalData.schoolID
-        }
+        };
         wx.request({
             url: urlModel.url.getCertifInfo,
             data: send_data,
             success: function(res) {
-                console.log(res)
+                console.log(res);
                 if (res.data.img_url) {
                     that.setData({
                         verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
                         accountHint: res.data.account_hint || hintsModel.hintsManager.certifPage.account
+                    })
+                }else {
+                    wx.showToast({
+                        title: res.data.error_hint,
+                        icon: 'none',
+                        duration: 1500
                     })
                 }
             }
@@ -233,9 +251,9 @@ Page({
         })
     },
     haveCertif: function(e) {
-        var that = this
-        var content = ''
-        console.log(e)
+        var that = this;
+        var content = '';
+        console.log(e);
         if (e.detail.value.schoolNumb == '' || e.detail.value.password == '' || e.detail.value.verifiedCode == '') {
           if(that.data.bePublic==false){
             content="填写完整信息以及同意用户隐私协议才能进行操作哦！"
@@ -258,8 +276,8 @@ Page({
             wx.showLoading({
                 title: '认证中',
                 mask: true
-            })
-            console.log(e.detail.value)
+            });
+            console.log(e.detail.value);
             wx.request({
                 url: urlModel.url.postCertifMes, //填充认证url
                 method: 'POST',
@@ -272,21 +290,21 @@ Page({
                     'school_id': app.globalData.schoolID
                 },
                 success: function(res) {
-                    console.log(res)
-                    wx.hideLoading()
+                    console.log(res);
+                    wx.hideLoading();
                     if (res.statusCode == 200) {
                         if (res.data.status == 1) {
-                            console.log(res)
+                            console.log(res);
                                 //设置姓名、学号、user_status
-                            app.globalData.userName = res.data.name
-                            app.globalData.schoolNumb = res.data.school_numb
-                            app.globalData.ourUserStatus = res.data.user_status
+                            app.globalData.userName = res.data.name;
+                            app.globalData.schoolNumb = res.data.school_numb;
+                            app.globalData.ourUserStatus = res.data.user_status;
                             wx.showToast({
                                 title: '认证成功',
                                 icon: 'success',
                                 duration: 1500,
                                 success: function() {}
-                            })
+                            });
                             setTimeout(function() {
                                 if (that.data.showDefaultAddr){
                                     wx.showModal({
@@ -345,18 +363,18 @@ Page({
 
     },
     changeCode: function() {
-        var that = this
+        var that = this;
         var send_data = {
             'sessionID': app.globalData.sessionID,
             'identity': this.data.identity,
             'school_id': app.globalData.schoolID
-        }
+        };
         wx.request({
             url: urlModel.url.getCertifInfo,
             method: 'GET',
             data: send_data,
             success: function(res) {
-                console.log(res)
+                console.log(res);
                 if (res.data.img_url) {
                     that.setData({
                         verifyCodeUrl: res.data.img_url + '?v=' + Math.random(),
@@ -371,7 +389,7 @@ Page({
         })
     },
     accountHint: function() {
-        var that = this
+        var that = this;
         wx.showModal({
             title: '账号？',
             content: that.data.accountHint,
@@ -383,4 +401,4 @@ Page({
             }
         })
     }
-})
+});

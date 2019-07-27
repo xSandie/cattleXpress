@@ -12,5 +12,5 @@ var hintsManager = {
         loginFailed:'网络不太畅通，请检查网络后点击重新登陆',
         loadSession:'全速加载',
     }
-}
+};
 exports.hintsManager = hintsManager;
