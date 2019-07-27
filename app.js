@@ -3,6 +3,7 @@ const Promise = require('units/promise.js');
 const urlModel = require('utils/urlSet.js');
 const hintsModel = require('utils/hints.js');
 const Towxml = require('/towxml/main');
+
 App({
     onLaunch: function() {},
     towxml: new Towxml(),
