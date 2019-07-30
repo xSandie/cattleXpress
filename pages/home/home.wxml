@@ -73,6 +73,7 @@
             </button>
             </form>
         </view>
+        <ad unit-id="adunit-7a00aa73c69fcda6" style="margin-bottom:30rpx;"></ad>
         <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
             <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" >
                 <button style="padding: unset;" hover-class="not-hover" form-type="submit" class='rowFlex'  data-order-id="{{item.id}}">
