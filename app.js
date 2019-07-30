@@ -25,6 +25,7 @@ App({
                                 code: res.code
                             },
                             success: function(res) {
+                                console.log(res)
                                 if (res.statusCode == 200) {
                                     app.globalData.sessionID = res.data.sessionID;
                                     wx.hideLoading();
