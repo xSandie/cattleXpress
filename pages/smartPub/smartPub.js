@@ -500,17 +500,20 @@ Page({
         'school_id':app.globalData.schoolID,
         'sessionID':app.globalData.sessionID
       };
+     
       wx.request({
         url: urlModel.url.intelliRecogn,
         data: send_data,
         method:'POST',
         success: function(res) {
           wx.hideLoading();
+          console.log(res)
           if (res.statusCode == 200) {
             that.setData({
               expCode:res.data.expcode,
               expressLoc:res.data.place + '·' + res.data.company
             });
+            console.log(that.data.expCode)
             wx.showToast({
               title: '识别成功'
             })
@@ -543,6 +546,11 @@ Page({
     console.log(e);
     this.setData({
       sizeIndex: e.detail.value
+    })
+  },
+  modifyCode:function(e){
+    this.setData({
+      expCode:e.detail.value
     })
   },
   bindLimitChange:function(e){

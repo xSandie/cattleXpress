@@ -79,7 +79,7 @@
             <view class="left-cell" style="width: 220rpx;">
                 <text class="my-grey xxs-font">取件码</text>
                 <input maxlength='15' type="text" name="fetchCode" placeholder-class="xl-font my-grey" placeholder="{{expCode}}"
-                style="line-height: unset;" class="xl-font my-grey"/>
+                style="line-height: unset;" class="xl-font my-grey" bindblur="modifyCode"/>
             </view>
             <view class="right-cell" style="width: 380rpx;">
                 <text class="my-grey xxs-font">快递站点</text>
