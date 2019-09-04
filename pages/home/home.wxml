@@ -73,6 +73,9 @@
             </button>
             </form>
         </view>
+        <view class="xs-font my-grey" style="display:flex;width:100%;box-sizing:border-box;justify-content:center;margin-bottom:10rpx;">
+            <text>点击广告，给永远不收中间费的良心团队捐5毛，wink😉</text>
+        </view>
         <ad unit-id="adunit-7a00aa73c69fcda6" style="margin-bottom:30rpx;"></ad>
         <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
             <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" >
