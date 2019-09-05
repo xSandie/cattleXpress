@@ -61,8 +61,8 @@
             </view>
         </view>
     </view>
-    <ad unit-id="adunit-f87faad8b21bd022" style="margin-top:30rpx;"></ad>
-    <view class='trifle'>
+    <ad unit-id="adunit-f87faad8b21bd022" style="margin-top:30rpx;"></ad>  
+<view class='trifle'>
         <view class='pubSum'>
            <text>{{pubLastName}}同学于 {{pubTime}} 发布</text>
         </view>

@@ -14,5 +14,6 @@
                 <text class="con">{{item.schoolname}}</text>
             </view>
         </view>
+        <ad unit-id="adunit-d17325619b6b7d82" style="margin-top:30rpx;" ad-type="video" ad-theme="white"></ad>
     </view>
 </view>

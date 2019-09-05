@@ -136,3 +136,6 @@
                 </view>
             </button> -->
         </view>
+        <view class="container">
+          <ad unit-id="adunit-d33132612a03f7c7" style="margin:30rpx 0;"></ad>
+        </view>

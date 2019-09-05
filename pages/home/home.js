@@ -1,6 +1,8 @@
 var app = getApp();//获取app对象
 const urlModel = require('../../utils/urlSet.js');
 const ui = require('../../utils/helper.js');
+// 在页面中定义插屏广告
+let interstitialAd = true
 Page({
 
     /**
@@ -111,7 +113,17 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+      // 在页面onLoad回调事件中创建插屏广告实例
+      if (wx.createInterstitialAd) {
+        interstitialAd = wx.createInterstitialAd({
+          adUnitId: 'adunit-a3f1ad91890b23e7'
+        })
+        interstitialAd.onLoad(() => { })
+        interstitialAd.onError((err) => { })
+        interstitialAd.onClose(() => { })
+      }
         var that = this;
+      setTimeout(this.showAd, 1000)
         app.getUserSync().then(function(res) {
             app.getBaseInfoSync().then(
                 ()=>{
@@ -220,11 +232,19 @@ Page({
     onUnload: function() {
 
     },
-
+    showAd:function(){
+      // 在适合的场景显示插屏广告
+      if (interstitialAd) {
+        interstitialAd.show().catch((err) => {
+          console.error(err)
+        })
+      }
+    },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function() {
+
         wx.showLoading({
             title: '刷新中',
             mask: true
