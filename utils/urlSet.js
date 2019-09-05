@@ -47,6 +47,7 @@ var testurl = new Object({
     collectFormId:'http://148.70.54.102:5000/minav1/pstMsg/formId'//收集formId
 })
 var url = new Object({
+  unpay: 'https://www.inschool.tech/minav1/orders/unpay',
     codeUrl: 'https://www.inschool.tech/minav1/auth/login',
     configUrl: 'http://148.70.54.102:5000/minav1/school/config',
     baseInfoUrl: 'http://148.70.54.102:5000/minav1/auth/base_info',

@@ -1,6 +1,9 @@
 {
-    "navigationBarTitleText": "黄牛快递代领",
-    "navigationBarTextStyle": "black",
-    "backgroundColor":"#ffffff",
-    "navigationBarBackgroundColor": "#ffffff"
+  "navigationBarTitleText": "黄牛快递代领",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#ffffff",
+  "usingComponents": {
+    "l-notice-bar": "/components/lin-ui-master/notice-bar/index"
+  }
 }

@@ -104,9 +104,11 @@ Page({
           url: '/pages/adsDetail/adsDetail?id='+adId.toString()
         })
     },
-    checkUnPay:function(){//TODO:检查是否有未支付订单
-        
-    },
+  checkUnPay: function () {//TODO:检查是否有未支付订单
+    wx.switchTab({
+      url: '../orders/orders'
+    })
+  },
     /**
      * 生命周期函数--监听页面加载
      */
@@ -177,6 +179,19 @@ Page({
                             }
                         }
                     });
+                  var data = {
+                    "sessionID": app.globalData.sessionID
+                  }
+                  wx.request({
+                    url: urlModel.url.unpay,
+                    data: data,
+                    method: 'POST',
+                    success: function (res) {
+                      that.setData({
+                        unpay: res.data.unpay
+                      })
+                    }
+                  })
                     that.setAvatar();
                 }
             ).catch();
