@@ -51,6 +51,7 @@
                     <text>限团队</text>
                   </view>
                 </view>
+<<<<<<< HEAD
                 <view class='exTagWor' wx:if="{{item.womanOnly}}">
                   <view class='tagText'>
                     <text>限女生</text>
@@ -92,6 +93,81 @@
           </view>
         </button>
       </form>
+=======
+            </button>
+            </form>
+        </view>
+        <view class="xs-font my-grey" style="display:flex;width:100%;box-sizing:border-box;justify-content:center;margin-bottom:10rpx;">
+            <text>点击广告，给不收中间费的良心团队捐5毛，wink😉</text>
+        </view>
+        <ad unit-id="adunit-7a00aa73c69fcda6" style="margin-bottom:30rpx;"></ad>
+        <view class='listItem' wx:key="{{item.id}}" wx:for="{{finishedOrderList}}">
+            <form report-submit="true" report-submit-timeout="1000" bindsubmit="collect" >
+                <button style="padding: unset;" hover-class="not-hover" form-type="submit" class='rowFlex'  data-order-id="{{item.id}}">
+                    <view class='my-silver-bg reward'>
+                        <view class='rcText'>
+                            <text>赏金</text>
+                        </view>
+                        <view class='rnText'>
+                            <text>{{item.reward}}</text>
+                        </view>
+                        <view class='reText'>
+                            <text>RMB</text>
+                        </view>
+                    </view>
+                    <view class='body'>
+                        <view class='exInstance'>
+                            <text>{{item.expStationName}} 送至</text>
+                        </view>
+                        <view class='sdInstance'>
+                            <view class='sdIText'><text>{{item.sendLocSum}}</text></view>
+                        </view>
+                        <view class='exTag'>
+                            <view class='exTag exTagWei my-silver-bg'>
+                                <view class='tagText my-grey'><text>重量{{item.expWeight}} | {{item.expSize}}</text></view>
+                            </view>
+                            <view class='exTag exTagTime my-silver-bg'>
+                                <view class='tagText my-grey'><text>{{item.endTime}}前送达</text></view>
+                            </view>
+                        </view>
+                        <view class='pubisher'>
+                            <image class='pubIcon' src="{{pubPersonIconGrey}}"></image>
+                            <view class='pubName my-grey'>
+                                <text>发布人：{{item.pubName}}</text>
+                            </view>
+                        </view>
+                    </view>
+                </button>
+                <image class='recBadge' src="{{recBadge}}" />
+            </form>
+        </view>
+    </view>
+    <view class='fbtnBox'>
+        <form style="box-sizing: border-box;" report-submit="true" report-submit-timeout="1000" bindsubmit="toTop">
+            <button hover-class="answerHover1" class='floatBtn' wx:if="{{!pubOrTop}}" form-type="submit">
+                <text class='hBtnText'>回到顶部</text>
+                <image class='hBtnIcon' src='{{topIcon}}'></image>
+            </button>
+        </form>
+
+        <form style="box-sizing: border-box;" report-submit="true" wx:if="{{pubOrTop && !loginFailed}}" report-submit-timeout="1000" bindsubmit="toPub">
+            <button hover-class="answerHover1" class='floatBtn' form-type="submit">
+                <text class='hBtnText'>智能发布</text>
+                <image class='hBtnIcon' src='{{toTopIcon}}'></image>
+            </button>
+        </form>
+<!--        <view hover-class="answerHover1" class='floatBtn'  bindtap="toPub">-->
+<!--            <text class='hBtnText'>智能发布</text>-->
+<!--            <image class='hBtnIcon' src='{{toTopIcon}}'></image>-->
+<!--        </view>-->
+        <form style="box-sizing: border-box;" report-submit="true"  wx:if="{{loginFailed}}" report-submit-timeout="1000" bindsubmit="relogin">
+<!--        <view hover-class="answerHover1" class='jieri' bindtap="relogin">重新登陆</view>-->
+            <button hover-class="answerHover1" class='jieri' style="margin: 0" form-type="submit">
+                <text style="font-size:24rpx;color:#373c46;">重新登陆</text>
+            </button>
+        <!--<view  hover-class="answerHover1" wx:if="{{jieri}}" class='jieri' bindtap='toDaike'>代课专区</view>-->
+        </form>
+>>>>>>> d7226859ecdaddc73fc81c7b0574322a8b321b5a
     </view>
     <view class="xs-font my-grey" style="display:flex;width:100%;box-sizing:border-box;justify-content:center;margin-bottom:10rpx;">
       <text>点击广告，给永远不收中间费的良心团队捐5毛，wink😉</text>

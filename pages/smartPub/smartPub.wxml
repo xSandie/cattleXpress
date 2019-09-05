@@ -130,4 +130,5 @@
         <textarea class='others' name="otherInfo" maxlength='50' type="text" placeholder="{{expDescript}}" />
         </block>
     </view>
+    <ad unit-id="adunit-d17325619b6b7d82" style="margin-bottom:30rpx;" ad-type="video" ad-theme="white"></ad>  
 </form>

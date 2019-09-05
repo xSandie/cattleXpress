@@ -25,7 +25,6 @@ button::after {
 
 .trifle {
     margin-top: 26rpx;
-    margin-bottom: 150rpx;
     font-size: 22rpx;
     color: #999ba1;
     display: flex;

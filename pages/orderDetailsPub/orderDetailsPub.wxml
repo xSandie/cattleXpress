@@ -117,7 +117,9 @@
            </view>
         </view>
     </view>
+    <ad unit-id="adunit-d17325619b6b7d82"  ad-type="video" ad-theme="white"></ad>  
 </view>
+
 <view wx:if="{{statusCode==0||statusCode==2||statusCode==3}}">
     <view class='fxdBtnBac'>    
     </view>
